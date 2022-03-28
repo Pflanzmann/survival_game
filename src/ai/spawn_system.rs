@@ -1,7 +1,8 @@
+use bevy::math::Vec3;
 use bevy::prelude::{AssetServer, Commands, Res, Sprite, SpriteBundle, Time, Vec2};
 use rand::random;
 
-use crate::ai::ai_components::{EnemyAi, Size, Speed};
+use crate::ai::ai_components::{Direction, EnemyAi, Size, Speed};
 use crate::collision::collision_components::Collider;
 use crate::Transform;
 
@@ -30,5 +31,7 @@ pub fn spawn_system(
         .insert(EnemyAi)
         .insert(Speed { speed: 6.0 })
         .insert(Size { size: Vec2::new(256.0, 256.0) })
-        .insert(Collider);
+        .insert(Collider)
+        .insert(Direction {direction: Vec3::default()});
+
 }
