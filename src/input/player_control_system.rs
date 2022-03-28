@@ -33,7 +33,7 @@ pub fn player_control_system(
         player_move_transform.translation.y -= 1.0;
     }
 
-    if !has_input { return; }
+    if player_move_transform.translation == player_transform.translation { return; }
 
     let direction = (player_move_transform.translation - player_transform.translation).normalize();
 
