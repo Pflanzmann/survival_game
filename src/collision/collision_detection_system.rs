@@ -1,34 +1,30 @@
-use bevy::prelude::{Commands, Entity, Query};
+use bevy::prelude::{Commands, Entity, Query, With};
 use bevy::sprite::collide_aabb::collide;
 
-use crate::ai::ai_components::Size;
+use crate::{Player, Transform, Without};
+use crate::ai::ai_components::{EnemyAi, Size};
 use crate::collision::collision_components::Collider;
-use crate::Transform;
 
-pub fn collision_detection_system(
+pub fn enemy_player_collision_system(
     mut commands: Commands,
-    collider_query: Query<(Entity, &Transform, &Collider, &Size)>,
+    enemy_query: Query<(Entity, &Transform, &Size), (With<Collider>, With<EnemyAi>, Without<Player>)>,
+    player_query: Query<(&Transform, &Size), (With<Collider>, With<Player>, Without<EnemyAi>)>,
 ) {
-    let mut test_objects = Vec::<(Entity, &Transform, &Collider, &Size)>::new();
+    let mut test_objects = Vec::<(Entity, &Transform, &Size)>::new();
+    let (player_transform, player_size) = player_query.get_single().unwrap();
 
-    for (test_entity, test_transform, test_collider, test_size) in collider_query.iter() {
-        test_objects.push((test_entity, test_transform, test_collider, test_size))
+    for (test_entity, test_transform, test_size) in enemy_query.iter() {
+        test_objects.push((test_entity, test_transform, test_size))
     }
 
-    for (pos, (test_entity, test_transform, test_collider, test_size)) in test_objects.iter().enumerate() {
-        if pos + 1 < test_objects.len() - 1 {
-            for n in pos..(test_objects.len() - 1) {
-                let (other_entity, other_transform, other_collider, other_size) = test_objects[n];
-
-                if collide(
-                    test_transform.translation,
-                    test_size.size,
-                    other_transform.translation,
-                    other_size.size,
-                ).is_some() {
-//                    commands.entity(other_entity).insert
-                }
-            }
+    for (enemy_entity, enemy_transform, enemy_size) in test_objects.iter() {
+        if collide(
+            enemy_transform.translation,
+            enemy_size.size,
+            player_transform.translation,
+            player_size.size,
+        ).is_some() {
+            commands.entity(*enemy_entity).despawn()
         }
     }
 }
