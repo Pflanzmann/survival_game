@@ -8,20 +8,33 @@ pub fn player_control_system(
     mut player_query: Query<&mut Transform, With<Player>>,
 ) {
     let mut player_transform = player_query.get_single_mut().unwrap();
+    let mut player_move_transform = player_transform.clone();
+
+    let mut has_input = false;
 
     if input.pressed(KeyCode::A) {
-        player_transform.translation.x -= 10.0;
+        has_input = true;
+        player_move_transform.translation.x -= 10.0;
     }
 
     if input.pressed(KeyCode::D) {
-        player_transform.translation.x += 10.0;
+        has_input = true;
+        player_move_transform.translation.x += 10.0;
     }
 
     if input.pressed(KeyCode::W) {
-        player_transform.translation.y += 10.0;
+        has_input = true;
+        player_move_transform.translation.y += 10.0;
     }
 
     if input.pressed(KeyCode::S) {
-        player_transform.translation.y -= 10.0;
+        has_input = true;
+        player_move_transform.translation.y -= 10.0;
     }
+
+    if !has_input { return; }
+
+    let direction = (player_move_transform.translation - player_transform.translation).normalize();
+
+    player_transform.translation += direction * 10.0;
 }
