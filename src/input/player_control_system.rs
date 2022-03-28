@@ -1,8 +1,8 @@
 use bevy::ecs::component::Component;
 use bevy::prelude::*;
 
+use crate::ai::ai_components::{Direction, Speed};
 use crate::input::input_components::{MainCamera, Player};
-use crate::ai::ai_components::{Speed, Direction};
 
 pub fn player_control_system(
     input: Res<Input<KeyCode>>,
