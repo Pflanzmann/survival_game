@@ -6,7 +6,7 @@ pub fn enemy_movement_system(
     mut enemies: Query<(&mut Transform, &Speed, &mut Direction), (With<EnemyAi>, Without<Player>)>,
     player: Query<&Transform, (With<Player>, Without<EnemyAi>)>,
 ) {
-    let mut player_transform = player.get_single().unwrap();
+    let player_transform = player.get_single().unwrap();
 
     for (mut transform, speed, mut enemy_direction) in enemies.iter_mut() {
         let direction = (player_transform.translation - transform.translation).normalize();
