@@ -11,7 +11,7 @@ pub fn spawn_system(
     time: Res<Time>,
     asset_server: Res<AssetServer>,
 ) {
-    if time.time_since_startup().as_millis() % 100 != 0 {
+    if time.time_since_startup().as_millis() % 1000 != 0 {
         return;
     }
 

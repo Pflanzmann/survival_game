@@ -4,13 +4,17 @@ use bevy::prelude::{App, AssetServer, BuildChildren, Commands, Entity, GlobalTra
 use bevy_inspector_egui::WorldInspectorPlugin;
 
 use crate::ai::ai_plugin::AiPlugin;
+use crate::bullets::bullet_plugin::BulletPlugin;
 use crate::collision::collision_plugin::CollisionPlugin;
+use crate::guns::gun_plugin::GunPlugin;
 use crate::input::input_components::Player;
 use crate::input::input_plugin::InputPlugin;
 
 mod input;
 mod ai;
 mod collision;
+mod guns;
+mod bullets;
 
 fn main() {
     App::new()
@@ -20,6 +24,8 @@ fn main() {
         .add_plugin(InputPlugin)
         .add_plugin(AiPlugin)
         .add_plugin(CollisionPlugin)
+        .add_plugin(GunPlugin)
+        .add_plugin(BulletPlugin)
 
         .add_startup_system(setup_tiles)
         .run()
