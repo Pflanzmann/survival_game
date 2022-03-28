@@ -2,13 +2,13 @@ use bevy::ecs::component::Component;
 use bevy::prelude::*;
 
 use crate::input::input_components::{MainCamera, Player};
-use crate::ai::ai_components::Speed;
+use crate::ai::ai_components::{Speed, Direction};
 
 pub fn player_control_system(
     input: Res<Input<KeyCode>>,
-    mut player_query: Query<(&mut Transform, &Speed), With<Player>>,
+    mut player_query: Query<(&mut Transform, &Speed, &mut Direction), With<Player>>,
 ) {
-    let (mut player_transform, speed) = player_query.get_single_mut().unwrap();
+    let (mut player_transform, speed, mut player_direction) = player_query.get_single_mut().unwrap();
     let mut player_move_transform = player_transform.clone();
 
     let mut has_input = false;
@@ -38,4 +38,5 @@ pub fn player_control_system(
     let direction = (player_move_transform.translation - player_transform.translation).normalize();
 
     player_transform.translation += direction * speed.speed;
+    player_direction.direction = direction;
 }
