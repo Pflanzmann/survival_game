@@ -2,7 +2,7 @@ use bevy::core::FixedTimestep;
 use bevy::prelude::{Plugin, SystemSet};
 
 use crate::App;
-use crate::collision::collision_detection_system::collision_detection_system;
+use crate::collision::collision_detection_system::enemy_player_collision_system;
 
 pub struct CollisionPlugin;
 
@@ -13,7 +13,7 @@ impl Plugin for CollisionPlugin {
         app.add_system_set(
             SystemSet::new()
                 .with_run_criteria(FixedTimestep::step(FIXED_TIMESTEP))
-                .with_system(collision_detection_system)
+                .with_system(enemy_player_collision_system)
         );
     }
 }
