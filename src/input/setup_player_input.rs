@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 use crate::ai::ai_components::{Size, Speed, Direction};
 use crate::collision::collision_components::Collider;
+use crate::guns::gun_components::BasicGun;
 
 use crate::input::input_components::MainCamera;
 use crate::Player;
@@ -23,7 +24,8 @@ pub fn setup_player_input(
         .insert(Speed { speed: 10.0 })
         .insert(Size { size: Vec2::new(256.0, 256.0) })
         .insert(Collider)
-        .insert(Direction { direction: Vec3::default()})
+        .insert(Direction { direction: Vec3::new(1.0, 0.0, 0.0) })
+        .insert(BasicGun)
         .id();
 
     let mut camera_bundle = OrthographicCameraBundle::new_2d();
