@@ -1,5 +1,5 @@
-use bevy::prelude::{App, Plugin, StartupStage};
-use bevy::render::camera::camera_system;
+use bevy::prelude::{App, Plugin};
+
 use crate::input::player_control_system::player_control_system;
 use crate::input::setup_camera_system::setup_camera_system;
 use crate::SetupStages;

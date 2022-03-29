@@ -1,15 +1,10 @@
-use bevy::ecs::system::QuerySingleError;
 use bevy::prelude::*;
-use crate::components::unit_stats_components::{ColliderSize, MoveSpeed, Direction, Damage, Health};
-use crate::collision::collision_components::Collider;
-use crate::components::gun_components::BasicGun;
 
 use crate::components::player_components::MainCamera;
 use crate::Player;
 
 pub fn setup_camera_system(
     mut commands: Commands,
-    asset_server: Res<AssetServer>,
     player_query: Query<Entity, With<Player>>,
 ) {
     let player_result = match player_query.get_single() {
