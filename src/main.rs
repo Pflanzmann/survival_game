@@ -1,13 +1,17 @@
 use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
-use bevy::prelude::{App, AssetServer, BuildChildren, Commands, Entity, GlobalTransform, Input, KeyCode, Name, OrthographicCameraBundle, Plugin, Res, Sprite, SpriteBundle, Transform, Vec2, With, Without};
+use bevy::prelude::{App, AssetServer, BuildChildren, Commands, Entity, GlobalTransform, Input, KeyCode, Name, OrthographicCameraBundle, Plugin, Res, Sprite, SpriteBundle, SystemStage, Transform, Vec2, Vec3, With, Without};
 use bevy_inspector_egui::WorldInspectorPlugin;
+use bevy::ecs::schedule::StageLabel;
+use components::player_components::Player;
 
 use crate::ai::ai_plugin::AiPlugin;
 use crate::bullets::bullet_plugin::BulletPlugin;
+use crate::collision::collision_components::Collider;
 use crate::collision::collision_plugin::CollisionPlugin;
+use crate::components::gun_components::BasicGun;
+use crate::components::unit_stats_components::{Direction, Size, Speed};
 use crate::guns::gun_plugin::GunPlugin;
-use crate::input::input_components::Player;
 use crate::input::input_plugin::InputPlugin;
 
 mod input;
@@ -15,6 +19,7 @@ mod ai;
 mod collision;
 mod guns;
 mod bullets;
+mod components;
 
 fn main() {
     App::new()

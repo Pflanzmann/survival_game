@@ -1,8 +1,8 @@
 use bevy::prelude::Transform;
 
 use crate::{Query, With};
-use crate::ai::ai_components::{Direction, Speed};
-use crate::bullets::bullet_components::Bullet;
+use crate::components::unit_stats_components::{Direction, Speed};
+use crate::components::bullet_components::Bullet;
 
 pub fn bullet_movement_system(
     mut bullet_query: Query<(&mut Transform, &Direction, &Speed), With<Bullet>>,

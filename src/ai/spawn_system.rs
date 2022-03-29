@@ -2,7 +2,7 @@ use bevy::math::Vec3;
 use bevy::prelude::{AssetServer, Commands, Res, Sprite, SpriteBundle, Time, Vec2};
 use rand::random;
 
-use crate::ai::ai_components::{Direction, EnemyAi, Size, Speed};
+use crate::components::unit_stats_components::{Direction, Enemy, Size, Speed};
 use crate::collision::collision_components::Collider;
 use crate::Transform;
 
@@ -28,7 +28,7 @@ pub fn spawn_system(
             texture: asset_server.load("Rock01.png"),
             ..Default::default()
         })
-        .insert(EnemyAi)
+        .insert(Enemy)
         .insert(Speed { speed: 6.0 })
         .insert(Size { size: Vec2::new(256.0, 256.0) })
         .insert(Collider)
