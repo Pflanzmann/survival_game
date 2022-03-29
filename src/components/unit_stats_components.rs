@@ -12,6 +12,21 @@ pub struct Speed {
 }
 
 #[derive(Component)]
+pub struct Collider_Size{
+    pub collider_size: Vec2,
+}
+
+#[derive(Component)]
+pub struct Health{
+    pub health : f32,
+}
+
+#[derive(Component)]
+pub struct Damage{
+    pub damage : f32,
+}
+
+#[derive(Component)]
 pub struct Direction{
     pub direction: Vec3
 }

@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use crate::components::unit_stats_components::{Size, Speed, Direction};
+use crate::components::unit_stats_components::{Size, Speed, Direction, Damage, Health};
 use crate::collision::collision_components::Collider;
 use crate::components::gun_components::BasicGun;
 
@@ -26,6 +26,8 @@ pub fn setup_player_input(
         .insert(Collider)
         .insert(Direction { direction: Vec3::new(1.0, 0.0, 0.0) })
         .insert(BasicGun)
+        .insert(Damage{damage : 5.0})
+        .insert(Health{health : 50.0})
         .id();
 
     let mut camera_bundle = OrthographicCameraBundle::new_2d();

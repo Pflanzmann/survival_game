@@ -12,6 +12,10 @@ pub fn basic_gun_system(
     asset_server: Res<AssetServer>,
     player_query: Query<(&Transform, &Direction), With<BasicGun>>,
 ) {
+    if time.time_since_startup().as_millis() % 10000000 != 0 {
+        return;
+    }
+
     for (transform, direction) in player_query.iter() {
         command.spawn_bundle(SpriteBundle {
             transform: Transform::from_xyz(transform.translation.x, transform.translation.y, 0.0),
