@@ -2,7 +2,7 @@ use bevy::math::Vec3;
 use bevy::prelude::{AssetServer, Commands, Res, Sprite, SpriteBundle, Time, Vec2};
 use rand::random;
 
-use crate::components::unit_stats_components::{Direction, Enemy, Size, Speed, Damage, Health};
+use crate::components::unit_stats_components::{Direction, Enemy, ColliderSize, Speed, Damage, Health};
 use crate::collision::collision_components::Collider;
 use crate::Transform;
 
@@ -30,7 +30,7 @@ pub fn spawn_system(
         })
         .insert(Enemy)
         .insert(Speed { speed: 6.0 })
-        .insert(Size { size: Vec2::new(256.0, 256.0) })
+        .insert(ColliderSize { collider_size: Vec2::new(256.0, 256.0) })
         .insert(Collider)
         .insert(Damage{damage: 5.0})
         .insert(Direction {direction: Vec3::default()});

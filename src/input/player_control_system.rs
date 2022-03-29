@@ -7,7 +7,12 @@ pub fn player_control_system(
     input: Res<Input<KeyCode>>,
     mut player_query: Query<(&mut Transform, &Speed, &mut Direction), With<Player>>,
 ) {
-    let (mut player_transform, speed, mut player_direction) = player_query.get_single_mut().unwrap();
+    let player_result = player_query.get_single_mut();
+    if player_result.is_err(){
+        return;
+    }
+
+    let (mut player_transform, speed, mut player_direction) = player_result.unwrap();
     let mut player_move_transform = player_transform.clone();
 
     if input.pressed(KeyCode::A) {
