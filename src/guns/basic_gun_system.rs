@@ -1,7 +1,7 @@
 use bevy::prelude::{AssetServer, Color, Commands, Res, Sprite, SpriteBundle, Time, Vec2};
 
 use crate::{Query, Transform, With};
-use crate::components::unit_stats_components::{Direction, ColliderSize, Speed};
+use crate::components::unit_stats_components::{Direction, ColliderSize, MoveSpeed};
 use crate::components::bullet_components::Bullet;
 use crate::collision::collision_components::Collider;
 use crate::components::gun_components::BasicGun;
@@ -30,6 +30,6 @@ pub fn basic_gun_system(
             .insert(Collider)
             .insert(ColliderSize { collider_size: Vec2::new(256.0, 256.0) })
             .insert(Direction { direction: direction.direction })
-            .insert(Speed { speed: 15.0 });
+            .insert(MoveSpeed { move_speed: 15.0 });
     }
 }

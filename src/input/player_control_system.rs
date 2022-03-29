@@ -1,11 +1,11 @@
 use bevy::prelude::*;
 
-use crate::components::unit_stats_components::{Direction, Speed};
+use crate::components::unit_stats_components::{Direction, MoveSpeed};
 use crate::components::player_components::Player;
 
 pub fn player_control_system(
     input: Res<Input<KeyCode>>,
-    mut player_query: Query<(&mut Transform, &Speed, &mut Direction), With<Player>>,
+    mut player_query: Query<(&mut Transform, &MoveSpeed, &mut Direction), With<Player>>,
 ) {
     let player_result = player_query.get_single_mut();
     if player_result.is_err(){
@@ -35,6 +35,6 @@ pub fn player_control_system(
 
     let direction = (player_move_transform.translation - player_transform.translation).normalize();
 
-    player_transform.translation += direction * speed.speed;
+    player_transform.translation += direction * speed.move_speed;
     player_direction.direction = direction;
 }
