@@ -1,9 +1,9 @@
 use bevy::prelude::*;
-use crate::ai::ai_components::{Size, Speed, Direction};
+use crate::components::unit_stats_components::{Size, Speed, Direction};
 use crate::collision::collision_components::Collider;
-use crate::guns::gun_components::BasicGun;
+use crate::components::gun_components::BasicGun;
 
-use crate::input::input_components::MainCamera;
+use crate::components::player_components::MainCamera;
 use crate::Player;
 
 pub fn setup_player_input(

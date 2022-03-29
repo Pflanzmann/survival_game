@@ -1,10 +1,10 @@
 use bevy::prelude::{Transform, Without};
 use crate::{Player, Query, With};
-use crate::ai::ai_components::{Direction, EnemyAi, Speed};
+use crate::components::unit_stats_components::{Direction, Enemy, Speed};
 
 pub fn enemy_movement_system(
-    mut enemies: Query<(&mut Transform, &Speed, &mut Direction), (With<EnemyAi>, Without<Player>)>,
-    player: Query<&Transform, (With<Player>, Without<EnemyAi>)>,
+    mut enemies: Query<(&mut Transform, &Speed, &mut Direction), (With<Enemy>, Without<Player>)>,
+    player: Query<&Transform, (With<Player>, Without<Enemy>)>,
 ) {
     let player_transform = player.get_single().unwrap();
 
