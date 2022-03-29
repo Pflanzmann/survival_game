@@ -1,8 +1,9 @@
 use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
+use bevy::ecs::schedule::StageLabel;
 use bevy::prelude::{App, AssetServer, BuildChildren, Commands, Entity, GlobalTransform, Input, KeyCode, Name, OrthographicCameraBundle, Plugin, Res, Sprite, SpriteBundle, SystemStage, Transform, Vec2, Vec3, With, Without};
 use bevy_inspector_egui::WorldInspectorPlugin;
-use bevy::ecs::schedule::StageLabel;
+
 use components::player_components::Player;
 
 use crate::ai::ai_plugin::AiPlugin;
@@ -10,7 +11,7 @@ use crate::bullets::bullet_plugin::BulletPlugin;
 use crate::collision::collision_components::Collider;
 use crate::collision::collision_plugin::CollisionPlugin;
 use crate::components::gun_components::BasicGun;
-use crate::components::unit_stats_components::{Direction, ColliderSize, MoveSpeed};
+use crate::components::unit_stats_components::{ColliderSize, Direction, MoveSpeed};
 use crate::guns::gun_plugin::GunPlugin;
 use crate::input::input_plugin::InputPlugin;
 
@@ -21,8 +22,19 @@ mod guns;
 mod bullets;
 mod components;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(StageLabel)]
+pub enum SetupStages {
+    PlayerSetup,
+    AfterPlayerSetup,
+}
+
 fn main() {
     App::new()
+        .add_startup_stage(SetupStages::PlayerSetup, SystemStage::single_threaded())
+        .add_startup_stage(SetupStages::AfterPlayerSetup, SystemStage::single_threaded())
+        .add_startup_system_to_stage(SetupStages::PlayerSetup, setup_player)
+
         .add_plugins(DefaultPlugins)
         .add_plugin(WorldInspectorPlugin::new())
 
@@ -34,6 +46,28 @@ fn main() {
 
         .add_startup_system(setup_tiles)
         .run()
+}
+
+pub fn setup_player(
+    mut commands: Commands,
+    asset_server: Res<AssetServer>,
+) {
+    commands.spawn_bundle(
+        SpriteBundle {
+            sprite: Sprite {
+                custom_size: Some(Vec2::new(256.0, 256.0)),
+                ..Default::default()
+            },
+            texture: asset_server.load("NickelMan.png"),
+            ..Default::default()
+        })
+        .insert(Name::new("Test"))
+        .insert(Player)
+        .insert(MoveSpeed { move_speed: 10.0 })
+        .insert(ColliderSize { collider_size: Vec2::new(256.0, 256.0) })
+        .insert(Collider)
+        .insert(Direction { direction: Vec3::new(1.0, 0.0, 0.0) })
+        .insert(BasicGun);
 }
 
 pub fn setup_tiles(
