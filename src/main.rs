@@ -11,7 +11,7 @@ use crate::bullets::bullet_plugin::BulletPlugin;
 use crate::collision::collision_components::Collider;
 use crate::collision::collision_plugin::CollisionPlugin;
 use crate::components::gun_components::BasicGun;
-use crate::components::unit_stats_components::{ColliderSize, Direction, MoveSpeed};
+use crate::components::unit_stats_components::{Damage, Direction, Health, MoveSpeed, UnitSize};
 use crate::guns::gun_plugin::GunPlugin;
 use crate::input::input_plugin::InputPlugin;
 
@@ -61,13 +61,16 @@ pub fn setup_player(
             texture: asset_server.load("NickelMan.png"),
             ..Default::default()
         })
-        .insert(Name::new("Test"))
+        .insert(Name::new("Player"))
         .insert(Player)
         .insert(MoveSpeed { move_speed: 10.0 })
-        .insert(ColliderSize { collider_size: Vec2::new(256.0, 256.0) })
+        .insert(MoveSpeed { move_speed: 10.0 })
+        .insert(UnitSize { collider_size: Vec2::new(256.0, 256.0) })
         .insert(Collider)
         .insert(Direction { direction: Vec3::new(1.0, 0.0, 0.0) })
-        .insert(BasicGun);
+        .insert(BasicGun)
+        .insert(Damage { damage: 5.0 })
+        .insert(Health { health: 50.0 });
 }
 
 pub fn setup_tiles(

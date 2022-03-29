@@ -27,6 +27,6 @@ pub struct Direction {
 }
 
 #[derive(Component)]
-pub struct ColliderSize {
+pub struct UnitSize {
     pub collider_size: Vec2,
 }
