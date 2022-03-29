@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use crate::components::unit_stats_components::{ColliderSize, Speed, Direction, Damage, Health};
+use crate::components::unit_stats_components::{ColliderSize, MoveSpeed, Direction, Damage, Health};
 use crate::collision::collision_components::Collider;
 use crate::components::gun_components::BasicGun;
 
@@ -21,7 +21,7 @@ pub fn setup_player_input(
         })
         .insert(Name::new("Player"))
         .insert(Player)
-        .insert(Speed { speed: 10.0 })
+        .insert(MoveSpeed { move_speed: 10.0 })
         .insert(ColliderSize { collider_size: Vec2::new(256.0, 256.0) })
         .insert(Collider)
         .insert(Direction { direction: Vec3::new(1.0, 0.0, 0.0) })

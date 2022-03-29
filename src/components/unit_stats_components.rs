@@ -7,8 +7,8 @@ use crate::Vec2;
 pub struct Enemy;
 
 #[derive(Component)]
-pub struct Speed {
-    pub speed: f32,
+pub struct MoveSpeed {
+    pub move_speed: f32,
 }
 
 #[derive(Component)]
