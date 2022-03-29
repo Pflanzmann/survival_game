@@ -10,7 +10,7 @@ use crate::bullets::bullet_plugin::BulletPlugin;
 use crate::collision::collision_components::Collider;
 use crate::collision::collision_plugin::CollisionPlugin;
 use crate::components::gun_components::BasicGun;
-use crate::components::unit_stats_components::{Direction, Size, Speed};
+use crate::components::unit_stats_components::{Direction, ColliderSize, Speed};
 use crate::guns::gun_plugin::GunPlugin;
 use crate::input::input_plugin::InputPlugin;
 
