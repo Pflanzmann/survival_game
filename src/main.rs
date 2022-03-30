@@ -1,7 +1,8 @@
 use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
-use bevy::prelude::{App, AssetServer, BuildChildren, Commands, Entity, GlobalTransform, Input, KeyCode, Name, OrthographicCameraBundle, Plugin, Res, Sprite, SpriteBundle, SystemStage, Transform, Vec2, Vec3, With, Without};
+use bevy::prelude::{App, AssetServer, BuildChildren, Color, Commands, Entity, GlobalTransform, Input, KeyCode, Name, OrthographicCameraBundle, Plugin, Res, Sprite, SpriteBundle, SystemStage, Transform, Vec2, Vec3, With, Without};
+//use bevy_inspector_egui::egui::ImageData::Color;
 use bevy_inspector_egui::WorldInspectorPlugin;
 
 use components::player_components::Player;
@@ -12,8 +13,10 @@ use crate::collision::collision_components::Collider;
 use crate::collision::collision_plugin::CollisionPlugin;
 use crate::components::gun_components::BasicGun;
 use crate::components::unit_stats_components::{Damage, Direction, Health, MoveSpeed, UnitSize};
+use crate::components::ui_components::{HealthBar};
 use crate::guns::gun_plugin::GunPlugin;
 use crate::input::input_plugin::InputPlugin;
+use crate::KeyCode::D;
 
 mod input;
 mod ai;
@@ -45,6 +48,7 @@ fn main() {
         .add_plugin(BulletPlugin)
 
         .add_startup_system(setup_tiles)
+        .add_startup_system_to_stage(SetupStages::AfterPlayerSetup, setup_healthBar)
         .run()
 }
 
@@ -60,7 +64,8 @@ pub fn setup_player(
             },
             texture: asset_server.load("NickelMan.png"),
             ..Default::default()
-        })
+        },
+    )
         .insert(Name::new("Player"))
         .insert(Player)
         .insert(MoveSpeed { move_speed: 10.0 })
@@ -94,4 +99,25 @@ pub fn setup_tiles(
             commands.entity(background).add_child(child);
         }
     }
+}
+
+pub fn setup_healthBar(
+    mut commands : Commands,
+    asset_server: Res<AssetServer>,
+) {
+    commands.spawn_bundle(
+        SpriteBundle{
+            sprite: Sprite{
+                custom_size: Some(Vec2::new(256.0,50.0)),
+                color: Color::rgb(0.7,0.7,0.7),
+                ..Default::default()
+            },
+            transform: Transform{
+                translation : Vec3::new(0.0,-125.0,0.0),
+                ..Default::default()
+            },
+            ..Default::default()
+        },
+    )
+        .insert(HealthBar);
 }
