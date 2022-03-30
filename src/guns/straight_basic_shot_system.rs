@@ -4,13 +4,13 @@ use crate::{Entity, Query, Transform, With};
 use crate::collision::collision_components::Collider;
 use crate::components::bullet_components::Bullet;
 use crate::components::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
-use crate::components::unit_stats_components::{Direction, MoveSpeed, UnitSize};
+use crate::components::unit_stats_components::{FacingDirection, MoveSpeed, UnitSize};
 
 pub fn straight_basic_shot_system(
     mut command: Commands,
     time: Res<Time>,
     asset_server: Res<AssetServer>,
-    player_query: Query<(&Transform, &Direction, &WeaponSlot)>,
+    player_query: Query<(&Transform, &FacingDirection, &WeaponSlot)>,
     mut gun_query: Query<(Entity, &mut Reloadable), With<StraightBasicShot>>,
 ) {
     for (transform, direction, weapon_slot) in player_query.iter() {
@@ -37,7 +37,7 @@ pub fn straight_basic_shot_system(
                 .insert(Bullet)
                 .insert(Collider)
                 .insert(UnitSize { collider_size: Vec2::new(256.0, 256.0) })
-                .insert(Direction { direction: direction.direction })
+                .insert(FacingDirection { facing_direction: direction.facing_direction })
                 .insert(MoveSpeed { move_speed: 15.0 });
         }
     }

@@ -7,12 +7,12 @@ use rand::random;
 use crate::{Player, Query, Transform, With};
 use crate::collision::collision_components::Collider;
 use crate::components::player_components::MainCamera;
-use crate::components::unit_stats_components::{Damage, Direction, Enemy, Health, MoveSpeed, UnitSize};
+use crate::components::unit_stats_components::{Damage, FacingDirection, Enemy, Health, MoveSpeed, UnitSize};
 
 #[derive(Default)]
 pub struct SpawnTimer(f32);
 
-pub fn spawn_system(
+pub fn enemy_spawn_system(
     mut commands: Commands,
     time: Res<Time>,
     mut spawn_timer: ResMut<SpawnTimer>,
@@ -49,6 +49,6 @@ pub fn spawn_system(
             .insert(UnitSize { collider_size: Vec2::new(256.0, 256.0) })
             .insert(Collider)
             .insert(Damage { damage: 5.0 })
-            .insert(Direction { direction: Vec3::default() });
+            .insert(FacingDirection { facing_direction: Vec3::default() });
     }
 }
