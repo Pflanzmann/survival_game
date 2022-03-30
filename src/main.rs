@@ -11,7 +11,7 @@ use crate::ai::ai_plugin::AiPlugin;
 use crate::bullets::bullet_plugin::BulletPlugin;
 use crate::collision::collision_components::Collider;
 use crate::collision::collision_plugin::CollisionPlugin;
-use crate::components::gun_components::BasicGun;
+use crate::components::gun_components::Gunnable;
 use crate::components::unit_stats_components::{Damage, Direction, Health, MoveSpeed, UnitSize};
 use crate::components::ui_components::{HealthBar};
 use crate::guns::gun_plugin::GunPlugin;
@@ -73,7 +73,6 @@ pub fn setup_player(
         .insert(UnitSize { collider_size: Vec2::new(256.0, 256.0) })
         .insert(Collider)
         .insert(Direction { direction: Vec3::new(1.0, 0.0, 0.0) })
-        .insert(BasicGun)
         .insert(Damage { damage: 5.0 })
         .insert(Health { health: 50.0 });
 }
