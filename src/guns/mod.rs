@@ -1,3 +1,4 @@
 pub mod gun_plugin;
-pub mod basic_gun_system;
+pub mod straight_basic_shot_system;
+pub mod setup_gun_system;
 
