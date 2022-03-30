@@ -1,11 +1,11 @@
 use bevy::prelude::*;
 
 use crate::components::player_components::Player;
-use crate::components::unit_stats_components::{Direction, MoveSpeed};
+use crate::components::unit_stats_components::{FacingDirection, MoveSpeed};
 
 pub fn player_control_system(
     input: Res<Input<KeyCode>>,
-    mut player_query: Query<(&mut Transform, &MoveSpeed, &mut Direction), With<Player>>,
+    mut player_query: Query<(&mut Transform, &MoveSpeed, &mut FacingDirection), With<Player>>,
 ) {
     for (mut player_transform, move_speed, mut player_direction) in player_query.iter_mut() {
         let mut player_move_transform = player_transform.clone();
@@ -31,6 +31,9 @@ pub fn player_control_system(
         let direction = (player_move_transform.translation - player_transform.translation).normalize();
 
         player_transform.translation += direction * move_speed.move_speed;
-        player_direction.direction = direction;
+
+        if player_direction.facing_direction != direction {
+            player_direction.facing_direction = direction;
+        }
     }
 }

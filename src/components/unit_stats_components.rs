@@ -22,8 +22,8 @@ pub struct Damage {
 }
 
 #[derive(Component)]
-pub struct Direction {
-    pub direction: Vec3,
+pub struct FacingDirection {
+    pub facing_direction: Vec3,
 }
 
 #[derive(Component)]
