@@ -15,7 +15,7 @@ pub fn setup_camera_system(
     let mut camera_bundle = OrthographicCameraBundle::new_2d();
     camera_bundle.transform.translation.x = 0.0;
     camera_bundle.transform.translation.y = 0.0;
-    camera_bundle.transform.translation.z = 0.0;
+    camera_bundle.transform.translation.z = 10.0;
 
     camera_bundle.orthographic_projection.scale = 5.0;
 
