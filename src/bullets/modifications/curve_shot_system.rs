@@ -1,10 +1,9 @@
 use bevy::app::EventReader;
-use bevy::prelude::{Commands, Quat, Query, Transform, With};
-use rand::random;
+use bevy::prelude::{Commands, Query, With};
 
-use crate::{FacingDirection, Vec2};
 use crate::components::event_components::BulletShotEvent;
 use crate::components::modification_components::CurveShot;
+use crate::FacingDirection;
 
 pub fn apply_curved_shot_system(
     mut commands: Commands,
@@ -19,7 +18,7 @@ pub fn curve_shot_system(
     mut bullet_query: Query<&mut FacingDirection, With<CurveShot>>,
 ) {
     for mut direction in bullet_query.iter_mut() {
-        let angle: f32 = 0.01;
+        let angle: f32 = 0.005;
         let x = direction.facing_direction.x;
         let y = direction.facing_direction.y;
 

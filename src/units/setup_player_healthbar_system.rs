@@ -1,13 +1,9 @@
-use bevy::prelude::{AssetServer, BuildChildren, Changed, Children, Color, Commands, Entity, Query, Res, Sprite, SpriteBundle, Vec2, Vec3, With, World};
-use bevy::sprite::collide_aabb::collide;
+use bevy::prelude::{BuildChildren, Color, Commands, Entity, Query, Sprite, SpriteBundle, Vec2, Vec3, With};
 
-use crate::{HealthBar, Player, Transform, Without};
-use crate::collision::collision_components::Collider;
-use crate::components::unit_stats_components::{Damage, Enemy, Health, UnitSize};
+use crate::{HealthBar, Player, Transform};
 
 pub fn setup_health_bar(
     mut commands: Commands,
-    asset_server: Res<AssetServer>,
     player_query: Query<Entity, With<Player>>,
 ) {
     let player_result = match player_query.get_single() {

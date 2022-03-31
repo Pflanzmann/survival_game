@@ -5,3 +5,4 @@ pub mod player_components;
 pub mod ui_components;
 pub mod modification_components;
 pub mod event_components;
+pub mod collision_components;

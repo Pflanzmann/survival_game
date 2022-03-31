@@ -3,11 +3,10 @@ use bevy::prelude::Plugin;
 use crate::{App, SetupStages};
 use crate::units::enemy_movement_system::enemy_movement_system;
 use crate::units::enemy_spawn_system::{enemy_spawn_system, SpawnTimer};
-use crate::units::setup_player_system::setup_player_system;
-use crate::units::sprite_direction_system::sprite_direction_system;
 use crate::units::healthbar_update_system::healthbar_update_system;
 use crate::units::setup_player_healthbar_system::setup_health_bar;
-
+use crate::units::setup_player_system::setup_player_system;
+use crate::units::sprite_direction_system::sprite_direction_system;
 
 pub struct UnitPlugin;
 

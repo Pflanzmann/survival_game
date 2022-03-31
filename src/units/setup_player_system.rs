@@ -1,10 +1,11 @@
-use bevy::prelude::{AssetServer, Commands, Name, Res, Sprite, SpriteBundle, Vec2, Vec3};
+use bevy::prelude::{Commands, Name, Res, Sprite, SpriteBundle, Vec2, Vec3};
+
 use crate::{Collider, Damage, FacingDirection, Health, MoveSpeed, Player, UnitSize};
 use crate::assets_handling::preload_texture_system::TextureHandles;
 
 pub fn setup_player_system(
     mut commands: Commands,
-    texture_handles: Res<TextureHandles>
+    texture_handles: Res<TextureHandles>,
 ) {
     commands.spawn_bundle(
         SpriteBundle {

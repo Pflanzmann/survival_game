@@ -2,8 +2,8 @@ use bevy::app::EventWriter;
 use bevy::prelude::{AssetServer, Commands, Res, Sprite, SpriteBundle, Time, Vec2};
 
 use crate::{Entity, Query, Transform, With};
-use crate::collision::collision_components::Collider;
 use crate::components::bullet_components::Bullet;
+use crate::components::collision_components::Collider;
 use crate::components::event_components::BulletShotEvent;
 use crate::components::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
 use crate::components::unit_stats_components::{FacingDirection, MoveSpeed, UnitSize};
