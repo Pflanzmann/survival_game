@@ -5,6 +5,7 @@ use bevy::prelude::{App, AssetServer, BuildChildren, Color, Commands, Entity, Gl
 use bevy_inspector_egui::WorldInspectorPlugin;
 
 use components::player_components::Player;
+use crate::assets_handling::asset_handling_plugin::AssetHandlingPlugin;
 
 use crate::units::unit_plugin::UnitPlugin;
 use crate::bullets::bullet_plugin::BulletPlugin;
@@ -48,6 +49,7 @@ fn main() {
         .add_plugin(GunPlugin)
         .add_plugin(BulletPlugin)
         .add_plugin(DropsPlugin)
+        .add_plugin(AssetHandlingPlugin)
 
         .add_startup_system(setup_tiles)
         .run()
