@@ -22,5 +22,5 @@ pub fn setup_player_system(
         .insert(Collider)
         .insert(FacingDirection { facing_direction: Vec3::new(1.0, 0.0, 0.0) })
         .insert(Damage { damage: 5.0 })
-        .insert(Health { health: 50.0 });
+        .insert(Health { current_health: 50.0, max_health: 50.0 });
 }
