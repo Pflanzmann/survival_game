@@ -3,7 +3,7 @@ use bevy::prelude::{Children, Commands, Entity, Query, With, World};
 use bevy::sprite::collide_aabb::collide;
 
 use crate::{HealthBar, Player, Transform, Without};
-use crate::collision::collision_components::Collider;
+use crate::components::collision_components::Collider;
 use crate::components::unit_stats_components::{Damage, Enemy, Health, UnitSize};
 
 pub fn enemy_player_collision_system(
@@ -22,11 +22,9 @@ pub fn enemy_player_collision_system(
             ).is_some() {
                 player_health.current_health -= enemy_damage.damage.clone();
 
-
-            }
-
-            if player_health.current_health <= 0.0 {
-                commands.entity(player_entity).despawn()
+                if player_health.current_health <= 0.0 {
+                    commands.entity(player_entity).despawn()
+                }
             }
         }
     }

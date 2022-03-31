@@ -1,13 +1,10 @@
-use std::thread::spawn;
-
 use bevy::math::Vec3;
 use bevy::prelude::{AssetServer, Commands, Res, ResMut, Sprite, SpriteBundle, Time, Vec2};
 use rand::random;
 
 use crate::{Player, Query, Transform, With};
-use crate::collision::collision_components::Collider;
-use crate::components::player_components::MainCamera;
-use crate::components::unit_stats_components::{Damage, FacingDirection, Enemy, Health, MoveSpeed, UnitSize};
+use crate::components::collision_components::Collider;
+use crate::components::unit_stats_components::{Damage, Enemy, FacingDirection, MoveSpeed, UnitSize};
 
 #[derive(Default)]
 pub struct SpawnTimer(f32);
@@ -20,7 +17,7 @@ pub fn enemy_spawn_system(
     main_player_query: Query<&Transform, With<Player>>,
 ) {
     spawn_timer.0 += time.delta().as_secs_f32();
-    if spawn_timer.0 < 1.0 {
+    if spawn_timer.0 < 0.5 {
         return;
     }
 

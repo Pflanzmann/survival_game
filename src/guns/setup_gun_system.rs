@@ -1,6 +1,6 @@
 use bevy::prelude::{Commands, Entity, Query, With};
 
-use crate::{Damage, Gunnable, Player};
+use crate::{Gunnable, Player};
 use crate::components::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
 
 pub fn setup_gun_system(
@@ -11,7 +11,7 @@ pub fn setup_gun_system(
         let gun = commands.spawn()
             .insert(Gunnable)
             .insert(StraightBasicShot)
-            .insert(Reloadable::new(1.0))
+            .insert(Reloadable::new(2.0))
             .id();
 
         commands.entity(entity).insert(WeaponSlot { entity: gun });

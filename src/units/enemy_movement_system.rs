@@ -1,10 +1,11 @@
 use bevy::prelude::{Transform, Without};
 
 use crate::{Player, Query, With};
-use crate::components::unit_stats_components::{FacingDirection, Enemy, MoveSpeed};
+use crate::components::collision_components::Collisions;
+use crate::components::unit_stats_components::{Enemy, FacingDirection, MoveSpeed};
 
 pub fn enemy_movement_system(
-    mut enemies: Query<(&mut Transform, &MoveSpeed, &mut FacingDirection), (With<Enemy>, Without<Player>)>,
+    mut enemies: Query<(&mut Transform, &MoveSpeed, &mut FacingDirection, Option<&Collisions>), (With<Enemy>, Without<Player>)>,
     mut player_query: Query<&Transform, (With<Player>, Without<Enemy>)>,
 ) {
     let player_result = match player_query.get_single_mut() {
@@ -12,8 +13,15 @@ pub fn enemy_movement_system(
         Err(_) => return,
     };
 
-    for (mut transform, speed, mut enemy_direction) in enemies.iter_mut() {
-        let direction = (player_result.translation - transform.translation).normalize();
+    for (mut transform, speed, mut enemy_direction, collisions) in enemies.iter_mut() {
+        let mut direction = (player_result.translation - transform.translation).normalize();
+
+        if let Some(collisions) = collisions {
+            for col_direction in collisions.collisions.iter() {
+                direction -= *col_direction / 1.5;
+                direction = direction.normalize();
+            }
+        }
 
         transform.translation.x += direction.x * speed.move_speed;
         transform.translation.y += direction.y * speed.move_speed;
