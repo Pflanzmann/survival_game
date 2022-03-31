@@ -1,9 +1,10 @@
 use bevy::prelude::{AssetServer, Commands, Name, Res, Sprite, SpriteBundle, Vec2, Vec3};
 use crate::{Collider, Damage, FacingDirection, Health, MoveSpeed, Player, UnitSize};
+use crate::assets_handling::preload_texture_system::TextureHandles;
 
 pub fn setup_player_system(
     mut commands: Commands,
-    asset_server: Res<AssetServer>,
+    texture_handles: Res<TextureHandles>
 ) {
     commands.spawn_bundle(
         SpriteBundle {
@@ -11,7 +12,7 @@ pub fn setup_player_system(
                 custom_size: Some(Vec2::new(256.0, 256.0)),
                 ..Default::default()
             },
-            texture: asset_server.load("NickelMan.png"),
+            texture: texture_handles.player_sprite.clone(),
             ..Default::default()
         },
     )

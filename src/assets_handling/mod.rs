@@ -1,2 +1,2 @@
 pub mod asset_handling_plugin;
-mod preload_texture_system;
+pub mod preload_texture_system;
