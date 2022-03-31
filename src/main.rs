@@ -2,7 +2,6 @@ use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
 use bevy::prelude::{App, AssetServer, BuildChildren, Color, Commands, Entity, GlobalTransform, Input, KeyCode, Name, OrthographicCameraBundle, Plugin, Res, Sprite, SpriteBundle, SystemStage, Transform, Val, Vec2, Vec3, With, Without};
-//use bevy_inspector_egui::egui::ImageData::Color;
 use bevy_inspector_egui::WorldInspectorPlugin;
 
 use components::player_components::Player;
@@ -14,6 +13,7 @@ use crate::collision::collision_plugin::CollisionPlugin;
 use crate::components::gun_components::Gunnable;
 use crate::components::ui_components::HealthBar;
 use crate::components::unit_stats_components::{Damage, FacingDirection, Health, MoveSpeed, UnitSize};
+use crate::drops::drops_plugin::DropsPlugin;
 use crate::guns::gun_plugin::GunPlugin;
 use crate::input::input_plugin::InputPlugin;
 
@@ -23,10 +23,13 @@ mod collision;
 mod guns;
 mod bullets;
 mod components;
+mod drops;
+mod assets_handling;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 #[derive(StageLabel)]
 pub enum SetupStages {
+    AssetSetup,
     PlayerSetup,
     AfterPlayerSetup,
 }
@@ -35,7 +38,6 @@ fn main() {
     App::new()
         .add_startup_stage(SetupStages::PlayerSetup, SystemStage::single_threaded())
         .add_startup_stage(SetupStages::AfterPlayerSetup, SystemStage::single_threaded())
-        //.add_startup_system_to_stage(SetupStages::PlayerSetup, setup_player)
 
         .add_plugins(DefaultPlugins)
         .add_plugin(WorldInspectorPlugin::new())
@@ -45,6 +47,7 @@ fn main() {
         .add_plugin(CollisionPlugin)
         .add_plugin(GunPlugin)
         .add_plugin(BulletPlugin)
+        .add_plugin(DropsPlugin)
 
         .add_startup_system(setup_tiles)
         .run()
