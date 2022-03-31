@@ -22,18 +22,7 @@ pub fn enemy_player_collision_system(
             ).is_some() {
                 player_health.current_health -= enemy_damage.damage.clone();
 
-                for &child in children.iter() {
-                    let mut health_bar = match children_query.get_mut(child) {
-                        Ok(value) => value,
-                        Err(_) => continue
-                    };
 
-                    if player_health.current_health / player_health.max_health < 0.0 {
-                        health_bar.scale.x = 0.01
-                    } else {
-                        health_bar.scale.x = player_health.current_health / player_health.max_health;
-                    }
-                }
             }
 
             if player_health.current_health <= 0.0 {
