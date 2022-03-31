@@ -13,7 +13,8 @@ pub struct MoveSpeed {
 
 #[derive(Component)]
 pub struct Health {
-    pub health: f32,
+    pub current_health: f32,
+    pub max_health: f32,
 }
 
 #[derive(Component)]
