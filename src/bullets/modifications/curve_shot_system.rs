@@ -19,12 +19,12 @@ pub fn curve_shot_system(
     mut bullet_query: Query<&mut FacingDirection, With<CurveShot>>,
 ) {
     for mut direction in bullet_query.iter_mut() {
-        let angle: f32 = 1.0;
+        let angle: f32 = 0.01;
         let x = direction.facing_direction.x;
         let y = direction.facing_direction.y;
 
-        direction.facing_direction.x -= x * angle.cos() - y * angle.sin();
-        direction.facing_direction.y += x * angle.sin() + y * angle.cos();
+        direction.facing_direction.x = x * angle.cos() - y * angle.sin();
+        direction.facing_direction.y = x * angle.sin() + y * angle.cos();
 
         direction.facing_direction = direction.facing_direction.normalize();
     }
