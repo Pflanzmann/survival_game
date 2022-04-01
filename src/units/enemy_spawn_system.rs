@@ -3,6 +3,7 @@ use bevy::prelude::{AssetServer, Commands, Res, ResMut, Sprite, SpriteBundle, Ti
 use rand::random;
 
 use crate::{Player, Query, Transform, With};
+use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::components::collision_components::Collider;
 use crate::components::unit_stats_components::{Damage, Enemy, FacingDirection, MoveSpeed, UnitSize};
 
@@ -14,6 +15,7 @@ pub fn enemy_spawn_system(
     time: Res<Time>,
     mut spawn_timer: ResMut<SpawnTimer>,
     asset_server: Res<AssetServer>,
+    texture_handles: Res<TextureHandles>,
     main_player_query: Query<&Transform, With<Player>>,
 ) {
     spawn_timer.0 += time.delta().as_secs_f32();
@@ -37,7 +39,7 @@ pub fn enemy_spawn_system(
                     ..Default::default()
                 },
                 transform: Transform::from_xyz(position_to_spawn.x, position_to_spawn.y, 0.0),
-                texture: asset_server.load("Rock01.png"),
+                texture: texture_handles.enemy_rock.clone(),
                 ..Default::default()
             })
             .insert(Enemy)
