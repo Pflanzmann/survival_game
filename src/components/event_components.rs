@@ -8,3 +8,8 @@ pub struct BulletShotEvent {
 pub struct EnemyDiedEvent {
     pub death_position: Vec3,
 }
+
+pub struct BulletEnemyCollisionEvent {
+    pub enemy_entity: Entity,
+    pub bullet_entity: Entity,
+}
