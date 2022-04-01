@@ -8,6 +8,7 @@ use components::collision_components::Collider;
 use components::player_components::Player;
 
 use crate::assets_handling::asset_handling_plugin::AssetHandlingPlugin;
+use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::bullets::bullet_plugin::BulletPlugin;
 use crate::collision::collision_plugin::CollisionPlugin;
 use crate::components::gun_components::Gunnable;
@@ -51,20 +52,21 @@ fn main() {
         .add_plugin(DropsPlugin)
         .add_plugin(AssetHandlingPlugin)
 
-        .add_startup_system(setup_tiles)
+        .add_startup_system_to_stage(SetupStages::PlayerSetup, setup_tiles)
         .run()
 }
 
 pub fn setup_tiles(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
+    texture_handles: Res<TextureHandles>
 ) {
     let background = commands.spawn().insert(Name::new("background")).id();
 
     for x in 0..100 {
         for y in 0..100 {
             let child = commands.spawn_bundle(SpriteBundle {
-                texture: asset_server.load("BackgroundTile.png").into(),
+                texture: texture_handles.background_tile.clone(),
                 global_transform: GlobalTransform::from(Transform::from_xyz((x.clone() * 256) as f32, (y.clone() * 256) as f32, -100.0)),
                 sprite: Sprite {
                     custom_size: Some(Vec2::new(256.0, 256.0)),
