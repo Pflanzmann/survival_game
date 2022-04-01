@@ -20,7 +20,6 @@ pub fn enemy_spawn_system(
     if spawn_timer.0 < 0.5 {
         return;
     }
-
     spawn_timer.0 = 0.0;
 
     let random_x = random::<f32>() * 2.0 - 1.0;
