@@ -31,7 +31,7 @@ pub fn straight_basic_shot_system(
             let bullet = command.spawn_bundle(SpriteBundle {
                 transform: Transform::from_xyz(transform.translation.x, transform.translation.y, 0.0),
                 sprite: Sprite {
-                    custom_size: Some(Vec2::new(256.0, 256.0)),
+                    custom_size: Some(Vec2::new(128.0, 128.0)),
                     ..Default::default()
                 },
                 texture: asset_server.load("Bullet.png"),
@@ -39,7 +39,7 @@ pub fn straight_basic_shot_system(
             })
                 .insert(Bullet)
                 .insert(Collider)
-                .insert(UnitSize { collider_size: Vec2::new(256.0, 256.0) })
+                .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
                 .insert(FacingDirection { facing_direction: direction.facing_direction })
                 .insert(MoveSpeed { move_speed: 15.0 }).id();
 
