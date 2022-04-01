@@ -6,3 +6,4 @@ pub mod ui_components;
 pub mod modification_components;
 pub mod event_components;
 pub mod collision_components;
+pub mod item_components;
