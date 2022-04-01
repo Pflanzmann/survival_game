@@ -3,7 +3,7 @@ use bevy::prelude::{AssetServer, Commands, Res, Sprite, SpriteBundle, Time, Vec2
 
 use crate::{Entity, Query, Transform, With};
 use crate::components::bullet_components::Bullet;
-use crate::components::collision_components::Collider;
+use crate::components::collision_components::{CollidedEntities, Collider};
 use crate::components::event_components::BulletShotEvent;
 use crate::components::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
 use crate::components::unit_stats_components::{FacingDirection, MoveSpeed, UnitSize};
@@ -41,7 +41,9 @@ pub fn straight_basic_shot_system(
                 .insert(Collider)
                 .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
                 .insert(FacingDirection { facing_direction: direction.facing_direction })
-                .insert(MoveSpeed { move_speed: 15.0 }).id();
+                .insert(MoveSpeed { move_speed: 15.0 })
+                .insert(CollidedEntities { collisions: Vec::new() })
+                .id();
 
             bullet_shot_event_writer.send(BulletShotEvent { entity: bullet })
         }
