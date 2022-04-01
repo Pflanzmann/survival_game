@@ -3,6 +3,7 @@ use bevy::prelude::Plugin;
 use crate::{App, SetupStages};
 use crate::units::enemy_movement_system::enemy_movement_system;
 use crate::units::enemy_spawn_system::{enemy_spawn_system, SpawnTimer};
+use crate::units::fit_sprite_to_size_system::fit_sprite_to_size_system;
 use crate::units::healthbar_update_system::healthbar_update_system;
 use crate::units::setup_player_healthbar_system::setup_health_bar;
 use crate::units::setup_player_system::setup_player_system;
@@ -19,6 +20,7 @@ impl Plugin for UnitPlugin {
             .add_system(enemy_movement_system)
             .add_system(sprite_direction_system)
             .add_system(healthbar_update_system)
+            .add_system(fit_sprite_to_size_system)
             .init_resource::<SpawnTimer>();
     }
 }
