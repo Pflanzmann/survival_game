@@ -1,5 +1,4 @@
-use bevy::ecs::query::QueryEntityError;
-use bevy::prelude::{Children, Commands, Entity, Query, With, World};
+use bevy::prelude::{Children, Commands, Entity, Query, With};
 use bevy::sprite::collide_aabb::collide;
 
 use crate::{HealthBar, Player, Transform, Without};
@@ -20,7 +19,7 @@ pub fn enemy_player_collision_system(
                 player_transform.translation,
                 player_size.collider_size,
             ).is_some() {
-                player_health.current_health -= enemy_damage.damage.clone();
+               // player_health.current_health -= enemy_damage.damage.clone();
 
                 if player_health.current_health <= 0.0 {
                     commands.entity(player_entity).despawn()
