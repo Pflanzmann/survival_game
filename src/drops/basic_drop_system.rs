@@ -1,7 +1,8 @@
 use bevy::prelude::{AssetServer, EventReader, Res, Sprite, SpriteBundle, Vec2};
-use crate::{Commands, Transform, Vec3};
+use crate::{Collider, Commands, Transform, UnitSize, Vec3};
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::components::event_components::EnemyDiedEvent;
+use crate::components::item_components::Item;
 
 pub fn basic_drop_system(
     mut commands: Commands,
@@ -25,6 +26,9 @@ pub fn basic_drop_system(
                 },
                 ..Default::default()
             }
-        );
+        )
+            .insert(Item)
+            .insert(Collider)
+            .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) });
     }
 }

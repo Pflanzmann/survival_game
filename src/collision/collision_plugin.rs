@@ -6,6 +6,7 @@ use crate::App;
 use crate::collision::enemy_bullet_collision_system::enemy_bullet_collision_system;
 use crate::collision::enemy_enemy_collision_system::enemy_enemy_collision_system;
 use crate::collision::enemy_player_collision_system::enemy_player_collision_system;
+use crate::collision::item_player_collision_system::item_player_collision_system;
 use crate::components::event_components::EnemyDiedEvent;
 
 pub struct CollisionPlugin;
@@ -20,7 +21,8 @@ impl Plugin for CollisionPlugin {
                 .with_run_criteria(FixedTimestep::step(FIXED_TIMESTEP))
                 .with_system(enemy_player_collision_system)
                 .with_system(enemy_bullet_collision_system)
-                .with_system(enemy_enemy_collision_system),
+                .with_system(enemy_enemy_collision_system)
+                .with_system(item_player_collision_system),
         )
 
             .add_event::<EnemyDiedEvent>();
