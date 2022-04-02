@@ -63,8 +63,8 @@ pub fn setup_tiles(
 ) {
     let background = commands.spawn().insert(Name::new("background")).id();
 
-    for x in 0..100 {
-        for y in 0..100 {
+    for x in 0..30 {
+        for y in 0..30 {
             let child = commands.spawn_bundle(SpriteBundle {
                 texture: texture_handles.background_tile.clone(),
                 global_transform: GlobalTransform::from(Transform::from_xyz((x.clone() * 256) as f32, (y.clone() * 256) as f32, -100.0)),

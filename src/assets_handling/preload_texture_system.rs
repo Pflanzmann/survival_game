@@ -19,5 +19,5 @@ pub fn preload_texture_system(
     texture_handles.player_sprite = asset_server.load("NickelMan.png");
     texture_handles.enemy_rock = asset_server.load("Rock01.png");
     texture_handles.bullet_fireball = asset_server.load("Bullet.png");
-    texture_handles.background_tile = asset_server.load("BackgroundTile.png");
+    texture_handles.background_tile = asset_server.load("full_grass.png");
 }
