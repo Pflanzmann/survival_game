@@ -3,6 +3,7 @@ use bevy::prelude::{AssetServer, Commands, Res, ResMut, Sprite, SpriteBundle, Ti
 use rand::random;
 
 use crate::{Player, Query, Transform, With};
+use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::components::collision_components::Collider;
 use crate::components::unit_stats_components::{Damage, Enemy, FacingDirection, MoveSpeed, UnitSize};
@@ -15,6 +16,7 @@ pub fn enemy_spawn_system(
     time: Res<Time>,
     mut spawn_timer: ResMut<SpawnTimer>,
     texture_handles: Res<TextureHandles>,
+    enemy_handles: Res<EnemyConfigHandles>,
     main_player_query: Query<&Transform, With<Player>>,
 ) {
     spawn_timer.0 += time.delta().as_secs_f32();
@@ -34,7 +36,7 @@ pub fn enemy_spawn_system(
         commands.spawn_bundle(
             SpriteBundle {
                 sprite: Sprite {
-                    custom_size: Some(Vec2::new(256.0, 256.0)),
+                    custom_size: Some(Vec2::new(enemy_handles.rock.sprite_custom_size_x, enemy_handles.rock.sprite_custom_size_y)),
                     ..Default::default()
                 },
                 transform: Transform::from_xyz(position_to_spawn.x, position_to_spawn.y, 0.0),
@@ -42,10 +44,10 @@ pub fn enemy_spawn_system(
                 ..Default::default()
             })
             .insert(Enemy)
-            .insert(MoveSpeed { move_speed: 6.0 })
-            .insert(UnitSize { collider_size: Vec2::new(256.0, 256.0) })
+            .insert(MoveSpeed { move_speed: enemy_handles.rock.move_speed })
+            .insert(UnitSize { collider_size: Vec2::new(enemy_handles.rock.sprite_custom_size_x, enemy_handles.rock.sprite_custom_size_y) })
             .insert(Collider)
-            .insert(Damage { damage: 5.0 })
+            .insert(Damage { damage: enemy_handles.rock.damage })
             .insert(FacingDirection { facing_direction: Vec3::default() });
     }
 }
