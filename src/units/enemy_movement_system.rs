@@ -19,7 +19,10 @@ pub fn enemy_movement_system(
         if let Some(collisions) = collisions {
             for col_direction in collisions.collisions.iter() {
                 direction -= *col_direction / 1.5;
-                direction = direction.normalize();
+
+                if direction.length() != 0.0 {
+                    direction = direction.normalize();
+                }
             }
         }
 
