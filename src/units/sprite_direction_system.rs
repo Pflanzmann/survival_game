@@ -12,7 +12,7 @@ pub fn sprite_direction_system(
             }
         } else {
             if sprite.flip_x {
-                sprite.flip_x = true;
+                sprite.flip_x = false;
             }
         }
     }
