@@ -1,17 +1,15 @@
-use std::error::Error;
 use std::fs::{File, read_to_string};
+use std::path::Path;
+use std::error::Error;
 use std::io::{BufReader, copy, stdout};
 use std::ops::Index;
-use std::path::Path;
-
 use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
 use bevy::prelude::{App, AssetServer, BuildChildren, Commands, Entity, GlobalTransform, Input, KeyCode, Name, OrthographicCameraBundle, Plugin, Res, Sprite, SpriteBundle, SystemStage, Transform, Val, Vec2, Vec3, With, Without};
-use bevy::sprite::collide_aabb::collide;
 use bevy_inspector_egui::WorldInspectorPlugin;
 use rustc_serialize::json::Json;
-use serde::{Deserialize, Serialize};
+use serde::{Serialize, Deserialize};
 
 use components::collision_components::Collider;
 use components::player_components::Player;
@@ -41,21 +39,16 @@ mod util;
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 #[derive(StageLabel)]
 pub enum SetupStages {
+    ConfigSetup,
     AssetSetup,
     PlayerSetup,
     AfterPlayerSetup,
 }
 
-
-#[derive(Deserialize, Debug)]
-struct User {
-    FirstName: String,
-    LastName: String,
-    Age: f32,
-}
-
 fn main() {
     App::new()
+        .add_startup_stage(SetupStages::ConfigSetup, SystemStage::parallel())
+        .add_startup_stage(SetupStages::AssetSetup, SystemStage::parallel())
         .add_startup_stage(SetupStages::PlayerSetup, SystemStage::single_threaded())
         .add_startup_stage(SetupStages::AfterPlayerSetup, SystemStage::single_threaded())
 
@@ -70,15 +63,14 @@ fn main() {
         .add_plugin(DropsPlugin)
         .add_plugin(AssetHandlingPlugin)
 
-        .add_startup_system(json_serialize_system)
-
         .add_startup_system_to_stage(SetupStages::PlayerSetup, setup_tiles)
         .run()
 }
 
 pub fn setup_tiles(
     mut commands: Commands,
-    texture_handles: Res<TextureHandles>,
+    asset_server: Res<AssetServer>,
+    texture_handles: Res<TextureHandles>
 ) {
     let background = commands.spawn().insert(Name::new("background")).id();
 
@@ -99,14 +91,5 @@ pub fn setup_tiles(
     }
 }
 
-pub fn json_serialize_system() {
-    let mut my_string = match read_to_string("assets/Json/test.json") {
-        Ok(value) => value,
-        Err(_) => String::new(),
-    };
 
-    let u: User = serde_json::from_str(&my_string).expect("JSON was not well-formatted");
-
-    println!("{:#?}", u);
-}
 
