@@ -1,13 +1,22 @@
-use bevy::prelude::Transform;
+use bevy::prelude::{Commands, Transform};
 
-use crate::{Query, With};
+use crate::{Entity, Query, With};
+use crate::components::bullet_components::{Bullet, BulletRange};
 use crate::components::unit_stats_components::{FacingDirection, MoveSpeed};
-use crate::components::bullet_components::Bullet;
 
 pub fn bullet_movement_system(
-    mut bullet_query: Query<(&mut Transform, &FacingDirection, &MoveSpeed), With<Bullet>>,
+    mut commands: Commands,
+    mut bullet_query: Query<(&mut Transform, &FacingDirection, &MoveSpeed, &mut BulletRange, Entity), With<Bullet>>,
 ) {
-    for (mut transform, direction, speed) in bullet_query.iter_mut() {
-        transform.translation += direction.facing_direction * speed.move_speed;
+    for (mut transform, direction, speed, mut bullet_range, entity) in bullet_query.iter_mut() {
+        let distance_to_move = speed.move_speed;
+        bullet_range.distance_traveled += distance_to_move;
+
+        if bullet_range.distance_traveled >= bullet_range.total_range {
+            commands.entity(entity).despawn();
+            continue;
+        }
+
+        transform.translation += direction.facing_direction * distance_to_move;
     }
 }
