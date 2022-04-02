@@ -1,8 +1,9 @@
-use std::fs::{File, read_to_string};
-use std::path::Path;
 use std::error::Error;
+use std::fs::{File, read_to_string};
 use std::io::{BufReader, copy, stdout};
 use std::ops::Index;
+use std::path::Path;
+
 use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
@@ -10,7 +11,7 @@ use bevy::prelude::{App, AssetServer, BuildChildren, Commands, Entity, GlobalTra
 use bevy::sprite::collide_aabb::collide;
 use bevy_inspector_egui::WorldInspectorPlugin;
 use rustc_serialize::json::Json;
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 use components::collision_components::Collider;
 use components::player_components::Player;
@@ -50,7 +51,7 @@ pub enum SetupStages {
 struct User {
     FirstName: String,
     LastName: String,
-    Age: f32
+    Age: f32,
 }
 
 fn main() {
@@ -77,7 +78,6 @@ fn main() {
 
 pub fn setup_tiles(
     mut commands: Commands,
-    asset_server: Res<AssetServer>,
     texture_handles: Res<TextureHandles>,
 ) {
     let background = commands.spawn().insert(Name::new("background")).id();
@@ -99,8 +99,7 @@ pub fn setup_tiles(
     }
 }
 
-pub fn json_serialize_system(){
-
+pub fn json_serialize_system() {
     let mut my_string = match read_to_string("assets/Json/test.json") {
         Ok(value) => value,
         Err(_) => String::new(),

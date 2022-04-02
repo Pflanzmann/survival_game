@@ -14,7 +14,6 @@ pub fn enemy_spawn_system(
     mut commands: Commands,
     time: Res<Time>,
     mut spawn_timer: ResMut<SpawnTimer>,
-    asset_server: Res<AssetServer>,
     texture_handles: Res<TextureHandles>,
     main_player_query: Query<&Transform, With<Player>>,
 ) {

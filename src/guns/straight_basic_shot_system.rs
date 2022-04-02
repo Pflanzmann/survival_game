@@ -1,7 +1,7 @@
 use bevy::app::EventWriter;
 use bevy::prelude::{AssetServer, Commands, Res, Sprite, SpriteBundle, Time, Vec2};
 
-use crate::{Entity, Query, Transform, With};
+use crate::{Entity, Query, TextureHandles, Transform, With};
 use crate::components::bullet_components::Bullet;
 use crate::components::collision_components::{CollidedEntities, Collider};
 use crate::components::event_components::BulletShotEvent;
@@ -11,7 +11,7 @@ use crate::components::unit_stats_components::{FacingDirection, MoveSpeed, UnitS
 pub fn straight_basic_shot_system(
     mut command: Commands,
     time: Res<Time>,
-    asset_server: Res<AssetServer>,
+    texture_handle: Res<TextureHandles>,
     mut bullet_shot_event_writer: EventWriter<BulletShotEvent>,
     player_query: Query<(&Transform, &FacingDirection, &WeaponSlot)>,
     mut gun_query: Query<(Entity, &mut Reloadable), With<StraightBasicShot>>,
@@ -34,7 +34,7 @@ pub fn straight_basic_shot_system(
                     custom_size: Some(Vec2::new(128.0, 128.0)),
                     ..Default::default()
                 },
-                texture: asset_server.load("Bullet.png"),
+                texture: texture_handle.bullet_fireball.clone(),
                 ..Default::default()
             })
                 .insert(Bullet)
