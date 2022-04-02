@@ -7,6 +7,7 @@ use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
 use bevy::prelude::{App, AssetServer, BuildChildren, Commands, Entity, GlobalTransform, Input, KeyCode, Name, OrthographicCameraBundle, Plugin, Res, Sprite, SpriteBundle, SystemStage, Transform, Val, Vec2, Vec3, With, Without};
+use bevy::sprite::collide_aabb::collide;
 use bevy_inspector_egui::WorldInspectorPlugin;
 use rustc_serialize::json::Json;
 use serde::{Serialize, Deserialize};
@@ -34,6 +35,7 @@ mod bullets;
 mod components;
 mod drops;
 mod assets_handling;
+mod util;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 #[derive(StageLabel)]
@@ -76,7 +78,7 @@ fn main() {
 pub fn setup_tiles(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
-    texture_handles: Res<TextureHandles>
+    texture_handles: Res<TextureHandles>,
 ) {
     let background = commands.spawn().insert(Name::new("background")).id();
 
