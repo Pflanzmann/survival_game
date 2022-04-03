@@ -3,7 +3,7 @@ use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
 use bevy::math::const_mat2;
-use bevy::prelude::{App, BuildChildren, Color, Commands, Entity, Font, GlobalTransform, HorizontalAlign, Name, OrthographicCameraBundle, Plugin, Res, ResMut, Sprite, SpriteBundle, SystemStage, Text, TextAlignment, TextBundle, TextStyle, Transform, UiCameraBundle, Val, Vec2, Vec3, VerticalAlign, With, Without};
+use bevy::prelude::{App, BuildChildren, Color, Commands, DetectChanges, Entity, Font, GlobalTransform, HorizontalAlign, Name, OrthographicCameraBundle, Plugin, Res, ResMut, Sprite, SpriteBundle, SystemStage, Text, TextAlignment, TextBundle, TextStyle, Transform, UiCameraBundle, Val, Vec2, Vec3, VerticalAlign, With, Without};
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
 
@@ -125,8 +125,10 @@ pub fn update_text_system(
     mut text_query: Query<&mut Text, With<Cointext>>,
     mut coin_counter : ResMut<CoinCount>
 ){
-    for (mut text) in text_query.iter_mut(){
-        text.sections[0].value = format!("{:.0}", coin_counter.number);
+    if coin_counter.is_changed() {
+        for mut text in text_query.iter_mut() {
+            text.sections[0].value = format!("{:.0}", coin_counter.number);
+        }
     }
 }
 
