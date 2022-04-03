@@ -8,9 +8,9 @@ use crate::util::is_colliding::is_colliding;
 pub fn item_player_collision_system(
     mut commands: Commands,
     mut player_query: Query<(Entity, &Transform, &UnitSize, &mut Health, &mut Children), (With<Collider>, With<Player>, Without<Enemy>)>,
-    mut item_query: Query<(Entity, &Transform, &UnitSize), With<Item>>,
+    item_query: Query<(Entity, &Transform, &UnitSize), With<Item>>,
 ) {
-    for (player_entity, player_transform, player_size, mut player_health, mut children) in player_query.iter_mut() {
+    for (player_entity, player_transform, player_size, player_health, children) in player_query.iter_mut() {
         for (item_entity, item_transform, item_size) in item_query.iter() {
             if is_colliding(
                 item_transform.translation,
