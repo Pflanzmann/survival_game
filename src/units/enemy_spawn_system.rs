@@ -40,7 +40,7 @@ pub fn enemy_spawn_system(
                     ..Default::default()
                 },
                 transform: Transform::from_xyz(position_to_spawn.x, position_to_spawn.y, 0.0),
-                texture: texture_handles.enemy_rock.clone(),
+                texture: texture_handles.enemy_goblin.clone(),
                 ..Default::default()
             })
             .insert(Enemy)
