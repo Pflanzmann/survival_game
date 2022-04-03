@@ -12,7 +12,7 @@ pub struct EnemyConfigHandles {
 pub fn preload_enemy_system(
     mut enemy_handles: ResMut<EnemyConfigHandles>,
 ){
-    let my_string = read_file_to_string("assets/configurations/rock.json");
+    let my_string = read_file_to_string("assets/configurations/goblin.json");
     enemy_handles.rock = serde_json::from_str(&my_string).expect("JSON was not well-formatted");
 }
 
