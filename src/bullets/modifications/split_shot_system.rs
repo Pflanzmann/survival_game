@@ -7,14 +7,32 @@ use crate::{Collider, FacingDirection, MoveSpeed, TextureHandles, Transform, Uni
 use crate::components::bullet_components::{Bullet, BulletRange};
 use crate::components::collision_components::CollidedEntities;
 use crate::components::event_components::{BulletShotEvent, BulletStoppedEvent};
-use crate::components::modification_components::{CurveShot, SplitShot};
+use crate::components::modification_components::{ModContainer, ModContainerSlot, SplitShot};
 
 pub fn apply_split_shot_system(
     mut commands: Commands,
     mut bullet_shot_event: EventReader<BulletShotEvent>,
+    bullet_query: Query<&Bullet>,
+    source_query: Query<&ModContainerSlot>,
+    mod_container_query: Query<&SplitShot, With<ModContainer>>,
 ) {
     for event in bullet_shot_event.iter() {
-        commands.entity(event.entity).insert(SplitShot);
+        let bullet = match bullet_query.get(event.entity) {
+            Ok(bullet) => bullet,
+            Err(_) => continue,
+        };
+
+        let source_mod_container_slot = match source_query.get(bullet.source_entity) {
+            Ok(source) => source,
+            Err(_) => continue,
+        };
+
+        let split_shot = match mod_container_query.get(source_mod_container_slot.container_entity) {
+            Ok(split_shot) => split_shot,
+            Err(_) => continue,
+        };
+
+        commands.entity(event.entity).insert(split_shot.clone());
     }
 }
 
@@ -22,10 +40,10 @@ pub fn split_shot_system(
     mut command: Commands,
     texture_handle: Res<TextureHandles>,
     mut bullet_stopped_events: EventReader<BulletStoppedEvent>,
-    bullet_query: Query<&Transform, With<SplitShot>>,
+    bullet_query: Query<(&Transform, &Bullet), With<SplitShot>>,
 ) {
     for event in bullet_stopped_events.iter() {
-        let bullet_transform = match bullet_query.get(event.bullet_entity) {
+        let (bullet_transform, bullet) = match bullet_query.get(event.bullet_entity) {
             Ok(transform) => transform,
             Err(_) => continue,
         };
@@ -49,7 +67,7 @@ pub fn split_shot_system(
                 texture: texture_handle.bullet_fireball.clone(),
                 ..Default::default()
             })
-                .insert(Bullet)
+                .insert(bullet.clone())
                 .insert(Collider)
                 .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
                 .insert(FacingDirection { facing_direction: direction })

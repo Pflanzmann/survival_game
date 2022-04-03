@@ -1,17 +1,36 @@
 use bevy::app::EventReader;
-use bevy::prelude::{Commands, Query, With};
+use bevy::prelude::{Commands, Entity, Query, With};
 use rand::random;
 
+use crate::components::bullet_components::Bullet;
 use crate::components::event_components::BulletShotEvent;
-use crate::components::modification_components::CurveShot;
+use crate::components::modification_components::{CurveShot, ModContainer, ModContainerSlot};
 use crate::FacingDirection;
 
 pub fn apply_curved_shot_system(
     mut commands: Commands,
     mut bullet_shot_event: EventReader<BulletShotEvent>,
+    bullet_query: Query<&Bullet>,
+    source_query: Query<&ModContainerSlot>,
+    mod_container_query: Query<&CurveShot, With<ModContainer>>,
 ) {
     for event in bullet_shot_event.iter() {
-        commands.entity(event.entity).insert(CurveShot { curve_left: random() });
+        let bullet = match bullet_query.get(event.entity) {
+            Ok(bullet) => bullet,
+            Err(_) => continue,
+        };
+
+        let source_mod_container_slot = match source_query.get(bullet.source_entity) {
+            Ok(source) => source,
+            Err(_) => continue,
+        };
+
+        let modi = match mod_container_query.get(source_mod_container_slot.container_entity) {
+            Ok(modi) => modi,
+            Err(_) => continue,
+        };
+
+        commands.entity(event.entity).insert(modi.clone());
     }
 }
 

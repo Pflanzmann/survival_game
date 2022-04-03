@@ -3,7 +3,7 @@ use bevy::prelude::Entity;
 
 #[derive(Component)]
 pub struct WeaponSlot {
-    pub entity: Entity,
+    pub weapon_entity: Entity,
 }
 
 #[derive(Component)]
