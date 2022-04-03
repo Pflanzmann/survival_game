@@ -9,10 +9,8 @@ pub struct ModContainerSlot {
 #[derive(Component)]
 pub struct ModContainer;
 
-#[derive(Copy, Clone, Component)]
-pub struct CurveShot {
-    pub curve_left: bool,
-}
+#[derive(Copy, Clone, Hash, Component)]
+pub struct CurveShot;
 
 #[derive(Copy, Clone, Component)]
 pub struct GrowShot {
