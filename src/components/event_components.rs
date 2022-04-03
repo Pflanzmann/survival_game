@@ -1,4 +1,5 @@
-use bevy::prelude::Entity;
+use bevy::prelude::{Entity, Transform};
+
 use crate::Vec3;
 
 pub struct BulletShotEvent {
@@ -11,5 +12,9 @@ pub struct EnemyDiedEvent {
 
 pub struct BulletEnemyCollisionEvent {
     pub enemy_entity: Entity,
+    pub bullet_entity: Entity,
+}
+
+pub struct BulletStoppedEvent {
     pub bullet_entity: Entity,
 }

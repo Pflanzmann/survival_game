@@ -1,5 +1,5 @@
 use bevy::app::EventWriter;
-use bevy::prelude::{AssetServer, Commands, Res, Sprite, SpriteBundle, Time, Vec2};
+use bevy::prelude::{Commands, Res, Sprite, SpriteBundle, Time, Vec2};
 
 use crate::{Entity, Query, TextureHandles, Transform, With};
 use crate::components::bullet_components::{Bullet, BulletRange};
