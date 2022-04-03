@@ -1,6 +1,6 @@
 use bevy::prelude::ResMut;
 use crate::assets_handling::configurations::item_config::ItemConfig;
-use crate::helper::read_file_to_string::read_file_to_string;
+use crate::util::read_file_to_string::read_file_to_string;
 
 #[derive(Default)]
 pub struct ItemConfigHandles {

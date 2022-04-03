@@ -35,7 +35,6 @@ mod components;
 mod drops;
 mod assets_handling;
 mod util;
-mod helper;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 #[derive(StageLabel)]
