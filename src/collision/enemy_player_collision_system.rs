@@ -1,6 +1,6 @@
-use bevy::prelude::{Children, Commands, Entity, Query, With};
+use bevy::prelude::{Commands, Entity, Query, With};
 
-use crate::{HealthBar, Player, Transform, Without};
+use crate::{Player, Transform, Without};
 use crate::components::collision_components::Collider;
 use crate::components::unit_stats_components::{Damage, Enemy, Health, UnitSize};
 use crate::util::is_colliding::is_colliding;
@@ -8,10 +8,9 @@ use crate::util::is_colliding::is_colliding;
 pub fn enemy_player_collision_system(
     mut commands: Commands,
     enemy_query: Query<(&Transform, &UnitSize, &Damage), (With<Collider>, With<Enemy>, Without<Player>)>,
-    mut player_query: Query<(Entity, &Transform, &UnitSize, &mut Health, &mut Children), (With<Collider>, With<Player>, Without<Enemy>)>,
-    children_query: Query<&mut Transform, (With<HealthBar>, Without<Player>, Without<Enemy>)>,
+    mut player_query: Query<(Entity, &Transform, &UnitSize, &mut Health), (With<Collider>, With<Player>, Without<Enemy>)>,
 ) {
-    for (player_entity, player_transform, player_size, mut player_health, children) in player_query.iter_mut() {
+    for (player_entity, player_transform, player_size, mut player_health) in player_query.iter_mut() {
         for (enemy_transform, enemy_size, enemy_damage) in enemy_query.iter() {
             if is_colliding(
                 enemy_transform.translation,
