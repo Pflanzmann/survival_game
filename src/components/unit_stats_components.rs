@@ -13,8 +13,14 @@ pub struct MoveSpeed {
 
 #[derive(Component)]
 pub struct Health {
-    pub current_health: f32,
     pub max_health: f32,
+    pub current_health: f32,
+}
+
+impl Health {
+    pub fn new(max_health: f32) -> Self {
+        Health { max_health, current_health: (max_health) }
+    }
 }
 
 #[derive(Component)]
