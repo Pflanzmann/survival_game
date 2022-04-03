@@ -1,23 +1,23 @@
 use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
-use bevy::prelude::{App, AssetServer, BuildChildren, Commands, Entity, GlobalTransform, Input, KeyCode, Name, OrthographicCameraBundle, Plugin, Res, Sprite, SpriteBundle, SystemStage, Transform, Val, Vec2, Vec3, With, Without};
+use bevy::prelude::{App, BuildChildren, Commands, Entity, GlobalTransform, Name, OrthographicCameraBundle, Plugin, Res, Sprite, SpriteBundle, SystemStage, Transform, Val, Vec2, Vec3, With, Without};
 use bevy_inspector_egui::WorldInspectorPlugin;
 
 use components::collision_components::Collider;
 use components::player_components::Player;
 
-use crate::assets_handling::asset_handling_plugin::AssetHandlingPlugin;
+use crate::assets_handling::AssetHandlingPlugin;
 use crate::assets_handling::preload_texture_system::TextureHandles;
-use crate::bullets::bullet_plugin::BulletPlugin;
-use crate::collision::collision_plugin::CollisionPlugin;
+use crate::bullets::BulletPlugin;
+use crate::collision::CollisionPlugin;
 use crate::components::gun_components::Gunnable;
 use crate::components::ui_components::HealthBar;
 use crate::components::unit_stats_components::{Damage, FacingDirection, Health, MoveSpeed, UnitSize};
-use crate::drops::drops_plugin::DropsPlugin;
-use crate::guns::gun_plugin::GunPlugin;
-use crate::input::input_plugin::InputPlugin;
-use crate::units::unit_plugin::UnitPlugin;
+use crate::drops::DropsPlugin;
+use crate::guns::GunPlugin;
+use crate::input::InputPlugin;
+use crate::units::UnitPlugin;
 
 mod input;
 mod units;
