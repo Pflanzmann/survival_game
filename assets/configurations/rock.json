@@ -1,0 +1,8 @@
+{
+  "sprite_custom_size_x" : 256.0,
+  "sprite_custom_size_y" : 256.0,
+  "sprite_path" : "rock01.png",
+  "move_speed" : 6.0,
+  "damage" : 5.0,
+  "health" : 20.0
+}
