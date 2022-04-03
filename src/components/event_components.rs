@@ -18,3 +18,7 @@ pub struct BulletEnemyCollisionEvent {
 pub struct BulletStoppedEvent {
     pub bullet_entity: Entity,
 }
+
+pub struct ItemPickupEvent {
+    //pub item_type : String or Component?
+}
