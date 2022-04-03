@@ -3,6 +3,7 @@ use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
 use bevy::prelude::{App, BuildChildren, Commands, Entity, GlobalTransform, Name, OrthographicCameraBundle, Plugin, Res, Sprite, SpriteBundle, SystemStage, Transform, Val, Vec2, Vec3, With, Without};
 use bevy_inspector_egui::WorldInspectorPlugin;
+use bevy_kira_audio::AudioPlugin;
 
 use components::collision_components::Collider;
 use components::player_components::Player;
@@ -54,6 +55,7 @@ fn main() {
         .add_plugin(BulletPlugin)
         .add_plugin(DropsPlugin)
         .add_plugin(AssetHandlingPlugin)
+        .add_plugin(AudioPlugin)
 
         .add_startup_system_to_stage(SetupStages::PlayerSetup, setup_tiles)
         .run()
