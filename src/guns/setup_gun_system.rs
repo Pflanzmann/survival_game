@@ -12,7 +12,6 @@ pub fn setup_gun_system(
         let mod_container = commands.spawn()
             .insert(Name::new("mod container"))
             .insert(ModContainer)
-            .insert(SplitShot)
             .id();
 
         let gun = commands.spawn()
