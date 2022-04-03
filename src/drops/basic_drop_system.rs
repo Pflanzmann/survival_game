@@ -10,7 +10,7 @@ pub fn basic_drop_system(
     mut commands: Commands,
     mut enemy_died_event: EventReader<EnemyDiedEvent>,
     texture_handles: Res<TextureHandles>,
-    item_handles: Res<ItemConfigHandles>
+    item_handles: Res<ItemConfigHandles>,
 ) {
     for event in enemy_died_event.iter() {
         let mut drop_translation = event.death_position;

@@ -1,8 +1,8 @@
 use bevy::core::FixedTimestep;
 use bevy::prelude::{App, Plugin, SystemSet};
 
-use crate::drops::basic_drop_system::basic_drop_system;
 use crate::components::event_components::EnemyDiedEvent;
+use crate::drops::basic_drop_system::basic_drop_system;
 
 pub struct DropsPlugin;
 

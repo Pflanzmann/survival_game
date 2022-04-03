@@ -1,4 +1,5 @@
 use bevy::prelude::ResMut;
+
 use crate::assets_handling::configurations::item_config::ItemConfig;
 use crate::assets_handling::configurations::player_config::PlayerConfig;
 use crate::util::read_file_to_string::read_file_to_string;
@@ -10,8 +11,7 @@ pub struct PlayerConfigHandles {
 
 pub fn preload_player_system(
     mut player_handles: ResMut<PlayerConfigHandles>,
-
-){
+) {
     let my_string = read_file_to_string("assets/configurations/player.json");
     player_handles.player_one = serde_json::from_str(&my_string).expect("JSON was not well-formatted");
 }

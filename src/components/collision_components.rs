@@ -1,5 +1,6 @@
 use bevy::ecs::component::Component;
 use bevy::prelude::Vec3;
+
 use crate::Entity;
 
 #[derive(Component)]
