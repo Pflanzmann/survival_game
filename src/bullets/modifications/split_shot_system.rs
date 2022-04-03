@@ -1,13 +1,12 @@
 use bevy::app::EventReader;
-use bevy::ecs::query::QueryEntityError;
 use bevy::prelude::{Commands, Query, Res, Sprite, SpriteBundle, Vec2, Vec3};
 use rand::random;
 
 use crate::{Collider, FacingDirection, MoveSpeed, TextureHandles, Transform, UnitSize, With};
 use crate::components::bullet_components::{Bullet, BulletRange};
 use crate::components::collision_components::CollidedEntities;
-use crate::components::event_components::{BulletShotEvent, BulletStoppedEvent};
-use crate::components::modification_components::{ModContainer, ModContainerSlot, SplitShot};
+use crate::components::event_components::BulletStoppedEvent;
+use crate::components::modification_components::SplitShot;
 
 pub fn split_shot_system(
     mut command: Commands,

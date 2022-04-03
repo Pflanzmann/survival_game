@@ -2,7 +2,7 @@ use bevy::prelude::{Commands, Entity, Name, Query, With};
 
 use crate::{Gunnable, Player};
 use crate::components::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
-use crate::components::modification_components::{ModContainer, ModContainerSlot, SplitShot};
+use crate::components::modification_components::{ModContainer, ModContainerSlot};
 
 pub fn setup_gun_system(
     mut commands: Commands,

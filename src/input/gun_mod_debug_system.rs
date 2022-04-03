@@ -27,7 +27,7 @@ pub fn gun_mod_debug_system(
     if input.just_pressed(KeyCode::Numpad1) {
         for (entity, curved_shot, grow_shot, split_shot) in mod_container_query.iter() {
             if curved_shot.is_none() {
-                commands.entity(entity).insert(CurveShot { curve_left: random() });
+                commands.entity(entity).insert(CurveShot);
             } else {
                 commands.entity(entity).remove::<CurveShot>();
             }
