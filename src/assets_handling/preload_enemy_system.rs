@@ -2,7 +2,7 @@ use bevy::prelude::{Handle, ResMut};
 use serde::{Serialize, Deserialize};
 use crate::assets_handling::configurations::enemy_config::EnemyConfig;
 use crate::components::unit_stats_components::Enemy;
-use crate::helper::read_file_to_string::read_file_to_string;
+use crate::util::read_file_to_string::read_file_to_string;
 
 #[derive(Default)]
 pub struct EnemyConfigHandles {
