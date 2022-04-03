@@ -5,3 +5,6 @@ use crate::Vec2;
 
 #[derive(Component)]
 pub struct HealthBar;
+
+#[derive(Component)]
+pub struct Cointext;

@@ -1,7 +1,9 @@
+use bevy::asset::AssetServer;
 use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
-use bevy::prelude::{App, BuildChildren, Commands, Entity, GlobalTransform, Name, OrthographicCameraBundle, Plugin, Res, Sprite, SpriteBundle, SystemStage, Transform, Val, Vec2, Vec3, With, Without};
+use bevy::math::const_mat2;
+use bevy::prelude::{App, BuildChildren, Color, Commands, Entity, Font, GlobalTransform, HorizontalAlign, Name, OrthographicCameraBundle, Plugin, Res, ResMut, Sprite, SpriteBundle, SystemStage, Text, TextAlignment, TextBundle, TextStyle, Transform, UiCameraBundle, Val, Vec2, Vec3, VerticalAlign, With, Without};
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
 
@@ -13,11 +15,13 @@ use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::bullets::BulletPlugin;
 use crate::collision::CollisionPlugin;
 use crate::components::gun_components::Gunnable;
-use crate::components::ui_components::HealthBar;
+use crate::components::ui_components::{Cointext, HealthBar};
 use crate::components::unit_stats_components::{Damage, FacingDirection, Health, MoveSpeed, UnitSize};
 use crate::drops::DropsPlugin;
 use crate::guns::GunPlugin;
 use crate::input::InputPlugin;
+use crate::resources::ResourcePlugin;
+use crate::resources::ui_resources::CoinCount;
 use crate::units::UnitPlugin;
 
 mod input;
@@ -29,6 +33,7 @@ mod components;
 mod drops;
 mod assets_handling;
 mod util;
+mod resources;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, StageLabel)]
 pub enum SetupStages {
@@ -56,6 +61,10 @@ fn main() {
         .add_plugin(DropsPlugin)
         .add_plugin(AssetHandlingPlugin)
         .add_plugin(AudioPlugin)
+        .add_plugin(ResourcePlugin)
+
+        .add_startup_system(spawn_text_system)
+        .add_system(update_text_system)
 
         .add_startup_system_to_stage(SetupStages::PlayerSetup, setup_tiles)
         .run()
@@ -84,5 +93,41 @@ pub fn setup_tiles(
     }
 }
 
+pub fn spawn_text_system (
+    mut commands: Commands,
+    asset_loader : Res<AssetServer>,
+    mut coin_counter : ResMut<CoinCount>
+){
+    coin_counter.number = 0;
+
+    commands.spawn_bundle(UiCameraBundle::default());
+
+    commands.spawn_bundle(TextBundle{
+        text : Text::with_section(
+            "Coins: ".to_string(),
+            TextStyle {
+                font: asset_loader.load("BodoniFLF-Roman.ttf"),
+                font_size: 60.0,
+                color: Color::WHITE,
+            },
+            TextAlignment {
+                vertical: VerticalAlign::Center,
+                horizontal: HorizontalAlign::Center,
+            },
+        ),
+        ..Default::default()
+    })
+        .insert(Cointext)
+        .id();
+}
+
+pub fn update_text_system(
+    mut text_query: Query<&mut Text, With<Cointext>>,
+    mut coin_counter : ResMut<CoinCount>
+){
+    for (mut text) in text_query.iter_mut(){
+        text.sections[0].value = format!("{:.0}", coin_counter.number);
+    }
+}
 
 
