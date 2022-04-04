@@ -25,7 +25,18 @@ impl Health {
 
 #[derive(Component)]
 pub struct Damage {
-    pub damage: f32,
+    pub base_damage: f32,
+    pub bonus_damage: f32,
+}
+
+impl Damage {
+    pub fn new(base_damage: f32) -> Self {
+        Damage { base_damage, bonus_damage: 0.0 }
+    }
+
+    pub fn get_damage(&self) -> f32 {
+        return self.base_damage + self.bonus_damage;
+    }
 }
 
 #[derive(Component)]

@@ -38,7 +38,7 @@ pub fn gun_mod_debug_system(
     if input.just_pressed(KeyCode::Numpad2) {
         for (entity, curved_shot, grow_shot, split_shot) in mod_container_query.iter() {
             if grow_shot.is_none() {
-                commands.entity(entity).insert(GrowShot { grow_step: 10.0 });
+                commands.entity(entity).insert(GrowShot { size_step: 10.0, damage_step: 0.1 });
             } else {
                 commands.entity(entity).remove::<GrowShot>();
             }

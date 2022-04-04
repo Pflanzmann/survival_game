@@ -25,6 +25,6 @@ pub fn setup_player_system(
         .insert(UnitSize { collider_size: Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y) })
         .insert(Collider)
         .insert(FacingDirection { facing_direction: Vec3::new(1.0, 0.0, 0.0) })
-        .insert(Damage { damage: player_handles.player_one.damage })
+        .insert(Damage::new(player_handles.player_one.damage))
         .insert(Health { current_health: player_handles.player_one.health, max_health: player_handles.player_one.health });
 }

@@ -42,7 +42,7 @@ pub fn straight_basic_shot_system(
             .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
             .insert(FacingDirection { facing_direction: holder_facing_direction.facing_direction })
             .insert(MoveSpeed { move_speed: 15.0 })
-            .insert(Damage { damage: 5.0 })
+            .insert(Damage::new(5.0))
             .insert(BulletRange::new(2048.0))
             .insert(CollidedEntities { collisions: Vec::new() })
             .insert(HitLimit { hit_limit: 1 })

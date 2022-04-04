@@ -47,7 +47,7 @@ pub fn enemy_spawn_system(
             .insert(MoveSpeed { move_speed: enemy_handles.goblin.move_speed })
             .insert(UnitSize { collider_size: Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y) })
             .insert(Collider)
-            .insert(Damage { damage: enemy_handles.goblin.damage })
+            .insert(Damage::new(enemy_handles.goblin.damage))
             .insert(Health::new(enemy_handles.goblin.health))
             .insert(FacingDirection { facing_direction: Vec3::default() });
     }

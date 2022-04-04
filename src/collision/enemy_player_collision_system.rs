@@ -18,7 +18,7 @@ pub fn enemy_player_collision_system(
                 player_transform.translation,
                 player_size.collider_size,
             ) {
-                player_health.current_health -= enemy_damage.damage.clone();
+                player_health.current_health -= enemy_damage.get_damage();
 
                 if player_health.current_health <= 0.0 {
                     commands.entity(player_entity).despawn()
