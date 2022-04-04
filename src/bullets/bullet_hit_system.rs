@@ -40,8 +40,8 @@ pub fn bullet_hit_system(
         } else {
             collided_entities.collisions.push(enemy_entity);
 
-            if enemy_health.current_health - bullet_damage.damage > 0.0 {
-                enemy_health.current_health -= bullet_damage.damage;
+            if enemy_health.current_health - bullet_damage.get_damage() > 0.0 {
+                enemy_health.current_health -= bullet_damage.get_damage();
             } else {
                 enemy_died_event.send(EnemyDiedEvent { enemy_entity });
             }
