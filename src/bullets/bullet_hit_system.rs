@@ -19,14 +19,14 @@ pub fn bullet_hit_system(
             Ok(val) => val,
             Err(_) => {
                 continue;
-            },
+            }
         };
 
         let (enemy_entity, mut enemy_health) = match enemy_query.get_mut(event.enemy_entity) {
             Ok(enemy) => enemy,
             Err(_) => {
                 continue;
-            },
+            }
         };
 
         if let Some(hit_limit) = hit_limit {

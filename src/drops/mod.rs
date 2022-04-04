@@ -10,7 +10,6 @@ pub struct DropsPlugin;
 
 impl Plugin for DropsPlugin {
     fn build(&self, app: &mut App) {
-
         app.add_system(basic_drop_system)
             .add_system(item_pickup_system);
     }

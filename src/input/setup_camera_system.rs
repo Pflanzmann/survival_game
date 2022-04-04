@@ -1,6 +1,5 @@
 use bevy::prelude::*;
 
-
 use crate::components::player_components::MainCamera;
 use crate::Player;
 
