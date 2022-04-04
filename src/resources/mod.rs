@@ -1,4 +1,5 @@
 use bevy::prelude::{App, Plugin};
+
 use crate::resources::ui_resources::CoinCount;
 
 pub mod ui_resources;
