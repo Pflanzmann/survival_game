@@ -7,7 +7,7 @@ pub struct BulletShotEvent {
 }
 
 pub struct EnemyDiedEvent {
-    pub death_position: Vec3,
+    pub enemy_entity: Entity,
 }
 
 pub struct BulletEnemyCollisionEvent {
@@ -21,4 +21,8 @@ pub struct BulletStoppedEvent {
 
 pub struct ItemPickupEvent {
     //pub item_type : String or Component?
+}
+
+pub struct EnemyHitEvent {
+    pub bullet_entity: Entity,
 }

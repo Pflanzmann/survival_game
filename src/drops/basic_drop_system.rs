@@ -1,19 +1,26 @@
-use bevy::prelude::{AssetServer, EventReader, Res, Sprite, SpriteBundle, Vec2};
+use bevy::prelude::{EventReader, Res, Sprite, SpriteBundle, Vec2, With};
 
-use crate::{Collider, Commands, Transform, UnitSize, Vec3};
+use crate::{Collider, Commands, Query, Transform, UnitSize, Vec3};
 use crate::assets_handling::preload_item_system::ItemConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::components::event_components::EnemyDiedEvent;
 use crate::components::item_components::Item;
+use crate::components::unit_stats_components::Enemy;
 
 pub fn basic_drop_system(
     mut commands: Commands,
     mut enemy_died_event: EventReader<EnemyDiedEvent>,
     texture_handles: Res<TextureHandles>,
     item_handles: Res<ItemConfigHandles>,
+    enemy_query: Query<&Transform, With<Enemy>>,
 ) {
     for event in enemy_died_event.iter() {
-        let mut drop_translation = event.death_position;
+        let enemy_position = match enemy_query.get(event.enemy_entity) {
+            Ok(transform) => transform.translation,
+            Err(_) => continue,
+        };
+
+        let mut drop_translation = enemy_position.clone();
         drop_translation.z += 1.0;
 
         commands.spawn_bundle(
