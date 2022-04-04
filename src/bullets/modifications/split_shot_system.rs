@@ -39,7 +39,7 @@ pub fn split_shot_system(
                 texture: texture_handle.bullet_fireball.clone(),
                 ..Default::default()
             })
-                .insert(bullet.clone())
+                .insert(*bullet)
                 .insert(Collider)
                 .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
                 .insert(FacingDirection { facing_direction: direction })
