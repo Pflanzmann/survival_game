@@ -17,3 +17,8 @@ impl BulletRange {
         BulletRange { total_range, distance_traveled: 0.0 }
     }
 }
+
+#[derive(Component)]
+pub struct HitLimit {
+    pub hit_limit: usize,
+}

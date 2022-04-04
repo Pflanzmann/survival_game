@@ -1,6 +1,6 @@
 use bevy::prelude::{Commands, Name, Res, Sprite, SpriteBundle, Vec2, Vec3};
 
-use crate::{Collider, Damage, FacingDirection, Health, MoveSpeed, Player, Transform, UnitSize};
+use crate::{Collider, Damage, FacingDirection, Health, MoveSpeed, Player, UnitSize};
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 
@@ -16,7 +16,6 @@ pub fn setup_player_system(
                 ..Default::default()
             },
             texture: texture_handles.player_sprite.clone(),
-            //transform : Transform::from_xyz(0.0,0.0,1.0),
             ..Default::default()
         },
     )

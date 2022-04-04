@@ -2,7 +2,7 @@ use bevy::math::Vec3;
 use bevy::prelude::{AssetServer, Commands, Res, ResMut, Sprite, SpriteBundle, Time, Vec2};
 use rand::random;
 
-use crate::{Player, Query, Transform, With};
+use crate::{Health, Player, Query, Transform, With};
 use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::components::collision_components::Collider;
@@ -20,7 +20,7 @@ pub fn enemy_spawn_system(
     main_player_query: Query<&Transform, With<Player>>,
 ) {
     spawn_timer.0 += time.delta().as_secs_f32();
-    if spawn_timer.0 < 0.5 {
+    if spawn_timer.0 < 2.0 {
         return;
     }
     spawn_timer.0 = 0.0;
@@ -36,7 +36,7 @@ pub fn enemy_spawn_system(
         commands.spawn_bundle(
             SpriteBundle {
                 sprite: Sprite {
-                    custom_size: Some(Vec2::new(enemy_handles.rock.sprite_custom_size_x, enemy_handles.rock.sprite_custom_size_y)),
+                    custom_size: Some(Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y)),
                     ..Default::default()
                 },
                 transform: Transform::from_xyz(position_to_spawn.x, position_to_spawn.y, 0.0),
@@ -44,10 +44,11 @@ pub fn enemy_spawn_system(
                 ..Default::default()
             })
             .insert(Enemy)
-            .insert(MoveSpeed { move_speed: enemy_handles.rock.move_speed })
-            .insert(UnitSize { collider_size: Vec2::new(enemy_handles.rock.sprite_custom_size_x, enemy_handles.rock.sprite_custom_size_y) })
+            .insert(MoveSpeed { move_speed: enemy_handles.goblin.move_speed })
+            .insert(UnitSize { collider_size: Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y) })
             .insert(Collider)
-            .insert(Damage { damage: enemy_handles.rock.damage })
+            .insert(Damage { damage: enemy_handles.goblin.damage })
+            .insert(Health::new(enemy_handles.goblin.health))
             .insert(FacingDirection { facing_direction: Vec3::default() });
     }
 }

@@ -6,7 +6,6 @@ use crate::components::event_components::BulletStoppedEvent;
 use crate::components::unit_stats_components::{FacingDirection, MoveSpeed};
 
 pub fn bullet_movement_system(
-    mut commands: Commands,
     mut bullet_stopped_event: EventWriter<BulletStoppedEvent>,
     mut bullet_query: Query<(&mut Transform, &FacingDirection, &MoveSpeed, &mut BulletRange, Entity), With<Bullet>>,
 ) {
