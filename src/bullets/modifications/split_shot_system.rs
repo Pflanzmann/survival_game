@@ -2,8 +2,8 @@ use bevy::app::EventReader;
 use bevy::prelude::{Commands, Query, Res, Sprite, SpriteBundle, Vec2, Vec3};
 use rand::random;
 
-use crate::{Collider, FacingDirection, MoveSpeed, TextureHandles, Transform, UnitSize, With};
-use crate::components::bullet_components::{Bullet, BulletRange};
+use crate::{Collider, Damage, FacingDirection, MoveSpeed, TextureHandles, Transform, UnitSize, With};
+use crate::components::bullet_components::{Bullet, BulletRange, HitLimit};
 use crate::components::collision_components::CollidedEntities;
 use crate::components::event_components::BulletStoppedEvent;
 use crate::components::modification_components::SplitShot;
@@ -44,8 +44,10 @@ pub fn split_shot_system(
                 .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
                 .insert(FacingDirection { facing_direction: direction })
                 .insert(MoveSpeed { move_speed: 15.0 })
+                .insert(Damage::new(5.0))
                 .insert(BulletRange::new(2048.0))
-                .insert(CollidedEntities { collisions: Vec::new() });
+                .insert(CollidedEntities { collisions: Vec::new() })
+                .insert(HitLimit { hit_limit: 1 });
         }
     }
 }
