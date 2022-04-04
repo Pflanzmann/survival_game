@@ -14,7 +14,8 @@ pub struct CurveShot;
 
 #[derive(Copy, Clone, Component)]
 pub struct GrowShot {
-    pub grow_step: f32,
+    pub size_step: f32,
+    pub damage_step: f32,
 }
 
 #[derive(Copy, Clone, Component)]
