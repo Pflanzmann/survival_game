@@ -6,19 +6,20 @@ use bevy::prelude::{App, BuildChildren, Color, Commands, DetectChanges, Entity, 
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
 
-use entities::player_components::Player;
+use models::player_components::Player;
 
 use crate::assets_handling::AssetHandlingPlugin;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::bullets::BulletPlugin;
 use crate::collision::CollisionPlugin;
 use crate::drops::DropsPlugin;
-use crate::entities::events::EventsPlugin;
-use crate::entities::gun_components::Gunnable;
-use crate::entities::ui_components::{Cointext, HealthBar};
-use crate::entities::unit_stats_components::{Damage, FacingDirection, Health, MoveSpeed, UnitSize};
 use crate::guns::GunPlugin;
 use crate::input::InputPlugin;
+use crate::models::events::EventsPlugin;
+use crate::models::gun_components::Gunnable;
+use crate::models::sprite_layer::SpriteLayer;
+use crate::models::ui_components::{Cointext, HealthBar};
+use crate::models::unit_stats_components::{Damage, FacingDirection, Health, MoveSpeed, UnitSize};
 use crate::resources::ResourcePlugin;
 use crate::resources::ui_resources::CoinCount;
 use crate::units::UnitPlugin;
@@ -28,7 +29,7 @@ mod units;
 mod collision;
 mod guns;
 mod bullets;
-mod entities;
+mod models;
 mod drops;
 mod assets_handling;
 mod util;
@@ -80,7 +81,7 @@ pub fn setup_tiles(
         for y in 0..30 {
             let child = commands.spawn_bundle(SpriteBundle {
                 texture: texture_handles.background_tile.clone(),
-                global_transform: GlobalTransform::from(Transform::from_xyz((x * 256) as f32, (y * 256) as f32, -100.0)),
+                global_transform: GlobalTransform::from(Transform::from_xyz((x * 256) as f32, (y * 256) as f32, SpriteLayer::FloorLevel.get_layer_z())),
                 sprite: Sprite {
                     custom_size: Some(Vec2::new(256.0, 256.0)),
                     ..Default::default()

@@ -1,9 +1,10 @@
-use bevy::prelude::{Commands, Name, Res, Sprite, SpriteBundle, Vec2, Vec3};
+use bevy::prelude::{Commands, Name, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3};
 
 use crate::{Damage, FacingDirection, Health, MoveSpeed, Player, UnitSize};
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
-use crate::entities::collider::collider::Collider;
+use crate::models::collider::collider::Collider;
+use crate::models::sprite_layer::SpriteLayer;
 
 pub fn setup_player_system(
     mut commands: Commands,
@@ -17,6 +18,7 @@ pub fn setup_player_system(
                 ..Default::default()
             },
             texture: texture_handles.player_sprite.clone(),
+            transform: Transform::from_xyz(0.0, 0.0, SpriteLayer::GroundLevel.get_layer_z()),
             ..Default::default()
         },
     )

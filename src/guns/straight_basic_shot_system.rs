@@ -2,12 +2,13 @@ use bevy::app::EventWriter;
 use bevy::prelude::{Commands, Res, Sprite, SpriteBundle, Time, Vec2};
 
 use crate::{Damage, Entity, Query, TextureHandles, Transform, With};
-use crate::entities::bullet_components::{Bullet, BulletRange, HitLimit};
-use crate::entities::collider::collided_entities::CollidedEntities;
-use crate::entities::collider::collider::Collider;
-use crate::entities::events::bullet_shot_event::BulletShotEvent;
-use crate::entities::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
-use crate::entities::unit_stats_components::{FacingDirection, MoveSpeed, UnitSize};
+use crate::models::bullet_components::{Bullet, BulletRange, HitLimit};
+use crate::models::collider::collided_entities::CollidedEntities;
+use crate::models::collider::collider::Collider;
+use crate::models::events::bullet_shot_event::BulletShotEvent;
+use crate::models::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
+use crate::models::sprite_layer::SpriteLayer;
+use crate::models::unit_stats_components::{FacingDirection, MoveSpeed, UnitSize};
 
 pub fn straight_basic_shot_system(
     mut command: Commands,
@@ -30,7 +31,7 @@ pub fn straight_basic_shot_system(
         gun_reloadable.reload_timer = gun_reloadable.base_reloading_time;
 
         let bullet = command.spawn_bundle(SpriteBundle {
-            transform: Transform::from_xyz(holder_transform.translation.x, holder_transform.translation.y, 0.0),
+            transform: Transform::from_xyz(holder_transform.translation.x, holder_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z()),
             sprite: Sprite {
                 custom_size: Some(Vec2::new(128.0, 128.0)),
                 ..Default::default()

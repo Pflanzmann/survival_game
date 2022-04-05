@@ -1,10 +1,10 @@
 use bevy::prelude::{*};
 
 use crate::{Player, UnitSize};
-use crate::entities::collider::collider::Collider;
-use crate::entities::events::item_collision_event::ItemCollisionEvent;
-use crate::entities::item_components::Item;
-use crate::entities::unit_stats_components::Enemy;
+use crate::models::collider::collider::Collider;
+use crate::models::events::item_collision_event::ItemCollisionEvent;
+use crate::models::item_components::Item;
+use crate::models::unit_stats_components::Enemy;
 use crate::util::is_colliding::is_colliding;
 
 pub fn item_player_collision_system(

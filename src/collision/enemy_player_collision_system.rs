@@ -1,8 +1,8 @@
 use bevy::prelude::{Commands, Entity, Query, With};
 
 use crate::{Player, Transform, Without};
-use crate::entities::collider::collider::Collider;
-use crate::entities::unit_stats_components::{Damage, Enemy, Health, UnitSize};
+use crate::models::collider::collider::Collider;
+use crate::models::unit_stats_components::{Damage, Enemy, Health, UnitSize};
 use crate::util::is_colliding::is_colliding;
 
 pub fn enemy_player_collision_system(

@@ -1,9 +1,9 @@
 use bevy::prelude::{Commands, EventWriter, Transform};
 
 use crate::{Entity, Query, With};
-use crate::entities::bullet_components::{Bullet, BulletRange};
-use crate::entities::events::bullet_stopped_event::BulletStoppedEvent;
-use crate::entities::unit_stats_components::{FacingDirection, MoveSpeed};
+use crate::models::bullet_components::{Bullet, BulletRange};
+use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
+use crate::models::unit_stats_components::{FacingDirection, MoveSpeed};
 
 pub fn bullet_movement_system(
     mut bullet_stopped_event: EventWriter<BulletStoppedEvent>,

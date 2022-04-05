@@ -5,8 +5,9 @@ use rand::random;
 use crate::{Health, Player, Query, Transform, With};
 use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
-use crate::entities::collider::collider::Collider;
-use crate::entities::unit_stats_components::{Damage, Enemy, FacingDirection, MoveSpeed, UnitSize};
+use crate::models::collider::collider::Collider;
+use crate::models::sprite_layer::SpriteLayer;
+use crate::models::unit_stats_components::{Damage, Enemy, FacingDirection, MoveSpeed, UnitSize};
 
 #[derive(Default)]
 pub struct SpawnTimer(f32);
@@ -39,7 +40,7 @@ pub fn enemy_spawn_system(
                     custom_size: Some(Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y)),
                     ..Default::default()
                 },
-                transform: Transform::from_xyz(position_to_spawn.x, position_to_spawn.y, 0.0),
+                transform: Transform::from_xyz(position_to_spawn.x, position_to_spawn.y, SpriteLayer::GroundLevel.get_layer_z()),
                 texture: texture_handles.enemy_goblin.clone(),
                 ..Default::default()
             })

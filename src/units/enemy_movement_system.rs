@@ -1,8 +1,8 @@
 use bevy::prelude::{Transform, Without};
 
 use crate::{Player, Query, With};
-use crate::entities::collider::collision_directions::CollisionDirections;
-use crate::entities::unit_stats_components::{Enemy, FacingDirection, MoveSpeed};
+use crate::models::collider::collision_directions::CollisionDirections;
+use crate::models::unit_stats_components::{Enemy, FacingDirection, MoveSpeed};
 
 pub fn enemy_movement_system(
     mut enemies: Query<(&mut Transform, &MoveSpeed, &mut FacingDirection, Option<&CollisionDirections>), (With<Enemy>, Without<Player>)>,
