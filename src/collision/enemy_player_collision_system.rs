@@ -1,12 +1,13 @@
-use bevy::prelude::{Commands, Entity, Query, With};
+use bevy::prelude::{Commands, Entity, Query, Res, State, With};
 
-use crate::{Player, Transform, Without};
+use crate::{AppState, Player, ResMut, Transform, Without};
 use crate::models::collider::collider::Collider;
 use crate::models::unit_stats_components::{Damage, Enemy, Health, UnitSize};
 use crate::util::is_colliding::is_colliding;
 
 pub fn enemy_player_collision_system(
     mut commands: Commands,
+    mut app_state: ResMut<State<AppState>>,
     enemy_query: Query<(&Transform, &UnitSize, &Damage), (With<Collider>, With<Enemy>, Without<Player>)>,
     mut player_query: Query<(Entity, &Transform, &UnitSize, &mut Health), (With<Collider>, With<Player>, Without<Enemy>)>,
 ) {
@@ -21,7 +22,8 @@ pub fn enemy_player_collision_system(
                 player_health.current_health -= enemy_damage.get_damage();
 
                 if player_health.current_health <= 0.0 {
-                    commands.entity(player_entity).despawn()
+                    commands.entity(player_entity).despawn();
+                    app_state.set(AppState::MainMenu).unwrap();
                 }
             }
         }
