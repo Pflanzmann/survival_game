@@ -1,6 +1,7 @@
 use bevy::prelude::{BuildChildren, Color, Commands, Entity, Query, Sprite, SpriteBundle, Vec2, Vec3, With};
 
 use crate::{HealthBar, Player, Transform};
+use crate::models::sprite_layer::SpriteLayer;
 
 pub fn setup_health_bar(
     mut commands: Commands,
@@ -19,7 +20,7 @@ pub fn setup_health_bar(
                 ..Default::default()
             },
             transform: Transform {
-                translation: Vec3::new(0.0, -125.0, 1.0),
+                translation: Vec3::new(0.0, -125.0, SpriteLayer::UILevel.get_layer_z()),
                 scale: Vec3::new(1.0, 1.0, 1.0),
                 ..Default::default()
             },

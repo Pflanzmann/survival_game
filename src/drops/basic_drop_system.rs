@@ -3,10 +3,11 @@ use bevy::prelude::{EventReader, Res, Sprite, SpriteBundle, Vec2, With};
 use crate::{Commands, Query, Transform, UnitSize};
 use crate::assets_handling::preload_item_system::ItemConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
-use crate::entities::collider::collider::Collider;
-use crate::entities::events::enemy_died_event::EnemyDiedEvent;
-use crate::entities::item_components::Item;
-use crate::entities::unit_stats_components::Enemy;
+use crate::models::collider::collider::Collider;
+use crate::models::events::enemy_died_event::EnemyDiedEvent;
+use crate::models::item_components::Item;
+use crate::models::sprite_layer::SpriteLayer;
+use crate::models::unit_stats_components::Enemy;
 
 pub fn basic_drop_system(
     mut commands: Commands,
@@ -22,7 +23,7 @@ pub fn basic_drop_system(
         };
 
         let mut drop_translation = enemy_position.clone();
-        drop_translation.z += 1.0;
+        drop_translation.z = SpriteLayer::LowGroundLevel.get_layer_z();
 
         commands.spawn_bundle(
             SpriteBundle {

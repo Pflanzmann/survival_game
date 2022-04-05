@@ -6,7 +6,7 @@ use crate::bullets::modifications::apply_modification_system::apply_modification
 use crate::bullets::modifications::curve_shot_system::curve_shot_system;
 use crate::bullets::modifications::grow_shot_system::grow_shot_system;
 use crate::bullets::modifications::split_shot_system::split_shot_system;
-use crate::entities::modification_components::{CurveShot, GrowShot, SplitShot};
+use crate::models::modification_components::{CurveShot, GrowShot, SplitShot};
 
 pub mod curve_shot_system;
 pub mod grow_shot_system;

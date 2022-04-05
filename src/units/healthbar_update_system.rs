@@ -1,8 +1,8 @@
 use bevy::prelude::{Changed, Children, Query, With};
 
 use crate::{HealthBar, Player, Transform, Without};
-use crate::entities::collider::collider::Collider;
-use crate::entities::unit_stats_components::{Enemy, Health};
+use crate::models::collider::collider::Collider;
+use crate::models::unit_stats_components::{Enemy, Health};
 
 pub fn healthbar_update_system(
     mut children_query: Query<&mut Transform, (With<HealthBar>, Without<Player>, Without<Enemy>)>,

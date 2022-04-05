@@ -1,6 +1,6 @@
 use bevy::prelude::{Commands, EventReader};
 
-use crate::entities::events::bullet_stopped_event::BulletStoppedEvent;
+use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 
 pub fn bullet_despawn_system(
     mut commands: Commands,

@@ -3,11 +3,11 @@ use bevy::prelude::{Commands, Query, Res, Sprite, SpriteBundle, Vec2, Vec3};
 use rand::random;
 
 use crate::{Damage, FacingDirection, MoveSpeed, TextureHandles, Transform, UnitSize, With};
-use crate::entities::bullet_components::{Bullet, BulletRange, HitLimit};
-use crate::entities::collider::collided_entities::CollidedEntities;
-use crate::entities::collider::collider::Collider;
-use crate::entities::events::bullet_stopped_event::BulletStoppedEvent;
-use crate::entities::modification_components::SplitShot;
+use crate::models::bullet_components::{Bullet, BulletRange, HitLimit};
+use crate::models::collider::collided_entities::CollidedEntities;
+use crate::models::collider::collider::Collider;
+use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
+use crate::models::modification_components::SplitShot;
 
 pub fn split_shot_system(
     mut command: Commands,
