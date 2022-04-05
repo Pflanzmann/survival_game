@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::components::player_components::MainCamera;
+use crate::entities::player_components::MainCamera;
 use crate::Player;
 
 pub fn setup_camera_system(

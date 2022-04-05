@@ -7,7 +7,6 @@ use crate::collision::enemy_bullet_collision_system::enemy_bullet_collision_syst
 use crate::collision::enemy_enemy_collision_system::enemy_enemy_collision_system;
 use crate::collision::enemy_player_collision_system::enemy_player_collision_system;
 use crate::collision::item_player_collision_system::item_player_collision_system;
-use crate::components::event_components::{EnemyDiedEvent, EnemyHitEvent, ItemPickupEvent};
 
 pub mod enemy_player_collision_system;
 pub mod enemy_bullet_collision_system;
@@ -28,10 +27,6 @@ impl Plugin for CollisionPlugin {
                 .with_system(enemy_bullet_collision_system)
                 .with_system(enemy_enemy_collision_system)
                 .with_system(item_player_collision_system),
-        )
-
-            .add_event::<EnemyHitEvent>()
-            .add_event::<EnemyDiedEvent>()
-            .add_event::<ItemPickupEvent>();
+        );
     }
 }

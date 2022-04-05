@@ -2,11 +2,11 @@ use bevy::app::EventWriter;
 use bevy::prelude::{Commands, Res, Sprite, SpriteBundle, Time, Vec2};
 
 use crate::{Damage, Entity, Query, TextureHandles, Transform, With};
-use crate::components::bullet_components::{Bullet, BulletRange, HitLimit};
-use crate::components::collision_components::{CollidedEntities, Collider};
-use crate::components::event_components::BulletShotEvent;
-use crate::components::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
-use crate::components::unit_stats_components::{FacingDirection, MoveSpeed, UnitSize};
+use crate::entities::bullet_components::{Bullet, BulletRange, HitLimit};
+use crate::entities::collision_components::{CollidedEntities, Collider};
+use crate::entities::events::bullet_shot_event::BulletShotEvent;
+use crate::entities::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
+use crate::entities::unit_stats_components::{FacingDirection, MoveSpeed, UnitSize};
 
 pub fn straight_basic_shot_system(
     mut command: Commands,

@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
-use crate::components::player_components::Player;
-use crate::components::unit_stats_components::{FacingDirection, MoveSpeed};
+use crate::entities::player_components::Player;
+use crate::entities::unit_stats_components::{FacingDirection, MoveSpeed};
 
 pub fn player_control_system(
     input: Res<Input<KeyCode>>,

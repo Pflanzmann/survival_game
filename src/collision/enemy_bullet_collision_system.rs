@@ -2,10 +2,10 @@ use bevy::app::EventWriter;
 use bevy::prelude::{Entity, Query, With};
 
 use crate::{Transform, Without};
-use crate::components::bullet_components::Bullet;
-use crate::components::collision_components::Collider;
-use crate::components::event_components::BulletEnemyCollisionEvent;
-use crate::components::unit_stats_components::{Enemy, UnitSize};
+use crate::entities::bullet_components::Bullet;
+use crate::entities::collision_components::Collider;
+use crate::entities::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
+use crate::entities::unit_stats_components::{Enemy, UnitSize};
 use crate::util::is_colliding::is_colliding;
 
 pub fn enemy_bullet_collision_system(
