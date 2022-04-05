@@ -1,6 +1,7 @@
 use bevy::prelude::{*};
 
-use crate::{Collider, Health, Player, UnitSize};
+use crate::{Player, UnitSize};
+use crate::entities::collider::collider::Collider;
 use crate::entities::events::item_collision_event::ItemCollisionEvent;
 use crate::entities::item_components::Item;
 use crate::entities::unit_stats_components::Enemy;

@@ -1,8 +1,9 @@
 use bevy::prelude::{EventReader, Res, Sprite, SpriteBundle, Vec2, With};
 
-use crate::{Collider, Commands, Query, Transform, UnitSize};
+use crate::{Commands, Query, Transform, UnitSize};
 use crate::assets_handling::preload_item_system::ItemConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
+use crate::entities::collider::collider::Collider;
 use crate::entities::events::enemy_died_event::EnemyDiedEvent;
 use crate::entities::item_components::Item;
 use crate::entities::unit_stats_components::Enemy;

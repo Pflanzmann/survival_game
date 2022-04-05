@@ -1,8 +1,9 @@
 use bevy::prelude::{Commands, Name, Res, Sprite, SpriteBundle, Vec2, Vec3};
 
-use crate::{Collider, Damage, FacingDirection, Health, MoveSpeed, Player, UnitSize};
+use crate::{Damage, FacingDirection, Health, MoveSpeed, Player, UnitSize};
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
+use crate::entities::collider::collider::Collider;
 
 pub fn setup_player_system(
     mut commands: Commands,

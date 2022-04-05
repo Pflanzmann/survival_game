@@ -4,6 +4,6 @@ pub mod gun_components;
 pub mod player_components;
 pub mod ui_components;
 pub mod modification_components;
-pub mod collision_components;
 pub mod item_components;
 pub mod events;
+pub mod collider;

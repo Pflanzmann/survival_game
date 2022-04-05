@@ -6,17 +6,17 @@ use bevy::prelude::{App, BuildChildren, Color, Commands, DetectChanges, Entity, 
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
 
-use entities::collision_components::Collider;
 use entities::player_components::Player;
 
 use crate::assets_handling::AssetHandlingPlugin;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::bullets::BulletPlugin;
 use crate::collision::CollisionPlugin;
+use crate::drops::DropsPlugin;
+use crate::entities::events::EventsPlugin;
 use crate::entities::gun_components::Gunnable;
 use crate::entities::ui_components::{Cointext, HealthBar};
 use crate::entities::unit_stats_components::{Damage, FacingDirection, Health, MoveSpeed, UnitSize};
-use crate::drops::DropsPlugin;
 use crate::guns::GunPlugin;
 use crate::input::InputPlugin;
 use crate::resources::ResourcePlugin;
@@ -52,6 +52,7 @@ fn main() {
         .add_plugins(DefaultPlugins)
         .add_plugin(WorldInspectorPlugin::new())
 
+        .add_plugin(EventsPlugin)
         .add_plugin(InputPlugin)
         .add_plugin(UnitPlugin)
         .add_plugin(CollisionPlugin)

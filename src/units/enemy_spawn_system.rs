@@ -5,7 +5,7 @@ use rand::random;
 use crate::{Health, Player, Query, Transform, With};
 use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
-use crate::entities::collision_components::Collider;
+use crate::entities::collider::collider::Collider;
 use crate::entities::unit_stats_components::{Damage, Enemy, FacingDirection, MoveSpeed, UnitSize};
 
 #[derive(Default)]
