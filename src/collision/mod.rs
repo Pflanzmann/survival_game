@@ -15,7 +15,7 @@ pub mod item_player_collision_system;
 
 pub struct CollisionPlugin;
 
-const FIXED_TIMESTEP: f64 = 15.0 / 60.0;
+const FIXED_TIMESTEP: f64 = 0.1;
 
 impl Plugin for CollisionPlugin {
     fn build(&self, app: &mut App) {
