@@ -1,7 +1,7 @@
-use bevy::prelude::{Changed, Children, Query, With, World};
+use bevy::prelude::{Changed, Children, Query, With};
 
 use crate::{HealthBar, Player, Transform, Without};
-use crate::entities::collision_components::Collider;
+use crate::entities::collider::collider::Collider;
 use crate::entities::unit_stats_components::{Enemy, Health};
 
 pub fn healthbar_update_system(

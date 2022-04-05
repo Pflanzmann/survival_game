@@ -1,7 +1,7 @@
 use bevy::prelude::{Transform, Without};
 
 use crate::{Player, Query, With};
-use crate::entities::collision_components::CollisionDirections;
+use crate::entities::collider::collision_directions::CollisionDirections;
 use crate::entities::unit_stats_components::{Enemy, FacingDirection, MoveSpeed};
 
 pub fn enemy_movement_system(

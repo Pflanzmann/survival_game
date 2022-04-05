@@ -1,6 +1,7 @@
 use bevy::prelude::{Commands, Entity, Query, With};
 
-use crate::entities::collision_components::{Collider, CollisionDirections};
+use crate::entities::collider::collider::Collider;
+use crate::entities::collider::collision_directions::CollisionDirections;
 use crate::entities::unit_stats_components::{Enemy, UnitSize};
 use crate::Transform;
 use crate::util::is_colliding::is_colliding;
@@ -31,7 +32,7 @@ pub fn enemy_enemy_collision_system(
                     direction = direction.normalize();
                 }
 
-                collisions.collisions.push((direction))
+                collisions.collisions.push(direction);
             }
         }
         commands.entity(entity).insert(collisions);

@@ -2,9 +2,10 @@ use bevy::app::EventReader;
 use bevy::prelude::{Commands, Query, Res, Sprite, SpriteBundle, Vec2, Vec3};
 use rand::random;
 
-use crate::{Collider, Damage, FacingDirection, MoveSpeed, TextureHandles, Transform, UnitSize, With};
+use crate::{Damage, FacingDirection, MoveSpeed, TextureHandles, Transform, UnitSize, With};
 use crate::entities::bullet_components::{Bullet, BulletRange, HitLimit};
-use crate::entities::collision_components::CollidedEntities;
+use crate::entities::collider::collided_entities::CollidedEntities;
+use crate::entities::collider::collider::Collider;
 use crate::entities::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::entities::modification_components::SplitShot;
 

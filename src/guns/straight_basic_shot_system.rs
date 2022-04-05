@@ -3,7 +3,8 @@ use bevy::prelude::{Commands, Res, Sprite, SpriteBundle, Time, Vec2};
 
 use crate::{Damage, Entity, Query, TextureHandles, Transform, With};
 use crate::entities::bullet_components::{Bullet, BulletRange, HitLimit};
-use crate::entities::collision_components::{CollidedEntities, Collider};
+use crate::entities::collider::collided_entities::CollidedEntities;
+use crate::entities::collider::collider::Collider;
 use crate::entities::events::bullet_shot_event::BulletShotEvent;
 use crate::entities::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
 use crate::entities::unit_stats_components::{FacingDirection, MoveSpeed, UnitSize};

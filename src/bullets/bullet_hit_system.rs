@@ -3,7 +3,7 @@ use bevy::prelude::{Entity, EventReader, With};
 
 use crate::{Damage, Health, Query, Without};
 use crate::entities::bullet_components::{Bullet, HitLimit};
-use crate::entities::collision_components::CollidedEntities;
+use crate::entities::collider::collided_entities::CollidedEntities;
 use crate::entities::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
 use crate::entities::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::entities::events::enemy_died_event::EnemyDiedEvent;

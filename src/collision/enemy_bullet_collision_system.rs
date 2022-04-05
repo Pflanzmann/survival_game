@@ -3,7 +3,7 @@ use bevy::prelude::{Entity, Query, With};
 
 use crate::{Transform, Without};
 use crate::entities::bullet_components::Bullet;
-use crate::entities::collision_components::Collider;
+use crate::entities::collider::collider::Collider;
 use crate::entities::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
 use crate::entities::unit_stats_components::{Enemy, UnitSize};
 use crate::util::is_colliding::is_colliding;
