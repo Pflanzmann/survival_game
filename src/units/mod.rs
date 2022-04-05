@@ -6,6 +6,7 @@ use crate::units::enemy_movement_system::enemy_movement_system;
 use crate::units::enemy_spawn_system::{enemy_spawn_system, SpawnTimer};
 use crate::units::fit_sprite_to_size_system::fit_sprite_to_size_system;
 use crate::units::healthbar_update_system::healthbar_update_system;
+use crate::units::player_hit_system::player_hit_system;
 use crate::units::setup_player_healthbar_system::setup_health_bar;
 use crate::units::setup_player_system::setup_player_system;
 use crate::units::sprite_direction_system::sprite_direction_system;
@@ -18,6 +19,7 @@ pub mod healthbar_update_system;
 pub mod setup_player_healthbar_system;
 pub mod fit_sprite_to_size_system;
 pub mod enemy_despawn_system;
+pub mod player_hit_system;
 
 pub struct UnitPlugin;
 
@@ -32,6 +34,7 @@ impl Plugin for UnitPlugin {
             .add_system(sprite_direction_system)
             .add_system(healthbar_update_system)
             .add_system(fit_sprite_to_size_system)
+            .add_system(player_hit_system)
             .init_resource::<SpawnTimer>();
     }
 }
