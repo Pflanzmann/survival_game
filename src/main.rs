@@ -2,7 +2,7 @@ use bevy::asset::AssetServer;
 use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
-use bevy::prelude::{App, BuildChildren, Color, Commands, DetectChanges, Entity, Font, GlobalTransform, HorizontalAlign, Name, OrthographicCameraBundle, Plugin, Res, ResMut, Sprite, SpriteBundle, SystemStage, Text, TextAlignment, TextBundle, TextStyle, Transform, UiCameraBundle, Val, Vec2, Vec3, VerticalAlign, With, Without};
+use bevy::prelude::{App, BuildChildren, Color, Commands, DetectChanges, Entity, Font, GlobalTransform, HorizontalAlign, Name, OrthographicCameraBundle, Plugin, Res, ResMut, Sprite, SpriteBundle, SystemSet, SystemStage, Text, TextAlignment, TextBundle, TextStyle, Transform, UiCameraBundle, Val, Vec2, Vec3, VerticalAlign, With, Without};
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
 
@@ -43,6 +43,14 @@ pub enum SetupStages {
     AfterPlayerSetup,
 }
 
+#[derive(Debug, Clone, Eq, PartialEq, Hash)]
+pub enum AppState {
+    MainMenu,
+    InGame,
+    GameOver,
+    Paused,
+}
+
 fn main() {
     App::new()
         .add_startup_stage(SetupStages::ConfigSetup, SystemStage::parallel())
@@ -52,6 +60,8 @@ fn main() {
 
         .add_plugins(DefaultPlugins)
         .add_plugin(WorldInspectorPlugin::new())
+
+        .add_state(AppState::InGame)
 
         .add_plugin(EventsPlugin)
         .add_plugin(InputPlugin)
@@ -66,6 +76,11 @@ fn main() {
 
         .add_startup_system(spawn_text_system)
         .add_system(update_text_system)
+
+        .add_system_set(
+            SystemSet::on_enter(AppState::MainMenu)
+                .with_system(spawn_menu_system)
+        )
 
         .add_startup_system_to_stage(SetupStages::PlayerSetup, setup_tiles)
         .run()
@@ -133,4 +148,24 @@ pub fn update_text_system(
     }
 }
 
-
+pub fn spawn_menu_system(
+    mut commands: Commands,
+    asset_loader: Res<AssetServer>,
+) {
+    commands.spawn_bundle(TextBundle {
+        text: Text::with_section(
+            "You Dieded".to_string(),
+            TextStyle {
+                font: asset_loader.load("BodoniFLF-Roman.ttf"),
+                font_size: 60.0,
+                color: Color::RED,
+            },
+            TextAlignment {
+                vertical: VerticalAlign::Top,
+                horizontal: HorizontalAlign::Center,
+            },
+        ),
+        ..Default::default()
+    })
+        .id();
+}
