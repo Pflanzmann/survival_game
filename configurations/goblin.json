@@ -1,7 +1,7 @@
 {
   "sprite_custom_size_x": 256.0,
   "sprite_custom_size_y": 256.0,
-  "sprite_path": "Goblin.png",
+  "sprite_path": "sprites/Goblin.png",
   "move_speed": 6.0,
   "damage": 5.0,
   "health": 10.0
