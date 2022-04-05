@@ -3,6 +3,7 @@ use bevy::prelude::{Commands, Res, Sprite, SpriteBundle, Time, Vec2};
 
 use crate::{Damage, Entity, Query, TextureHandles, Transform, With};
 use crate::models::bullet_components::{Bullet, BulletRange, HitLimit};
+use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::collider::collider::Collider;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
@@ -39,16 +40,17 @@ pub fn straight_basic_shot_system(
             texture: texture_handle.bullet_fireball.clone(),
             ..Default::default()
         })
-            .insert(Bullet { source_entity: gun_entity })
-            .insert(Collider)
-            .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
-            .insert(FacingDirection { facing_direction: holder_facing_direction.facing_direction })
-            .insert(MoveSpeed { move_speed: 15.0 })
-            .insert(Damage::new(5.0))
-            .insert(BulletRange::new(2048.0))
-            .insert(CollidedEntities { collisions: Vec::new() })
-            .insert(HitLimit { hit_limit: 1 })
-            .id();
+            .insert_bundle(BulletBundle {
+                bullet: Bullet { source_entity: gun_entity },
+                unit_size: UnitSize { collider_size: Vec2::new(128.0, 128.0) },
+                facing_direction: FacingDirection { facing_direction: holder_facing_direction.facing_direction },
+                move_speed: MoveSpeed { move_speed: 15.0 },
+                damage: Damage::new(5.0),
+                bullet_range: BulletRange::new(2048.0),
+                hit_limit: HitLimit { hit_limit: 1 },
+                collider: Collider,
+                collider_entities: CollidedEntities::default(),
+            }).id();
 
         bullet_shot_event_writer.send(BulletShotEvent { entity: bullet })
     }

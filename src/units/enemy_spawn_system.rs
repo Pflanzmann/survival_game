@@ -5,6 +5,7 @@ use rand::random;
 use crate::{Health, Player, Query, Transform, With};
 use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
+use crate::models::bundles::enemy_bundle::EnemyBundle;
 use crate::models::collider::collider::Collider;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_stats_components::{Damage, Enemy, FacingDirection, MoveSpeed, UnitSize};
@@ -44,12 +45,14 @@ pub fn enemy_spawn_system(
                 texture: texture_handles.enemy_goblin.clone(),
                 ..Default::default()
             })
-            .insert(Enemy)
-            .insert(MoveSpeed { move_speed: enemy_handles.goblin.move_speed })
-            .insert(UnitSize { collider_size: Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y) })
-            .insert(Collider)
-            .insert(Damage::new(enemy_handles.goblin.damage))
-            .insert(Health::new(enemy_handles.goblin.health))
-            .insert(FacingDirection { facing_direction: Vec3::default() });
+            .insert_bundle(EnemyBundle {
+                enemy: Enemy,
+                collider: Collider,
+                unit_size: UnitSize { collider_size: Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y) },
+                facing_direction: FacingDirection { facing_direction: Vec3::default() },
+                move_speed: MoveSpeed { move_speed: enemy_handles.goblin.move_speed },
+                damage: Damage::new(enemy_handles.goblin.damage),
+                health: Health::new(enemy_handles.goblin.health),
+            });
     }
 }

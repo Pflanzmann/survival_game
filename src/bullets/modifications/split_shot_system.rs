@@ -4,6 +4,7 @@ use rand::random;
 
 use crate::{Damage, FacingDirection, MoveSpeed, TextureHandles, Transform, UnitSize, With};
 use crate::models::bullet_components::{Bullet, BulletRange, HitLimit};
+use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::collider::collider::Collider;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
@@ -39,16 +40,17 @@ pub fn split_shot_system(
                 },
                 texture: texture_handle.bullet_fireball.clone(),
                 ..Default::default()
-            })
-                .insert(*bullet)
-                .insert(Collider)
-                .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
-                .insert(FacingDirection { facing_direction: direction })
-                .insert(MoveSpeed { move_speed: 15.0 })
-                .insert(Damage::new(5.0))
-                .insert(BulletRange::new(2048.0))
-                .insert(CollidedEntities { collisions: Vec::new() })
-                .insert(HitLimit { hit_limit: 1 });
+            }).insert_bundle(BulletBundle {
+                bullet: *bullet,
+                unit_size: UnitSize { collider_size: Vec2::new(128.0, 128.0) },
+                facing_direction: FacingDirection { facing_direction: direction },
+                move_speed: MoveSpeed { move_speed: 15.0 },
+                damage: Damage::new(5.0),
+                bullet_range: BulletRange::new(2048.0),
+                hit_limit: HitLimit { hit_limit: 1 },
+                collider: Collider,
+                collider_entities: CollidedEntities::default(),
+            });
         }
     }
 }
