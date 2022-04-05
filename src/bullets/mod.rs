@@ -5,7 +5,6 @@ use crate::bullets::bullet_despawn_system::bullet_despawn_system;
 use crate::bullets::bullet_hit_system::bullet_hit_system;
 use crate::bullets::bullet_movement_system::bullet_movement_system;
 use crate::bullets::modifications::ModificationsPlugin;
-use crate::components::event_components::{BulletEnemyCollisionEvent, BulletShotEvent, BulletStoppedEvent};
 
 pub mod bullet_movement_system;
 pub mod modifications;
@@ -18,10 +17,6 @@ impl Plugin for BulletPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugin(ModificationsPlugin)
-
-            .add_event::<BulletShotEvent>()
-            .add_event::<BulletEnemyCollisionEvent>()
-            .add_event::<BulletStoppedEvent>()
 
             .add_system(bullet_movement_system)
             .add_system(bullet_hit_system)

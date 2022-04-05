@@ -1,7 +1,7 @@
 use bevy::prelude::{Entity, Query, With};
 
-use crate::components::bullet_components::BulletRange;
-use crate::components::modification_components::CurveShot;
+use crate::entities::bullet_components::BulletRange;
+use crate::entities::modification_components::CurveShot;
 use crate::FacingDirection;
 
 pub fn curve_shot_system(

@@ -1,12 +1,12 @@
-use bevy::asset::{AssetServer};
+use bevy::asset::AssetServer;
 use bevy::prelude::{EventReader, ResMut};
 use bevy_kira_audio::Audio;
 
 use crate::{CoinCount, Res};
-use crate::components::event_components::{ItemPickupEvent};
+use crate::entities::events::item_collision_event::ItemCollisionEvent;
 
 pub fn item_pickup_system(
-    mut item_pickup_event: EventReader<ItemPickupEvent>,
+    mut item_pickup_event: EventReader<ItemCollisionEvent>,
     asset_server: Res<AssetServer>,
     audio: Res<Audio>,
     mut coin_counter: ResMut<CoinCount>,

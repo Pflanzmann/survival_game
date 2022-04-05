@@ -2,10 +2,12 @@ use bevy::app::EventWriter;
 use bevy::prelude::{Entity, EventReader, With};
 
 use crate::{Damage, Health, Query, Without};
-use crate::components::bullet_components::{Bullet, HitLimit};
-use crate::components::collision_components::CollidedEntities;
-use crate::components::event_components::{BulletEnemyCollisionEvent, BulletStoppedEvent, EnemyDiedEvent};
-use crate::components::unit_stats_components::Enemy;
+use crate::entities::bullet_components::{Bullet, HitLimit};
+use crate::entities::collision_components::CollidedEntities;
+use crate::entities::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
+use crate::entities::events::bullet_stopped_event::BulletStoppedEvent;
+use crate::entities::events::enemy_died_event::EnemyDiedEvent;
+use crate::entities::unit_stats_components::Enemy;
 
 pub fn bullet_hit_system(
     mut bullet_stopped_event: EventWriter<BulletStoppedEvent>,

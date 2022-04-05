@@ -1,7 +1,7 @@
 use bevy::prelude::{Query, With};
 
 use crate::{Damage, UnitSize};
-use crate::components::modification_components::{GrowShot, ModContainerSlot};
+use crate::entities::modification_components::{GrowShot, ModContainerSlot};
 
 pub fn grow_shot_system(
     mut bullet_query: Query<(&mut UnitSize, &mut Damage, &GrowShot)>,

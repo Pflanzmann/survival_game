@@ -1,6 +1,5 @@
 use bevy::prelude::{Commands, EventReader};
-
-use crate::components::event_components::EnemyDiedEvent;
+use crate::entities::events::enemy_died_event::EnemyDiedEvent;
 
 pub fn enemy_despawn_system(
     mut commands: Commands,

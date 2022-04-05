@@ -6,16 +6,16 @@ use bevy::prelude::{App, BuildChildren, Color, Commands, DetectChanges, Entity, 
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
 
-use components::collision_components::Collider;
-use components::player_components::Player;
+use entities::collision_components::Collider;
+use entities::player_components::Player;
 
 use crate::assets_handling::AssetHandlingPlugin;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::bullets::BulletPlugin;
 use crate::collision::CollisionPlugin;
-use crate::components::gun_components::Gunnable;
-use crate::components::ui_components::{Cointext, HealthBar};
-use crate::components::unit_stats_components::{Damage, FacingDirection, Health, MoveSpeed, UnitSize};
+use crate::entities::gun_components::Gunnable;
+use crate::entities::ui_components::{Cointext, HealthBar};
+use crate::entities::unit_stats_components::{Damage, FacingDirection, Health, MoveSpeed, UnitSize};
 use crate::drops::DropsPlugin;
 use crate::guns::GunPlugin;
 use crate::input::InputPlugin;
@@ -28,7 +28,7 @@ mod units;
 mod collision;
 mod guns;
 mod bullets;
-mod components;
+mod entities;
 mod drops;
 mod assets_handling;
 mod util;

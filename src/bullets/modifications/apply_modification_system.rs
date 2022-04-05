@@ -1,8 +1,8 @@
 use bevy::prelude::{Commands, Component, EventReader, Query, With};
 
-use crate::components::bullet_components::Bullet;
-use crate::components::event_components::BulletShotEvent;
-use crate::components::modification_components::{ModContainer, ModContainerSlot};
+use crate::entities::bullet_components::Bullet;
+use crate::entities::events::bullet_shot_event::BulletShotEvent;
+use crate::entities::modification_components::{ModContainer, ModContainerSlot};
 
 pub fn apply_modification_system<T: Component + Copy>(
     mut commands: Commands,
