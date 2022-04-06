@@ -12,7 +12,7 @@ pub fn item_pickup_system(
     mut coin_counter: ResMut<CoinCount>,
 ) {
     for _ in item_pickup_event.iter() {
-        audio.play(asset_server.load("coin_pickup_sound.ogg"));
+        audio.play(asset_server.load("audio/coin_pickup_sound.ogg"));
         coin_counter.number += 1;
     }
 }
