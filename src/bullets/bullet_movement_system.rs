@@ -4,12 +4,12 @@ use bevy::prelude::{Commands, EventWriter, Transform};
 use crate::{Entity, Query, Res, With};
 use crate::models::bullet_components::{Bullet, BulletRange};
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
-use crate::models::unit_stats_components::{FacingDirection, MoveSpeed};
+use crate::models::unit_stats_components::{MoveDirection, MoveSpeed};
 
 pub fn bullet_movement_system(
     time : Res<Time>,
     mut bullet_stopped_event: EventWriter<BulletStoppedEvent>,
-    mut bullet_query: Query<(&mut Transform, &FacingDirection, &MoveSpeed, &mut BulletRange, Entity), With<Bullet>>,
+    mut bullet_query: Query<(&mut Transform, &MoveDirection, &MoveSpeed, &mut BulletRange, Entity), With<Bullet>>,
 ) {
     for (mut transform, direction, speed, mut bullet_range, bullet_entity) in bullet_query.iter_mut() {
         let distance_to_move = speed.move_speed;

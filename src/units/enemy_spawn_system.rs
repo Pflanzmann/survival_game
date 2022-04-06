@@ -8,7 +8,7 @@ use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::models::bundles::enemy_bundle::EnemyBundle;
 use crate::models::collider::collider::Collider;
 use crate::models::sprite_layer::SpriteLayer;
-use crate::models::unit_stats_components::{Damage, Enemy, FacingDirection, MoveSpeed, UnitSize};
+use crate::models::unit_stats_components::{Damage, Enemy, MoveDirection, MoveSpeed, UnitSize};
 
 #[derive(Default)]
 pub struct SpawnTimer(f32);
@@ -49,7 +49,7 @@ pub fn enemy_spawn_system(
                 enemy: Enemy,
                 collider: Collider,
                 unit_size: UnitSize { collider_size: Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y) },
-                facing_direction: FacingDirection { facing_direction: Vec3::default() },
+                facing_direction: MoveDirection { direction: Vec3::default() },
                 move_speed: MoveSpeed { move_speed: enemy_handles.goblin.move_speed },
                 damage: Damage::new(enemy_handles.goblin.damage),
                 health: Health::new(enemy_handles.goblin.health),
