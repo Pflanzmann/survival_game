@@ -1,10 +1,11 @@
 use bevy::prelude::{Commands, Name, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3};
 
-use crate::{Damage, FacingDirection, Health, MoveSpeed, Player, UnitSize};
+use crate::{Damage, Health, MoveDirection, MoveSpeed, Player, UnitSize};
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::models::bundles::player_bundle::PlayerBundle;
 use crate::models::collider::collider::Collider;
+use crate::models::player_components::AimDirection;
 use crate::models::sprite_layer::SpriteLayer;
 
 pub fn setup_player_system(
@@ -28,7 +29,8 @@ pub fn setup_player_system(
             player: Player,
             collider: Collider,
             unit_size: UnitSize { collider_size: Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y) },
-            facing_direction: FacingDirection { facing_direction: Vec3::new(1.0, 0.0, 0.0) },
+            aim_direction: AimDirection { direction: Vec3::new(1.0, 0.0, 0.0) },
+            move_direction: MoveDirection { direction: Vec3::new(1.0, 0.0, 0.0) },
             move_speed: MoveSpeed { move_speed: player_handles.player_one.move_speed },
             damage: Damage::new(player_handles.player_one.damage),
             health: Health::new(player_handles.player_one.health),

@@ -19,7 +19,7 @@ use crate::models::events::EventsPlugin;
 use crate::models::gun_components::Gunnable;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::ui_components::{Cointext, HealthBar};
-use crate::models::unit_stats_components::{Damage, FacingDirection, Health, MoveSpeed, UnitSize};
+use crate::models::unit_stats_components::{Damage, MoveDirection, Health, MoveSpeed, UnitSize};
 use crate::resources::ResourcePlugin;
 use crate::resources::ui_resources::CoinCount;
 use crate::ui::UiPlugin;

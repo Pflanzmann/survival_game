@@ -1,5 +1,5 @@
 use bevy::app::EventWriter;
-use bevy::prelude::{Commands, Res, Sprite, SpriteBundle, Time, Vec2};
+use bevy::prelude::{Commands, Res, Sprite, SpriteBundle, Vec2};
 
 use crate::{Damage, Entity, Query, TextureHandles, Transform, With};
 use crate::models::bullet_components::{Bullet, BulletRange, HitLimit};
@@ -8,24 +8,27 @@ use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::collider::collider::Collider;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
+use crate::models::player_components::AimDirection;
 use crate::models::sprite_layer::SpriteLayer;
-use crate::models::unit_stats_components::{FacingDirection, MoveSpeed, UnitSize};
+use crate::models::unit_stats_components::{MoveDirection, MoveSpeed, UnitSize};
 
 pub fn straight_basic_shot_system(
     mut command: Commands,
-    time: Res<Time>,
     texture_handle: Res<TextureHandles>,
     mut bullet_shot_event_writer: EventWriter<BulletShotEvent>,
-    weapon_holder: Query<(&Transform, &FacingDirection, &WeaponSlot)>,
+    weapon_holder: Query<(&Transform, &AimDirection, &WeaponSlot)>,
     mut gun_query: Query<(Entity, &mut Reloadable), With<StraightBasicShot>>,
 ) {
-    for (holder_transform, holder_facing_direction, holder_weapon_slot) in weapon_holder.iter() {
+    for (holder_transform, holder_aim_direction, holder_weapon_slot) in weapon_holder.iter() {
+        if holder_aim_direction.direction.length() == 0.0 {
+            continue;
+        }
+
         let (gun_entity, mut gun_reloadable) = match gun_query.get_mut(holder_weapon_slot.weapon_entity) {
             Ok(gun) => gun,
             Err(_) => continue,
         };
 
-        gun_reloadable.reload_timer -= time.delta().as_secs_f32();
         if gun_reloadable.reload_timer > 0.0 {
             continue;
         }
@@ -43,7 +46,7 @@ pub fn straight_basic_shot_system(
             .insert_bundle(BulletBundle {
                 bullet: Bullet { source_entity: gun_entity },
                 unit_size: UnitSize { collider_size: Vec2::new(128.0, 128.0) },
-                facing_direction: FacingDirection { facing_direction: holder_facing_direction.facing_direction },
+                facing_direction: MoveDirection { direction: holder_aim_direction.direction },
                 move_speed: MoveSpeed { move_speed: 15.0 },
                 damage: Damage::new(5.0),
                 bullet_range: BulletRange::new(2048.0),

@@ -1,6 +1,6 @@
 use bevy::ecs::bundle::Bundle;
 
-use crate::{Damage, FacingDirection, Health, MoveSpeed, UnitSize};
+use crate::{Damage, MoveDirection, Health, MoveSpeed, UnitSize};
 use crate::models::collider::collider::Collider;
 use crate::models::unit_stats_components::Enemy;
 
@@ -11,7 +11,7 @@ pub struct EnemyBundle {
     pub collider: Collider,
     pub unit_size: UnitSize,
 
-    pub facing_direction: FacingDirection,
+    pub facing_direction: MoveDirection,
     pub move_speed: MoveSpeed,
     pub damage: Damage,
     pub health: Health,
