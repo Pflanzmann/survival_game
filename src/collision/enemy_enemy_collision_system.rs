@@ -28,9 +28,7 @@ pub fn enemy_enemy_collision_system(
             ) {
                 let mut direction = (other_transform.translation - transform.translation);
 
-                if direction.length() != 0.0 {
-                    direction = direction.normalize();
-                }
+                direction = direction.normalize_or_zero();
 
                 collisions.collisions.push(direction);
             }

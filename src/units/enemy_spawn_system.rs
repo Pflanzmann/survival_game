@@ -30,7 +30,7 @@ pub fn enemy_spawn_system(
     let random_x = random::<f32>() * 2.0 - 1.0;
     let random_y = random::<f32>() * 2.0 - 1.0;
 
-    let direction_to_spawn = Vec3::new(random_x, random_y, 0.0).normalize();
+    let direction_to_spawn = Vec3::new(random_x, random_y, 0.0).normalize_or_zero();
 
     for transform in main_player_query.iter() {
         let position_to_spawn = transform.translation + (direction_to_spawn * (256.0 * 12.0));

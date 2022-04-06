@@ -2,7 +2,7 @@ use bevy::app::EventReader;
 use bevy::prelude::{Commands, Query, Res, Sprite, SpriteBundle, Vec2, Vec3};
 use rand::random;
 
-use crate::{Damage, MoveDirection, MoveSpeed, TextureHandles, Transform, UnitSize, With};
+use crate::{Damage, MoveDirection, MoveSpeed, SpriteLayer, TextureHandles, Transform, UnitSize, With};
 use crate::models::bullet_components::{Bullet, BulletRange, HitLimit};
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
@@ -33,7 +33,7 @@ pub fn split_shot_system(
 
         for direction in directions {
             command.spawn_bundle(SpriteBundle {
-                transform: Transform::from_xyz(bullet_transform.translation.x, bullet_transform.translation.y, 0.0),
+                transform: Transform::from_xyz(bullet_transform.translation.x, bullet_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z()),
                 sprite: Sprite {
                     custom_size: Some(Vec2::new(128.0, 128.0)),
                     ..Default::default()
