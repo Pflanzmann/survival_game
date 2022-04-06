@@ -1,11 +1,13 @@
+use bevy::core::Time;
 use bevy::prelude::{Commands, EventWriter, Transform};
 
-use crate::{Entity, Query, With};
+use crate::{Entity, Query, Res, With};
 use crate::models::bullet_components::{Bullet, BulletRange};
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::models::unit_stats_components::{FacingDirection, MoveSpeed};
 
 pub fn bullet_movement_system(
+    time : Res<Time>,
     mut bullet_stopped_event: EventWriter<BulletStoppedEvent>,
     mut bullet_query: Query<(&mut Transform, &FacingDirection, &MoveSpeed, &mut BulletRange, Entity), With<Bullet>>,
 ) {
@@ -18,6 +20,6 @@ pub fn bullet_movement_system(
             continue;
         }
 
-        transform.translation += direction.facing_direction * distance_to_move;
+        transform.translation += direction.facing_direction * distance_to_move * time.delta_seconds() * 60.0;
     }
 }
