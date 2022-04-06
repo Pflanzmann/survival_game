@@ -1,5 +1,5 @@
 use bevy::math::Vec2;
-use bevy::prelude::{ResMut, Transform, Vec3, With, Without};
+use bevy::prelude::{GlobalTransform, ResMut, Transform, Vec3, With, Without};
 
 use crate::{Player, Query, SpriteLayer};
 use crate::models::tile::Tile;
@@ -8,7 +8,7 @@ use crate::resources::background_tiles_resource::BackgroundTilesResource;
 pub fn move_background_tiles_system(
     mut background_tiles: ResMut<BackgroundTilesResource>,
     player_query: Query<(&Transform), (With<Player>, Without<Tile>)>,
-    mut tiles_query: Query<&mut Transform, With<Tile>>,
+    mut tiles_query: Query<&mut GlobalTransform, With<Tile>>,
 ) {
     let player_position = match player_query.get_single() {
         Ok(transform) => transform.translation,
