@@ -24,7 +24,7 @@ pub fn enemy_movement_system(
                 enemies_dodge_direction -= *col_direction;
             }
 
-            direction += enemies_dodge_direction.normalize_or_zero();
+            direction += enemies_dodge_direction.normalize_or_zero() * 0.4;
         }
 
         transform.translation.x += direction.x * speed.move_speed * time.delta_seconds() * 60.0;
