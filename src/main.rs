@@ -1,8 +1,10 @@
+use std::fmt::Alignment;
+
 use bevy::asset::AssetServer;
 use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
-use bevy::prelude::{App, BuildChildren, Color, Commands, DetectChanges, Entity, Font, GlobalTransform, HorizontalAlign, Name, OrthographicCameraBundle, Plugin, Res, ResMut, Sprite, SpriteBundle, SystemSet, SystemStage, Text, TextAlignment, TextBundle, TextStyle, Transform, UiCameraBundle, Val, Vec2, Vec3, VerticalAlign, With, Without};
+use bevy::prelude::{AlignItems, AlignSelf, App, BuildChildren, Button, ButtonBundle, Changed, Color, Commands, DetectChanges, Entity, FlexDirection, Font, GlobalTransform, HorizontalAlign, Interaction, JustifyContent, Name, NodeBundle, OrthographicCameraBundle, Plugin, PositionType, Rect, Res, ResMut, Size, Sprite, SpriteBundle, Style, SystemSet, SystemStage, Text, TextAlignment, TextBundle, TextStyle, Transform, UiCameraBundle, Val, Vec2, Vec3, VerticalAlign, With, Without};
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
 
@@ -22,6 +24,7 @@ use crate::models::ui_components::{Cointext, HealthBar};
 use crate::models::unit_stats_components::{Damage, FacingDirection, Health, MoveSpeed, UnitSize};
 use crate::resources::ResourcePlugin;
 use crate::resources::ui_resources::CoinCount;
+use crate::ui::UiPlugin;
 use crate::units::UnitPlugin;
 
 mod input;
@@ -34,6 +37,7 @@ mod drops;
 mod assets_handling;
 mod util;
 mod resources;
+mod ui;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, StageLabel)]
 pub enum SetupStages {
@@ -73,14 +77,7 @@ fn main() {
         .add_plugin(AssetHandlingPlugin)
         .add_plugin(AudioPlugin)
         .add_plugin(ResourcePlugin)
-
-        .add_startup_system(spawn_text_system)
-        .add_system(update_text_system)
-
-        .add_system_set(
-            SystemSet::on_enter(AppState::MainMenu)
-                .with_system(spawn_menu_system)
-        )
+        .add_plugin(UiPlugin)
 
         .add_startup_system_to_stage(SetupStages::PlayerSetup, setup_tiles)
         .run()
@@ -109,63 +106,7 @@ pub fn setup_tiles(
     }
 }
 
-pub fn spawn_text_system(
-    mut commands: Commands,
-    asset_loader: Res<AssetServer>,
-    mut coin_counter: ResMut<CoinCount>,
-) {
-    coin_counter.number = 0;
 
-    commands.spawn_bundle(UiCameraBundle::default());
 
-    commands.spawn_bundle(TextBundle {
-        text: Text::with_section(
-            "Coins: ".to_string(),
-            TextStyle {
-                font: asset_loader.load("BodoniFLF-Roman.ttf"),
-                font_size: 60.0,
-                color: Color::WHITE,
-            },
-            TextAlignment {
-                vertical: VerticalAlign::Center,
-                horizontal: HorizontalAlign::Center,
-            },
-        ),
-        ..Default::default()
-    })
-        .insert(Cointext)
-        .id();
-}
 
-pub fn update_text_system(
-    mut text_query: Query<&mut Text, With<Cointext>>,
-    mut coin_counter: ResMut<CoinCount>,
-) {
-    if coin_counter.is_changed() {
-        for mut text in text_query.iter_mut() {
-            text.sections[0].value = format!("{:.0}", coin_counter.number);
-        }
-    }
-}
 
-pub fn spawn_menu_system(
-    mut commands: Commands,
-    asset_loader: Res<AssetServer>,
-) {
-    commands.spawn_bundle(TextBundle {
-        text: Text::with_section(
-            "You Dieded".to_string(),
-            TextStyle {
-                font: asset_loader.load("BodoniFLF-Roman.ttf"),
-                font_size: 60.0,
-                color: Color::RED,
-            },
-            TextAlignment {
-                vertical: VerticalAlign::Top,
-                horizontal: HorizontalAlign::Center,
-            },
-        ),
-        ..Default::default()
-    })
-        .id();
-}
