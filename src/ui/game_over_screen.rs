@@ -1,4 +1,5 @@
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, Entity, FlexDirection, HorizontalAlign, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign};
+use bevy::app::Events;
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, Entity, FlexDirection, HorizontalAlign, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign};
 
 pub fn spawn_menu_system(
     mut commands: Commands,
@@ -58,7 +59,7 @@ pub fn spawn_menu_system(
                         ..Default::default()
                     },
                     text: Text::with_section(
-                        "Respawn".to_string(),
+                        "Ragequit".to_string(),
                         TextStyle {
                             font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                             font_size: 20.0,
@@ -77,14 +78,15 @@ pub fn spawn_menu_system(
 }
 
 pub fn button_click_system(
-
+    mut app_exit_events: ResMut<Events<bevy::app::AppExit>>,
     mut button_query : Query<(Entity, &mut Interaction), Changed<Interaction>>
 
 ){
     for (entity, mut interaction) in button_query.iter_mut(){
         match *interaction {
             Interaction::Clicked =>{
-                println!("button wurde geklickt!")
+                println!("button wurde geklickt!");
+                app_exit_events.send(bevy::app::AppExit);
             }
             Interaction::Hovered =>{
                 println!("button wurde gehovered!")
