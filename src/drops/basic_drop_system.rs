@@ -22,7 +22,7 @@ pub fn basic_drop_system(
             Err(_) => continue,
         };
 
-        let mut drop_translation = enemy_position.clone();
+        let mut drop_translation = enemy_position;
         drop_translation.z = SpriteLayer::LowGroundLevel.get_layer_z();
 
         commands.spawn_bundle(
