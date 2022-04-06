@@ -6,7 +6,7 @@ use crate::models::unit_stats_components::{MoveDirection, MoveSpeed};
 pub fn player_control_movement_system(
     input: Res<Input<KeyCode>>,
     time : Res<Time>,
-    mut player_query: Query<(&mut Transform, &MoveSpeed, &mut FacingDirection), With<Player>>,
+    mut player_query: Query<(&mut Transform, &MoveSpeed, &mut MoveDirection), With<Player>>,
 ) {
     for (mut player_transform, move_speed, mut player_direction) in player_query.iter_mut() {
         let mut player_move_transform = *player_transform;
