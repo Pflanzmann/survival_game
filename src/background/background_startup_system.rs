@@ -9,7 +9,7 @@ pub fn background_startup_system(
     mut background_tiles: ResMut<BackgroundTilesResource>,
     texture_handles: Res<TextureHandles>,
 ) {
-   // let background = commands.spawn().insert(Name::new("background")).id();
+    let background = commands.spawn().insert(Name::new("background")).id();
 
     for x in 0..50 {
         for y in 0..50 {
@@ -25,7 +25,7 @@ pub fn background_startup_system(
                 .insert(Tile)
                 .id();
 
-//            commands.entity(background).add_child(child);
+            commands.entity(background).add_child(child);
 
             background_tiles.tiles.push(TileData {
                 entity: child,
