@@ -1,13 +1,13 @@
-use bevy::prelude::{App, Plugin};
+use bevy::prelude::{App, CoreStage, Plugin};
 
+use crate::{camera_system, SetupStages};
+use crate::input::camera_systems::setup_camera_system;
 use crate::input::gun_mod_debug_system::gun_mod_debug_system;
 use crate::input::player_control_aim_system::player_control_aim_system;
 use crate::input::player_control_movement_system::player_control_movement_system;
-use crate::input::setup_camera_system::setup_camera_system;
-use crate::SetupStages;
 
 pub mod player_control_movement_system;
-pub mod setup_camera_system;
+pub mod camera_systems;
 pub mod gun_mod_debug_system;
 pub mod player_control_aim_system;
 

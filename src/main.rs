@@ -2,6 +2,7 @@ use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
 use bevy::prelude::{AlignItems, AlignSelf, App, BuildChildren, Button, ButtonBundle, Changed, Color, Commands, DetectChanges, Entity, FlexDirection, Font, GlobalTransform, HorizontalAlign, Interaction, JustifyContent, Name, NodeBundle, OrthographicCameraBundle, Plugin, PositionType, Rect, Res, ResMut, Size, Sprite, SpriteBundle, Style, SystemSet, SystemStage, Text, TextAlignment, TextBundle, TextStyle, Transform, UiCameraBundle, Val, Vec2, Vec3, VerticalAlign, With, Without};
+use bevy::render::camera::camera_system;
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
 
@@ -19,7 +20,7 @@ use crate::models::events::EventsPlugin;
 use crate::models::gun_components::Gunnable;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::ui_components::{Cointext, HealthBar};
-use crate::models::unit_stats_components::{Damage, MoveDirection, Health, MoveSpeed, UnitSize};
+use crate::models::unit_stats_components::{Damage, Health, MoveDirection, MoveSpeed, UnitSize};
 use crate::resources::ResourcePlugin;
 use crate::resources::ui_resources::CoinCount;
 use crate::ui::UiPlugin;
