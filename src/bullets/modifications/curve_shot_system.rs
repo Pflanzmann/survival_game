@@ -17,6 +17,6 @@ pub fn curve_shot_system(
         direction.direction.x = x * angle.cos() - y * angle.sin();
         direction.direction.y = x * angle.sin() + y * angle.cos();
 
-        direction.direction = direction.direction.normalize();
+        direction.direction = direction.direction.normalize_or_zero();
     }
 }

@@ -25,6 +25,8 @@ pub fn player_control_aim_system(
             direction += Vec3::new(0.0, -1.0, 0.0);
         }
 
+        direction = direction.normalize_or_zero();
+
         if direction != player_aim_direction.direction {
             player_aim_direction.direction = direction;
         }

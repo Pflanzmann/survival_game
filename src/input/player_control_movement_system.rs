@@ -5,7 +5,7 @@ use crate::models::unit_stats_components::{MoveDirection, MoveSpeed};
 
 pub fn player_control_movement_system(
     input: Res<Input<KeyCode>>,
-    time : Res<Time>,
+    time: Res<Time>,
     mut player_query: Query<(&mut Transform, &MoveSpeed, &mut MoveDirection), With<Player>>,
 ) {
     for (mut player_transform, move_speed, mut player_direction) in player_query.iter_mut() {
@@ -26,10 +26,8 @@ pub fn player_control_movement_system(
         if input.pressed(KeyCode::S) {
             player_move_transform.translation.y -= 1.0;
         }
-
-        if player_move_transform.translation == player_transform.translation { return; }
-
-        let direction = (player_move_transform.translation - player_transform.translation).normalize();
+        
+        let direction = (player_move_transform.translation - player_transform.translation).normalize_or_zero();
 
         player_transform.translation += direction * move_speed.move_speed * time.delta_seconds() * 60.0;
 
