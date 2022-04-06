@@ -8,7 +8,7 @@ use crate::models::unit_stats_components::{Enemy, MoveDirection, MoveSpeed};
 pub fn enemy_movement_system(
     time : Res<Time>,
 
-    mut enemies: Query<(&mut Transform, &MoveSpeed, &mut FacingDirection, Option<&CollisionDirections>), (With<Enemy>, Without<Player>)>,
+    mut enemies: Query<(&mut Transform, &MoveSpeed, &mut MoveDirection, Option<&CollisionDirections>), (With<Enemy>, Without<Player>)>,
     mut player_query: Query<&Transform, (With<Player>, Without<Enemy>)>,
 ) {
     let player_result = match player_query.get_single_mut() {

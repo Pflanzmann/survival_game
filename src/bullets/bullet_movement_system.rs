@@ -20,6 +20,6 @@ pub fn bullet_movement_system(
             continue;
         }
 
-        transform.translation += direction.facing_direction * distance_to_move * time.delta_seconds() * 60.0;
+        transform.translation += direction.direction * distance_to_move * time.delta_seconds() * 60.0;
     }
 }
