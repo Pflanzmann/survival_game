@@ -8,3 +8,6 @@ pub struct HealthBar;
 
 #[derive(Component)]
 pub struct Cointext;
+
+#[derive(Component)]
+pub struct BulletHud;
