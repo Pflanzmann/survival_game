@@ -5,6 +5,7 @@ use crate::models::unit_stats_components::{FacingDirection, MoveSpeed};
 
 pub fn player_control_system(
     input: Res<Input<KeyCode>>,
+    time : Res<Time>,
     mut player_query: Query<(&mut Transform, &MoveSpeed, &mut FacingDirection), With<Player>>,
 ) {
     for (mut player_transform, move_speed, mut player_direction) in player_query.iter_mut() {
@@ -30,7 +31,7 @@ pub fn player_control_system(
 
         let direction = (player_move_transform.translation - player_transform.translation).normalize();
 
-        player_transform.translation += direction * move_speed.move_speed;
+        player_transform.translation += direction * move_speed.move_speed * time.delta_seconds() * 60.0;
 
         if player_direction.facing_direction != direction {
             player_direction.facing_direction = direction;

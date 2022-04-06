@@ -1,10 +1,13 @@
+use bevy::core::Time;
 use bevy::prelude::{Transform, Without};
 
-use crate::{Player, Query, With};
+use crate::{Player, Query, Res, With};
 use crate::models::collider::collision_directions::CollisionDirections;
 use crate::models::unit_stats_components::{Enemy, FacingDirection, MoveSpeed};
 
 pub fn enemy_movement_system(
+    time : Res<Time>,
+
     mut enemies: Query<(&mut Transform, &MoveSpeed, &mut FacingDirection, Option<&CollisionDirections>), (With<Enemy>, Without<Player>)>,
     mut player_query: Query<&Transform, (With<Player>, Without<Enemy>)>,
 ) {
@@ -26,8 +29,8 @@ pub fn enemy_movement_system(
             }
         }
 
-        transform.translation.x += direction.x * speed.move_speed;
-        transform.translation.y += direction.y * speed.move_speed;
+        transform.translation.x += direction.x * speed.move_speed * time.delta_seconds() * 60.0;
+        transform.translation.y += direction.y * speed.move_speed * time.delta_seconds() * 60.0;
 
         if enemy_direction.facing_direction != direction {
             enemy_direction.facing_direction = direction;
