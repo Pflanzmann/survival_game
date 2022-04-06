@@ -9,3 +9,4 @@ pub mod events;
 pub mod collider;
 pub mod sprite_layer;
 pub mod bundles;
+pub mod tile;

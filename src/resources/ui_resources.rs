@@ -1,6 +1,5 @@
-use serde::{Deserialize, Serialize};
 
-#[derive(Default, Deserialize, Debug)]
+#[derive(Default, Debug)]
 pub struct CoinCount {
     pub number: i32,
 }

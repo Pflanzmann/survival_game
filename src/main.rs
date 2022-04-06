@@ -1,6 +1,3 @@
-use std::fmt::Alignment;
-
-use bevy::asset::AssetServer;
 use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
@@ -12,6 +9,7 @@ use models::player_components::Player;
 
 use crate::assets_handling::AssetHandlingPlugin;
 use crate::assets_handling::preload_texture_system::TextureHandles;
+use crate::background::BackgroundPlugin;
 use crate::bullets::BulletPlugin;
 use crate::collision::CollisionPlugin;
 use crate::drops::DropsPlugin;
@@ -38,6 +36,7 @@ mod assets_handling;
 mod util;
 mod resources;
 mod ui;
+mod background;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, StageLabel)]
 pub enum SetupStages {
@@ -78,33 +77,10 @@ fn main() {
         .add_plugin(AudioPlugin)
         .add_plugin(ResourcePlugin)
         .add_plugin(UiPlugin)
-
-        .add_startup_system_to_stage(SetupStages::PlayerSetup, setup_tiles)
+        .add_plugin(BackgroundPlugin)
         .run()
 }
 
-pub fn setup_tiles(
-    mut commands: Commands,
-    texture_handles: Res<TextureHandles>,
-) {
-    let background = commands.spawn().insert(Name::new("background")).id();
-
-    for x in 0..30 {
-        for y in 0..30 {
-            let child = commands.spawn_bundle(SpriteBundle {
-                texture: texture_handles.background_tile.clone(),
-                global_transform: GlobalTransform::from(Transform::from_xyz((x * 256) as f32, (y * 256) as f32, SpriteLayer::FloorLevel.get_layer_z())),
-                sprite: Sprite {
-                    custom_size: Some(Vec2::new(256.0, 256.0)),
-                    ..Default::default()
-                },
-                ..Default::default()
-            }).id();
-
-            commands.entity(background).add_child(child);
-        }
-    }
-}
 
 
 
