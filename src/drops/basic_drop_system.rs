@@ -28,8 +28,7 @@ pub fn basic_drop_system(
 
         let random = random::<f32>() * 100.0;
 
-        //spawn coin by chance
-        if random > 0.0 && random < 20.0 {
+        if (0.0..20.0).contains(&random) {
             commands.spawn_bundle(
                 SpriteBundle {
                     transform: Transform::from_translation(drop_translation),
@@ -47,8 +46,7 @@ pub fn basic_drop_system(
                 .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) });
         }
 
-        //spawn snack by chance
-        if random >= 20.0 && random < 100.0 {
+        if (20.0..100.0).contains(&random) {
             commands.spawn_bundle(
                 SpriteBundle {
                     transform: Transform::from_translation(drop_translation),
@@ -62,8 +60,8 @@ pub fn basic_drop_system(
             )
                 .insert(Item)
                 .insert(Collider)
-                .insert(Heal{amount : item_handles.hot_dog.heal_amount})
-                .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) });
+                .insert(Heal { amount: item_handles.hot_dog.heal_amount })
+                .insert(UnitSize { collider_size: Vec2::new(item_handles.hot_dog.sprite_custom_size_x, item_handles.hot_dog.sprite_custom_size_y) });
         }
     }
 }

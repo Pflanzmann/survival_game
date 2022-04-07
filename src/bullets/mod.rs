@@ -19,8 +19,8 @@ impl Plugin for BulletPlugin {
             .add_plugin(ModificationsPlugin)
 
             .add_system(bullet_movement_system)
-            .add_system(bullet_hit_system)
 
+            .add_system_to_stage(CoreStage::PreUpdate, bullet_hit_system)
             .add_system_to_stage(CoreStage::Last, bullet_despawn_system);
     }
 }

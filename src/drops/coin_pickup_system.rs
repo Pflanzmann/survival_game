@@ -1,5 +1,4 @@
 use bevy::asset::AssetServer;
-use bevy::ecs::query::QueryEntityError;
 use bevy::prelude::{EventReader, ResMut};
 use bevy_kira_audio::Audio;
 
