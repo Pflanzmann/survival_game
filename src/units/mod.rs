@@ -1,4 +1,5 @@
-use bevy::prelude::{CoreStage, Plugin};
+use bevy::prelude::{CoreStage, Plugin, SystemSet};
+use bevy::prelude::CoreStage::PostUpdate;
 
 use crate::{App, SetupStages};
 use crate::units::despawn_dead_enemy_system::despawn_dead_enemy_system;
@@ -34,6 +35,9 @@ impl Plugin for UnitPlugin {
             .add_startup_system_to_stage(SetupStages::AfterPlayerSetup, setup_health_bar)
             .add_system_to_stage(CoreStage::Last, player_died_system)
             .add_system_to_stage(CoreStage::Last, despawn_dead_enemy_system)
+
+            .add_system_to_stage(CoreStage::PreUpdate, player_hit_system)
+
             .add_system(enemy_spawn_system)
             .add_system(enemy_movement_system)
             .add_system(sprite_direction_system)
