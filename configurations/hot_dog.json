@@ -1,0 +1,6 @@
+{
+  "sprite_custom_size_x": 128.0,
+  "sprite_custom_size_y": 128.0,
+  "sprite_path": "sprites/hot_dog.png",
+  "heal_amount": 20.0
+}

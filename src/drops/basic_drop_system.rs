@@ -1,11 +1,12 @@
 use bevy::prelude::{EventReader, Res, Sprite, SpriteBundle, Vec2, With};
+use rand::random;
 
 use crate::{Commands, Query, Transform, UnitSize};
 use crate::assets_handling::preload_item_system::ItemConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::models::collider::collider::Collider;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
-use crate::models::item_components::Item;
+use crate::models::item_components::{Coin, Heal, Item};
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_stats_components::Enemy;
 
@@ -25,19 +26,44 @@ pub fn basic_drop_system(
         let mut drop_translation = enemy_position;
         drop_translation.z = SpriteLayer::LowGroundLevel.get_layer_z();
 
-        commands.spawn_bundle(
-            SpriteBundle {
-                transform: Transform::from_translation(drop_translation),
-                texture: texture_handles.basic_drop_asset_handler.clone(),
-                sprite: Sprite {
-                    custom_size: Some(Vec2::new(item_handles.coin.sprite_custom_size_x, item_handles.coin.sprite_custom_size_y)),
+        let random = random::<f32>() * 100.0;
+
+        //spawn coin by chance
+        if random > 0.0 && random < 20.0 {
+            commands.spawn_bundle(
+                SpriteBundle {
+                    transform: Transform::from_translation(drop_translation),
+                    texture: texture_handles.coin_sprite.clone(),
+                    sprite: Sprite {
+                        custom_size: Some(Vec2::new(item_handles.coin.sprite_custom_size_x, item_handles.coin.sprite_custom_size_y)),
+                        ..Default::default()
+                    },
                     ..Default::default()
-                },
-                ..Default::default()
-            }
-        )
-            .insert(Item)
-            .insert(Collider)
-            .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) });
+                }
+            )
+                .insert(Item)
+                .insert(Collider)
+                .insert(Coin)
+                .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) });
+        }
+
+        //spawn snack by chance
+        if random >= 20.0 && random < 100.0 {
+            commands.spawn_bundle(
+                SpriteBundle {
+                    transform: Transform::from_translation(drop_translation),
+                    texture: texture_handles.hot_dog_sprite.clone(),
+                    sprite: Sprite {
+                        custom_size: Some(Vec2::new(item_handles.hot_dog.sprite_custom_size_x, item_handles.hot_dog.sprite_custom_size_y)),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                }
+            )
+                .insert(Item)
+                .insert(Collider)
+                .insert(Heal{amount : item_handles.hot_dog.heal_amount})
+                .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) });
+        }
     }
 }

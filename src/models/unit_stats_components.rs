@@ -21,6 +21,14 @@ impl Health {
     pub fn new(max_health: f32) -> Self {
         Health { max_health, current_health: (max_health) }
     }
+
+    pub fn heal(&mut self, amount: f32) {
+        self.current_health += amount;
+
+        if self.current_health > self.max_health {
+            self.current_health = self.max_health
+        }
+    }
 }
 
 #[derive(Component)]
