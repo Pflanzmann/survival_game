@@ -2,6 +2,7 @@ use bevy::app::EventWriter;
 use bevy::prelude::{Commands, Res, Sprite, SpriteBundle, Vec2};
 
 use crate::{Damage, Entity, Query, TextureHandles, Transform, With};
+use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
 use crate::models::bullet_components::{Bullet, BulletRange, HitLimit};
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
@@ -15,6 +16,7 @@ use crate::models::unit_stats_components::{MoveDirection, MoveSpeed, UnitSize};
 pub fn straight_basic_shot_system(
     mut command: Commands,
     texture_handle: Res<TextureHandles>,
+    bullet_handle: Res<BulletConfigHandles>,
     mut bullet_shot_event_writer: EventWriter<BulletShotEvent>,
     weapon_holder: Query<(&Transform, &AimDirection, &WeaponSlot)>,
     mut gun_query: Query<(Entity, &mut Reloadable), With<StraightBasicShot>>,
@@ -37,7 +39,7 @@ pub fn straight_basic_shot_system(
         let bullet = command.spawn_bundle(SpriteBundle {
             transform: Transform::from_xyz(holder_transform.translation.x, holder_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z()),
             sprite: Sprite {
-                custom_size: Some(Vec2::new(128.0, 128.0)),
+                custom_size: Some(Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y)),
                 ..Default::default()
             },
             texture: texture_handle.bullet_fireball.clone(),
@@ -45,12 +47,12 @@ pub fn straight_basic_shot_system(
         })
             .insert_bundle(BulletBundle {
                 bullet: Bullet { source_entity: gun_entity },
-                unit_size: UnitSize { collider_size: Vec2::new(128.0, 128.0) },
+                unit_size: UnitSize { collider_size: Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y) },
                 facing_direction: MoveDirection { direction: holder_aim_direction.direction },
-                move_speed: MoveSpeed { move_speed: 15.0 },
-                damage: Damage::new(5.0),
-                bullet_range: BulletRange::new(2048.0),
-                hit_limit: HitLimit { hit_limit: 1 },
+                move_speed: MoveSpeed { move_speed: bullet_handle.basic_bullet.speed },
+                damage: Damage::new(bullet_handle.basic_bullet.damage),
+                bullet_range: BulletRange::new(bullet_handle.basic_bullet.range),
+                hit_limit: HitLimit { hit_limit: bullet_handle.basic_bullet.hit_limit},
                 collider: Collider,
                 collider_entities: CollidedEntities::default(),
             }).id();
