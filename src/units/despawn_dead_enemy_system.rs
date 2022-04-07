@@ -2,7 +2,7 @@ use bevy::prelude::{Commands, EventReader};
 
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
 
-pub fn enemy_despawn_system(
+pub fn despawn_dead_enemy_system(
     mut commands: Commands,
     mut enemy_died_event: EventReader<EnemyDiedEvent>,
 ) {
@@ -10,3 +10,4 @@ pub fn enemy_despawn_system(
         commands.entity(event.enemy_entity).despawn();
     }
 }
+
