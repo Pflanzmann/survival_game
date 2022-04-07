@@ -7,7 +7,8 @@ use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 
 #[derive(Default)]
 pub struct TextureHandles {
-    pub basic_drop_asset_handler: Handle<Image>,
+    pub coin_sprite: Handle<Image>,
+    pub hot_dog_sprite: Handle<Image>,
     pub player_sprite: Handle<Image>,
     pub enemy_goblin: Handle<Image>,
     pub bullet_fireball: Handle<Image>,
@@ -19,9 +20,11 @@ pub fn preload_texture_system(
     enemy_handle: Res<EnemyConfigHandles>,
     item_handles: Res<ItemConfigHandles>,
     player_handles: Res<PlayerConfigHandles>,
+
     mut texture_handles: ResMut<TextureHandles>,
 ) {
-    texture_handles.basic_drop_asset_handler = asset_server.load(&item_handles.coin.sprite_path);
+    texture_handles.coin_sprite = asset_server.load(&item_handles.coin.sprite_path);
+    texture_handles.hot_dog_sprite = asset_server.load(&item_handles.hot_dog.sprite_path);
     texture_handles.player_sprite = asset_server.load(&player_handles.player_one.sprite_path);
     texture_handles.enemy_goblin = asset_server.load(&enemy_handle.goblin.sprite_path.clone());
     texture_handles.bullet_fireball = asset_server.load("sprites/Bullet.png");
