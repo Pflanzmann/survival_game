@@ -10,7 +10,7 @@ pub fn setup_gun_system(
 ) {
     for entity in player_query.iter() {
         let mod_container = commands.spawn()
-            .insert(Name::new("mod container"))
+            .insert(Name::new("gun mod container"))
             .insert(ModContainer)
             .id();
 

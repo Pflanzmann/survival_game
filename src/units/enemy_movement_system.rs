@@ -2,8 +2,10 @@ use bevy::core::Time;
 use bevy::prelude::{Transform, Without};
 
 use crate::{Player, Query, Res, Vec3, With};
+use crate::models::attributes::attribute::*;
+use crate::models::attributes::move_speed::MoveSpeed;
 use crate::models::collider::collision_directions::CollisionDirections;
-use crate::models::unit_stats_components::{Enemy, MoveDirection, MoveSpeed};
+use crate::models::unit_stats_components::{Enemy, MoveDirection};
 
 pub fn enemy_movement_system(
     time: Res<Time>,
@@ -27,8 +29,8 @@ pub fn enemy_movement_system(
             direction += enemies_dodge_direction.normalize_or_zero() * 0.4;
         }
 
-        transform.translation.x += direction.x * speed.move_speed * time.delta_seconds() * 60.0;
-        transform.translation.y += direction.y * speed.move_speed * time.delta_seconds() * 60.0;
+        transform.translation.x += direction.x * speed.get_total_amount() * time.delta_seconds() * 60.0;
+        transform.translation.y += direction.y * speed.get_total_amount() * time.delta_seconds() * 60.0;
 
         if enemy_direction.direction != direction {
             enemy_direction.direction = direction;

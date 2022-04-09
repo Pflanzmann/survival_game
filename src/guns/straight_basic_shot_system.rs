@@ -3,6 +3,8 @@ use bevy::prelude::{Commands, Res, Sprite, SpriteBundle, Vec2};
 
 use crate::{Damage, Entity, Query, TextureHandles, Transform, With};
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
+use crate::models::attributes::attribute::Attribute;
+use crate::models::attributes::move_speed::MoveSpeed;
 use crate::models::bullet_components::{Bullet, BulletRange, HitLimit};
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
@@ -11,7 +13,7 @@ use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
 use crate::models::player_components::AimDirection;
 use crate::models::sprite_layer::SpriteLayer;
-use crate::models::unit_stats_components::{MoveDirection, MoveSpeed, UnitSize};
+use crate::models::unit_stats_components::{MoveDirection, UnitSize};
 
 pub fn straight_basic_shot_system(
     mut command: Commands,
@@ -49,10 +51,10 @@ pub fn straight_basic_shot_system(
                 bullet: Bullet { source_entity: gun_entity },
                 unit_size: UnitSize { collider_size: Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y) },
                 facing_direction: MoveDirection { direction: holder_aim_direction.direction },
-                move_speed: MoveSpeed { move_speed: bullet_handle.basic_bullet.speed },
+                move_speed: MoveSpeed::new(bullet_handle.basic_bullet.speed),
                 damage: Damage::new(bullet_handle.basic_bullet.damage),
                 bullet_range: BulletRange::new(bullet_handle.basic_bullet.range),
-                hit_limit: HitLimit { hit_limit: bullet_handle.basic_bullet.hit_limit},
+                hit_limit: HitLimit { hit_limit: bullet_handle.basic_bullet.hit_limit },
                 collider: Collider,
                 collider_entities: CollidedEntities::default(),
             }).id();

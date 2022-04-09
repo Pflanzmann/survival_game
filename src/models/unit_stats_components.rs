@@ -7,11 +7,6 @@ use crate::Vec2;
 pub struct Enemy;
 
 #[derive(Component)]
-pub struct MoveSpeed {
-    pub move_speed: f32,
-}
-
-#[derive(Component)]
 pub struct Health {
     pub max_health: f32,
     pub current_health: f32,
