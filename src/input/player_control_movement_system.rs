@@ -1,7 +1,9 @@
 use bevy::prelude::*;
 
+use crate::models::attributes::attribute::*;
+use crate::models::attributes::move_speed::MoveSpeed;
 use crate::models::player_components::Player;
-use crate::models::unit_stats_components::{MoveDirection, MoveSpeed};
+use crate::models::unit_stats_components::MoveDirection;
 
 pub fn player_control_movement_system(
     input: Res<Input<KeyCode>>,
@@ -26,10 +28,10 @@ pub fn player_control_movement_system(
         if input.pressed(KeyCode::S) {
             player_move_transform.translation.y -= 1.0;
         }
-        
+
         let direction = (player_move_transform.translation - player_transform.translation).normalize_or_zero();
 
-        player_transform.translation += direction * move_speed.move_speed * time.delta_seconds() * 60.0;
+        player_transform.translation += direction * move_speed.get_total_amount() * time.delta_seconds() * 60.0;
 
         if player_direction.direction != direction {
             player_direction.direction = direction;

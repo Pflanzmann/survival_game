@@ -1,14 +1,16 @@
 use bevy::math::Vec3;
-use bevy::prelude::{AssetServer, Commands, Res, ResMut, Sprite, SpriteBundle, Time, Vec2};
+use bevy::prelude::{Commands, Res, ResMut, Sprite, SpriteBundle, Time, Vec2};
 use rand::random;
 
 use crate::{Health, Player, Query, Transform, With};
 use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
+use crate::models::attributes::attribute::Attribute;
+use crate::models::attributes::move_speed::MoveSpeed;
 use crate::models::bundles::enemy_bundle::EnemyBundle;
 use crate::models::collider::collider::Collider;
 use crate::models::sprite_layer::SpriteLayer;
-use crate::models::unit_stats_components::{Damage, Enemy, MoveDirection, MoveSpeed, UnitSize};
+use crate::models::unit_stats_components::{Damage, Enemy, MoveDirection, UnitSize};
 
 #[derive(Default)]
 pub struct SpawnTimer(f32);
@@ -50,7 +52,7 @@ pub fn enemy_spawn_system(
                 collider: Collider,
                 unit_size: UnitSize { collider_size: Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y) },
                 facing_direction: MoveDirection { direction: Vec3::default() },
-                move_speed: MoveSpeed { move_speed: enemy_handles.goblin.move_speed },
+                move_speed: MoveSpeed::new(enemy_handles.goblin.move_speed),
                 damage: Damage::new(enemy_handles.goblin.damage),
                 health: Health::new(enemy_handles.goblin.health),
             });
