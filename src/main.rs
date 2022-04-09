@@ -81,47 +81,13 @@ impl Default for ToAppState {
 #[derive(Default)]
 pub struct StateTimer(f32);
 
-const FIXED_TIMESTEP_Pause: f64 = 0.1;
-
 fn main() {
     App::new()
         .add_startup_stage(SetupStages::ConfigSetup, SystemStage::parallel())
         .add_startup_stage(SetupStages::AssetSetup, SystemStage::parallel())
-        //.add_startup_stage(SetupStages::PlayerSetup, SystemStage::single_threaded())
-        //.add_startup_stage(SetupStages::AfterPlayerSetup, SystemStage::parallel())
 
-        .add_stage_before(CoreStage::PreUpdate, SetupStages::AfterPlayerSetup, SystemStage::parallel())
-        .add_stage_before(CoreStage::PreUpdate, SetupStages::PlayerSetup, SystemStage::parallel())
-        //.add_stage_before(CoreStage::PreUpdate, SetupStages::AssetSetup, SystemStage::parallel())
-        //.add_stage_before(CoreStage::PreUpdate, SetupStages::ConfigSetup, SystemStage::parallel())
-
-        .add_state_to_stage(CoreStage::PostUpdate, AppState::MainMenu)
-        .add_state_to_stage(CoreStage::Last, AppState::MainMenu)
-
-        .add_state_to_stage(SetupStages::AfterPlayerSetup, AppState::MainMenu)
-        /*.add_state_to_stage(SetupStages::AfterPlayerSetup, AppState::Loading)
-        .add_state_to_stage(SetupStages::AfterPlayerSetup, AppState::InGame)
-        .add_state_to_stage(SetupStages::AfterPlayerSetup, AppState::GameOver)
-        .add_state_to_stage(SetupStages::AfterPlayerSetup, AppState::Paused)*/
-
-        //.add_state_to_stage(SetupStages::AssetSetup, AppState::MainMenu)
-        /*.add_state_to_stage(SetupStages::AssetSetup, AppState::Loading)
-        .add_state_to_stage(SetupStages::AssetSetup, AppState::InGame)
-        .add_state_to_stage(SetupStages::AssetSetup, AppState::GameOver)
-        .add_state_to_stage(SetupStages::AssetSetup, AppState::Paused)*/
-
-        .add_state_to_stage(SetupStages::PlayerSetup, AppState::MainMenu)
-        /*.add_state_to_stage(SetupStages::PlayerSetup, AppState::Loading)
-        .add_state_to_stage(SetupStages::PlayerSetup, AppState::InGame)
-        .add_state_to_stage(SetupStages::PlayerSetup, AppState::GameOver)
-        .add_state_to_stage(SetupStages::PlayerSetup, AppState::Paused)*/
-
-        //.add_state_to_stage(SetupStages::ConfigSetup, AppState::MainMenu)
-        /*.add_state_to_stage(SetupStages::ConfigSetup, AppState::Loading)
-        .add_state_to_stage(SetupStages::ConfigSetup, AppState::InGame)
-        .add_state_to_stage(SetupStages::ConfigSetup, AppState::GameOver)
-        .add_state_to_stage(SetupStages::ConfigSetup, AppState::Paused)*/
-
+        .add_state_to_stage(CoreStage::PostUpdate, AppState::Pre)
+        .add_state_to_stage(CoreStage::Last, AppState::Pre)
 
         .add_plugins(DefaultPlugins)
         .add_plugin(WorldInspectorPlugin::new())
@@ -136,10 +102,11 @@ fn main() {
         .add_plugin(BulletPlugin)
         .add_plugin(DropsPlugin)
         .add_plugin(AssetHandlingPlugin)
-        .add_plugin(AudioPlugin)
         .add_plugin(ResourcePlugin)
         .add_plugin(UiPlugin)
         .add_plugin(BackgroundPlugin)
+
+        .add_plugin(AudioPlugin)
 
         .add_system_set(SystemSet::on_enter(AppState::MainMenu)
             .with_system(spawn_main_menu_system)
@@ -157,7 +124,6 @@ fn main() {
         .add_system_to_stage(CoreStage::PreUpdate, execute_state_switch_system)
         //.add_system(execute_state_switch_system)
         .add_system_set(SystemSet::new()
-            .with_run_criteria(FixedTimestep::step(FIXED_TIMESTEP_Pause))
             .with_system(toggle_pause_system)
         )
 
@@ -170,12 +136,6 @@ pub fn execute_state_switch_system(
     mut state_trigger: ResMut<AppStateTrigger>,
     mut app_state: ResMut<State<AppState>>,
 ) {
-    /*state_timer.0 += time.delta().as_secs_f32();
-    if state_timer.0 < 2.0 {
-        return;
-    }
-    state_timer.0 = 0.0;*/
-
     match state_trigger.State_Change_Trigger {
         ToAppState::ToPre => {
             if app_state.current() != &AppState::Pre {
@@ -226,13 +186,12 @@ pub fn toggle_pause_system(
     time: Res<Time>,
 ) {
     state_timer.0 += time.delta().as_secs_f32();
-    if state_timer.0 < 0.1 {
+    if state_timer.0 < 0.2 {
         return;
     }
 
 
     if input.pressed(KeyCode::Space) {
-        println!("pause");
         state_timer.0 = 0.0;
         match app_state.current() {
             AppState::Pre => {}

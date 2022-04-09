@@ -14,7 +14,7 @@ pub struct GunPlugin;
 impl Plugin for GunPlugin {
     fn build(&self, app: &mut App) {
         app
-            .add_system_set(SystemSet::on_enter(AppState::InGame)
+            .add_system_set(SystemSet::on_exit(AppState::MainMenu)
                                                  .with_system(setup_gun_system))
 
             .add_system_set(SystemSet::on_update(AppState::InGame)
