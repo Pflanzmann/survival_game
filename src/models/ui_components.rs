@@ -14,3 +14,9 @@ pub struct BulletHud;
 
 #[derive(Component)]
 pub struct MainMenuComp;
+
+#[derive(Component)]
+pub struct PauseMenuComp;
+
+#[derive(Component)]
+pub struct GameOverMenuComp;
