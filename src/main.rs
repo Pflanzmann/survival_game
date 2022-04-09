@@ -1,9 +1,10 @@
 use bevy::app::CoreStage;
 use bevy::app::CoreStage::PreUpdate;
+use bevy::core::FixedTimestep;
 use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
-use bevy::prelude::{AlignItems, AlignSelf, App, AssetServer, BuildChildren, Button, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, DetectChanges, Entity, FlexDirection, Font, GlobalTransform, HorizontalAlign, Interaction, JustifyContent, Name, NodeBundle, OrthographicCameraBundle, Plugin, PositionType, Rect, Res, ResMut, Size, Sprite, SpriteBundle, State, Style, SystemSet, SystemStage, Text, TextAlignment, TextBundle, TextStyle, Transform, UiCameraBundle, Val, Vec2, Vec3, VerticalAlign, With, Without};
+use bevy::prelude::{AlignItems, AlignSelf, App, AssetServer, BuildChildren, Button, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, DetectChanges, Entity, FlexDirection, Font, GlobalTransform, HorizontalAlign, Input, Interaction, JustifyContent, KeyCode, Name, NodeBundle, OrthographicCameraBundle, Plugin, PositionType, Rect, Res, ResMut, Size, Sprite, SpriteBundle, State, Style, SystemSet, SystemStage, Text, TextAlignment, TextBundle, TextStyle, Time, Transform, UiCameraBundle, Val, Vec2, Vec3, VerticalAlign, With, Without};
 use bevy::render::camera::camera_system;
 use bevy::utils::tracing::event;
 use bevy_inspector_egui::WorldInspectorPlugin;
@@ -25,6 +26,7 @@ use crate::models::sprite_layer::SpriteLayer;
 use crate::models::ui_components::{Cointext, HealthBar, MainMenuComp};
 use crate::models::unit_stats_components::{Damage, Health, MoveDirection, MoveSpeed, UnitSize};
 use crate::resources::ResourcePlugin;
+use crate::resources::state_resources::AppStateTrigger;
 use crate::resources::ui_resources::CoinCount;
 use crate::ui::UiPlugin;
 use crate::units::UnitPlugin;
@@ -48,6 +50,7 @@ pub enum SetupStages {
     AssetSetup,
     PlayerSetup,
     AfterPlayerSetup,
+    StateStage
 }
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
@@ -60,17 +63,37 @@ pub enum AppState {
     Paused,
 }
 
+#[derive(Debug)]
+pub enum ToAppState {
+    ToPre,
+    ToMainMenu,
+    ToLoading,
+    ToInGame,
+    ToGameOver,
+    ToPaused,
+    None,
+}
+
+impl Default for ToAppState {
+    fn default() -> Self { ToAppState::None }
+}
+
+#[derive(Default)]
+pub struct StateTimer(f32);
+
+const FIXED_TIMESTEP_Pause: f64 = 0.1;
+
 fn main() {
     App::new()
-        //.add_startup_stage(SetupStages::ConfigSetup, SystemStage::parallel())
-        //.add_startup_stage(SetupStages::AssetSetup, SystemStage::parallel())
+        .add_startup_stage(SetupStages::ConfigSetup, SystemStage::parallel())
+        .add_startup_stage(SetupStages::AssetSetup, SystemStage::parallel())
         //.add_startup_stage(SetupStages::PlayerSetup, SystemStage::single_threaded())
         //.add_startup_stage(SetupStages::AfterPlayerSetup, SystemStage::parallel())
 
         .add_stage_before(CoreStage::PreUpdate, SetupStages::AfterPlayerSetup, SystemStage::parallel())
         .add_stage_before(CoreStage::PreUpdate, SetupStages::PlayerSetup, SystemStage::parallel())
-        .add_stage_before(CoreStage::PreUpdate, SetupStages::AssetSetup, SystemStage::parallel())
-        .add_stage_before(CoreStage::PreUpdate, SetupStages::ConfigSetup, SystemStage::parallel())
+        //.add_stage_before(CoreStage::PreUpdate, SetupStages::AssetSetup, SystemStage::parallel())
+        //.add_stage_before(CoreStage::PreUpdate, SetupStages::ConfigSetup, SystemStage::parallel())
 
         .add_state_to_stage(CoreStage::PostUpdate, AppState::MainMenu)
         .add_state_to_stage(CoreStage::Last, AppState::MainMenu)
@@ -81,7 +104,7 @@ fn main() {
         .add_state_to_stage(SetupStages::AfterPlayerSetup, AppState::GameOver)
         .add_state_to_stage(SetupStages::AfterPlayerSetup, AppState::Paused)*/
 
-        .add_state_to_stage(SetupStages::AssetSetup, AppState::MainMenu)
+        //.add_state_to_stage(SetupStages::AssetSetup, AppState::MainMenu)
         /*.add_state_to_stage(SetupStages::AssetSetup, AppState::Loading)
         .add_state_to_stage(SetupStages::AssetSetup, AppState::InGame)
         .add_state_to_stage(SetupStages::AssetSetup, AppState::GameOver)
@@ -93,7 +116,7 @@ fn main() {
         .add_state_to_stage(SetupStages::PlayerSetup, AppState::GameOver)
         .add_state_to_stage(SetupStages::PlayerSetup, AppState::Paused)*/
 
-        .add_state_to_stage(SetupStages::ConfigSetup, AppState::MainMenu)
+        //.add_state_to_stage(SetupStages::ConfigSetup, AppState::MainMenu)
         /*.add_state_to_stage(SetupStages::ConfigSetup, AppState::Loading)
         .add_state_to_stage(SetupStages::ConfigSetup, AppState::InGame)
         .add_state_to_stage(SetupStages::ConfigSetup, AppState::GameOver)
@@ -130,13 +153,117 @@ fn main() {
             .with_system(trigger_enter_main_system)
         )
 
+        //.add_system(show_current_state)
+        .add_system_to_stage(CoreStage::PreUpdate, execute_state_switch_system)
+        //.add_system(execute_state_switch_system)
+        .add_system_set(SystemSet::new()
+            .with_run_criteria(FixedTimestep::step(FIXED_TIMESTEP_Pause))
+            .with_system(toggle_pause_system)
+        )
+
+        .init_resource::<StateTimer>()
+
         .run()
 }
 
+pub fn execute_state_switch_system(
+    mut state_trigger: ResMut<AppStateTrigger>,
+    mut app_state: ResMut<State<AppState>>,
+) {
+    /*state_timer.0 += time.delta().as_secs_f32();
+    if state_timer.0 < 2.0 {
+        return;
+    }
+    state_timer.0 = 0.0;*/
+
+    match state_trigger.State_Change_Trigger {
+        ToAppState::ToPre => {
+            if app_state.current() != &AppState::Pre {
+                state_trigger.State_Change_Trigger = ToAppState::None;
+                app_state.set(AppState::Pre).unwrap();
+            }
+        }
+        ToAppState::ToMainMenu => {
+            if app_state.current() != &AppState::MainMenu {
+                state_trigger.State_Change_Trigger = ToAppState::None;
+                app_state.set(AppState::MainMenu).unwrap();
+            }
+        }
+        ToAppState::ToLoading => {
+            if app_state.current() != &AppState::Loading {
+                state_trigger.State_Change_Trigger = ToAppState::None;
+                app_state.set(AppState::Loading).unwrap();
+            }
+        }
+        ToAppState::ToInGame => {
+            if app_state.current() != &AppState::InGame {
+                state_trigger.State_Change_Trigger = ToAppState::None;
+                app_state.set(AppState::InGame).unwrap();
+            }
+        }
+        ToAppState::ToGameOver => {
+            if app_state.current() != &AppState::GameOver {
+                state_trigger.State_Change_Trigger = ToAppState::None;
+                app_state.set(AppState::GameOver).unwrap();
+            }
+        }
+        ToAppState::ToPaused => {
+            if app_state.current() != &AppState::Paused {
+                state_trigger.State_Change_Trigger = ToAppState::None;
+                app_state.set(AppState::Paused).unwrap();
+            }
+        }
+        ToAppState::None => {}
+    }
+}
+
+pub fn toggle_pause_system(
+    input: Res<Input<KeyCode>>,
+    mut state_trigger: ResMut<AppStateTrigger>,
+    app_state: ResMut<State<AppState>>,
+
+    mut state_timer: ResMut<StateTimer>,
+    time: Res<Time>,
+) {
+    state_timer.0 += time.delta().as_secs_f32();
+    if state_timer.0 < 0.1 {
+        return;
+    }
+
+
+    if input.pressed(KeyCode::Space) {
+        println!("pause");
+        state_timer.0 = 0.0;
+        match app_state.current() {
+            AppState::Pre => {}
+            AppState::MainMenu => {}
+            AppState::Loading => {}
+            AppState::InGame => { state_trigger.State_Change_Trigger = ToAppState::ToPaused; }
+            AppState::GameOver => {}
+            AppState::Paused => { state_trigger.State_Change_Trigger = ToAppState::ToInGame; }
+        }
+    }
+}
+
+pub fn show_current_state(
+    app_state: ResMut<State<AppState>>
+) {
+    match app_state.current() {
+        AppState::Pre => { println!("pre") }
+        AppState::MainMenu => { println!("MainMenu") }
+        AppState::Loading => { println!("Loading") }
+        AppState::InGame => { println!("InGame") }
+        AppState::GameOver => { println!("GameOver") }
+        AppState::Paused => { println!("Paused") }
+    }
+}
+
 pub fn trigger_enter_main_system(
-    mut app_state: ResMut<State<AppState>>
-){
-    app_state.set(AppState::MainMenu).unwrap();
+    mut app_state: ResMut<State<AppState>>,
+    mut state_trigger: ResMut<AppStateTrigger>,
+) {
+    state_trigger.State_Change_Trigger = ToAppState::ToMainMenu;
+    //app_state.set(AppState::MainMenu).unwrap();
 }
 
 pub fn close_main_menu_system(

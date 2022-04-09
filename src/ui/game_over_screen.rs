@@ -1,11 +1,12 @@
 use bevy::app::Events;
 use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, Entity, FlexDirection, HorizontalAlign, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, State, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign};
-use crate::AppState;
+use crate::{AppState, AppStateTrigger, ToAppState};
 
 pub fn spawn_menu_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
 ) {
+    print!("game over screen system");
     commands
         .spawn_bundle(NodeBundle {
             style: Style {
@@ -81,7 +82,8 @@ pub fn spawn_menu_system(
 pub fn button_click_system(
     mut app_exit_events: ResMut<Events<bevy::app::AppExit>>,
     mut button_query : Query<(Entity, &mut Interaction), Changed<Interaction>>,
-    mut app_state: ResMut<State<AppState>>
+    mut app_state: ResMut<State<AppState>>,
+    mut state_trigger : ResMut<AppStateTrigger>
 
 ){
     match app_state.current() {
@@ -110,7 +112,8 @@ pub fn button_click_system(
                 match *interaction {
                     Interaction::Clicked => {
                         println!("button wurde geklickt!");
-                        app_state.set(AppState::InGame).unwrap();
+                        state_trigger.State_Change_Trigger = ToAppState::ToInGame;
+                        //app_state.set(AppState::InGame).unwrap();
                     }
                     Interaction::Hovered => {
                         println!("button wurde gehovered!")
