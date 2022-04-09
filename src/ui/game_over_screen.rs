@@ -6,7 +6,6 @@ pub fn spawn_menu_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
 ) {
-    print!("game over screen system");
     commands
         .spawn_bundle(NodeBundle {
             style: Style {
@@ -91,14 +90,11 @@ pub fn button_click_system(
             for (entity, mut interaction) in button_query.iter_mut() {
                 match *interaction {
                     Interaction::Clicked => {
-                        println!("button wurde geklickt!");
                         app_exit_events.send(bevy::app::AppExit);
                     }
                     Interaction::Hovered => {
-                        println!("button wurde gehovered!")
                     }
                     Interaction::None => {
-                        println!("button wurde geleaved!")
                     }
                 }
             }
@@ -111,15 +107,11 @@ pub fn button_click_system(
             for (entity, mut interaction) in button_query.iter_mut() {
                 match *interaction {
                     Interaction::Clicked => {
-                        println!("button wurde geklickt!");
                         state_trigger.State_Change_Trigger = ToAppState::ToInGame;
-                        //app_state.set(AppState::InGame).unwrap();
                     }
                     Interaction::Hovered => {
-                        println!("button wurde gehovered!")
                     }
                     Interaction::None => {
-                        println!("button wurde geleaved!")
                     }
                 }
             }

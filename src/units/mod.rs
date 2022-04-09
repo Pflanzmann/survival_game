@@ -1,6 +1,6 @@
 use bevy::prelude::{CoreStage, Plugin, SystemSet};
 
-use crate::{App, SetupStages};
+use crate::{App, AppState};
 use crate::units::despawn_dead_enemy_system::despawn_dead_enemy_system;
 use crate::units::despawn_far_enemy_system::despawn_far_enemy_system;
 use crate::units::enemy_movement_system::enemy_movement_system;
