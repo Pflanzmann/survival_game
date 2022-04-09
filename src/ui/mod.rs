@@ -18,7 +18,7 @@ impl Plugin for UiPlugin {
                 .with_system(update_bullet_hud_system)
             )
 
-            .add_system_set(SystemSet::on_enter(AppState::InGame)
+            .add_system_set(SystemSet::on_exit(AppState::MainMenu)
                 .with_system(spawn_text_system)
             )
 

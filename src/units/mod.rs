@@ -32,19 +32,11 @@ impl Plugin for UnitPlugin {
         app
             .init_resource::<SpawnTimer>()
 
-            /*.add_system_set_to_stage(SetupStages::PlayerSetup, SystemSet::on_enter(AppState::MainMenu)
-                .with_system(setup_player_system),
-            )*/
-
             .add_system_set(SystemSet::on_enter(AppState::MainMenu)
                 .with_system(setup_player_system)
             )
 
-            /*.add_system_set_to_stage(SetupStages::AfterPlayerSetup, SystemSet::on_enter(AppState::MainMenu)
-                .with_system(setup_health_bar),
-            )*/
-
-            .add_system_set(SystemSet::on_enter(AppState::InGame)
+            .add_system_set(SystemSet::on_exit(AppState::MainMenu)
                 .with_system(setup_health_bar)
             )
 
@@ -54,7 +46,6 @@ impl Plugin for UnitPlugin {
             )
 
             .add_system_set(SystemSet::on_update(AppState::InGame)
-
                 .with_system(enemy_spawn_system)
                 .with_system(enemy_movement_system)
                 .with_system(sprite_direction_system)

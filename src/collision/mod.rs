@@ -1,3 +1,4 @@
+use bevy::app::CoreStage;
 use bevy::app::CoreStage::PostUpdate;
 use bevy::core::FixedTimestep;
 use bevy::prelude::{Plugin, SystemSet};
@@ -20,7 +21,7 @@ const FIXED_TIMESTEP: f64 = 0.1;
 impl Plugin for CollisionPlugin {
     fn build(&self, app: &mut App) {
         app.add_system_set_to_stage(
-            PostUpdate,
+            CoreStage::PostUpdate,
             SystemSet::on_update(AppState::InGame)
                 .with_run_criteria(FixedTimestep::step(FIXED_TIMESTEP))
                 .with_system(enemy_player_collision_system)

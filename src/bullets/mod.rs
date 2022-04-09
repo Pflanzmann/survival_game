@@ -23,10 +23,10 @@ impl Plugin for BulletPlugin {
                 .with_system(bullet_hit_system)
             )
 
-
-            .add_system_set_to_stage(CoreStage::Last,
-                                     SystemSet::on_update(AppState::InGame)
-                                         .with_system(bullet_despawn_system)
+            .add_system_set_to_stage(
+                CoreStage::Last,
+                SystemSet::on_update(AppState::InGame)
+                    .with_system(bullet_despawn_system)
             );
     }
 }
