@@ -10,15 +10,20 @@ pub struct UiPlugin;
 
 impl Plugin for UiPlugin {
     fn build(&self, app: &mut App) {
-        app.add_system(button_click_system)
-            .add_system(update_text_system)
-            .add_system(update_bullet_hud_system)
+       app
+           .add_system_set(SystemSet::on_update(AppState::InGame)
+                .with_system(update_text_system)
+                .with_system(update_bullet_hud_system)
+            )
 
-            .add_startup_system(spawn_text_system)
+            .add_system_set(SystemSet::on_enter(AppState::InGame)
+                .with_system(spawn_text_system)
+            )
 
             .add_system_set(
-                SystemSet::on_enter(AppState::MainMenu)
+                SystemSet::on_enter(AppState::GameOver)
                     .with_system(spawn_menu_system)
-            );
+            )
+            .add_system(button_click_system);
     }
 }

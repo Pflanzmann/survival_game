@@ -11,8 +11,6 @@ pub fn spawn_text_system(
 ) {
     coin_counter.number = 0;
 
-    commands.spawn_bundle(UiCameraBundle::default());
-
     commands.spawn_bundle(TextBundle {
         style: Style {
             position_type: PositionType::Absolute,

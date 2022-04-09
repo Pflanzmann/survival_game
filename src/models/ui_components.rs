@@ -11,3 +11,6 @@ pub struct Cointext;
 
 #[derive(Component)]
 pub struct BulletHud;
+
+#[derive(Component)]
+pub struct MainMenuComp;

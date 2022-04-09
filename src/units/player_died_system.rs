@@ -11,6 +11,6 @@ pub fn player_died_system(
 ) {
     for event in player_died_event.iter() {
         commands.entity(event.player_entity).despawn();
-        app_state.set(AppState::MainMenu).unwrap();
+        app_state.set(AppState::GameOver).unwrap();
     }
 }
