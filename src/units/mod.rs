@@ -1,5 +1,4 @@
 use bevy::prelude::{CoreStage, Plugin, SystemSet};
-use bevy::prelude::CoreStage::PostUpdate;
 
 use crate::{App, SetupStages};
 use crate::units::despawn_dead_enemy_system::despawn_dead_enemy_system;
@@ -31,20 +30,30 @@ pub struct UnitPlugin;
 impl Plugin for UnitPlugin {
     fn build(&self, app: &mut App) {
         app
-            .add_startup_system_to_stage(SetupStages::PlayerSetup, setup_player_system)
-            .add_startup_system_to_stage(SetupStages::AfterPlayerSetup, setup_health_bar)
-            .add_system_to_stage(CoreStage::Last, player_died_system)
-            .add_system_to_stage(CoreStage::Last, despawn_dead_enemy_system)
+            .init_resource::<SpawnTimer>()
 
-            .add_system_to_stage(CoreStage::PreUpdate, player_hit_system)
+            .add_system_set_to_stage(SetupStages::PlayerSetup, SystemSet::on_enter(AppState::MainMenu)
+                .with_system(setup_player_system),
+            )
 
-            .add_system(enemy_spawn_system)
-            .add_system(enemy_movement_system)
-            .add_system(sprite_direction_system)
-            .add_system(healthbar_update_system)
-            .add_system(fit_sprite_to_size_system)
-            .add_system(player_hit_system)
-            .add_system(despawn_far_enemy_system)
-            .init_resource::<SpawnTimer>();
+            .add_system_set_to_stage(SetupStages::AfterPlayerSetup, SystemSet::on_enter(AppState::MainMenu)
+                .with_system(setup_health_bar),
+            )
+
+            .add_system_set_to_stage(CoreStage::Last, SystemSet::on_update(AppState::InGame)
+                .with_system(player_died_system)
+                .with_system(despawn_dead_enemy_system),
+            )
+
+            .add_system_set(SystemSet::on_update(AppState::InGame)
+
+                .with_system(enemy_spawn_system)
+                .with_system(enemy_movement_system)
+                .with_system(sprite_direction_system)
+                .with_system(healthbar_update_system)
+                .with_system(fit_sprite_to_size_system)
+                .with_system(player_hit_system)
+                .with_system(despawn_far_enemy_system)
+            );
     }
 }

@@ -1,5 +1,6 @@
 use bevy::app::Events;
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, Entity, FlexDirection, HorizontalAlign, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, Entity, FlexDirection, HorizontalAlign, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, State, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign};
+use crate::AppState;
 
 pub fn spawn_menu_system(
     mut commands: Commands,
@@ -79,21 +80,47 @@ pub fn spawn_menu_system(
 
 pub fn button_click_system(
     mut app_exit_events: ResMut<Events<bevy::app::AppExit>>,
-    mut button_query : Query<(Entity, &mut Interaction), Changed<Interaction>>
+    mut button_query : Query<(Entity, &mut Interaction), Changed<Interaction>>,
+    mut app_state: ResMut<State<AppState>>
 
 ){
-    for (entity, mut interaction) in button_query.iter_mut(){
-        match *interaction {
-            Interaction::Clicked =>{
-                println!("button wurde geklickt!");
-                app_exit_events.send(bevy::app::AppExit);
-            }
-            Interaction::Hovered =>{
-                println!("button wurde gehovered!")
-            }
-            Interaction::None => {
-                println!("button wurde geleaved!")
+    match app_state.current() {
+        AppState::GameOver => {
+            for (entity, mut interaction) in button_query.iter_mut() {
+                match *interaction {
+                    Interaction::Clicked => {
+                        println!("button wurde geklickt!");
+                        app_exit_events.send(bevy::app::AppExit);
+                    }
+                    Interaction::Hovered => {
+                        println!("button wurde gehovered!")
+                    }
+                    Interaction::None => {
+                        println!("button wurde geleaved!")
+                    }
+                }
             }
         }
+
+        AppState::Loading => {}
+        AppState::InGame => {}
+        AppState::Pre => {}
+        AppState::MainMenu => {
+            for (entity, mut interaction) in button_query.iter_mut() {
+                match *interaction {
+                    Interaction::Clicked => {
+                        println!("button wurde geklickt!");
+                        app_state.set(AppState::InGame).unwrap();
+                    }
+                    Interaction::Hovered => {
+                        println!("button wurde gehovered!")
+                    }
+                    Interaction::None => {
+                        println!("button wurde geleaved!")
+                    }
+                }
+            }
+        }
+        AppState::Paused => {}
     }
 }
