@@ -12,6 +12,7 @@ use crate::units::player_hit_system::player_hit_system;
 use crate::units::setup_player_healthbar_system::setup_health_bar;
 use crate::units::setup_player_system::setup_player_system;
 use crate::units::sprite_direction_system::sprite_direction_system;
+use crate::util::stage_label_helper::{in_last, in_pre_update, in_update};
 
 pub mod enemy_spawn_system;
 pub mod enemy_movement_system;
@@ -32,31 +33,40 @@ impl Plugin for UnitPlugin {
         app
             .init_resource::<SpawnTimer>()
 
-            .add_system_set(SystemSet::on_enter(AppState::MainMenu)
-                .with_system(setup_player_system)
+            .add_system_set(
+                SystemSet::on_enter(AppState::MainMenu)
+                    .with_system(setup_player_system)
             )
 
-            .add_system_set(SystemSet::on_exit(AppState::MainMenu)
-                .with_system(setup_health_bar)
+            .add_system_set(
+                SystemSet::on_exit(AppState::MainMenu)
+                    .with_system(setup_health_bar)
             )
 
-            .add_system_set_to_stage(CoreStage::Last, SystemSet::on_update(AppState::InGame)
-                .with_system(player_died_system)
-                .with_system(despawn_dead_enemy_system),
+            .add_system_set(
+                in_last(
+                    SystemSet::on_update(AppState::InGame)
+                        .with_system(player_died_system)
+                        .with_system(despawn_dead_enemy_system)
+                )
             )
 
-            .add_system_set(SystemSet::on_update(AppState::InGame)
-                .with_system(enemy_spawn_system)
-                .with_system(enemy_movement_system)
-                .with_system(sprite_direction_system)
-                .with_system(healthbar_update_system)
-                .with_system(fit_sprite_to_size_system)
-                .with_system(despawn_far_enemy_system)
+            .add_system_set(
+                in_update(
+                    SystemSet::on_update(AppState::InGame)
+                        .with_system(enemy_spawn_system)
+                        .with_system(enemy_movement_system)
+                        .with_system(sprite_direction_system)
+                        .with_system(healthbar_update_system)
+                        .with_system(fit_sprite_to_size_system)
+                        .with_system(despawn_far_enemy_system)
+                )
             )
-            .add_system_set_to_stage(
-                CoreStage::PreUpdate,
-                SystemSet::new()
-                    .with_system(player_hit_system),
+            .add_system_set(
+                in_pre_update(
+                    SystemSet::new()
+                        .with_system(player_hit_system)
+                )
             );
     }
 }

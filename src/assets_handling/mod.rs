@@ -26,12 +26,13 @@ impl Plugin for AssetHandlingPlugin {
 
             .add_startup_system_to_stage(SetupStages::AssetSetup, preload_texture_system)
 
-            .add_startup_system_set_to_stage(SetupStages::ConfigSetup,
-                                             SystemSet::new()
-                                                 .with_system(preload_enemy_system)
-                                                 .with_system(preload_item_system)
-                                                 .with_system(preload_player_system)
-                                                 .with_system(preload_bullet_system)
+            .add_startup_system_set_to_stage(
+                SetupStages::ConfigSetup,
+                SystemSet::new()
+                    .with_system(preload_enemy_system)
+                    .with_system(preload_item_system)
+                    .with_system(preload_player_system)
+                    .with_system(preload_bullet_system),
             );
     }
 }
