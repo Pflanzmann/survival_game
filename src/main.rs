@@ -79,9 +79,6 @@ impl Default for ToAppState {
     fn default() -> Self { ToAppState::None }
 }
 
-#[derive(Default)]
-pub struct StateTimer(f32);
-
 fn main() {
     App::new()
         .add_startup_stage(SetupStages::ConfigSetup, SystemStage::parallel())

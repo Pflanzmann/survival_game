@@ -1,5 +1,8 @@
 use bevy::prelude::{Input, KeyCode, Res, ResMut, State, Time};
-use crate::{AppState, AppStateTrigger, StateTimer, ToAppState};
+use crate::{AppState, AppStateTrigger, ToAppState};
+
+#[derive(Default)]
+pub struct StateTimer(f32);
 
 pub fn toggle_pause_system(
     input: Res<Input<KeyCode>>,
