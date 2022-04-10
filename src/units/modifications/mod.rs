@@ -1,17 +1,20 @@
-use crate::{App, Plugin};
-use crate::models::attributes::move_speed::MoveSpeed;
-use crate::models::modification_components::CurveShot;
-use crate::units::modifications::apply_attribute_system::apply_attribute_system;
-use crate::units::modifications::sprinting::Sprinting;
+use crate::{App, AppState, Plugin, SystemSet};
+use crate::util::stage_label_helper::{in_post_update};
 
 pub mod sprinting;
-mod apply_attribute_system;
 
 pub struct UnitModificationsPlugin;
 
 impl Plugin for UnitModificationsPlugin {
     fn build(&self, app: &mut App) {
-        app.
-            add_system(apply_attribute_system::<MoveSpeed, Sprinting>);
+        app
+            .add_system_set(
+                in_post_update(
+                    SystemSet::on_update(AppState::InGame)
+
+                        // .with_system(apply_attribute_system::<MoveSpeed, Sprinting>)
+                        // .with_system(apply_attribute_system::<Damage, Sprinting>)
+                )
+            );
     }
 }

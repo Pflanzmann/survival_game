@@ -35,6 +35,8 @@ impl Plugin for UnitPlugin {
         app
             .init_resource::<SpawnTimer>()
 
+            .add_plugin(UnitModificationsPlugin)
+
             .add_system_set(
                 SystemSet::on_enter(AppState::MainMenu)
                     .with_system(setup_player_system)
