@@ -51,8 +51,12 @@ impl Plugin for UnitPlugin {
                 .with_system(sprite_direction_system)
                 .with_system(healthbar_update_system)
                 .with_system(fit_sprite_to_size_system)
-                .with_system(player_hit_system)
                 .with_system(despawn_far_enemy_system)
+            )
+            .add_system_set_to_stage(
+                CoreStage::PreUpdate,
+                SystemSet::on_update(AppState::InGame)
+                    .with_system(player_hit_system),
             );
     }
 }
