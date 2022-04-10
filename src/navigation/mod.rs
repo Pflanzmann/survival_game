@@ -12,14 +12,24 @@ pub mod stage_label_system;
 
 pub struct NavigationPlugin;
 
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
+#[derive(SystemLabel)]
+pub enum ScheduleLabel {
+    First,
+    Collision,
+    PreUpdate,
+    Update,
+    PostUpdate
+}
+
 impl Plugin for NavigationPlugin {
     fn build(&self, app: &mut App) {
         app
-            .add_system(first_label_system.label("first").before("collision"))
-            .add_system(collision_label_system.label("collision").after("first").before("preUpdate"))
-            .add_system(pre_update_label_system.label("preUpdate").after("collision").before("Update"))
-            .add_system(update_label_system.label("Update").after("preUpdate").before("PostUpdate"))
-            .add_system(post_update_label_system.label("PostUpdate").after("Update"))
+            .add_system(first_label_system.label(ScheduleLabel::First).before(ScheduleLabel::Collision))
+            .add_system(collision_label_system.label(ScheduleLabel::Collision).after(ScheduleLabel::First).before(ScheduleLabel::PreUpdate))
+            .add_system(pre_update_label_system.label(ScheduleLabel::PreUpdate).after(ScheduleLabel::Collision).before(ScheduleLabel::Update))
+            .add_system(update_label_system.label(ScheduleLabel::Update).after(ScheduleLabel::PreUpdate).before(ScheduleLabel::PostUpdate))
+            .add_system(post_update_label_system.label(ScheduleLabel::PostUpdate).after(ScheduleLabel::Update))
 
             .add_system_set(
                 in_first(
