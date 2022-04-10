@@ -24,7 +24,7 @@ impl Plugin for BulletPlugin {
 
             .add_system_set_to_stage(
                 CoreStage::PreUpdate,
-                SystemSet::on_update(AppState::InGame)
+                SystemSet::new()
                     .with_system(bullet_hit_system)
             )
 
