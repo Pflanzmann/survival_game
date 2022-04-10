@@ -1,6 +1,6 @@
-use bevy::prelude::{CoreStage, Plugin};
+use bevy::prelude::{CoreStage, Plugin, SystemSet};
 
-use crate::App;
+use crate::{App, AppState};
 use crate::bullets::bullet_despawn_system::bullet_despawn_system;
 use crate::bullets::bullet_hit_system::bullet_hit_system;
 use crate::bullets::bullet_movement_system::bullet_movement_system;
@@ -20,7 +20,12 @@ impl Plugin for BulletPlugin {
 
             .add_system_set(SystemSet::on_update(AppState::InGame)
                 .with_system(bullet_movement_system)
-                .with_system(bullet_hit_system)
+            )
+
+            .add_system_set_to_stage(
+                CoreStage::PreUpdate,
+                SystemSet::on_update(AppState::InGame)
+                    .with_system(bullet_hit_system)
             )
 
             .add_system_set_to_stage(

@@ -12,7 +12,7 @@ pub struct NavigationPlugin;
 impl Plugin for NavigationPlugin {
     fn build(&self, app: &mut App) {
         app
-            .add_system_to_stage(CoreStage::PreUpdate, execute_state_switch_system)
+            .add_system_to_stage(CoreStage::First, execute_state_switch_system)
 
             .add_system_set(SystemSet::on_update(AppState::Pre)
                                 .with_system(trigger_enter_main_system)
