@@ -3,7 +3,7 @@ use bevy::core::FixedTimestep;
 use bevy::DefaultPlugins;
 use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
-use bevy::prelude::{AlignItems, AlignSelf, App, AssetServer, BuildChildren, Button, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, DetectChanges, Entity, FlexDirection, Font, GlobalTransform, HorizontalAlign, Input, Interaction, JustifyContent, KeyCode, Name, NodeBundle, OrthographicCameraBundle, Plugin, PositionType, Rect, Res, ResMut, Size, Sprite, SpriteBundle, State, Style, SystemSet, SystemStage, Text, TextAlignment, TextBundle, TextStyle, Time, Transform, UiCameraBundle, Val, Vec2, Vec3, VerticalAlign, With, Without};
+use bevy::prelude::{*, AlignItems, AlignSelf, App, AssetServer, BuildChildren, Button, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, DetectChanges, Entity, FlexDirection, Font, GlobalTransform, HorizontalAlign, Input, Interaction, JustifyContent, KeyCode, Name, NodeBundle, OrthographicCameraBundle, Plugin, PositionType, Rect, Res, ResMut, Size, Sprite, SpriteBundle, State, Style, SystemSet, SystemStage, Text, TextAlignment, TextBundle, TextStyle, Time, Transform, UiCameraBundle, Val, Vec2, Vec3, VerticalAlign, With, Without};
 use bevy::render::camera::camera_system;
 use bevy::utils::tracing::event;
 use bevy_inspector_egui::WorldInspectorPlugin;
@@ -86,9 +86,6 @@ fn main() {
     App::new()
         .add_startup_stage(SetupStages::ConfigSetup, SystemStage::parallel())
         .add_startup_stage(SetupStages::AssetSetup, SystemStage::parallel())
-
-        .add_state_to_stage(CoreStage::PostUpdate, AppState::MainMenu)
-        .add_state_to_stage(CoreStage::Last, AppState::MainMenu)
 
         .add_plugins(DefaultPlugins)
         .add_plugin(WorldInspectorPlugin::new())
