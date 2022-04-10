@@ -9,9 +9,3 @@ pub trait Attribute {
 
     fn add_bonus_to_amount(&mut self, added_amount: f32);
 }
-
-pub trait AttributeAffect<T: Attribute> {
-    fn add_affect(&self, attribute: &mut T);
-
-    fn remove_affect(&self, attribute: &mut T);
-}
