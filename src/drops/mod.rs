@@ -19,7 +19,7 @@ impl Plugin for DropsPlugin {
             )
             .add_system_set_to_stage(
                 CoreStage::PreUpdate,
-                SystemSet::on_update(AppState::InGame)
+                SystemSet::new()
                     .with_system(coin_pickup_system)
                     .with_system(hot_dog_pickup_system),
             );

@@ -89,8 +89,6 @@ fn main() {
 
         .add_state_to_stage(CoreStage::PostUpdate, AppState::MainMenu)
         .add_state_to_stage(CoreStage::Last, AppState::MainMenu)
-        .add_state_to_stage(CoreStage::PreUpdate, AppState::InGame)
-        .add_state_to_stage(CoreStage::First, AppState::MainMenu)
 
         .add_plugins(DefaultPlugins)
         .add_plugin(WorldInspectorPlugin::new())
@@ -108,26 +106,10 @@ fn main() {
         .add_plugin(DropsPlugin)
         .add_plugin(AssetHandlingPlugin)
         .add_plugin(ResourcePlugin)
-
         .add_plugin(BackgroundPlugin)
 
-
         .add_plugin(AudioPlugin)
-
-        .add_system(show_current_state)
 
         .run()
 }
 
-pub fn show_current_state(
-mut appstate: ResMut<State<AppState>>
-){
-    match appstate.current() {
-        AppState::Pre => {println!("Pre")}
-        AppState::MainMenu => {println!("MainMenu")}
-        AppState::Loading => {println!("Loading")}
-        AppState::InGame => {println!("Ingame")}
-        AppState::GameOver => {println!("GameOver")}
-        AppState::Paused => {println!("Paused")}
-    }
-}
