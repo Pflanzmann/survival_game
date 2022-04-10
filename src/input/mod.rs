@@ -1,11 +1,11 @@
 use bevy::prelude::{App, CoreStage, Plugin};
 
-use crate::{AppState, SetupStages, StateTimer, SystemSet};
+use crate::{AppState, SetupStages, SystemSet};
 use crate::input::camera_systems::setup_camera_system;
 use crate::input::gun_mod_debug_system::gun_mod_debug_system;
 use crate::input::player_control_aim_system::player_control_aim_system;
 use crate::input::player_control_movement_system::player_control_movement_system;
-use crate::input::toggle_pause_system::toggle_pause_system;
+use crate::input::toggle_pause_system::{StateTimer, toggle_pause_system};
 use crate::util::stage_label_helper::in_update;
 
 pub mod player_control_movement_system;
