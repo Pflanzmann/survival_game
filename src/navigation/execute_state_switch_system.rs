@@ -42,6 +42,14 @@ pub fn execute_state_switch_system(
                 app_state.set(AppState::Paused).unwrap();
             }
         }
+
+        ToAppState::ToShop => {
+            if app_state.current() != &AppState::Shop {
+                state_trigger.State_Change_Trigger = ToAppState::None;
+                app_state.set(AppState::Shop).unwrap();
+            }
+        }
+
         ToAppState::None => {}
     }
 }

@@ -1,5 +1,6 @@
 use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, HorizontalAlign, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiCameraBundle, Val, VerticalAlign, With};
 use crate::MainMenuComp;
+use crate::models::ui_components::NavigationButton;
 
 pub fn spawn_main_menu_system(
     mut commands: Commands,
@@ -74,7 +75,8 @@ pub fn spawn_main_menu_system(
                     ),
                     ..Default::default()
                 });
-            });
+            })
+                .insert(NavigationButton);
         })
         .insert(MainMenuComp)
         .id();

@@ -6,7 +6,7 @@ use crate::assets_handling::preload_item_system::ItemConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::models::collider::collider::Collider;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
-use crate::models::item_components::{Coin, Heal, Item};
+use crate::models::item_components::{Coin, Heal, Item, Shop};
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_stats_components::Enemy;
 
@@ -46,7 +46,7 @@ pub fn basic_drop_system(
                 .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) });
         }
 
-        if (20.0..100.0).contains(&random) {
+        if (20.0..40.0).contains(&random) {
             commands.spawn_bundle(
                 SpriteBundle {
                     transform: Transform::from_translation(drop_translation),
@@ -62,6 +62,24 @@ pub fn basic_drop_system(
                 .insert(Collider)
                 .insert(Heal { amount: item_handles.hot_dog.heal_amount })
                 .insert(UnitSize { collider_size: Vec2::new(item_handles.hot_dog.sprite_custom_size_x, item_handles.hot_dog.sprite_custom_size_y) });
+        }
+
+        if (40.0..100.0).contains(&random) {
+            commands.spawn_bundle(
+                SpriteBundle {
+                    transform: Transform::from_translation(drop_translation),
+                    texture: texture_handles.kiste_sprite.clone(),
+                    sprite: Sprite {
+                        custom_size: Some(Vec2::new(item_handles.kiste.sprite_custom_size_x, item_handles.kiste.sprite_custom_size_y)),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                }
+            )
+                .insert(Item)
+                .insert(Collider)
+                .insert(Shop)
+                .insert(UnitSize { collider_size: Vec2::new(item_handles.kiste.sprite_custom_size_x, item_handles.kiste.sprite_custom_size_y) });
         }
     }
 }

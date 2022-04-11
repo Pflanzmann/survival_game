@@ -10,3 +10,6 @@ pub struct Coin;
 pub struct Heal {
     pub amount: f32,
 }
+
+#[derive(Component)]
+pub struct Shop ;

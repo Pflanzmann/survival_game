@@ -11,5 +11,6 @@ pub fn show_current_state(
         AppState::InGame => {println!("Ingame")}
         AppState::GameOver => {println!("GameOver")}
         AppState::Paused => {println!("Paused")}
+        AppState::Shop => {println!("Shop")}
     }
 }
