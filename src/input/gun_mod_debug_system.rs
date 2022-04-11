@@ -4,7 +4,7 @@ use rand::random;
 use crate::{Health, Player, Query, With};
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::models::modification_components::{CurveShot, GrowShot, ModContainer, SplitShot};
-use crate::units::modifications::sprinting::Sprinting;
+use crate::models::modifications::sprinting::Sprinting;
 
 pub fn gun_mod_debug_system(
     mut commands: Commands,

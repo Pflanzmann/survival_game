@@ -11,5 +11,6 @@ pub mod sprite_layer;
 pub mod bundles;
 pub mod tile;
 pub mod attributes;
-pub mod modification_attributes;
 pub mod modifications;
+pub mod modification_attributes2;
+pub mod modification_attributes;
