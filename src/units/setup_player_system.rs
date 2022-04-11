@@ -1,15 +1,18 @@
 use bevy::prelude::{Commands, Name, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3};
 
-use crate::{Damage, Health, MoveDirection, Player, UnitSize};
+use crate::{Player};
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::models::attributes::attribute::Attribute;
+use crate::models::attributes::damage::Damage;
+use crate::models::attributes::health::Health;
 use crate::models::attributes::move_speed::MoveSpeed;
 use crate::models::bundles::player_bundle::PlayerBundle;
 use crate::models::collider::collider::Collider;
 use crate::models::modification_components::{ModContainer, ModContainerSlot};
 use crate::models::player_components::AimDirection;
 use crate::models::sprite_layer::SpriteLayer;
+use crate::models::unit_stats_components::{MoveDirection, UnitSize};
 
 pub fn setup_player_system(
     mut commands: Commands,

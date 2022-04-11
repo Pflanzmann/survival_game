@@ -1,9 +1,12 @@
 use bevy::ecs::bundle::Bundle;
 
-use crate::{Damage, Health, MoveDirection, Player, UnitSize};
+use crate::models::attributes::damage::Damage;
+use crate::models::attributes::health::Health;
 use crate::models::attributes::move_speed::MoveSpeed;
 use crate::models::collider::collider::Collider;
 use crate::models::player_components::AimDirection;
+use crate::models::unit_stats_components::{MoveDirection, UnitSize};
+use crate::Player;
 
 #[derive(Bundle)]
 pub struct PlayerBundle {

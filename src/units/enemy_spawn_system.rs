@@ -2,15 +2,17 @@ use bevy::math::Vec3;
 use bevy::prelude::{Commands, Res, ResMut, Sprite, SpriteBundle, Time, Vec2};
 use rand::random;
 
-use crate::{Health, Player, Query, Transform, With};
+use crate::{Player, Query, Transform, With};
 use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::models::attributes::attribute::Attribute;
+use crate::models::attributes::damage::Damage;
+use crate::models::attributes::health::Health;
 use crate::models::attributes::move_speed::MoveSpeed;
 use crate::models::bundles::enemy_bundle::EnemyBundle;
 use crate::models::collider::collider::Collider;
 use crate::models::sprite_layer::SpriteLayer;
-use crate::models::unit_stats_components::{Damage, Enemy, MoveDirection, UnitSize};
+use crate::models::unit_stats_components::{Enemy, MoveDirection, UnitSize};
 
 #[derive(Default)]
 pub struct SpawnTimer(f32);

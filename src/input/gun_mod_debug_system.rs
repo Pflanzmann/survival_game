@@ -1,8 +1,9 @@
 use bevy::prelude::{Commands, Entity, Input, KeyCode, Res};
-use rand::random;
 
-use crate::{Health, Player, Query, With};
+use crate::{Player, Query, With};
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
+use crate::models::attributes::attribute::Attribute;
+use crate::models::attributes::health::Health;
 use crate::models::modification_components::{CurveShot, GrowShot, ModContainer, SplitShot};
 use crate::models::modifications::sprinting::Sprinting;
 
@@ -64,7 +65,6 @@ pub fn gun_mod_debug_system(
                 commands.entity(entity).insert(Sprinting { boost_amount: 5.0 });
             } else {
                 commands.entity(entity).remove::<Sprinting>();
-
             }
         }
     }
