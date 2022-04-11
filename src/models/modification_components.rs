@@ -1,6 +1,6 @@
 use bevy::ecs::component::Component;
 use bevy::prelude::Entity;
-use serde::{Deserialize};
+use serde::Deserialize;
 
 #[derive(Component)]
 pub struct ModContainerSlot {

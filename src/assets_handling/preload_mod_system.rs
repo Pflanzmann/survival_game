@@ -6,6 +6,7 @@ use crate::assets_handling::configurations::mod_config::ModConfig;
 use crate::models::modification_attributes2::{ ModName, ModSpriteHandler, ToolTip};
 use crate::models::modification_attributes::modification::Modification;
 use crate::models::modification_components::{CurveShot, GrowShot, SplitShot};
+use crate::models::modifications::sprinting::Sprinting;
 use crate::util::read_file_to_string::read_file_to_string;
 
 pub fn preload_mod_system(
@@ -26,6 +27,10 @@ pub fn preload_mod_system(
 
     let my_string = read_file_to_string("configurations/mod_configurations/split_shot_config.json");
     let mod_config: ModConfig<SplitShot> = serde_json::from_str(&my_string).expect("JSON was not well-formatted || SPLIT SHOT MOD");
+    spawn_mod_entity(&mut commands, &mut asset_server, mod_config, parent);
+
+    let my_string = read_file_to_string("configurations/mod_configurations/sprinting_config.json");
+    let mod_config: ModConfig<Sprinting> = serde_json::from_str(&my_string).expect("JSON was not well-formatted || Sprinting MOD");
     spawn_mod_entity(&mut commands, &mut asset_server, mod_config, parent);
 }
 
