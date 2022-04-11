@@ -1,9 +1,10 @@
 use bevy::app::EventWriter;
 use bevy::prelude::{Commands, Res, Sprite, SpriteBundle, Vec2};
 
-use crate::{Damage, Entity, Query, TextureHandles, Transform, With};
+use crate::{Entity, Query, TextureHandles, Transform, With};
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
 use crate::models::attributes::attribute::Attribute;
+use crate::models::attributes::damage::Damage;
 use crate::models::attributes::move_speed::MoveSpeed;
 use crate::models::bullet_components::{Bullet, BulletRange, HitLimit};
 use crate::models::bundles::bullet_bundle::BulletBundle;

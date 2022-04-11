@@ -1,6 +1,7 @@
 use bevy::prelude::Changed;
 
-use crate::{MoveDirection, Query, Sprite};
+use crate::{Query, Sprite};
+use crate::models::unit_stats_components::MoveDirection;
 
 pub fn sprite_direction_system(
     mut sprite_query: Query<(&MoveDirection, &mut Sprite), Changed<MoveDirection>>,

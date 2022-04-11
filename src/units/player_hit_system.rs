@@ -1,7 +1,10 @@
 use bevy::app::EventReader;
-use bevy::prelude::{Entity, EventWriter, Transform, With, Without};
+use bevy::prelude::{Entity, EventWriter, With, Without};
 
-use crate::{Damage, Health, Player, Query};
+use crate::{Player, Query};
+use crate::models::attributes::attribute::*;
+use crate::models::attributes::damage::Damage;
+use crate::models::attributes::health::Health;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
 use crate::models::events::player_died_event::PlayerDiedEvent;
 use crate::models::events::player_enemy_collision_event::PlayerEnemyCollisionEvent;
@@ -25,15 +28,13 @@ pub fn player_hit_system(
             Err(_) => continue,
         };
 
-        if player_health.current_health - enemy_damage.get_damage() > 0.0 {
-            player_health.current_health -= enemy_damage.get_damage();
-        } else {
+        player_health.damage(enemy_damage.get_total_amount());
+        if player_health.get_current_health() <= 0.0 {
             player_died_event.send(PlayerDiedEvent { player_entity })
         }
 
-        if enemy_health.current_health - player_damage.get_damage() > 0.0 {
-            enemy_health.current_health -= player_damage.get_damage();
-        } else {
+        enemy_health.damage(player_damage.get_total_amount());
+        if enemy_health.get_current_health() <= 0.0 {
             enemy_died_event.send(EnemyDiedEvent { enemy_entity })
         }
     }

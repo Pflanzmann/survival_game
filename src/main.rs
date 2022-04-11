@@ -24,7 +24,6 @@ use crate::models::events::EventsPlugin;
 use crate::models::gun_components::Gunnable;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::ui_components::{Cointext, HealthBar, MainMenuComp};
-use crate::models::unit_stats_components::{Damage, Health, MoveDirection, UnitSize};
 use crate::navigation::NavigationPlugin;
 use crate::resources::ResourcePlugin;
 use crate::resources::state_resources::AppStateTrigger;
@@ -52,7 +51,7 @@ pub enum SetupStages {
     AssetSetup,
     PlayerSetup,
     AfterPlayerSetup,
-    StateStage
+    StateStage,
 }
 
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
@@ -63,7 +62,7 @@ pub enum AppState {
     InGame,
     GameOver,
     Paused,
-    Shop
+    Shop,
 }
 
 #[derive(Debug)]

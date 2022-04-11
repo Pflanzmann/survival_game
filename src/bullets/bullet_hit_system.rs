@@ -1,7 +1,10 @@
 use bevy::app::EventWriter;
 use bevy::prelude::{Entity, EventReader, With};
 
-use crate::{Damage, Health, Query, Without};
+use crate::{Query, Without};
+use crate::models::attributes::attribute::*;
+use crate::models::attributes::damage::Damage;
+use crate::models::attributes::health::Health;
 use crate::models::bullet_components::{Bullet, HitLimit};
 use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
@@ -42,10 +45,9 @@ pub fn bullet_hit_system(
         } else {
             collided_entities.collisions.push(enemy_entity);
 
-            if enemy_health.current_health - bullet_damage.get_damage() > 0.0 {
-                enemy_health.current_health -= bullet_damage.get_damage();
-            } else {
-                enemy_died_event.send(EnemyDiedEvent { enemy_entity });
+            enemy_health.damage(bullet_damage.get_total_amount());
+            if enemy_health.get_current_health() <= 0.0 {
+                enemy_died_event.send(EnemyDiedEvent { enemy_entity })
             }
 
             if let Some(hit_limit) = hit_limit {
