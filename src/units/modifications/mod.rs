@@ -17,10 +17,10 @@ impl Plugin for UnitModificationsPlugin {
                 in_post_update(
                     SystemSet::on_update(AppState::InGame)
 
-                        .with_system(apply_mod_to_target_system::<Sprinting>)
-                        .with_system(apply_mod_to_target_system::<CurveShot>)
-                        .with_system(apply_mod_to_target_system::<GrowShot>)
-                        .with_system(apply_mod_to_target_system::<SplitShot>)
+                        .with_system(apply_player_mod_to_target_system::<Sprinting>)
+                        .with_system(apply_player_mod_to_target_system::<CurveShot>)
+                        .with_system(apply_player_mod_to_target_system::<GrowShot>)
+                        .with_system(apply_player_mod_to_target_system::<SplitShot>)
                 )
             )
 
@@ -28,10 +28,10 @@ impl Plugin for UnitModificationsPlugin {
                 in_post_update(
                     SystemSet::on_update(AppState::Shop)
 
-                        .with_system(apply_mod_to_target_system::<Sprinting>)
-                        .with_system(apply_mod_to_target_system::<CurveShot>)
-                        .with_system(apply_mod_to_target_system::<GrowShot>)
-                        .with_system(apply_mod_to_target_system::<SplitShot>)
+                        .with_system(apply_player_mod_to_target_system::<Sprinting>)
+                        .with_system(apply_player_mod_to_target_system::<CurveShot>)
+                        .with_system(apply_player_mod_to_target_system::<GrowShot>)
+                        .with_system(apply_player_mod_to_target_system::<SplitShot>)
                 )
             );
     }
