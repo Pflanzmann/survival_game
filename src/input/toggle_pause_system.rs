@@ -27,6 +27,7 @@ pub fn toggle_pause_system(
             AppState::InGame => { state_trigger.State_Change_Trigger = ToAppState::ToPaused; }
             AppState::GameOver => {}
             AppState::Paused => { state_trigger.State_Change_Trigger = ToAppState::ToInGame; }
+            AppState::Shop => {}
         }
     }
 }

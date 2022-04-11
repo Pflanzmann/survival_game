@@ -20,3 +20,12 @@ pub struct PauseMenuComp;
 
 #[derive(Component)]
 pub struct GameOverMenuComp;
+
+#[derive(Component)]
+pub struct ShopMenuComp;
+
+#[derive(Component)]
+pub struct NavigationButton;
+
+#[derive(Component)]
+pub struct ShopButton;

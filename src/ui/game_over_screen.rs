@@ -1,6 +1,7 @@
 use bevy::app::Events;
 use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, Entity, FlexDirection, HorizontalAlign, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, State, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign};
-use crate::{AppState, AppStateTrigger, ToAppState};
+use crate::{AppState, AppStateTrigger, ToAppState, With};
+use crate::models::ui_components::NavigationButton;
 
 pub fn spawn_menu_system(
     mut commands: Commands,
@@ -73,14 +74,15 @@ pub fn spawn_menu_system(
                     ),
                     ..Default::default()
                 });
-            });
+            })
+                .insert(NavigationButton);
         })
         .id();
 }
 
 pub fn button_click_system(
     mut app_exit_events: ResMut<Events<bevy::app::AppExit>>,
-    mut button_query : Query<(Entity, &mut Interaction), Changed<Interaction>>,
+    mut button_query : Query<(Entity, &mut Interaction), (Changed<Interaction>, With<NavigationButton>)>,
     mut app_state: ResMut<State<AppState>>,
     mut state_trigger : ResMut<AppStateTrigger>
 
@@ -117,5 +119,18 @@ pub fn button_click_system(
             }
         }
         AppState::Paused => {}
+        AppState::Shop => {
+            for (entity, mut interaction) in button_query.iter_mut() {
+                match *interaction {
+                    Interaction::Clicked => {
+                        state_trigger.State_Change_Trigger = ToAppState::ToInGame;
+                    }
+                    Interaction::Hovered => {
+                    }
+                    Interaction::None => {
+                    }
+                }
+            }
+        }
     }
 }
