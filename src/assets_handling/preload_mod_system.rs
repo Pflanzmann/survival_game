@@ -3,7 +3,8 @@ use bevy::prelude::{BuildChildren, Name};
 
 use crate::{Commands, Component, Entity, ResMut};
 use crate::assets_handling::configurations::mod_config::ModConfig;
-use crate::models::modification_attributes2::{Modification, ModName, ModSpriteHandler, ToolTip};
+use crate::models::modification_attributes2::{ ModName, ModSpriteHandler, ToolTip};
+use crate::models::modification_attributes::modification::Modification;
 use crate::models::modification_components::{CurveShot, GrowShot, SplitShot};
 use crate::util::read_file_to_string::read_file_to_string;
 
