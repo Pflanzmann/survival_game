@@ -3,7 +3,7 @@ use bevy::prelude::{BuildChildren, Name};
 
 use crate::{Commands, Component, Entity, ResMut};
 use crate::assets_handling::configurations::mod_config::ModConfig;
-use crate::models::modification_attributes2::{ ModName, ModSpriteHandler, ToolTip};
+use crate::models::modification_attributes2::{ModName, ModSpriteHandler, ToolTip};
 use crate::models::modification_attributes::modification::Modification;
 use crate::models::modification_components::{CurveShot, GrowShot, SplitShot};
 use crate::models::modifications::sprinting::Sprinting;
@@ -35,7 +35,7 @@ pub fn preload_mod_system(
 }
 
 pub fn spawn_mod_entity<T: Component>(
-    mut commands: &mut Commands,
+    commands: &mut Commands,
     asset_server: &mut ResMut<AssetServer>,
     mod_config: ModConfig<T>,
     parent: Entity,
