@@ -1,4 +1,5 @@
 use bevy::prelude::{App, Plugin};
+use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
 
 use crate::models::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
@@ -15,6 +16,7 @@ pub mod bullet_stopped_event;
 pub mod item_collision_event;
 pub mod player_enemy_collision_event;
 pub mod player_died_event;
+pub mod apply_mod_to_target_event;
 
 pub struct EventsPlugin;
 
@@ -27,6 +29,8 @@ impl Plugin for EventsPlugin {
             .add_event::<BulletEnemyCollisionEvent>()
             .add_event::<BulletStoppedEvent>()
             .add_event::<PlayerEnemyCollisionEvent>()
-            .add_event::<PlayerDiedEvent>();
+            .add_event::<PlayerDiedEvent>()
+            .add_event::<ApplyModToTargetSystem>()
+        ;
     }
 }

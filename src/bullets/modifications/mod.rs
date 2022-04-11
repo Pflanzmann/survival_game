@@ -7,6 +7,7 @@ use crate::bullets::modifications::curve_shot_system::curve_shot_system;
 use crate::bullets::modifications::grow_shot_system::grow_shot_system;
 use crate::bullets::modifications::split_shot_system::split_shot_system;
 use crate::models::modification_components::{CurveShot, GrowShot, SplitShot};
+use crate::units::modifications::sprinting::Sprinting;
 use crate::util::stage_label_helper::{in_post_update, in_pre_update};
 
 pub mod curve_shot_system;
