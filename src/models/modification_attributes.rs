@@ -1,5 +1,6 @@
 use bevy::ecs::component::Component;
 use bevy::prelude::Entity;
+use crate::{Handle, Image};
 
 #[derive(Component)]
 pub struct ModName {
@@ -12,8 +13,8 @@ pub struct ToolTip {
 }
 
 #[derive(Component)]
-pub struct SpritePath {
-    pub sprite_path: String,
+pub struct ModSpriteHandler {
+    pub sprite: Handle<Image>,
 }
 
 #[derive(Component)]

@@ -6,8 +6,6 @@ pub fn spawn_shop_menu_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
 ){
-    commands.spawn_bundle(UiCameraBundle::default());
-
     commands
         .spawn_bundle(NodeBundle {
             style: Style {
