@@ -17,5 +17,3 @@ pub struct ModSpriteHandler {
     pub sprite: Handle<Image>,
 }
 
-#[derive(Component)]
-pub struct Modification;

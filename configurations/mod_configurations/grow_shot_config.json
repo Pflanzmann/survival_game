@@ -4,6 +4,6 @@
   "tooltip": "bullet gets bigger and doller",
   "component": {
     "damage_step": 1.0,
-    "size_step": 0.001
+    "size_step": 10.0
   }
 }
