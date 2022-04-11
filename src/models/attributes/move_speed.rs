@@ -25,7 +25,7 @@ impl Attribute for MoveSpeed {
         self.bonus_amount
     }
 
-    fn add_bonus_to_amount(&mut self, added_amount: f32) {
+    fn add_bonus_amount(&mut self, added_amount: f32) {
         self.bonus_amount += added_amount;
     }
 }
