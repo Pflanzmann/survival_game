@@ -1,6 +1,6 @@
 use crate::{Commands, Component, EventReader, Query, With};
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
-use crate::models::modification_attributes2::Modification;
+use crate::models::modification_attributes::modification::Modification;
 
 pub fn apply_bullet_mod_to_target_system<T: Component + Clone>(
     mut commands: Commands,

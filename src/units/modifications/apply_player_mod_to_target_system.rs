@@ -9,7 +9,6 @@ pub fn apply_player_mod_to_target_system<T: Component + Clone>(
     mod_query: Query<&T, With<Modification>>,
 ) {
     for apply_event in apply_events.iter() {
-        println!("event wird gecatcht");
         let player_mod = match mod_query.get(apply_event.mod_entity) {
             Ok(modification) => modification,
             Err(_) => continue,
