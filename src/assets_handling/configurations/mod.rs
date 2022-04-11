@@ -4,3 +4,4 @@ pub mod player_config;
 pub mod hot_dog_config;
 pub mod bullet_config;
 pub mod kiste_config;
+pub mod mod_config;

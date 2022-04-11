@@ -1,0 +1,9 @@
+{
+  "mod_name": "growshot",
+  "sprite_path": "sprites/grow_shot_icon.png",
+  "tooltip": "bullet gets bigger and doller",
+  "component": {
+    "damage_step": 1.0,
+    "size_step": 0.001
+  }
+}
