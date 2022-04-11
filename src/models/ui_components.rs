@@ -44,3 +44,6 @@ pub struct ShopEntityTwo;
 
 #[derive(Component)]
 pub struct ShopEntityThree;
+
+#[derive(Component)]
+pub struct ToolTipField;

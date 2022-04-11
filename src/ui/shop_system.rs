@@ -5,7 +5,7 @@ use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
 use crate::models::modification_attributes2::{ModName, ModSpriteHandler, ToolTip};
 use crate::models::modification_attributes::modification::Modification;
 use crate::models::modification_components::ModContainerSlot;
-use crate::models::ui_components::{NavigationButton, ShopButtonOne, ShopButtonThree, ShopButtonTwo, ShopEntityOne, ShopMenuComp};
+use crate::models::ui_components::{NavigationButton, ShopButtonOne, ShopButtonThree, ShopButtonTwo, ShopEntityOne, ShopMenuComp, ToolTipField};
 
 pub fn spawn_shop_menu_system(
     mut commands: Commands,
@@ -154,41 +154,94 @@ pub fn spawn_shop_menu_system(
                     ..Default::default()
                 })
                     .insert(ShopButtonThree);
-
             });
 
-            //close Shop Button
-            parent.spawn_bundle(ButtonBundle {
+            // Third UI Row (tooltip and close button)
+            parent.spawn_bundle(NodeBundle {
                 style: Style {
-                    size: Size::new(Val::Percent(25.0), Val::Percent(10.0)),
+                    size: Size::new(Val::Percent(80.0), Val::Percent(40.0)),
+                    position: Rect {
+                        left: Val::Percent(10.0),
+                        bottom: Val::Percent(10.0),
+                        top: Val::Percent(10.0),
+                        right: Val::Percent(10.0),
+                    },
+                    position_type: PositionType::Relative,
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::SpaceEvenly,
-                    flex_direction: FlexDirection::ColumnReverse,
+                    flex_direction: FlexDirection::Row,
                     ..Default::default()
                 },
-                color: Color::BLACK.into(),
+                color: Color::WHITE.into(),
                 ..Default::default()
             }).with_children(|parent| {
-                parent.spawn_bundle(TextBundle {
+
+                //tooltipbox
+                parent.spawn_bundle(NodeBundle {
                     style: Style {
+                        size: Size::new(Val::Percent(50.0), Val::Percent(90.0)),
+                        position_type: PositionType::Relative,
+                        align_items: AlignItems::Center,
+                        justify_content: JustifyContent::SpaceEvenly,
+                        flex_direction: FlexDirection::Row,
                         ..Default::default()
                     },
-                    text: Text::with_section(
-                        "Leave Shop".to_string(),
-                        TextStyle {
-                            font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
-                            font_size: 20.0,
-                            color: Color::WHITE,
-                        },
-                        TextAlignment {
-                            vertical: VerticalAlign::Center,
-                            horizontal: HorizontalAlign::Center,
-                        },
-                    ),
                     ..Default::default()
+                }).with_children(|parent| {
+                    parent.spawn_bundle(TextBundle {
+                        style: Style {
+                            ..Default::default()
+                        },
+                        text: Text::with_section(
+                            "".to_string(),
+                            TextStyle {
+                                font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
+                                font_size: 30.0,
+                                color: Color::RED,
+                            },
+                            TextAlignment {
+                                vertical: VerticalAlign::Center,
+                                horizontal: HorizontalAlign::Center,
+                            },
+                        ),
+                        ..Default::default()
+                    })
+                        .insert(ToolTipField);
                 });
-            })
-                .insert(NavigationButton);
+
+                //close Shop Button
+                parent.spawn_bundle(ButtonBundle {
+                    style: Style {
+                        size: Size::new(Val::Percent(25.0), Val::Percent(10.0)),
+                        align_items: AlignItems::Center,
+                        justify_content: JustifyContent::SpaceEvenly,
+                        flex_direction: FlexDirection::ColumnReverse,
+                        ..Default::default()
+                    },
+                    color: Color::BLACK.into(),
+                    ..Default::default()
+                }).with_children(|parent| {
+                    parent.spawn_bundle(TextBundle {
+                        style: Style {
+                            ..Default::default()
+                        },
+                        text: Text::with_section(
+                            "Leave Shop".to_string(),
+                            TextStyle {
+                                font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
+                                font_size: 20.0,
+                                color: Color::WHITE,
+                            },
+                            TextAlignment {
+                                vertical: VerticalAlign::Center,
+                                horizontal: HorizontalAlign::Center,
+                            },
+                        ),
+                        ..Default::default()
+                    });
+                })
+                    .insert(NavigationButton);
+            });
         })
         .insert(ShopMenuComp)
         .id();
@@ -204,27 +257,36 @@ pub fn close_shop_menu_system(
 }
 
 pub fn shop_button_system(
-    mut commands : Commands,
-    mut event : EventWriter<ApplyModToTargetSystem>,
-
+    mut commands: Commands,
+    mut event: EventWriter<ApplyModToTargetSystem>,
+    mut text_query: Query<&mut Text, With<ToolTipField>>,
     mut button_query: Query<&mut Interaction, (Changed<Interaction>, With<ShopButtonOne>)>,
-    mut mod_query: Query<Entity, With<ShopEntityOne>>,
-    mut player_query: Query<(Entity, &ModContainerSlot)>
+    mut mod_query: Query<(Entity, &ToolTip), With<ShopEntityOne>>,
+    mut player_query: Query<(Entity, &ModContainerSlot)>,
 ){
     for mut interaction in button_query.iter_mut() {
         match *interaction {
             Interaction::Clicked => {
-
-                for modification in mod_query.iter(){
-                    for (player_entity, mod_container_slot) in player_query.iter(){
-                        println!("shop button clicked");
-                        event.send(ApplyModToTargetSystem{mod_entity: modification, target_entity: mod_container_slot.container_entity})
+                for (modification_entity, modification_tooltip) in mod_query.iter() {
+                    for (player_entity, mod_container_slot) in player_query.iter() {
+                        event.send(ApplyModToTargetSystem { mod_entity: modification_entity, target_entity: player_entity })
                     }
-                    commands.entity(modification).remove::<ShopEntityOne>();
+                    commands.entity(modification_entity).remove::<ShopEntityOne>();
                 }
             }
-            Interaction::Hovered => {}
+
             Interaction::None => {
+                for mut text in text_query.iter_mut() {
+                    text.sections[0].value = String::new();
+                }
+            }
+
+            Interaction::Hovered => {
+                for (modification_entity, modification_tooltip) in mod_query.iter() {
+                    for mut text in text_query.iter_mut() {
+                        text.sections[0].value = String::from(&modification_tooltip.tooltip);
+                    }
+                }
             }
         }
     }
