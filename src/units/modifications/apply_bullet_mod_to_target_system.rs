@@ -1,15 +1,13 @@
 use crate::{Commands, Component, EventReader, Query, With};
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
-use crate::models::modification_attributes::modification::Modification;
+use crate::models::modification_attributes2::Modification;
 
-
-pub fn apply_player_mod_to_target_system<T: Component + Clone>(
+pub fn apply_bullet_mod_to_target_system<T: Component + Clone>(
     mut commands: Commands,
     mut apply_events: EventReader<ApplyModToTargetSystem>,
     mod_query: Query<&T, With<Modification>>,
 ) {
     for apply_event in apply_events.iter() {
-        println!("event wird gecatcht");
         let player_mod = match mod_query.get(apply_event.mod_entity) {
             Ok(modification) => modification,
             Err(_) => continue,
