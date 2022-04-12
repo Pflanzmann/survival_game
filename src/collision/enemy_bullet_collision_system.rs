@@ -2,7 +2,7 @@ use bevy::app::EventWriter;
 use bevy::prelude::{Entity, Query, With};
 
 use crate::{Transform, Without};
-use crate::models::bullet_components::Bullet;
+use crate::models::bullet::Bullet;
 use crate::models::collider::collider::Collider;
 use crate::models::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
 use crate::models::unit_stats_components::{Enemy, UnitSize};

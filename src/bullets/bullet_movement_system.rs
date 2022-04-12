@@ -4,7 +4,7 @@ use bevy::prelude::{EventWriter, Transform};
 use crate::{Entity, Query, Res, With};
 use crate::models::unit_attributes::attribute::*;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
-use crate::models::bullet_components::Bullet;
+use crate::models::bullet::Bullet;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_stats_components::MoveDirection;
