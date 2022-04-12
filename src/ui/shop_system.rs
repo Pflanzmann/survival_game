@@ -310,10 +310,16 @@ pub fn spawn_shop_menu_system(
 
 pub fn close_shop_menu_system(
     mut commands: Commands,
-    my_query: Query<Entity, With<ShopMenuComp>>,
+
+    slot_entity_query : Query<Entity, With<ShopSlot>>,
+    shop_ui_query: Query<Entity, With<ShopMenuComp>>,
 ) {
-    for entity in my_query.iter() {
+    for entity in shop_ui_query.iter() {
         commands.entity(entity).despawn_recursive();
+    }
+
+    for entity in slot_entity_query.iter(){
+        commands.entity(entity).remove::<ShopSlot>();
     }
 }
 
