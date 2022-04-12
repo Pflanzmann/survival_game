@@ -66,7 +66,7 @@ pub fn gun_mod_debug_system(
     if input.just_pressed(KeyCode::Numpad4) {
         for (entity, _, _, _, sprinting) in mod_container_query.iter() {
             if sprinting.is_none() {
-                commands.entity(entity).insert(Sprinting { boost_amount: 5.0 });
+                commands.entity(entity).insert(Sprinting);
             } else {
                 commands.entity(entity).remove::<Sprinting>();
             }
