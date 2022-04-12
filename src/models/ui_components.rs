@@ -28,22 +28,14 @@ pub struct ShopMenuComp;
 pub struct NavigationButton;
 
 #[derive(Component)]
-pub struct ShopButtonOne;
+pub struct ShopButton {
+    pub index : usize,
+}
 
 #[derive(Component)]
-pub struct ShopButtonTwo;
-
-#[derive(Component)]
-pub struct ShopButtonThree;
-
-#[derive(Component)]
-pub struct ShopEntityOne;
-
-#[derive(Component)]
-pub struct ShopEntityTwo;
-
-#[derive(Component)]
-pub struct ShopEntityThree;
+pub struct ShopSlot {
+    pub index : usize
+}
 
 #[derive(Component)]
 pub struct ToolTipField;
