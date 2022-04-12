@@ -7,3 +7,8 @@ use crate::{Handle, Image};
 pub struct ModSpriteHandler {
     pub sprite: Handle<Image>,
 }
+
+#[derive(Deserialize)]
+pub struct ModSpriteHandlerHelper {
+    pub sprite: String,
+}

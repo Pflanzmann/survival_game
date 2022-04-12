@@ -5,7 +5,7 @@ use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::models::attributes::attribute::Attribute;
 use crate::models::attributes::health::Health;
 use crate::models::modification_components::{CurveShot, GrowShot, ModContainer, SplitShot};
-use crate::models::modifications::sprinting::Sprinting;
+use crate::models::unit_modifications::sprinting::Sprinting;
 
 pub fn gun_mod_debug_system(
     mut commands: Commands,
