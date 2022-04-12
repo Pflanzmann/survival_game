@@ -2,8 +2,8 @@ use bevy::prelude::*;
 
 use crate::models::unit_attributes::attribute::*;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
-use crate::models::player_components::Player;
-use crate::models::unit_stats_components::MoveDirection;
+use crate::models::player::Player;
+use crate::models::move_direction::MoveDirection;
 
 pub fn player_control_movement_system(
     input: Res<Input<KeyCode>>,

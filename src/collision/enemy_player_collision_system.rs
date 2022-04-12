@@ -1,10 +1,12 @@
 use bevy::app::EventWriter;
 use bevy::prelude::{Entity, Query, With};
 
-use crate::{Player, Transform, Without};
+use crate::{Transform, Without};
 use crate::models::collider::collider::Collider;
 use crate::models::events::player_enemy_collision_event::PlayerEnemyCollisionEvent;
-use crate::models::unit_stats_components::{Enemy, UnitSize};
+use crate::models::unit_size::UnitSize;
+use crate::models::enemy::Enemy;
+use crate::models::player::Player;
 use crate::util::is_colliding::is_colliding;
 
 pub fn enemy_player_collision_system(

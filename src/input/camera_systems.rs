@@ -1,8 +1,8 @@
 use bevy::prelude::*;
 use bevy::render::camera::ScalingMode;
 
-use crate::models::player_components::MainCamera;
-use crate::Player;
+use crate::models::main_camera::MainCamera;
+use crate::models::player::Player;
 
 pub fn setup_camera_system(
     mut commands: Commands,

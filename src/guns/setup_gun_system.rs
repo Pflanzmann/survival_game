@@ -1,10 +1,12 @@
 use bevy::prelude::{Commands, Entity, Name, Query, With};
+use crate::models::mod_container::ModContainer;
 
-use crate::models::gun_components::{StraightBasicShot, WeaponSlot};
-use crate::models::modification_components::{ModContainer, ModContainerSlot};
+use crate::models::straight_basic_shot::StraightBasicShot;
+use crate::models::mod_container_slot::ModContainerSlot;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::reload::Reload;
-use crate::Player;
+use crate::models::weapon_slot::WeaponSlot;
+use crate::models::player::Player;
 
 pub fn setup_gun_system(
     mut commands: Commands,

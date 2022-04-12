@@ -3,11 +3,12 @@ use std::cmp::min;
 use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiCameraBundle, Val, VerticalAlign, With};
 use rand::Rng;
 
-use crate::{EventWriter, Player};
+use crate::EventWriter;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
 use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::mod_sprite_handler::ModSpriteHandler;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
+use crate::models::player::Player;
 use crate::models::ui_components::{NavigationButton, ShopButton, ShopMenuComp, ShopSlot, ToolTipField};
 
 pub fn spawn_shop_menu_system(

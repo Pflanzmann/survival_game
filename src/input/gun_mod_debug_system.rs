@@ -1,14 +1,15 @@
 use bevy::prelude::{Commands, Entity, Input, KeyCode, Res};
 
-use crate::{Player, Query, With};
+use crate::{Query, With};
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::health::Health;
-use crate::models::modification_components::ModContainer;
+use crate::models::mod_container::ModContainer;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::modifications::sprinting::Sprinting;
+use crate::models::player::Player;
 
 pub fn gun_mod_debug_system(
     mut commands: Commands,

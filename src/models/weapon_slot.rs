@@ -5,6 +5,3 @@ use bevy::prelude::Entity;
 pub struct WeaponSlot {
     pub weapon_entity: Entity,
 }
-
-#[derive(Component)]
-pub struct StraightBasicShot;
