@@ -1,6 +1,5 @@
 use bevy::prelude::ResMut;
 
-use crate::assets_handling::configurations::coin_config::CoinConfig;
 use crate::assets_handling::configurations::player_config::PlayerConfig;
 use crate::util::read_file_to_string::read_file_to_string;
 

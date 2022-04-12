@@ -1,5 +1,5 @@
 use bevy::prelude::Component;
-use serde::{Deserialize};
+use serde::Deserialize;
 
 #[derive(Default, Deserialize, Debug)]
 pub struct ModConfig<T: Component> {

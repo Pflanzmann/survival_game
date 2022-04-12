@@ -114,7 +114,7 @@ pub fn spawn_text_system(
 
 pub fn update_text_system(
     mut text_query: Query<&mut Text, With<CoinText>>,
-    mut coin_counter: ResMut<CoinCount>,
+    coin_counter: Res<CoinCount>,
 ) {
     if coin_counter.is_changed() {
         for mut text in text_query.iter_mut() {

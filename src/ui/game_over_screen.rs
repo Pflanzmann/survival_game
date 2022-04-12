@@ -84,12 +84,12 @@ pub fn spawn_menu_system(
 pub fn button_click_system(
     mut app_exit_events: ResMut<Events<bevy::app::AppExit>>,
     mut button_query: Query<&mut Interaction, (Changed<Interaction>, With<NavigationButton>)>,
-    mut app_state: ResMut<State<AppState>>,
+    app_state: ResMut<State<AppState>>,
     mut state_trigger: ResMut<AppStateTrigger>,
 ) {
     match app_state.current() {
         AppState::GameOver => {
-            for (mut interaction) in button_query.iter_mut() {
+            for interaction in button_query.iter_mut() {
                 match *interaction {
                     Interaction::Clicked => {
                         app_exit_events.send(bevy::app::AppExit);
@@ -104,10 +104,10 @@ pub fn button_click_system(
         AppState::InGame => {}
         AppState::Pre => {}
         AppState::MainMenu => {
-            for mut interaction in button_query.iter_mut() {
+            for interaction in button_query.iter_mut() {
                 match *interaction {
                     Interaction::Clicked => {
-                        state_trigger.State_Change_Trigger = ToAppState::ToInGame;
+                        state_trigger.state_change_trigger = ToAppState::ToInGame;
                     }
                     Interaction::Hovered => {}
                     Interaction::None => {}
@@ -116,10 +116,10 @@ pub fn button_click_system(
         }
         AppState::Paused => {}
         AppState::Shop => {
-            for mut interaction in button_query.iter_mut() {
+            for interaction in button_query.iter_mut() {
                 match *interaction {
                     Interaction::Clicked => {
-                        state_trigger.State_Change_Trigger = ToAppState::ToInGame;
+                        state_trigger.state_change_trigger = ToAppState::ToInGame;
                     }
                     Interaction::Hovered => {}
                     Interaction::None => {}
