@@ -7,7 +7,7 @@ use crate::units::enemy_movement_system::enemy_movement_system;
 use crate::units::enemy_spawn_system::{enemy_spawn_system, SpawnTimer};
 use crate::units::fit_sprite_to_size_system::fit_sprite_to_size_system;
 use crate::units::healthbar_update_system::healthbar_update_system;
-use crate::units::modifications::UnitModificationsPlugin;
+use crate::units::unit_modifications::UnitModificationsPlugin;
 use crate::units::player_died_system::player_died_system;
 use crate::units::player_hit_system::player_hit_system;
 use crate::units::setup_player_healthbar_system::setup_health_bar;
@@ -26,7 +26,7 @@ pub mod despawn_dead_enemy_system;
 pub mod player_hit_system;
 pub mod player_died_system;
 pub mod despawn_far_enemy_system;
-pub mod modifications;
+pub mod unit_modifications;
 
 pub struct UnitPlugin;
 

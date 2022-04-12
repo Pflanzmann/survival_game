@@ -5,5 +5,5 @@
   "speed": 15.0,
   "damage": 5.0,
   "range": 2048.0,
-  "hit_limit": 1
+  "hit_limit": 1.0
 }

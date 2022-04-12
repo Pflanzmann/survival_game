@@ -1,17 +1,19 @@
 use bevy::ecs::component::Component;
 use serde::Deserialize;
 
-use crate::models::attributes::attribute::Attribute;
+use crate::models::unit_attributes::attribute::Attribute;
 
 #[derive(Component, Deserialize)]
-pub struct Damage {
+pub struct TravelRange {
     base_amount: f32,
     bonus_amount: f32,
+    
+    pub distance_traveled: f32,
 }
 
-impl Attribute for Damage {
+impl Attribute for TravelRange {
     fn new(base_amount: f32) -> Self {
-        Damage { base_amount, bonus_amount: 0.0 }
+        TravelRange { base_amount, bonus_amount: 0.0, distance_traveled: 0.0 }
     }
 
     fn get_total_amount(&self) -> f32 {

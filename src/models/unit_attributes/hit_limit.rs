@@ -1,17 +1,17 @@
 use bevy::ecs::component::Component;
 use serde::Deserialize;
 
-use crate::models::attributes::attribute::Attribute;
+use crate::models::unit_attributes::attribute::Attribute;
 
-#[derive(Component, Deserialize)]
-pub struct MoveSpeed {
+#[derive(Component)]
+pub struct HitLimit {
     base_amount: f32,
     bonus_amount: f32,
 }
 
-impl Attribute for MoveSpeed {
+impl Attribute for HitLimit {
     fn new(base_amount: f32) -> Self {
-        MoveSpeed { base_amount, bonus_amount: 0.0 }
+        HitLimit { base_amount, bonus_amount: 0.0 }
     }
 
     fn get_total_amount(&self) -> f32 {

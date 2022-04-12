@@ -4,11 +4,11 @@ use crate::{App, AppState};
 use crate::bullets::bullet_despawn_system::bullet_despawn_system;
 use crate::bullets::bullet_hit_system::bullet_hit_system;
 use crate::bullets::bullet_movement_system::bullet_movement_system;
-use crate::bullets::modifications::ModificationsPlugin;
+use crate::bullets::bullet_modifications::ModificationsPlugin;
 use crate::util::stage_label_helper::{in_last, in_pre_update, in_update};
 
 pub mod bullet_movement_system;
-pub mod modifications;
+pub mod bullet_modifications;
 pub mod bullet_hit_system;
 pub mod bullet_despawn_system;
 

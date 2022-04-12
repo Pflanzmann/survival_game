@@ -2,8 +2,8 @@ use bevy::prelude::{Commands, Entity, Input, KeyCode, Res};
 
 use crate::{Player, Query, With};
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
-use crate::models::attributes::attribute::Attribute;
-use crate::models::attributes::health::Health;
+use crate::models::unit_attributes::attribute::Attribute;
+use crate::models::unit_attributes::health::Health;
 use crate::models::modification_components::{CurveShot, GrowShot, ModContainer, SplitShot};
 use crate::models::unit_modifications::sprinting::Sprinting;
 

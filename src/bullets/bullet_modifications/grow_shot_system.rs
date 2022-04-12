@@ -1,7 +1,7 @@
 use bevy::prelude::Query;
 
-use crate::models::attributes::attribute::*;
-use crate::models::attributes::damage::Damage;
+use crate::models::unit_attributes::attribute::*;
+use crate::models::unit_attributes::damage::Damage;
 use crate::models::modification_components::GrowShot;
 use crate::models::unit_stats_components::UnitSize;
 

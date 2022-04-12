@@ -3,15 +3,17 @@ use bevy::prelude::{Commands, Query, Res, Sprite, SpriteBundle, Vec2, Vec3};
 use rand::random;
 
 use crate::{SpriteLayer, TextureHandles, Transform, With};
-use crate::models::attributes::attribute::Attribute;
-use crate::models::attributes::damage::Damage;
-use crate::models::attributes::move_speed::MoveSpeed;
-use crate::models::bullet_components::{Bullet, BulletRange, HitLimit};
+use crate::models::bullet_components::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::collider::collider::Collider;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::models::modification_components::SplitShot;
+use crate::models::unit_attributes::attribute::Attribute;
+use crate::models::unit_attributes::damage::Damage;
+use crate::models::unit_attributes::hit_limit::HitLimit;
+use crate::models::unit_attributes::move_speed::MoveSpeed;
+use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_stats_components::{MoveDirection, UnitSize};
 
 pub fn split_shot_system(
@@ -47,11 +49,11 @@ pub fn split_shot_system(
             }).insert_bundle(BulletBundle {
                 bullet: *bullet,
                 unit_size: UnitSize { collider_size: Vec2::new(128.0, 128.0) },
-                facing_direction: MoveDirection { direction: direction },
+                facing_direction: MoveDirection { direction },
                 move_speed: MoveSpeed::new(15.0),
                 damage: Damage::new(5.0),
-                bullet_range: BulletRange::new(2048.0),
-                hit_limit: HitLimit { hit_limit: 1 },
+                travel_range: TravelRange::new(2048.0),
+                hit_limit: HitLimit::new(1.0),
                 collider: Collider,
                 collider_entities: CollidedEntities::default(),
             });

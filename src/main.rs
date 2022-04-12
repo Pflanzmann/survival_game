@@ -1,3 +1,5 @@
+extern crate core;
+
 use bevy::app::CoreStage;
 use bevy::core::FixedTimestep;
 use bevy::DefaultPlugins;

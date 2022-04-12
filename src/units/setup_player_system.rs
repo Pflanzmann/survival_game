@@ -3,10 +3,10 @@ use rand::{random, Rng, thread_rng};
 
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
-use crate::models::attributes::attribute::Attribute;
-use crate::models::attributes::damage::Damage;
-use crate::models::attributes::health::Health;
-use crate::models::attributes::move_speed::MoveSpeed;
+use crate::models::unit_attributes::attribute::Attribute;
+use crate::models::unit_attributes::damage::Damage;
+use crate::models::unit_attributes::health::Health;
+use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::bundles::player_bundle::PlayerBundle;
 use crate::models::collider::collider::Collider;
 use crate::models::player_components::AimDirection;

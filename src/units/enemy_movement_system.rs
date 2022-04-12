@@ -2,8 +2,8 @@ use bevy::core::Time;
 use bevy::prelude::{Transform, Without};
 
 use crate::{Player, Query, Res, Vec3, With};
-use crate::models::attributes::attribute::*;
-use crate::models::attributes::move_speed::MoveSpeed;
+use crate::models::unit_attributes::attribute::*;
+use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::collider::collision_directions::CollisionDirections;
 use crate::models::unit_stats_components::{Enemy, MoveDirection};
 

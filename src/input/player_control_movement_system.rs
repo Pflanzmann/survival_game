@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
-use crate::models::attributes::attribute::*;
-use crate::models::attributes::move_speed::MoveSpeed;
+use crate::models::unit_attributes::attribute::*;
+use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::player_components::Player;
 use crate::models::unit_stats_components::MoveDirection;
 
