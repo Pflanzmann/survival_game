@@ -11,5 +11,8 @@
   },
   "Sprinting": {
     "boost_amount": 15.0
+  },
+  "AffectMoveSpeed": {
+    "boost_amount": 15.0
   }
 }
