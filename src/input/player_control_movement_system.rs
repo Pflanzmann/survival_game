@@ -5,7 +5,7 @@ use crate::models::player::Player;
 
 pub fn player_control_movement_system(
     input: Res<Input<KeyCode>>,
-    mut player_query: Query<(&mut MoveDirection), With<Player>>,
+    mut player_query: Query<&mut MoveDirection, With<Player>>,
 ) {
     for mut player_direction in player_query.iter_mut() {
         let mut direction = Vec3::default();

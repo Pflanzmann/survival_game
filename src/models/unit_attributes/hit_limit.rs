@@ -1,5 +1,4 @@
 use bevy::ecs::component::Component;
-use serde::Deserialize;
 
 use crate::models::unit_attributes::attribute::Attribute;
 

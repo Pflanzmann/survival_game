@@ -1,4 +1,4 @@
-use bevy::prelude::{CoreStage, Plugin, SystemSet};
+use bevy::prelude::{Plugin, SystemSet};
 
 use crate::{App, AppState};
 use crate::bullets::bullet_check_stop_system::bullet_check_stop_system;
