@@ -1,17 +1,13 @@
-use bevy::core::Time;
 use bevy::prelude::{Transform, Without};
 
 use crate::{Query, Res, Vec3, With};
-use crate::models::unit_attributes::attribute::*;
-use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::collider::collision_directions::CollisionDirections;
 use crate::models::enemy::Enemy;
 use crate::models::move_direction::MoveDirection;
 use crate::models::player::Player;
 
-pub fn enemy_movement_system(
-    time: Res<Time>,
-    mut enemies: Query<(&mut Transform, &MoveSpeed, &mut MoveDirection, Option<&CollisionDirections>), (With<Enemy>, Without<Player>)>,
+pub fn enemy_set_move_direction_system(
+    mut enemies: Query<(&mut Transform, &mut MoveDirection, Option<&CollisionDirections>), (With<Enemy>, Without<Player>)>,
     mut player_query: Query<&Transform, (With<Player>, Without<Enemy>)>,
 ) {
     let player_result = match player_query.get_single_mut() {
@@ -19,7 +15,7 @@ pub fn enemy_movement_system(
         Err(_) => return,
     };
 
-    for (mut transform, speed, mut enemy_direction, collisions) in enemies.iter_mut() {
+    for (mut transform, mut enemy_direction, collisions) in enemies.iter_mut() {
         let mut direction = (player_result.translation - transform.translation).normalize_or_zero();
 
         if let Some(collisions) = collisions {
@@ -30,9 +26,6 @@ pub fn enemy_movement_system(
 
             direction += enemies_dodge_direction.normalize_or_zero() * 0.4;
         }
-
-        transform.translation.x += direction.x * speed.get_total_amount() * time.delta_seconds() * 60.0;
-        transform.translation.y += direction.y * speed.get_total_amount() * time.delta_seconds() * 60.0;
 
         if enemy_direction.direction != direction {
             enemy_direction.direction = direction;
