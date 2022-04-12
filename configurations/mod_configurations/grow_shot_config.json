@@ -1,8 +1,15 @@
 {
-  "mod_name": "growshot",
-  "sprite_path": "sprites/grow_shot_icon.png",
-  "tooltip": "bullet gets bigger and doller",
-  "component": {
+  "Modification": null,
+  "ModName": {
+    "mod_name": "Grow Shot"
+  },
+  "ModSpriteHandler": {
+    "sprite": "sprites/grow_shot_icon.png"
+  },
+  "ToolTip": {
+    "tooltip": "bullet gets bigger and doller"
+  },
+  "GrowShot": {
     "damage_step": 1.0,
     "size_step": 10.0
   }

@@ -1,8 +1,15 @@
 {
-  "mod_name": "sprinting",
-  "sprite_path": "sprites/Ranger.png",
-  "tooltip": "player can run faster",
-  "component": {
+  "Modification": null,
+  "ModName": {
+    "mod_name": "Sprinting"
+  },
+  "ModSpriteHandler": {
+    "sprite": "sprites/Ranger.png"
+  },
+  "ToolTip": {
+    "tooltip": "player can run faster"
+  },
+  "Sprinting": {
     "boost_amount": 15.0
   }
 }

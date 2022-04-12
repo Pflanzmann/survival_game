@@ -2,4 +2,6 @@ use bevy::ecs::component::Component;
 use serde::Deserialize;
 
 #[derive(Component, Deserialize)]
-pub struct Modification;
+pub struct ModName {
+    pub mod_name: String,
+}
