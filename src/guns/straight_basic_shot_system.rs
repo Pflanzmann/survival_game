@@ -3,18 +3,19 @@ use bevy::prelude::{Commands, Res, Sprite, SpriteBundle, Vec2};
 
 use crate::{Entity, Query, TextureHandles, Transform, With};
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
-use crate::models::bullet_components::Bullet;
+use crate::models::bullet::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::collider::collider::Collider;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
-use crate::models::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
+use crate::models::gun_components::{StraightBasicShot, WeaponSlot};
 use crate::models::player_components::AimDirection;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_attributes::attribute::*;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
+use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_stats_components::{MoveDirection, UnitSize};
 
@@ -24,7 +25,7 @@ pub fn straight_basic_shot_system(
     bullet_handle: Res<BulletConfigHandles>,
     mut bullet_shot_event_writer: EventWriter<BulletShotEvent>,
     weapon_holder: Query<(&Transform, &AimDirection, &WeaponSlot)>,
-    mut gun_query: Query<(Entity, &mut Reloadable), With<StraightBasicShot>>,
+    mut gun_query: Query<(Entity, &mut Reload), With<StraightBasicShot>>,
 ) {
     for (holder_transform, holder_aim_direction, holder_weapon_slot) in weapon_holder.iter() {
         if holder_aim_direction.direction.length() == 0.0 {
@@ -39,7 +40,7 @@ pub fn straight_basic_shot_system(
         if gun_reloadable.reload_timer > 0.0 {
             continue;
         }
-        gun_reloadable.reload_timer = gun_reloadable.base_reloading_time;
+        gun_reloadable.reload_timer = gun_reloadable.get_total_amount();
 
         let bullet = command.spawn_bundle(SpriteBundle {
             transform: Transform::from_xyz(holder_transform.translation.x, holder_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z()),

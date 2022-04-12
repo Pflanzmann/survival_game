@@ -1,6 +1,6 @@
 use bevy::prelude::{Commands, Component, EventReader, Query, With};
 
-use crate::models::bullet_components::Bullet;
+use crate::models::bullet::Bullet;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::modification_components::{ModContainer, ModContainerSlot};
 

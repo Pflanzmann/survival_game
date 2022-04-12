@@ -1,8 +1,10 @@
 use bevy::prelude::{Commands, Entity, Name, Query, With};
 
 use crate::{Gunnable, Player};
-use crate::models::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
+use crate::models::gun_components::{StraightBasicShot, WeaponSlot};
 use crate::models::modification_components::{ModContainer, ModContainerSlot};
+use crate::models::unit_attributes::attribute::Attribute;
+use crate::models::unit_attributes::reload::Reload;
 
 pub fn setup_gun_system(
     mut commands: Commands,
@@ -18,7 +20,7 @@ pub fn setup_gun_system(
             .insert(Name::new("basic gun"))
             .insert(Gunnable)
             .insert(StraightBasicShot)
-            .insert(Reloadable::new(2.0))
+            .insert(Reload::new(1.0))
             .insert(ModContainerSlot { container_entity: mod_container })
             .id();
 

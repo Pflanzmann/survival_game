@@ -3,7 +3,7 @@ use bevy::prelude::{Commands, Query, Res, Sprite, SpriteBundle, Vec2, Vec3};
 use rand::random;
 
 use crate::{SpriteLayer, TextureHandles, Transform, With};
-use crate::models::bullet_components::Bullet;
+use crate::models::bullet::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::collider::collider::Collider;
