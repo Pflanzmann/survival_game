@@ -7,7 +7,4 @@ pub struct WeaponSlot {
 }
 
 #[derive(Component)]
-pub struct Gunnable;
-
-#[derive(Component)]
 pub struct StraightBasicShot;
