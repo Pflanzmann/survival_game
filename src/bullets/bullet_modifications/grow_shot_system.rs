@@ -1,10 +1,12 @@
 use bevy::prelude::Query;
 
+use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::unit_attributes::attribute::*;
 use crate::models::unit_attributes::damage::Damage;
-use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::unit_size::UnitSize;
 
+/// A system to grow the [´Bullet´] that has [´GrowShot´] applied to it.
+/// This increases the [´UnitSize´] and [´Damage´] of the bullet depending on the distance traveled.
 pub fn grow_shot_system(
     mut bullet_query: Query<(&mut UnitSize, &mut Damage, &GrowShot)>,
 ) {
