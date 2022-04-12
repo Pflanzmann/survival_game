@@ -8,11 +8,11 @@ use crate::ui::pause_screen::{enter_pause_system, exit_pause_system};
 use crate::ui::shop_system::{close_shop_menu_system, shop_button_system, spawn_shop_menu_system};
 use crate::util::stage_label_helper::in_update;
 
-pub mod game_over_screen;
-pub mod hud_system;
-pub mod pause_screen;
-pub mod main_menu_screen;
-pub mod shop_system;
+mod game_over_screen;
+mod hud_system;
+mod pause_screen;
+mod main_menu_screen;
+mod shop_system;
 
 pub struct UiPlugin;
 
@@ -69,6 +69,5 @@ impl Plugin for UiPlugin {
 
             .add_system(button_click_system)
             .add_system(shop_button_system);
-
     }
 }

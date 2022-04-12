@@ -6,12 +6,12 @@ use crate::collision::enemy_bullet_collision_system::enemy_bullet_collision_syst
 use crate::collision::enemy_enemy_collision_system::enemy_enemy_collision_system;
 use crate::collision::enemy_player_collision_system::enemy_player_collision_system;
 use crate::collision::item_player_collision_system::item_player_collision_system;
-use crate::util::stage_label_helper::{in_collision, in_pre_update};
+use crate::util::stage_label_helper::in_collision;
 
-pub mod enemy_player_collision_system;
-pub mod enemy_bullet_collision_system;
-pub mod enemy_enemy_collision_system;
-pub mod item_player_collision_system;
+mod enemy_player_collision_system;
+mod enemy_bullet_collision_system;
+mod enemy_enemy_collision_system;
+mod item_player_collision_system;
 
 pub struct CollisionPlugin;
 

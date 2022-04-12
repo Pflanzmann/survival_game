@@ -5,8 +5,8 @@ use crate::background::background_startup_system::background_startup_system;
 use crate::background::move_background_tiles_system::move_background_tiles_system;
 use crate::util::stage_label_helper::in_update;
 
-pub mod background_startup_system;
-pub mod move_background_tiles_system;
+mod background_startup_system;
+mod move_background_tiles_system;
 
 pub struct BackgroundPlugin;
 

@@ -8,11 +8,11 @@ use crate::input::player_control_movement_system::player_control_movement_system
 use crate::input::toggle_pause_system::{StateTimer, toggle_pause_system};
 use crate::util::stage_label_helper::in_update;
 
-pub mod player_control_movement_system;
-pub mod camera_systems;
-pub mod gun_mod_debug_system;
-pub mod player_control_aim_system;
-pub mod toggle_pause_system;
+mod player_control_movement_system;
+mod camera_systems;
+mod gun_mod_debug_system;
+mod player_control_aim_system;
+mod toggle_pause_system;
 
 pub struct InputPlugin;
 

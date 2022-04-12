@@ -11,9 +11,9 @@ use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::util::stage_label_helper::in_pre_update;
 
-pub mod curve_shot_system;
-pub mod grow_shot_system;
-pub mod split_shot_system;
+mod curve_shot_system;
+mod grow_shot_system;
+mod split_shot_system;
 mod apply_modification_system;
 
 pub struct ModificationsPlugin;

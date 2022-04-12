@@ -1,16 +1,16 @@
 use bevy::prelude::{CoreStage, Plugin, SystemSet};
 
 use crate::{App, AppState};
+use crate::bullets::bullet_check_stop_system::bullet_check_stop_system;
 use crate::bullets::bullet_despawn_system::bullet_despawn_system;
 use crate::bullets::bullet_hit_system::bullet_hit_system;
-use crate::bullets::bullet_check_stop_system::bullet_check_stop_system;
 use crate::bullets::bullet_modifications::ModificationsPlugin;
 use crate::util::stage_label_helper::{in_last, in_pre_update, in_update};
 
-pub mod bullet_check_stop_system;
-pub mod bullet_modifications;
-pub mod bullet_hit_system;
-pub mod bullet_despawn_system;
+mod bullet_check_stop_system;
+mod bullet_modifications;
+mod bullet_hit_system;
+mod bullet_despawn_system;
 
 pub struct BulletPlugin;
 
