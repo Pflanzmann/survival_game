@@ -3,7 +3,7 @@ use bevy::prelude::Without;
 use crate::{Commands, Component, EventReader, Player, Query, With};
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
 use crate::models::gun_components::WeaponSlot;
-use crate::models::unit_modifications::descriptors::modification::Modification;
+use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modification_components::ModContainerSlot;
 
 pub fn apply_bullet_mod_to_target_system<T: Component + Clone>(

@@ -2,7 +2,8 @@ use bevy::prelude::{AssetServer, Commands, Entity, EventReader, Query, Res, ResM
 use bevy_kira_audio::Audio;
 use crate::{AppStateTrigger, CoinCount, ToAppState};
 use crate::models::events::item_collision_event::ItemCollisionEvent;
-use crate::models::item_components::{Coin, Shop};
+use crate::models::items::coin::Coin;
+use crate::models::items::shop::Shop;
 
 pub fn kiste_pickup_system(
     mut commands : Commands,

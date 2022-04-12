@@ -6,7 +6,10 @@ use crate::assets_handling::preload_item_system::ItemConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::models::collider::collider::Collider;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
-use crate::models::item_components::{Coin, Heal, Item, Shop};
+use crate::models::items::descriptor::item::Item;
+use crate::models::items::coin::Coin;
+use crate::models::items::descriptor::heal::Heal;
+use crate::models::items::shop::Shop;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_stats_components::{Enemy, UnitSize};
 
