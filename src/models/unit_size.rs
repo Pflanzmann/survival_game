@@ -1,5 +1,5 @@
 use bevy::ecs::component::Component;
-use crate::Vec2;
+use bevy::prelude::Vec2;
 
 #[derive(Component)]
 pub struct UnitSize {

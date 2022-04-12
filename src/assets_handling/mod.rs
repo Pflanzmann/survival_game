@@ -1,12 +1,12 @@
-use bevy::prelude::{App, Plugin};
+use bevy::prelude::{App, Plugin, SystemSet};
 
-use crate::{SetupStages, SystemSet};
 use crate::assets_handling::preload_bullet_system::{BulletConfigHandles, preload_bullet_system};
 use crate::assets_handling::preload_enemy_system::{EnemyConfigHandles, preload_enemy_system};
 use crate::assets_handling::preload_item_system::{ItemConfigHandles, preload_item_system};
 use crate::assets_handling::preload_mod_system::preload_mod_system;
 use crate::assets_handling::preload_player_system::{PlayerConfigHandles, preload_player_system};
 use crate::assets_handling::preload_texture_system::{preload_texture_system, TextureHandles};
+use crate::SetupStages;
 
 pub mod configurations;
 pub mod preload_texture_system;

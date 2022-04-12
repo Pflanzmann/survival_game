@@ -1,14 +1,7 @@
-extern crate core;
-
-use bevy::app::CoreStage;
-use bevy::core::FixedTimestep;
+use bevy::app::App;
 use bevy::DefaultPlugins;
-use bevy::ecs::prelude::Query;
 use bevy::ecs::schedule::StageLabel;
-use bevy::ecs::system::EntityCommands;
-use bevy::prelude::{*, AlignItems, AlignSelf, App, AssetServer, BuildChildren, Button, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, DetectChanges, Entity, FlexDirection, Font, GlobalTransform, HorizontalAlign, Input, Interaction, JustifyContent, KeyCode, Name, NodeBundle, OrthographicCameraBundle, Plugin, PositionType, Rect, Res, ResMut, Size, Sprite, SpriteBundle, State, Style, SystemSet, SystemStage, Text, TextAlignment, TextBundle, TextStyle, Time, Transform, UiCameraBundle, Val, Vec2, Vec3, VerticalAlign, With, Without};
-use bevy::render::camera::camera_system;
-use bevy::utils::tracing::event;
+use bevy::prelude::SystemStage;
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
 
@@ -21,12 +14,12 @@ use crate::drops::DropsPlugin;
 use crate::guns::GunPlugin;
 use crate::input::InputPlugin;
 use crate::models::events::EventsPlugin;
-use crate::models::sprite_layer::SpriteLayer;
-use crate::models::ui_components::{Cointext, HealthBar, MainMenuComp};
-use crate::navigation::NavigationPlugin;
 use crate::models::resources::ResourcePlugin;
 use crate::models::resources::state_resources::AppStateTrigger;
 use crate::models::resources::ui_resources::CoinCount;
+use crate::models::sprite_layer::SpriteLayer;
+use crate::models::ui_components::{CoinText, HealthBar, MainMenuComp};
+use crate::navigation::NavigationPlugin;
 use crate::ui::UiPlugin;
 use crate::units::UnitPlugin;
 

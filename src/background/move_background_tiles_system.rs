@@ -1,9 +1,9 @@
-use bevy::prelude::{GlobalTransform, ResMut, Transform, Vec3, With, Without};
+use bevy::prelude::{GlobalTransform, Query, ResMut, Transform, Vec3, With, Without};
 
-use crate::{Query, SpriteLayer};
 use crate::models::player::Player;
 use crate::models::resources::background_tiles_resource::BackgroundTilesResource;
 use crate::models::tile::Tile;
+use crate::SpriteLayer;
 
 pub fn move_background_tiles_system(
     mut background_tiles: ResMut<BackgroundTilesResource>,

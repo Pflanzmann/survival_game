@@ -1,18 +1,17 @@
-use bevy::prelude::{EventReader, Res, Sprite, SpriteBundle, Vec2, With};
+use bevy::prelude::{Commands, EventReader, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
 use rand::random;
 
-use crate::{Commands, Query, Transform};
 use crate::assets_handling::preload_item_system::ItemConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::models::collider::collider::Collider;
+use crate::models::enemy::Enemy;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
-use crate::models::items::descriptor::item::Item;
 use crate::models::items::coin::Coin;
 use crate::models::items::descriptor::heal::Heal;
+use crate::models::items::descriptor::item::Item;
 use crate::models::items::shop::Shop;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_size::UnitSize;
-use crate::models::enemy::Enemy;
 
 pub fn basic_drop_system(
     mut commands: Commands,

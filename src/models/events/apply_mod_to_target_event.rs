@@ -1,4 +1,4 @@
-use crate::Entity;
+use bevy::prelude::Entity;
 
 pub struct ApplyModToTargetSystem {
     pub mod_entity: Entity,

@@ -1,9 +1,9 @@
 use bevy::app::EventWriter;
-use bevy::prelude::{Entity, EventReader, With};
+use bevy::prelude::{Entity, EventReader, Query, With, Without};
 
-use crate::{Query, Without};
 use crate::models::bullet::Bullet;
 use crate::models::collider::collided_entities::CollidedEntities;
+use crate::models::enemy::Enemy;
 use crate::models::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
@@ -11,7 +11,6 @@ use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::hit_limit::HitLimit;
-use crate::models::enemy::Enemy;
 
 pub fn bullet_hit_system(
     mut bullet_stopped_event: EventWriter<BulletStoppedEvent>,

@@ -1,7 +1,6 @@
-use bevy::prelude::{Changed, Sprite};
+use bevy::prelude::{Changed, Query, Sprite};
 
 use crate::models::unit_size::UnitSize;
-use crate::Query;
 
 pub fn fit_sprite_to_size_system(
     mut target_query: Query<(&mut Sprite, &UnitSize), Changed<UnitSize>>

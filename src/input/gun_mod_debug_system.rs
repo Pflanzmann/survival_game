@@ -1,6 +1,5 @@
-use bevy::prelude::{Commands, Entity, Input, KeyCode, Res};
+use bevy::prelude::{Commands, Entity, Input, KeyCode, Query, Res, With};
 
-use crate::{Query, With};
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::unit_attributes::attribute::Attribute;

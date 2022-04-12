@@ -1,16 +1,16 @@
 use bevy::app::EventWriter;
-use bevy::prelude::{Commands, Res, Sprite, SpriteBundle, Vec2};
+use bevy::prelude::{Commands, Entity, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
 
-use crate::{Entity, Query, TextureHandles, Transform, With};
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
+use crate::models::aim_direction::AimDirection;
 use crate::models::bullet::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::collider::collider::Collider;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
-use crate::models::straight_basic_shot::StraightBasicShot;
-use crate::models::aim_direction::AimDirection;
+use crate::models::move_direction::MoveDirection;
 use crate::models::sprite_layer::SpriteLayer;
+use crate::models::straight_basic_shot::StraightBasicShot;
 use crate::models::unit_attributes::attribute::*;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::hit_limit::HitLimit;
@@ -18,8 +18,8 @@ use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_size::UnitSize;
-use crate::models::move_direction::MoveDirection;
 use crate::models::weapon_slot::WeaponSlot;
+use crate::TextureHandles;
 
 pub fn straight_basic_shot_system(
     mut command: Commands,

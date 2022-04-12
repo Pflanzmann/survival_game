@@ -1,6 +1,7 @@
 use bevy::app::Events;
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, Entity, FlexDirection, HorizontalAlign, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, State, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign};
-use crate::{AppState, AppStateTrigger, ToAppState, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, FlexDirection, HorizontalAlign, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, State, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+
+use crate::{AppState, AppStateTrigger, ToAppState};
 use crate::models::ui_components::NavigationButton;
 
 pub fn spawn_menu_system(
@@ -82,22 +83,19 @@ pub fn spawn_menu_system(
 
 pub fn button_click_system(
     mut app_exit_events: ResMut<Events<bevy::app::AppExit>>,
-    mut button_query : Query<(Entity, &mut Interaction), (Changed<Interaction>, With<NavigationButton>)>,
+    mut button_query: Query<&mut Interaction, (Changed<Interaction>, With<NavigationButton>)>,
     mut app_state: ResMut<State<AppState>>,
-    mut state_trigger : ResMut<AppStateTrigger>
-
-){
+    mut state_trigger: ResMut<AppStateTrigger>,
+) {
     match app_state.current() {
         AppState::GameOver => {
-            for (entity, mut interaction) in button_query.iter_mut() {
+            for (mut interaction) in button_query.iter_mut() {
                 match *interaction {
                     Interaction::Clicked => {
                         app_exit_events.send(bevy::app::AppExit);
                     }
-                    Interaction::Hovered => {
-                    }
-                    Interaction::None => {
-                    }
+                    Interaction::Hovered => {}
+                    Interaction::None => {}
                 }
             }
         }
@@ -106,29 +104,25 @@ pub fn button_click_system(
         AppState::InGame => {}
         AppState::Pre => {}
         AppState::MainMenu => {
-            for (entity, mut interaction) in button_query.iter_mut() {
+            for mut interaction in button_query.iter_mut() {
                 match *interaction {
                     Interaction::Clicked => {
                         state_trigger.State_Change_Trigger = ToAppState::ToInGame;
                     }
-                    Interaction::Hovered => {
-                    }
-                    Interaction::None => {
-                    }
+                    Interaction::Hovered => {}
+                    Interaction::None => {}
                 }
             }
         }
         AppState::Paused => {}
         AppState::Shop => {
-            for (entity, mut interaction) in button_query.iter_mut() {
+            for mut interaction in button_query.iter_mut() {
                 match *interaction {
                     Interaction::Clicked => {
                         state_trigger.State_Change_Trigger = ToAppState::ToInGame;
                     }
-                    Interaction::Hovered => {
-                    }
-                    Interaction::None => {
-                    }
+                    Interaction::Hovered => {}
+                    Interaction::None => {}
                 }
             }
         }

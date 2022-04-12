@@ -1,6 +1,7 @@
-use crate::{Query, Res, Time, Transform};
+use bevy::prelude::{Query, Res, Time, Transform};
+
 use crate::models::move_direction::MoveDirection;
-use crate::models::unit_attributes::attribute::*;
+use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
 
