@@ -9,9 +9,7 @@
   "ToolTip": {
     "tooltip": "player can run faster"
   },
-  "Sprinting": {
-    "boost_amount": 15.0
-  },
+  "Sprinting": null,
   "AffectMoveSpeed": {
     "boost_amount": 15.0
   }

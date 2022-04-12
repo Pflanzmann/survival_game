@@ -12,8 +12,6 @@ use bevy::utils::tracing::event;
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
 
-use models::player::Player;
-
 use crate::assets_handling::AssetHandlingPlugin;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::background::BackgroundPlugin;
