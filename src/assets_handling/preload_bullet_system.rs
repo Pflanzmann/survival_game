@@ -1,5 +1,6 @@
 use bevy::prelude::ResMut;
-use crate::assets_handling::configurations::bullet_config::BulletConfig;
+
+use crate::models::configurations::bullet_config::BulletConfig;
 use crate::util::read_file_to_string::read_file_to_string;
 
 #[derive(Default)]
