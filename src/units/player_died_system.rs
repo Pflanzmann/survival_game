@@ -1,10 +1,9 @@
 use bevy::app::EventReader;
-use bevy::prelude::{Commands, Entity, ResMut, State, With};
+use bevy::prelude::{Commands, ResMut, State, With};
 
-use crate::{AppState, Query, ToAppState};
+use crate::{Query, ToAppState};
 use crate::models::events::player_died_event::PlayerDiedEvent;
-use crate::models::player::Player;
-use crate::resources::state_resources::AppStateTrigger;
+use crate::models::resources::state_resources::AppStateTrigger;
 
 pub fn player_died_system(
     mut commands: Commands,
