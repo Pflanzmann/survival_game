@@ -5,7 +5,8 @@ use crate::{Transform, Without};
 use crate::models::bullet::Bullet;
 use crate::models::collider::collider::Collider;
 use crate::models::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
-use crate::models::unit_stats_components::{Enemy, UnitSize};
+use crate::models::unit_size::UnitSize;
+use crate::models::enemy::Enemy;
 use crate::util::is_colliding::is_colliding;
 
 pub fn enemy_bullet_collision_system(

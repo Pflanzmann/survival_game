@@ -2,7 +2,8 @@ use bevy::prelude::{Commands, Entity, Query, With};
 
 use crate::models::collider::collider::Collider;
 use crate::models::collider::collision_directions::CollisionDirections;
-use crate::models::unit_stats_components::{Enemy, UnitSize};
+use crate::models::unit_size::UnitSize;
+use crate::models::enemy::Enemy;
 use crate::Transform;
 use crate::util::is_colliding::is_colliding;
 

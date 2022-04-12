@@ -7,7 +7,7 @@ use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::bullet::Bullet;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::models::unit_attributes::travel_range::TravelRange;
-use crate::models::unit_stats_components::MoveDirection;
+use crate::models::move_direction::MoveDirection;
 
 pub fn bullet_movement_system(
     time: Res<Time>,

@@ -3,7 +3,7 @@ use bevy::prelude::Query;
 use crate::models::unit_attributes::attribute::*;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::modifications::grow_shot::GrowShot;
-use crate::models::unit_stats_components::UnitSize;
+use crate::models::unit_size::UnitSize;
 
 pub fn grow_shot_system(
     mut bullet_query: Query<(&mut UnitSize, &mut Damage, &GrowShot)>,

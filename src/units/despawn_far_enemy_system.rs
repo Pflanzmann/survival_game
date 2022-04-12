@@ -1,5 +1,6 @@
-use crate::{Commands, Entity, Player, Query, Transform, With, Without};
-use crate::models::unit_stats_components::Enemy;
+use crate::{Commands, Entity, Query, Transform, With, Without};
+use crate::models::enemy::Enemy;
+use crate::models::player::Player;
 
 pub fn despawn_far_enemy_system(
     mut commands : Commands,

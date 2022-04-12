@@ -8,8 +8,8 @@ use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::collider::collider::Collider;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
-use crate::models::gun_components::{StraightBasicShot, WeaponSlot};
-use crate::models::player_components::AimDirection;
+use crate::models::straight_basic_shot::StraightBasicShot;
+use crate::models::aim_direction::AimDirection;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_attributes::attribute::*;
 use crate::models::unit_attributes::damage::Damage;
@@ -17,7 +17,9 @@ use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::travel_range::TravelRange;
-use crate::models::unit_stats_components::{MoveDirection, UnitSize};
+use crate::models::unit_size::UnitSize;
+use crate::models::move_direction::MoveDirection;
+use crate::models::weapon_slot::WeaponSlot;
 
 pub fn straight_basic_shot_system(
     mut command: Commands,

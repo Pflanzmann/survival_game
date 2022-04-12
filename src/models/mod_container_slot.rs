@@ -6,6 +6,3 @@ pub struct ModContainerSlot {
     pub container_entity: Entity,
 }
 
-#[derive(Component)]
-pub struct ModContainer;
-

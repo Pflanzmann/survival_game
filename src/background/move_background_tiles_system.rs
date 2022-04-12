@@ -1,7 +1,8 @@
 use bevy::math::Vec2;
 use bevy::prelude::{GlobalTransform, ResMut, Transform, Vec3, With, Without};
 
-use crate::{Player, Query, SpriteLayer};
+use crate::{Query, SpriteLayer};
+use crate::models::player::Player;
 use crate::models::tile::Tile;
 use crate::resources::background_tiles_resource::BackgroundTilesResource;
 

@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::{CoinCount, Cointext, TextureHandles};
 use crate::models::modifications::grow_shot::GrowShot;
-use crate::models::modification_components::ModContainer;
+use crate::models::mod_container::ModContainer;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::ui_components::BulletHud;

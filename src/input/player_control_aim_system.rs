@@ -1,6 +1,7 @@
 use bevy::prelude::*;
+use crate::models::player::Player;
 
-use crate::models::player_components::{AimDirection, Player};
+use crate::models::aim_direction::AimDirection;
 
 pub fn player_control_aim_system(
     input: Res<Input<KeyCode>>,

@@ -2,7 +2,7 @@ use bevy::prelude::{Entity, Query, With};
 
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::unit_attributes::travel_range::TravelRange;
-use crate::models::unit_stats_components::MoveDirection;
+use crate::models::move_direction::MoveDirection;
 
 pub fn curve_shot_system(
     mut bullet_query: Query<(Entity, &mut MoveDirection, &TravelRange), With<CurveShot>>,

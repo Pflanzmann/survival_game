@@ -11,7 +11,7 @@ use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::hit_limit::HitLimit;
-use crate::models::unit_stats_components::Enemy;
+use crate::models::enemy::Enemy;
 
 pub fn bullet_hit_system(
     mut bullet_stopped_event: EventWriter<BulletStoppedEvent>,

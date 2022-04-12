@@ -7,7 +7,8 @@ use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
-use crate::models::unit_stats_components::{MoveDirection, UnitSize};
+use crate::models::unit_size::UnitSize;
+use crate::models::move_direction::MoveDirection;
 
 #[derive(Bundle)]
 pub struct BulletBundle {

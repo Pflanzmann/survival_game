@@ -4,7 +4,9 @@ use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::collider::collider::Collider;
-use crate::models::unit_stats_components::{Enemy, MoveDirection, UnitSize};
+use crate::models::enemy::Enemy;
+use crate::models::unit_size::UnitSize;
+use crate::models::move_direction::MoveDirection;
 
 #[derive(Bundle)]
 pub struct EnemyBundle {
