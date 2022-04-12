@@ -12,6 +12,17 @@ mod bullet_modifications;
 mod bullet_hit_system;
 mod bullet_despawn_system;
 
+/// This plugin manages the [`Bullet`] systems and how they get applied.
+///
+/// [`bullet_hit_system`] gets run in the [`on_pre_update`] stack because it is a system that
+/// reacts directly to the collision systems
+///
+/// [`bullet_check_stop_system`] gets run in the [`on_update`] stack
+///
+/// [`bullet_despawn_system`] gets run in the [`on_last`] stack because the app panics if
+/// you try access a despawned entity
+///
+/// All system get only used in the [`AppState::InGame`].
 pub struct BulletPlugin;
 
 impl Plugin for BulletPlugin {
@@ -20,15 +31,14 @@ impl Plugin for BulletPlugin {
             .add_plugin(BulletModificationsPlugin)
 
             .add_system_set(
-                in_update(
-                    SystemSet::on_update(AppState::InGame)
-                        .with_system(bullet_check_stop_system)
+                in_pre_update(SystemSet::on_update(AppState::InGame)
+                    .with_system(bullet_hit_system)
                 )
             )
 
             .add_system_set(
-                in_pre_update(SystemSet::new()
-                    .with_system(bullet_hit_system)
+                in_update(SystemSet::on_update(AppState::InGame)
+                    .with_system(bullet_check_stop_system)
                 )
             )
 
