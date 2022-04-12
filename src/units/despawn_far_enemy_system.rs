@@ -6,7 +6,7 @@ use crate::models::player::Player;
 pub fn despawn_far_enemy_system(
     mut commands: Commands,
     mut enemy_query: Query<(Entity, &mut Transform), (With<Enemy>, Without<Player>)>,
-    mut player_query: Query<(&mut Transform), (With<Player>, Without<Enemy>)>,
+    mut player_query: Query<&mut Transform, (With<Player>, Without<Enemy>)>,
 ) {
     for player_transform in player_query.iter_mut() {
         for (enemy_entity, enemy_transform) in enemy_query.iter_mut() {

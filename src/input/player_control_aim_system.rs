@@ -7,7 +7,7 @@ pub fn player_control_aim_system(
     input: Res<Input<KeyCode>>,
     mut player_query: Query<&mut AimDirection, With<Player>>,
 ) {
-    for (mut player_aim_direction) in player_query.iter_mut() {
+    for mut player_aim_direction in player_query.iter_mut() {
         let mut direction = Vec3::default();
 
         if input.pressed(KeyCode::Left) {

@@ -1,5 +1,5 @@
 use bevy::app::EventReader;
-use bevy::prelude::{Commands, ResMut, With};
+use bevy::prelude::{Commands, ResMut};
 
 use crate::models::events::player_died_event::PlayerDiedEvent;
 use crate::models::resources::state_resources::AppStateTrigger;

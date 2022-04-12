@@ -26,7 +26,7 @@ pub fn enemy_enemy_collision_system(
                 other_transform.translation,
                 other_size.collider_size,
             ) {
-                let mut direction = (other_transform.translation - transform.translation);
+                let mut direction = other_transform.translation - transform.translation;
 
                 direction = direction.normalize_or_zero();
 
