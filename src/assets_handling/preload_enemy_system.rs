@@ -1,6 +1,6 @@
 use bevy::prelude::ResMut;
 
-use crate::assets_handling::configurations::enemy_config::EnemyConfig;
+use crate::models::configurations::enemy_config::EnemyConfig;
 use crate::util::read_file_to_string::read_file_to_string;
 
 #[derive(Default)]

@@ -8,7 +8,6 @@ use crate::assets_handling::preload_player_system::{PlayerConfigHandles, preload
 use crate::assets_handling::preload_texture_system::{preload_texture_system, TextureHandles};
 use crate::SetupStages;
 
-pub mod configurations;
 pub mod preload_texture_system;
 pub mod preload_enemy_system;
 pub mod preload_item_system;

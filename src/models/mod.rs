@@ -19,3 +19,4 @@ pub mod mod_container;
 pub mod main_camera;
 pub mod player;
 pub mod resources;
+pub mod configurations;
