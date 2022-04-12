@@ -8,7 +8,7 @@ use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::collider::collider::Collider;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
-use crate::models::modification_components::SplitShot;
+use crate::models::modifications::split_shot::SplitShot;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::hit_limit::HitLimit;

@@ -1,6 +1,6 @@
 use bevy::prelude::{Entity, Query, With};
 
-use crate::models::modification_components::CurveShot;
+use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_stats_components::MoveDirection;
 

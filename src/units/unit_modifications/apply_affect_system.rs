@@ -3,7 +3,7 @@ use bevy::prelude::{Component, Query};
 use crate::EventReader;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
-use crate::models::unit_modifications::affects::attribute_affect::AttributeAffect;
+use crate::models::modifications::affects::attribute_affect::AttributeAffect;
 
 pub fn apply_attribute_system<
     T: Component + Attribute,

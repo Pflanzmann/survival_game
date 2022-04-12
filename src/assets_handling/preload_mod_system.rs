@@ -5,15 +5,17 @@ use bevy::prelude::{BuildChildren, Name};
 use serde::de::DeserializeOwned;
 
 use crate::{Commands, Entity, EntityCommands, ResMut};
+use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
-use crate::models::unit_modifications::descriptors::modification::Modification;
-use crate::models::modification_components::{CurveShot, GrowShot, SplitShot};
-use crate::models::unit_modifications::descriptors::mod_name::ModName;
-use crate::models::unit_modifications::descriptors::mod_sprite_handler::{ModSpriteHandler, ModSpriteHandlerHelper};
-use crate::models::unit_modifications::descriptors::tool_tip::ToolTip;
-use crate::models::unit_modifications::sprinting::Sprinting;
+use crate::models::modifications::descriptors::modification::Modification;
+use crate::models::modifications::curve_shot::CurveShot;
+use crate::models::modifications::descriptors::mod_name::ModName;
+use crate::models::modifications::descriptors::mod_sprite_handler::{ModSpriteHandler, ModSpriteHandlerHelper};
+use crate::models::modifications::descriptors::tool_tip::ToolTip;
+use crate::models::modifications::split_shot::SplitShot;
+use crate::models::modifications::sprinting::Sprinting;
 use crate::util::read_file_to_string::read_file_to_string;
 
 pub fn preload_mod_system(

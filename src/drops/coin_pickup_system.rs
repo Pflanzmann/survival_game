@@ -4,7 +4,7 @@ use bevy_kira_audio::Audio;
 
 use crate::{CoinCount, Commands, Entity, Query, Res, With};
 use crate::models::events::item_collision_event::ItemCollisionEvent;
-use crate::models::item_components::Coin;
+use crate::models::items::coin::Coin;
 
 pub fn coin_pickup_system(
     mut commands : Commands,

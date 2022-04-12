@@ -2,7 +2,7 @@ use bevy::ecs::component::Component;
 
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
-use crate::models::unit_modifications::affects::attribute_affect::AttributeAffect;
+use crate::models::modifications::affects::attribute_affect::AttributeAffect;
 
 #[derive(Component, Copy, Clone)]
 pub struct AffectMoveSpeed {
