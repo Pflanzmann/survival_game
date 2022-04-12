@@ -4,6 +4,7 @@ use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::move_direction::MoveDirection;
 
+/// A system to curve the [´Bullet´] that has [´CurveShot´] applied to it.
 pub fn curve_shot_system(
     mut bullet_query: Query<(Entity, &mut MoveDirection, &TravelRange), With<CurveShot>>,
 ) {

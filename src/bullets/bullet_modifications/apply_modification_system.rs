@@ -5,6 +5,21 @@ use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::mod_container::ModContainer;
 use crate::models::mod_container_slot::ModContainerSlot;
 
+/// A generic system to apply [`Bullet`]-mods like [`SplitShot`] to the new shot bullet from the
+/// [`BulletShotEvent`].
+///
+/// The mods from get applied from the [`ModContainer`] associated to the weapon.
+///
+/// ```
+/// # use bevy_ecs::prelude::;
+/// #
+/// impl Plugin for ExamplePlugin {
+///     fn build(&self, app: &mut App) {
+///         app.add_system(apply_modification_system::<SplitShot>)
+///     }
+/// }
+/// ```
+///
 pub fn apply_modification_system<T: Component + Copy>(
     mut commands: Commands,
     mut bullet_shot_event: EventReader<BulletShotEvent>,

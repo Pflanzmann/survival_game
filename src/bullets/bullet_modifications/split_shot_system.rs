@@ -17,6 +17,8 @@ use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_size::UnitSize;
 
+/// A system to split the [´Bullet´] that has [´SplitShot´] applied to it.
+/// The shot gets split when the bullet stops.
 pub fn split_shot_system(
     mut command: Commands,
     texture_handle: Res<TextureHandles>,

@@ -16,12 +16,17 @@ mod grow_shot_system;
 mod split_shot_system;
 mod apply_modification_system;
 
-pub struct ModificationsPlugin;
+/// This plugin manages the [`Bullet-Modification`]s and how they get applied.
+/// All the systems get added in the [PreUpdate] so that they can react last to all
+/// other accesses of the bullet.
+///
+/// All system get only used in the [`AppState::Ingame`].
+pub struct BulletModificationsPlugin;
 
 #[derive(Debug, Hash, PartialEq, Eq, Clone, StageLabel)]
 pub struct BulletModStage;
 
-impl Plugin for ModificationsPlugin {
+impl Plugin for BulletModificationsPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_system_set(
