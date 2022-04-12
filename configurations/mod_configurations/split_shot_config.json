@@ -1,6 +1,13 @@
 {
-  "mod_name": "splitshot",
-  "sprite_path": "sprites/split_shot_icon.png",
-  "tooltip": "bullet splits into 4 bullets",
-  "component": null
+  "Modification": null,
+  "ModName": {
+    "mod_name": "Split Shot"
+  },
+  "ModSpriteHandler": {
+    "sprite": "sprites/split_shot_icon.png"
+  },
+  "ToolTip": {
+    "tooltip": "bullet splits into 4 bullets"
+  },
+  "SplitShot": null
 }

@@ -1,10 +1,9 @@
-use std::thread::current;
-
 use bevy::ecs::component::Component;
+use serde::Deserialize;
 
 use crate::models::attributes::attribute::Attribute;
 
-#[derive(Component)]
+#[derive(Component, Deserialize)]
 pub struct Health {
     base_amount: f32,
     bonus_amount: f32,

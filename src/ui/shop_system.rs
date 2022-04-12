@@ -1,13 +1,13 @@
 use std::cmp::min;
 
 use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiCameraBundle, Val, VerticalAlign, With};
-use rand::{random, Rng};
+use rand::Rng;
 
-use crate::{AppStateTrigger, EventWriter, Player, SpriteBundle};
+use crate::{EventWriter, Player};
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
-use crate::models::modification_attributes2::{ModName, ModSpriteHandler, ToolTip};
-use crate::models::modification_attributes::modification::Modification;
-use crate::models::modification_components::ModContainerSlot;
+use crate::models::modifications::mod_name::ModName;
+use crate::models::modifications::mod_sprite_handler::ModSpriteHandler;
+use crate::models::modifications::tool_tip::ToolTip;
 use crate::models::ui_components::{NavigationButton, ShopButton, ShopMenuComp, ShopSlot, ToolTipField};
 
 pub fn spawn_shop_menu_system(
@@ -68,7 +68,7 @@ pub fn spawn_shop_menu_system(
             });
 
             //Shoppable items
-            parent.spawn_bundle( NodeBundle{
+            parent.spawn_bundle(NodeBundle {
                 style: Style {
                     size: Size::new(Val::Percent(80.0), Val::Percent(40.0)),
                     position: Rect {
@@ -85,7 +85,7 @@ pub fn spawn_shop_menu_system(
                 },
                 color: Color::WHITE.into(),
                 ..Default::default()
-            }).with_children(|parent|{
+            }).with_children(|parent| {
 
                 //first item
                 parent.spawn_bundle(ButtonBundle {
@@ -308,9 +308,9 @@ pub fn spawn_shop_menu_system(
 }
 
 pub fn close_shop_menu_system(
-    mut commands : Commands,
-    my_query : Query<Entity, With<ShopMenuComp>>
-){
+    mut commands: Commands,
+    my_query: Query<Entity, With<ShopMenuComp>>,
+) {
     for entity in my_query.iter() {
         commands.entity(entity).despawn_recursive();
     }
@@ -323,12 +323,12 @@ pub fn shop_button_system(
     mut button_query: Query<(&mut Interaction, &ShopButton), Changed<Interaction>>,
     mut mod_query: Query<(Entity, &ToolTip, &ShopSlot)>,
     mut player_query: Query<Entity, With<Player>>,
-){
+) {
     for (mut interaction, shop_button) in button_query.iter_mut() {
         match *interaction {
             Interaction::Clicked => {
                 for (modification_entity, _, shop_slot) in mod_query.iter() {
-                    if shop_button.index != shop_slot.index { continue }
+                    if shop_button.index != shop_slot.index { continue; }
 
                     for player_entity in player_query.iter() {
                         event.send(ApplyModToTargetSystem { mod_entity: modification_entity, target_entity: player_entity });
@@ -345,7 +345,7 @@ pub fn shop_button_system(
 
             Interaction::Hovered => {
                 for (_, modification_tooltip, shop_slot) in mod_query.iter() {
-                    if shop_button.index != shop_slot.index { continue }
+                    if shop_button.index != shop_slot.index { continue; }
                     for mut text in text_query.iter_mut() {
                         text.sections[0].value = String::from(&modification_tooltip.tooltip);
                     }
