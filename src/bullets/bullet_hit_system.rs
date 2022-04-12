@@ -2,14 +2,15 @@ use bevy::app::EventWriter;
 use bevy::prelude::{Entity, EventReader, With};
 
 use crate::{Query, Without};
-use crate::models::attributes::attribute::*;
-use crate::models::attributes::damage::Damage;
-use crate::models::attributes::health::Health;
-use crate::models::bullet_components::{Bullet, HitLimit};
+use crate::models::bullet_components::Bullet;
 use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
+use crate::models::unit_attributes::attribute::Attribute;
+use crate::models::unit_attributes::damage::Damage;
+use crate::models::unit_attributes::health::Health;
+use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_stats_components::Enemy;
 
 pub fn bullet_hit_system(
@@ -35,7 +36,7 @@ pub fn bullet_hit_system(
         };
 
         if let Some(hit_limit) = hit_limit {
-            if collided_entities.collisions.len() >= hit_limit.hit_limit {
+            if collided_entities.collisions.len() >= hit_limit.get_total_amount() as usize {
                 continue;
             }
         }
@@ -51,7 +52,7 @@ pub fn bullet_hit_system(
             }
 
             if let Some(hit_limit) = hit_limit {
-                if collided_entities.collisions.len() >= hit_limit.hit_limit {
+                if collided_entities.collisions.len() >= hit_limit.get_total_amount() as usize {
                     bullet_stopped_event.send(BulletStoppedEvent { bullet_entity: event.bullet_entity });
                     continue;
                 }

@@ -5,10 +5,10 @@ use bevy::prelude::{BuildChildren, Name};
 use serde::de::DeserializeOwned;
 
 use crate::{Commands, Entity, EntityCommands, ResMut};
-use crate::models::attributes::damage::Damage;
-use crate::models::attributes::health::Health;
-use crate::models::attributes::move_speed::MoveSpeed;
-use crate::models::modification_attributes::modification::Modification;
+use crate::models::unit_attributes::damage::Damage;
+use crate::models::unit_attributes::health::Health;
+use crate::models::unit_attributes::move_speed::MoveSpeed;
+use crate::models::unit_modifications::descriptors::modification::Modification;
 use crate::models::modification_components::{CurveShot, GrowShot, SplitShot};
 use crate::models::unit_modifications::descriptors::mod_name::ModName;
 use crate::models::unit_modifications::descriptors::mod_sprite_handler::{ModSpriteHandler, ModSpriteHandlerHelper};
@@ -68,7 +68,8 @@ pub fn spawn_entity(
             "GrowShot" => { entity.insert(get_component::<GrowShot>(object_data.clone())); }
             "SplitShot" => { entity.insert(get_component::<SplitShot>(object_data.clone())); }
             "Sprinting" => { entity.insert(get_component::<Sprinting>(object_data.clone())); }
-            _ => {}
+
+            not_found_key => panic!("Map key not handled [{}]", not_found_key),
         }
     }
 

@@ -1,8 +1,8 @@
 use crate::{App, AppState, Plugin, SystemSet};
 use crate::models::modification_components::{CurveShot, GrowShot, SplitShot};
 use crate::models::unit_modifications::sprinting::Sprinting;
-use crate::units::modifications::apply_bullet_mod_to_target_system::apply_bullet_mod_to_target_system;
-use crate::units::modifications::apply_player_mod_to_target_system::apply_player_mod_to_target_system;
+use crate::units::unit_modifications::apply_bullet_mod_to_target_system::apply_bullet_mod_to_target_system;
+use crate::units::unit_modifications::apply_player_mod_to_target_system::apply_player_mod_to_target_system;
 use crate::util::stage_label_helper::in_post_update;
 
 mod apply_player_mod_to_target_system;

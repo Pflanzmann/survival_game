@@ -1,6 +1,6 @@
 use crate::{Commands, Component, EventReader, Query, With};
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
-use crate::models::modification_attributes::modification::Modification;
+use crate::models::unit_modifications::descriptors::modification::Modification;
 
 
 pub fn apply_player_mod_to_target_system<T: Component + Clone>(

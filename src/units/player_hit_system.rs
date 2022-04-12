@@ -2,9 +2,9 @@ use bevy::app::EventReader;
 use bevy::prelude::{Entity, EventWriter, With, Without};
 
 use crate::{Player, Query};
-use crate::models::attributes::attribute::*;
-use crate::models::attributes::damage::Damage;
-use crate::models::attributes::health::Health;
+use crate::models::unit_attributes::attribute::*;
+use crate::models::unit_attributes::damage::Damage;
+use crate::models::unit_attributes::health::Health;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
 use crate::models::events::player_died_event::PlayerDiedEvent;
 use crate::models::events::player_enemy_collision_event::PlayerEnemyCollisionEvent;

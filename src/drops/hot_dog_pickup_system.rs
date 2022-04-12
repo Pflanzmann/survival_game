@@ -3,7 +3,7 @@ use bevy::prelude::EventReader;
 use bevy_kira_audio::Audio;
 
 use crate::{Commands, Player, Query, Res, With};
-use crate::models::attributes::health::Health;
+use crate::models::unit_attributes::health::Health;
 use crate::models::events::item_collision_event::ItemCollisionEvent;
 use crate::models::item_components::Heal;
 

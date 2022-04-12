@@ -2,10 +2,10 @@ use bevy::ecs::schedule::StageLabel;
 use bevy::prelude::{Plugin, SystemSet};
 
 use crate::{App, AppState};
-use crate::bullets::modifications::apply_modification_system::apply_modification_system;
-use crate::bullets::modifications::curve_shot_system::curve_shot_system;
-use crate::bullets::modifications::grow_shot_system::grow_shot_system;
-use crate::bullets::modifications::split_shot_system::split_shot_system;
+use crate::bullets::bullet_modifications::apply_modification_system::apply_modification_system;
+use crate::bullets::bullet_modifications::curve_shot_system::curve_shot_system;
+use crate::bullets::bullet_modifications::grow_shot_system::grow_shot_system;
+use crate::bullets::bullet_modifications::split_shot_system::split_shot_system;
 use crate::models::modification_components::{CurveShot, GrowShot, SplitShot};
 use crate::util::stage_label_helper::in_pre_update;
 

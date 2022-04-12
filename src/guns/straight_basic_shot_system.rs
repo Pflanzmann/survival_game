@@ -3,10 +3,7 @@ use bevy::prelude::{Commands, Res, Sprite, SpriteBundle, Vec2};
 
 use crate::{Entity, Query, TextureHandles, Transform, With};
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
-use crate::models::attributes::attribute::Attribute;
-use crate::models::attributes::damage::Damage;
-use crate::models::attributes::move_speed::MoveSpeed;
-use crate::models::bullet_components::{Bullet, BulletRange, HitLimit};
+use crate::models::bullet_components::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::collider::collider::Collider;
@@ -14,6 +11,11 @@ use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::gun_components::{Reloadable, StraightBasicShot, WeaponSlot};
 use crate::models::player_components::AimDirection;
 use crate::models::sprite_layer::SpriteLayer;
+use crate::models::unit_attributes::attribute::*;
+use crate::models::unit_attributes::damage::Damage;
+use crate::models::unit_attributes::hit_limit::HitLimit;
+use crate::models::unit_attributes::move_speed::MoveSpeed;
+use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_stats_components::{MoveDirection, UnitSize};
 
 pub fn straight_basic_shot_system(
@@ -54,8 +56,8 @@ pub fn straight_basic_shot_system(
                 facing_direction: MoveDirection { direction: holder_aim_direction.direction },
                 move_speed: MoveSpeed::new(bullet_handle.basic_bullet.speed),
                 damage: Damage::new(bullet_handle.basic_bullet.damage),
-                bullet_range: BulletRange::new(bullet_handle.basic_bullet.range),
-                hit_limit: HitLimit { hit_limit: bullet_handle.basic_bullet.hit_limit },
+                travel_range: TravelRange::new(bullet_handle.basic_bullet.range),
+                hit_limit: HitLimit::new(bullet_handle.basic_bullet.hit_limit),
                 collider: Collider,
                 collider_entities: CollidedEntities::default(),
             }).id();

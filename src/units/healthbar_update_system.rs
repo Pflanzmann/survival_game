@@ -1,8 +1,8 @@
 use bevy::prelude::{Changed, Children, Query, With};
 
 use crate::{HealthBar, Player, Transform, Without};
-use crate::models::attributes::attribute::*;
-use crate::models::attributes::health::Health;
+use crate::models::unit_attributes::attribute::*;
+use crate::models::unit_attributes::health::Health;
 use crate::models::collider::collider::Collider;
 use crate::models::unit_stats_components::Enemy;
 
