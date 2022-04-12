@@ -23,9 +23,6 @@ mod apply_modification_system;
 /// All system get only used in the [`AppState::Ingame`].
 pub struct BulletModificationsPlugin;
 
-#[derive(Debug, Hash, PartialEq, Eq, Clone, StageLabel)]
-pub struct BulletModStage;
-
 impl Plugin for BulletModificationsPlugin {
     fn build(&self, app: &mut App) {
         app
