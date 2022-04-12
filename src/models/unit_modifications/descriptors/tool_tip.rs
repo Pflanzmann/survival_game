@@ -5,8 +5,3 @@ use serde::Deserialize;
 pub struct ToolTip {
     pub tooltip: String,
 }
-
-#[derive(Deserialize)]
-pub struct ModSpriteHandlerHelper {
-    pub sprite: String,
-}
