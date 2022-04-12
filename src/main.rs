@@ -23,7 +23,6 @@ use crate::drops::DropsPlugin;
 use crate::guns::GunPlugin;
 use crate::input::InputPlugin;
 use crate::models::events::EventsPlugin;
-use crate::models::gun_components::Gunnable;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::ui_components::{Cointext, HealthBar, MainMenuComp};
 use crate::navigation::NavigationPlugin;
