@@ -1,10 +1,11 @@
 use bevy::ecs::component::Component;
+use serde::Deserialize;
 
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::modifications::affects::attribute_affect::AttributeAffect;
 
-#[derive(Component, Copy, Clone)]
+#[derive(Component, Copy, Clone, Deserialize)]
 pub struct AffectMoveSpeed {
     pub boost_amount: f32,
 }
