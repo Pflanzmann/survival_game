@@ -14,7 +14,7 @@ pub fn enemy_set_move_direction_system(
         Err(_) => return,
     };
 
-    for (mut transform, mut enemy_direction, collisions) in enemies.iter_mut() {
+    for (transform, mut enemy_direction, collisions) in enemies.iter_mut() {
         let mut direction = (player_result.translation - transform.translation).normalize_or_zero();
 
         if let Some(collisions) = collisions {

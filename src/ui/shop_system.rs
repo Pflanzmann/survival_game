@@ -1,6 +1,6 @@
 use std::cmp::min;
 
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiCameraBundle, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiCameraBundle, Val, VerticalAlign, With};
 use rand::Rng;
 
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
@@ -18,9 +18,9 @@ pub fn spawn_shop_menu_system(
     let mut shop_items_vec: Vec<(Entity, String, Handle<Image>, String)> = Vec::new();
     fetch_shop_slots(mod_query, &mut shop_items_vec, 3);
 
-    let (entity1, name1, sprite_handler1, tooltip1) = shop_items_vec.get(0).unwrap();
-    let (entity2, name2, sprite_handler2, tooltip2) = shop_items_vec.get(1).unwrap();
-    let (entity3, name3, sprite_handler3, tooltip3) = shop_items_vec.get(2).unwrap();
+    let (entity1, _, sprite_handler1, _) = shop_items_vec.get(0).unwrap();
+    let (entity2, _, sprite_handler2, _) = shop_items_vec.get(1).unwrap();
+    let (entity3, _, sprite_handler3, _) = shop_items_vec.get(2).unwrap();
 
     commands.entity(*entity1).insert(ShopSlot { index: 0 });
     commands.entity(*entity2).insert(ShopSlot { index: 1 });
@@ -326,10 +326,10 @@ pub fn shop_button_system(
     mut event: EventWriter<ApplyModToTargetSystem>,
     mut text_query: Query<&mut Text, With<ToolTipField>>,
     mut button_query: Query<(&mut Interaction, &ShopButton), Changed<Interaction>>,
-    mut mod_query: Query<(Entity, &ToolTip, &ShopSlot)>,
-    mut player_query: Query<Entity, With<Player>>,
+    mod_query: Query<(Entity, &ToolTip, &ShopSlot)>,
+    player_query: Query<Entity, With<Player>>,
 ) {
-    for (mut interaction, shop_button) in button_query.iter_mut() {
+    for (interaction, shop_button) in button_query.iter_mut() {
         match *interaction {
             Interaction::Clicked => {
                 for (modification_entity, _, shop_slot) in mod_query.iter() {
@@ -362,7 +362,7 @@ pub fn shop_button_system(
 
 pub fn fetch_shop_slots(
     mod_query: Query<(Entity, &ModName, &ModSpriteHandler, &ToolTip)>,
-    mut result_vector: &mut Vec<(Entity, String, Handle<Image>, String)>,
+    result_vector: &mut Vec<(Entity, String, Handle<Image>, String)>,
     requested_slot_count: i32,
 ) {
     let mut rng = rand::thread_rng();

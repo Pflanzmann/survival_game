@@ -15,7 +15,7 @@ pub fn coin_pickup_system(
     item_query: Query<Entity, With<Coin>>,
 ) {
     for event in item_pickup_event.iter() {
-        let item = match item_query.get(event.item_entity) {
+        let _item = match item_query.get(event.item_entity) {
             Ok(value) => value,
             Err(_) => continue
         };

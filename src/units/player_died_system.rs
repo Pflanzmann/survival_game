@@ -12,6 +12,6 @@ pub fn player_died_system(
 ) {
     for event in player_died_event.iter() {
         commands.entity(event.player_entity).despawn();
-        state_trigger.State_Change_Trigger = ToAppState::ToGameOver;
+        state_trigger.state_change_trigger = ToAppState::ToGameOver;
     }
 }

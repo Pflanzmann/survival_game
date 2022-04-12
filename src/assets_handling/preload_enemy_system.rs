@@ -1,8 +1,6 @@
-use bevy::prelude::{Handle, ResMut};
-use serde::{Deserialize, Serialize};
+use bevy::prelude::ResMut;
 
 use crate::assets_handling::configurations::enemy_config::EnemyConfig;
-use crate::models::enemy::Enemy;
 use crate::util::read_file_to_string::read_file_to_string;
 
 #[derive(Default)]

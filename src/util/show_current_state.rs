@@ -1,8 +1,8 @@
-use bevy::prelude::{ResMut, State};
+use bevy::prelude::{Res, State};
 use crate::AppState;
 
 pub fn show_current_state(
-    mut appstate: ResMut<State<AppState>>
+    appstate: Res<State<AppState>>
 ){
     match appstate.current() {
         AppState::Pre => {println!("Pre")}

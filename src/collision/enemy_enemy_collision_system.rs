@@ -19,7 +19,7 @@ pub fn enemy_enemy_collision_system(
     for (entity, transform, size) in enemy_query.iter() {
         let mut collisions = CollisionDirections { collisions: Vec::new() };
 
-        for (other_entity, other_transform, other_size) in enemy_query.iter() {
+        for (_, other_transform, other_size) in enemy_query.iter() {
             if is_colliding(
                 transform.translation,
                 size.collider_size,

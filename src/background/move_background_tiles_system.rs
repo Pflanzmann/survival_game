@@ -7,7 +7,7 @@ use crate::SpriteLayer;
 
 pub fn move_background_tiles_system(
     mut background_tiles: ResMut<BackgroundTilesResource>,
-    player_query: Query<(&Transform), (With<Player>, Without<Tile>)>,
+    player_query: Query<&Transform, (With<Player>, Without<Tile>)>,
     mut tiles_query: Query<&mut GlobalTransform, With<Tile>>,
 ) {
     let player_position = match player_query.get_single() {
