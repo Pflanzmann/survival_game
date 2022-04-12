@@ -4,11 +4,10 @@ use crate::models::move_direction::MoveDirection;
 use crate::models::player::Player;
 
 pub fn player_control_movement_system(
-    mut commands: Commands,
     input: Res<Input<KeyCode>>,
-    mut player_query: Query<(Entity, &mut MoveDirection), With<Player>>,
+    mut player_query: Query<(&mut MoveDirection), With<Player>>,
 ) {
-    for (entity, mut player_direction) in player_query.iter_mut() {
+    for mut player_direction in player_query.iter_mut() {
         let mut direction = Vec3::default();
 
         if input.pressed(KeyCode::A) {
@@ -28,7 +27,7 @@ pub fn player_control_movement_system(
         }
 
         direction = direction.normalize_or_zero();
-        
+
         if player_direction.direction != direction {
             player_direction.direction = direction;
         }
