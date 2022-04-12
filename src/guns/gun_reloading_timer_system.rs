@@ -1,7 +1,6 @@
-use bevy::prelude::{Query, Time};
+use bevy::prelude::{Query, Res, Time};
 
 use crate::models::unit_attributes::reload::Reload;
-use crate::Res;
 
 pub fn gun_reloading_timer_system(
     time: Res<Time>,

@@ -1,6 +1,6 @@
-use bevy::prelude::Plugin;
+use bevy::prelude::{App, Plugin, SystemSet};
 
-use crate::{App, AppState, SetupStages, SystemSet};
+use crate::AppState;
 use crate::background::background_startup_system::background_startup_system;
 use crate::background::move_background_tiles_system::move_background_tiles_system;
 use crate::util::stage_label_helper::in_update;

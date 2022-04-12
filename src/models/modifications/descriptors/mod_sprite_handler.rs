@@ -1,7 +1,6 @@
 use bevy::ecs::component::Component;
+use bevy::prelude::{Handle, Image};
 use serde::Deserialize;
-
-use crate::{Handle, Image};
 
 #[derive(Component)]
 pub struct ModSpriteHandler {

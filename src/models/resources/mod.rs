@@ -1,6 +1,5 @@
-use bevy::prelude::{App, Plugin};
+use bevy::prelude::{App, Plugin, Vec2};
 
-use crate::{ToAppState, Vec2};
 use crate::models::resources::background_tiles_resource::BackgroundTilesResource;
 use crate::models::resources::state_resources::AppStateTrigger;
 use crate::models::resources::ui_resources::CoinCount;

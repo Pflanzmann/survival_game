@@ -1,6 +1,5 @@
 use bevy::ecs::component::Component;
-
-use crate::Vec3;
+use bevy::prelude::Vec3;
 
 #[derive(Component)]
 pub struct AimDirection {

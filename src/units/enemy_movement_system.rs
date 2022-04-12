@@ -1,6 +1,5 @@
-use bevy::prelude::{Transform, Without};
+use bevy::prelude::{Query, Transform, Vec3, With, Without};
 
-use crate::{Query, Res, Vec3, With};
 use crate::models::collider::collision_directions::CollisionDirections;
 use crate::models::enemy::Enemy;
 use crate::models::move_direction::MoveDirection;

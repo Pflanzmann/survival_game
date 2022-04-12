@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::{CoinCount, Cointext, TextureHandles};
+use crate::{CoinCount, CoinText, TextureHandles};
 use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::mod_container::ModContainer;
 use crate::models::modifications::curve_shot::CurveShot;
@@ -38,7 +38,7 @@ pub fn spawn_text_system(
         ),
         ..Default::default()
     })
-        .insert(Cointext)
+        .insert(CoinText)
         .id();
 
     commands.spawn_bundle(NodeBundle {
@@ -113,7 +113,7 @@ pub fn spawn_text_system(
 }
 
 pub fn update_text_system(
-    mut text_query: Query<&mut Text, With<Cointext>>,
+    mut text_query: Query<&mut Text, With<CoinText>>,
     mut coin_counter: ResMut<CoinCount>,
 ) {
     if coin_counter.is_changed() {

@@ -1,15 +1,14 @@
 use bevy::app::EventReader;
-use bevy::prelude::{Entity, EventWriter, With, Without};
+use bevy::prelude::{Entity, EventWriter, Query, With, Without};
 
-use crate::Query;
-use crate::models::unit_attributes::attribute::*;
-use crate::models::unit_attributes::damage::Damage;
-use crate::models::unit_attributes::health::Health;
+use crate::models::enemy::Enemy;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
 use crate::models::events::player_died_event::PlayerDiedEvent;
 use crate::models::events::player_enemy_collision_event::PlayerEnemyCollisionEvent;
-use crate::models::enemy::Enemy;
 use crate::models::player::Player;
+use crate::models::unit_attributes::attribute::*;
+use crate::models::unit_attributes::damage::Damage;
+use crate::models::unit_attributes::health::Health;
 
 pub fn player_hit_system(
     mut player_enemy_collision_events: EventReader<PlayerEnemyCollisionEvent>,

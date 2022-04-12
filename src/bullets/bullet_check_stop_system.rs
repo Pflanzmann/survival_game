@@ -1,9 +1,8 @@
-use bevy::prelude::EventWriter;
+use bevy::prelude::{Entity, EventWriter, Query, With};
 
-use crate::{Entity, Query, With};
 use crate::models::bullet::Bullet;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
-use crate::models::unit_attributes::attribute::*;
+use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::travel_range::TravelRange;
 
 pub fn bullet_check_stop_system(

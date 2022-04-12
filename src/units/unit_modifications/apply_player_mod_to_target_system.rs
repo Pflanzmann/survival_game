@@ -1,7 +1,7 @@
-use crate::{Commands, Component, EventReader, Query, With};
+use bevy::prelude::{Commands, Component, EventReader, Query, With};
+
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
 use crate::models::modifications::descriptors::modification::Modification;
-
 
 pub fn apply_player_mod_to_target_system<T: Component + Clone>(
     mut commands: Commands,

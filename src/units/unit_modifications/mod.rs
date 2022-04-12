@@ -1,4 +1,7 @@
-use crate::{App, AppState, Plugin, SystemSet};
+use bevy::app::Plugin;
+use bevy::prelude::{App, SystemSet};
+
+use crate::AppState;
 use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::grow_shot::GrowShot;

@@ -1,10 +1,10 @@
-use crate::{Commands, Entity, Query, Transform, With, Without};
+use bevy::prelude::{Commands, Entity, Query, Transform, With, Without};
+
 use crate::models::enemy::Enemy;
 use crate::models::player::Player;
 
 pub fn despawn_far_enemy_system(
-    mut commands : Commands,
-
+    mut commands: Commands,
     mut enemy_query: Query<(Entity, &mut Transform), (With<Enemy>, Without<Player>)>,
     mut player_query: Query<(&mut Transform), (With<Player>, Without<Enemy>)>,
 ) {

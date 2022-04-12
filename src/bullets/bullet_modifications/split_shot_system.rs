@@ -1,21 +1,21 @@
 use bevy::app::EventReader;
-use bevy::prelude::{Commands, Query, Res, Sprite, SpriteBundle, Vec2, Vec3};
+use bevy::prelude::{Commands, Query, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
 use rand::random;
 
-use crate::{SpriteLayer, TextureHandles, Transform, With};
+use crate::{SpriteLayer, TextureHandles};
 use crate::models::bullet::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::collider::collider::Collider;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::models::modifications::split_shot::SplitShot;
+use crate::models::move_direction::MoveDirection;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_size::UnitSize;
-use crate::models::move_direction::MoveDirection;
 
 pub fn split_shot_system(
     mut command: Commands,

@@ -1,10 +1,10 @@
 use std::collections::HashMap;
 
 use bevy::asset::AssetServer;
-use bevy::prelude::{BuildChildren, Name};
+use bevy::ecs::system::EntityCommands;
+use bevy::prelude::{BuildChildren, Commands, Entity, Name, ResMut};
 use serde::de::DeserializeOwned;
 
-use crate::{Commands, Entity, EntityCommands, ResMut};
 use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::descriptors::mod_name::ModName;

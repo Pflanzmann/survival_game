@@ -1,9 +1,8 @@
 use std::cmp::min;
 
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiCameraBundle, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiCameraBundle, Val, VerticalAlign, With};
 use rand::Rng;
 
-use crate::EventWriter;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
 use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::mod_sprite_handler::ModSpriteHandler;
@@ -310,15 +309,14 @@ pub fn spawn_shop_menu_system(
 
 pub fn close_shop_menu_system(
     mut commands: Commands,
-
-    slot_entity_query : Query<Entity, With<ShopSlot>>,
+    slot_entity_query: Query<Entity, With<ShopSlot>>,
     shop_ui_query: Query<Entity, With<ShopMenuComp>>,
 ) {
     for entity in shop_ui_query.iter() {
         commands.entity(entity).despawn_recursive();
     }
 
-    for entity in slot_entity_query.iter(){
+    for entity in slot_entity_query.iter() {
         commands.entity(entity).remove::<ShopSlot>();
     }
 }

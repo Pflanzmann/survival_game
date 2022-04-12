@@ -1,6 +1,6 @@
-use bevy::prelude::Plugin;
+use bevy::prelude::{Plugin, SystemSet};
 
-use crate::{App, AppState, SystemSet};
+use crate::{App, AppState};
 use crate::guns::gun_reloading_timer_system::gun_reloading_timer_system;
 use crate::guns::setup_gun_system::setup_gun_system;
 use crate::guns::straight_basic_shot_system::straight_basic_shot_system;

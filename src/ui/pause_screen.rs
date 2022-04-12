@@ -1,6 +1,7 @@
 use bevy::app::Events;
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, HorizontalAlign, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, State, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign};
-use crate::{AppState, AppStateTrigger, ToAppState, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, HorizontalAlign, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, State, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+
+use crate::{AppState, AppStateTrigger, ToAppState};
 use crate::models::ui_components::PauseMenuComp;
 
 pub fn enter_pause_system(
@@ -52,8 +53,8 @@ pub fn enter_pause_system(
 
 pub fn exit_pause_system(
     mut commands: Commands,
-    ui_query: Query<Entity, With<PauseMenuComp>>
-){
+    ui_query: Query<Entity, With<PauseMenuComp>>,
+) {
     for entity in ui_query.iter() {
         commands.entity(entity).despawn_recursive();
     }
