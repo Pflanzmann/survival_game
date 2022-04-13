@@ -1,4 +1,3 @@
-use bevy::ecs::schedule::StageLabel;
 use bevy::prelude::{Plugin, SystemSet};
 
 use crate::{App, AppState};

@@ -1,12 +1,13 @@
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, HorizontalAlign, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiCameraBundle, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, HorizontalAlign, JustifyContent, Name, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiCameraBundle, Val, VerticalAlign, With};
+
 use crate::MainMenuComp;
 use crate::models::ui_components::NavigationButton;
 
 pub fn spawn_main_menu_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
-){
-    commands.spawn_bundle(UiCameraBundle::default());
+) {
+    commands.spawn_bundle(UiCameraBundle::default()).insert(Name::new("UiCamera"));
 
     commands
         .spawn_bundle(NodeBundle {
@@ -83,9 +84,9 @@ pub fn spawn_main_menu_system(
 }
 
 pub fn close_main_menu_system(
-    mut commands : Commands,
-    my_query : Query<Entity, With<MainMenuComp>>
-){
+    mut commands: Commands,
+    my_query: Query<Entity, With<MainMenuComp>>,
+) {
     for entity in my_query.iter() {
         commands.entity(entity).despawn_recursive();
     }

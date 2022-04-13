@@ -1,5 +1,5 @@
 use bevy::app::EventReader;
-use bevy::prelude::{Commands, Query, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
+use bevy::prelude::{Commands, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
 use rand::random;
 
 use crate::{SpriteLayer, TextureHandles};
@@ -59,7 +59,7 @@ pub fn split_shot_system(
                 hit_limit: HitLimit::new(1.0),
                 collider: Collider,
                 collider_entities: CollidedEntities::default(),
-            });
+            }).insert(Name::new("Bullet"));
         }
     }
 }
