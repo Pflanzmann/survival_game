@@ -14,6 +14,11 @@ mod pause_screen;
 mod main_menu_screen;
 mod shop_system;
 
+/// This plugin generates the [ UI ]  elements for game menus and
+/// the ingame hud. Furthermore it holds systems to control the
+/// spawning and despawning of UI elements as well as interactions
+/// like button clicks.
+
 pub struct UiPlugin;
 
 impl Plugin for UiPlugin {
