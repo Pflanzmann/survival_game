@@ -18,6 +18,25 @@ pub mod player_enemy_collision_event;
 pub mod player_died_event;
 pub mod apply_mod_to_target_event;
 
+/// This plugin defines events and their contents for several occasions
+///
+/// [ apply_mod_to_target ] is used to connect a unit and a mod entity in order to apply changes to the unit
+///
+/// [ bullet_enemy_collision_event ] reacts when an enemy is hit by a projectile. Applies damage to the enemy and
+/// possible changes to the projectile.
+///
+/// [ bullet_shot_event ] triggers adding modifications to newly spawned projectiles
+///
+/// [ bullet_stopped_event ] reaction to despawning projectiles to trigger effects on that
+///
+/// [ enemy_died_event ] reaction to enemies dying to calculate item drops or other things
+///
+/// [ item_collision_event ] triggers reaction to the player collecting an item
+///
+/// [ player_died_event ] reacts to the player dying
+///
+/// [ player_enemy_collision_event ] triggers reaction to the player being "hit" by an enemy
+
 pub struct EventsPlugin;
 
 impl Plugin for EventsPlugin {

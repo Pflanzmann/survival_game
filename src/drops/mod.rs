@@ -13,6 +13,14 @@ mod coin_pickup_system;
 mod hot_dog_pickup_system;
 mod barrel_pickup_system;
 
+/// this plugin manages the spawning and collection of items during the game.
+///
+/// [ basic_drop_system ] controls probability and collection of possible drops
+/// whenever an enemy dies
+///
+/// [ hot_dog_pickup_system ], [ coin_pickup_system ] and [ barrel_pickup_system ]
+/// handle the event when an item is picked up and execute the responding action.
+
 pub struct DropsPlugin;
 
 impl Plugin for DropsPlugin {
