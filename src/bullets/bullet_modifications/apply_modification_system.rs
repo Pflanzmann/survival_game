@@ -5,10 +5,10 @@ use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::mod_container::ModContainer;
 use crate::models::mod_container_slot::ModContainerSlot;
 
-/// A generic system to apply [`Bullet`]-mods like [`SplitShot`] to the new shot bullet from the
-/// [`BulletShotEvent`].
+/// A generic system to apply [Bullet]-mods like [SplitShot] to the new shot bullet from the
+/// [BulletShotEvent].
 ///
-/// The mods from get applied from the [`ModContainer`] associated to the weapon.
+/// The mods from get applied from the [ModContainer] associated to the weapon.
 ///
 /// ```
 /// # use bevy_ecs::prelude::;
