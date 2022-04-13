@@ -19,6 +19,13 @@ mod apply_bullet_mod_to_target_system;
 
 pub struct UnitModificationsPlugin;
 
+/// All the apply systems have to get registered in the [AppState::InGame] and
+/// the [AppState::Shop] to be able to apply plugins from the shop.
+///
+/// Every Modification has to get registered with the fitting [apply_bullet_mod_to_target_system]
+/// for [bullet][Modification] or [apply_player_mod_to_target_system] for [Player][Modification]
+///
+/// [apply_affect_system] is to register AffectAttributes<T, U>´s, this might get changed.
 impl Plugin for UnitModificationsPlugin {
     fn build(&self, app: &mut App) {
         app

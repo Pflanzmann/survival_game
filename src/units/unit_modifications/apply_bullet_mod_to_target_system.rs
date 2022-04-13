@@ -6,6 +6,21 @@ use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::player::Player;
 use crate::models::weapon_slot::WeaponSlot;
 
+/// A generic system to apply a [Bullet][Modification] from the source
+/// to the target of the [ApplyModToTargetSystem].
+///
+/// The modification gets applied from the source [Entity] with a [Modification]-Tag to
+/// the [ModContainer] from the [WeaponSlot] of the target [Entity].
+///
+/// ```
+/// # use bevy_ecs::prelude::;
+/// #
+/// impl Plugin for ExamplePlugin {
+///     fn build(&self, app: &mut App) {
+///         app.add_system(apply_bullet_mod_to_target_system::<CurveShot>)
+///     }
+/// }
+/// ```
 pub fn apply_bullet_mod_to_target_system<T: Component + Clone>(
     mut commands: Commands,
     mut apply_events: EventReader<ApplyModToTargetSystem>,
