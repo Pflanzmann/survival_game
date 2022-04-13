@@ -10,8 +10,14 @@ pub mod execute_state_switch_system;
 pub mod trigger_enter_main_system;
 pub mod stage_label_system;
 
-/// This plugin controls navigation between different [ game staes ].
+/// This plugin controls navigation between different [ game stages ].
 /// These are used to control globally which systems are running at any given time.
+///
+/// [ first_label_system ], [collision_label_system], [pre_update_label_system], [update_label_system] and [post_update_label_system]
+/// serve as simulated Stage boundary to help schedule the system runtime
+///
+/// [execute_state_switch_system] performs a switch between [ game stages ] in a controlled environment
+/// to guaranty execution time in the beginning of a game tick and avoid overlapping calls for state changes
 ///
 /// For each state there is an [ on_enter ] event that serves as a kind of startup
 /// system to each state.
