@@ -3,6 +3,20 @@ use bevy::prelude::{Commands, Component, EventReader, Query, With};
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
 use crate::models::modifications::descriptors::modification::Modification;
 
+/// A generic system to apply a [Bullet][Modification] from the source
+/// to the target of the [ApplyModToTargetSystem].
+///
+/// The mods from get applied from the source [Entity] with a [Modification]-Tag.
+///
+/// ```
+/// # use bevy_ecs::prelude::;
+/// #
+/// impl Plugin for ExamplePlugin {
+///     fn build(&self, app: &mut App) {
+///         app.add_system(apply_bullet_mod_to_target_system::<CurveShot>)
+///     }
+/// }
+/// ```
 pub fn apply_player_mod_to_target_system<T: Component + Clone>(
     mut commands: Commands,
     mut apply_events: EventReader<ApplyModToTargetSystem>,

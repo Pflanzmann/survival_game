@@ -4,6 +4,20 @@ use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
 use crate::models::modifications::affects::attribute_affect::AttributeAffect;
 use crate::models::unit_attributes::attribute::Attribute;
 
+/// A generic system to apply [AttributeAffect]s like [AffectMoveSpeed] from the source
+/// to the target of the [ApplyModToTargetSystem].
+///
+/// The mods from get applied from the source [Entity] with a [Modification]-Tag.
+///
+/// ```
+/// # use bevy_ecs::prelude::;
+/// #
+/// impl Plugin for ExamplePlugin {
+///     fn build(&self, app: &mut App) {
+///         app.add_system(apply_affect_system::<MoveSpeed, AffectMoveSpeed>)
+///     }
+/// }
+/// ```
 pub fn apply_affect_system<
     T: Component + Attribute,
     U: Component + AttributeAffect<T>>(
