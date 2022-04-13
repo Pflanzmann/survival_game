@@ -1,4 +1,4 @@
-use bevy::prelude::{BuildChildren, Color, Commands, Entity, Query, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
+use bevy::prelude::{BuildChildren, Color, Commands, Entity, Name, Query, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
 
 use crate::HealthBar;
 use crate::models::player::Player;
@@ -29,6 +29,7 @@ pub fn setup_health_bar(
         },
     )
         .insert(HealthBar)
+        .insert(Name::new("Player HealthBar"))
         .id();
 
     let child_background = commands.spawn_bundle(

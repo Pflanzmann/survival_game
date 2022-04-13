@@ -1,5 +1,5 @@
 use bevy::app::EventWriter;
-use bevy::prelude::{Commands, Entity, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
+use bevy::prelude::{Commands, Entity, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
 
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
 use crate::models::aim_direction::AimDirection;
@@ -63,7 +63,7 @@ pub fn straight_basic_shot_system(
                 hit_limit: HitLimit::new(bullet_handle.basic_bullet.hit_limit),
                 collider: Collider,
                 collider_entities: CollidedEntities::default(),
-            }).id();
+            }).insert(Name::new("Bullet")).id();
 
         bullet_shot_event_writer.send(BulletShotEvent { entity: bullet })
     }

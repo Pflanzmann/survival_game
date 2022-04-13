@@ -37,7 +37,7 @@ pub fn preload_mod_system(
     let mut child = commands.spawn();
     children.push(spawn_entity(&mut child, &mut asset_server, "configurations/mod_configurations/sprinting_config.json"));
 
-    let parent = commands.spawn().insert(Name::new("mod_entity_parent")).id();
+    let parent = commands.spawn().insert(Name::new("Mod Entities")).id();
     commands.entity(parent).push_children(&*children);
 }
 

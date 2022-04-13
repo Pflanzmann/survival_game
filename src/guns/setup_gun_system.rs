@@ -14,12 +14,12 @@ pub fn setup_gun_system(
 ) {
     for entity in player_query.iter() {
         let mod_container = commands.spawn()
-            .insert(Name::new("gun mod container"))
+            .insert(Name::new("BasicGun ModContainer"))
             .insert(ModContainer)
             .id();
 
         let gun = commands.spawn()
-            .insert(Name::new("basic gun"))
+            .insert(Name::new("BasicGun"))
             .insert(StraightBasicShot)
             .insert(Reload::new(1.0))
             .insert(ModContainerSlot { container_entity: mod_container })

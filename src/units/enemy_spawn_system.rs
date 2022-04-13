@@ -1,5 +1,5 @@
 use bevy::math::Vec3;
-use bevy::prelude::{Commands, Query, Res, ResMut, Sprite, SpriteBundle, Time, Transform, Vec2, With};
+use bevy::prelude::{Commands, Name, Query, Res, ResMut, Sprite, SpriteBundle, Time, Transform, Vec2, With};
 use rand::random;
 
 use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
@@ -59,6 +59,6 @@ pub fn enemy_spawn_system(
                 move_speed: MoveSpeed::new(enemy_handles.goblin.move_speed),
                 damage: Damage::new(enemy_handles.goblin.damage),
                 health: Health::new(enemy_handles.goblin.health),
-            });
+            }).insert(Name::new("Goblin"));
     }
 }

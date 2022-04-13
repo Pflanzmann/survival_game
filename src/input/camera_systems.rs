@@ -29,6 +29,7 @@ pub fn setup_camera_system(
 
     let child = commands.spawn_bundle(camera_bundle)
         .insert(MainCamera)
+        .insert(Name::new("MainCamera"))
         .id();
 
     commands.entity(player_result).push_children(&[child]);

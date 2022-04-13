@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, EventReader, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
+use bevy::prelude::{Commands, EventReader, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
 use rand::random;
 
 use crate::assets_handling::preload_item_system::ItemConfigHandles;
@@ -46,6 +46,7 @@ pub fn basic_drop_system(
                 .insert(Item)
                 .insert(Collider)
                 .insert(Coin)
+                .insert(Name::new("Item Coin"))
                 .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) });
         }
 
@@ -64,6 +65,7 @@ pub fn basic_drop_system(
                 .insert(Item)
                 .insert(Collider)
                 .insert(Heal { amount: item_handles.hot_dog.heal_amount })
+                .insert(Name::new("Item Heal"))
                 .insert(UnitSize { collider_size: Vec2::new(item_handles.hot_dog.sprite_custom_size_x, item_handles.hot_dog.sprite_custom_size_y) });
         }
 
@@ -82,6 +84,7 @@ pub fn basic_drop_system(
                 .insert(Item)
                 .insert(Collider)
                 .insert(Shop)
+                .insert(Name::new("Item Barrel"))
                 .insert(UnitSize { collider_size: Vec2::new(item_handles.barrel.sprite_custom_size_x, item_handles.barrel.sprite_custom_size_y) });
         }
     }

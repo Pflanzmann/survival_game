@@ -1,15 +1,15 @@
 use bevy::prelude::{BuildChildren, Commands, GlobalTransform, Name, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2};
 
 use crate::{SpriteLayer, TextureHandles};
-use crate::models::tile::Tile;
 use crate::models::resources::background_tiles_resource::{BackgroundTilesResource, TileData};
+use crate::models::tile::Tile;
 
 pub fn background_startup_system(
     mut commands: Commands,
     mut background_tiles: ResMut<BackgroundTilesResource>,
     texture_handles: Res<TextureHandles>,
 ) {
-    let background = commands.spawn().insert(Name::new("background")).id();
+    let background = commands.spawn().insert(Name::new("Background Tiles")).id();
 
     for x in 0..50 {
         for y in 0..50 {
@@ -23,6 +23,7 @@ pub fn background_startup_system(
                 ..Default::default()
             })
                 .insert(Tile)
+                .insert(Name::new("Tile"))
                 .id();
 
             commands.entity(background).add_child(child);
