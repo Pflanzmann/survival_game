@@ -12,14 +12,13 @@ use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::hit_limit::HitLimit;
 
-
-/// This system handles the collision between a [`Bullet`] and an [`Enemy`].
+/// This system handles the collision between a [Bullet] and an [Enemy].
 /// The damage of the bullet gets applied to the health of the enemy.
 ///
-/// The bullet gets checked if the [`HitLimit`] is not reached and if it is it sends
-/// a [`BulletEnemyCollisionEvent`].
+/// The bullet gets checked if the [HitLimit] is not reached and if it is it sends
+/// a [BulletEnemyCollisionEvent].
 ///
-/// If an [`Enemy`] dies from the bullet it will send out an [`EnemyDiedEvent`].
+/// If an [Enemy] dies from the bullet it will send out an [EnemyDiedEvent].
 pub fn bullet_hit_system(
     mut bullet_stopped_event: EventWriter<BulletStoppedEvent>,
     mut bullet_enemy_collision_events: EventReader<BulletEnemyCollisionEvent>,
