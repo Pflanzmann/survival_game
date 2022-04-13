@@ -4,7 +4,7 @@ use crate::{AppStateTrigger, ToAppState};
 use crate::models::events::item_collision_event::ItemCollisionEvent;
 use crate::models::items::shop::Shop;
 
-pub fn kiste_pickup_system(
+pub fn barrel_pickup_system(
     mut commands : Commands,
     mut item_pickup_event: EventReader<ItemCollisionEvent>,
     mut state_trigger: ResMut<AppStateTrigger>,
