@@ -1,6 +1,6 @@
 use bevy::prelude::{App, Plugin, SystemSet};
 
-use crate::{AppState};
+use crate::AppState;
 use crate::input::camera_systems::setup_camera_system;
 use crate::input::gun_mod_debug_system::gun_mod_debug_system;
 use crate::input::player_control_aim_system::player_control_aim_system;
@@ -14,6 +14,12 @@ mod gun_mod_debug_system;
 mod player_control_aim_system;
 mod toggle_pause_system;
 
+/// The [StateTimer] is for the [toggle_pause_system] so that it does not trigger x times per click.
+/// [toggle_pause_system] is registered in every [AppState] for now.
+///
+/// [setup_camera_system] is called on the exit of the [AppState::MainMenu] to handle setup timings.
+///
+/// Every input system is handled in the update of the [AppState::InGame]
 pub struct InputPlugin;
 
 impl Plugin for InputPlugin {
