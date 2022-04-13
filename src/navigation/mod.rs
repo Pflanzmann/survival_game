@@ -10,6 +10,12 @@ pub mod execute_state_switch_system;
 pub mod trigger_enter_main_system;
 pub mod stage_label_system;
 
+/// This plugin controls navigation between different [ game staes ].
+/// These are used to control globally which systems are running at any given time.
+///
+/// For each state there is an [ on_enter ] event that serves as a kind of startup
+/// system to each state.
+
 pub struct NavigationPlugin;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]

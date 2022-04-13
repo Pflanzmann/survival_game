@@ -15,6 +15,16 @@ pub mod preload_player_system;
 pub mod preload_bullet_system;
 pub mod preload_mod_system;
 
+/// This plugin serves as a Preloader for all [ Assets ].
+///
+/// Currently it is divided into different data types like
+/// [ preload_texture_system ] for sprites or
+/// [ preload_item_system ] for items
+///
+/// The systems are run in the custom Startupstage [ AssetSetup ] in
+/// order to have them ready when the game starts
+
+
 pub struct AssetHandlingPlugin;
 
 impl Plugin for AssetHandlingPlugin {
