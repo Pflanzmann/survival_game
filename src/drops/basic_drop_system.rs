@@ -71,9 +71,9 @@ pub fn basic_drop_system(
             commands.spawn_bundle(
                 SpriteBundle {
                     transform: Transform::from_translation(drop_translation),
-                    texture: texture_handles.kiste_sprite.clone(),
+                    texture: texture_handles.barrel_sprite.clone(),
                     sprite: Sprite {
-                        custom_size: Some(Vec2::new(item_handles.kiste.sprite_custom_size_x, item_handles.kiste.sprite_custom_size_y)),
+                        custom_size: Some(Vec2::new(item_handles.barrel.sprite_custom_size_x, item_handles.barrel.sprite_custom_size_y)),
                         ..Default::default()
                     },
                     ..Default::default()
@@ -82,7 +82,7 @@ pub fn basic_drop_system(
                 .insert(Item)
                 .insert(Collider)
                 .insert(Shop)
-                .insert(UnitSize { collider_size: Vec2::new(item_handles.kiste.sprite_custom_size_x, item_handles.kiste.sprite_custom_size_y) });
+                .insert(UnitSize { collider_size: Vec2::new(item_handles.barrel.sprite_custom_size_x, item_handles.barrel.sprite_custom_size_y) });
         }
     }
 }
