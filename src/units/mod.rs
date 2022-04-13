@@ -32,6 +32,19 @@ mod move_unit_system;
 
 pub struct UnitPlugin;
 
+/// This plugin manages the everything related to [Unit]s systems and how they get applied.
+///
+/// [player_hit_system] gets run in the [on_pre_update] stack because it is a system that
+/// reacts directly to the collision systems
+///
+/// In the [on_update] stack get all methods called that dont have to have a timing because
+/// of events. They work independently and all on their own.
+///
+/// [player_died_system], [despawn_dead_enemy_system] and [despawn_far_enemy_system] gets run in
+/// the [on_last] stack because the app panics if you try access a despawned entity
+///
+/// All system get only used in the [AppState::InGame] except for the player and health bar setup,
+/// they get called in the [AppState::MainMenu] for now.
 impl Plugin for UnitPlugin {
     fn build(&self, app: &mut App) {
         app
@@ -50,29 +63,30 @@ impl Plugin for UnitPlugin {
             )
 
             .add_system_set(
-                in_last(
-                    SystemSet::on_update(AppState::InGame)
-                        .with_system(player_died_system)
-                        .with_system(despawn_dead_enemy_system)
-                        .with_system(move_unit_system)
+                in_pre_update(
+                    SystemSet::new()
+                        .with_system(player_hit_system)
                 )
             )
 
             .add_system_set(
                 in_update(
                     SystemSet::on_update(AppState::InGame)
+                        .with_system(move_unit_system)
                         .with_system(enemy_spawn_system)
                         .with_system(enemy_set_move_direction_system)
                         .with_system(sprite_direction_system)
                         .with_system(healthbar_update_system)
                         .with_system(fit_sprite_to_size_system)
-                        .with_system(despawn_far_enemy_system)
                 )
             )
+
             .add_system_set(
-                in_pre_update(
-                    SystemSet::new()
-                        .with_system(player_hit_system)
+                in_last(
+                    SystemSet::on_update(AppState::InGame)
+                        .with_system(player_died_system)
+                        .with_system(despawn_dead_enemy_system)
+                        .with_system(despawn_far_enemy_system)
                 )
             );
     }
