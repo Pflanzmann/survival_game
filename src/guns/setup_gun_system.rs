@@ -12,19 +12,19 @@ pub fn setup_gun_system(
     mut commands: Commands,
     player_query: Query<Entity, With<Player>>,
 ) {
-    for entity in player_query.iter() {
+    for player_entity in player_query.iter() {
         let mod_container = commands.spawn()
             .insert(Name::new("BasicGun ModContainer"))
             .insert(ModContainer)
             .id();
 
-        let gun = commands.spawn()
+        let gun_entity = commands.spawn()
             .insert(Name::new("BasicGun"))
             .insert(StraightBasicShot)
-            .insert(Reload::new(1.0))
             .insert(ModContainerSlot { container_entity: mod_container })
             .id();
 
-        commands.entity(entity).insert(WeaponSlot { weapon_entity: gun });
+        commands.entity(player_entity).insert(WeaponSlot { weapon_entity: gun_entity });
+        commands.entity(player_entity).insert(Reload::new(1.0));
     }
 }
