@@ -1,5 +1,4 @@
-
 #[derive(Default, Debug)]
-pub struct CoinCount {
+pub struct GoldWallet {
     pub number: i32,
 }

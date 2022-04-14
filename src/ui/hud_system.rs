@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::{CoinCount, CoinText, TextureHandles};
+use crate::{GoldWallet, CoinText, TextureHandles};
 use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::mod_container::ModContainer;
 use crate::models::modifications::curve_shot::CurveShot;
@@ -10,7 +10,7 @@ use crate::models::ui_components::BulletHud;
 pub fn spawn_text_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
-    mut coin_counter: ResMut<CoinCount>,
+    mut coin_counter: ResMut<GoldWallet>,
 ) {
     coin_counter.number = 0;
 
@@ -114,7 +114,7 @@ pub fn spawn_text_system(
 
 pub fn update_text_system(
     mut text_query: Query<&mut Text, With<CoinText>>,
-    coin_counter: Res<CoinCount>,
+    coin_counter: Res<GoldWallet>,
 ) {
     if coin_counter.is_changed() {
         for mut text in text_query.iter_mut() {

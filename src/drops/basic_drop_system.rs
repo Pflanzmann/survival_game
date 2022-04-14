@@ -7,6 +7,7 @@ use crate::models::collider::collider::Collider;
 use crate::models::enemy::Enemy;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
 use crate::models::items::coin::Coin;
+use crate::models::items::descriptor::gold_value::GoldValue;
 use crate::models::items::descriptor::heal::Heal;
 use crate::models::items::descriptor::item::Item;
 use crate::models::items::shop::Shop;
@@ -47,7 +48,8 @@ pub fn basic_drop_system(
                 .insert(Collider)
                 .insert(Coin)
                 .insert(Name::new("Item Coin"))
-                .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) });
+                .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
+                .insert(GoldValue { gold_value: 1 });
         }
 
         if (20.0..40.0).contains(&random) {
