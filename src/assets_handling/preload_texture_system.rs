@@ -15,6 +15,7 @@ pub struct TextureHandles {
     pub enemy_goblin: Handle<Image>,
     pub bullet_fireball: Handle<Image>,
     pub background_tile: Handle<Image>,
+    pub sold_button: Handle<Image>
 }
 
 pub fn preload_texture_system(
@@ -29,6 +30,8 @@ pub fn preload_texture_system(
     texture_handles.coin_sprite = asset_server.load(&item_handles.coin.sprite_path);
     texture_handles.hot_dog_sprite = asset_server.load(&item_handles.hot_dog.sprite_path);
     texture_handles.barrel_sprite = asset_server.load(&item_handles.barrel.sprite_path);
+
+    texture_handles.sold_button = asset_server.load("sprites/sold_sign.png");
 
     texture_handles.player_sprite = asset_server.load(&player_handles.player_one.sprite_path);
     texture_handles.enemy_goblin = asset_server.load(&enemy_handle.goblin.sprite_path);

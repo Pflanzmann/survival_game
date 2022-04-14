@@ -1,6 +1,7 @@
 use std::cmp::min;
+use bevy::ecs::system::EntityCommands;
 
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
 use rand::Rng;
 
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
@@ -9,10 +10,12 @@ use crate::models::modifications::descriptors::mod_sprite_handler::ModSpriteHand
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::player::Player;
 use crate::models::ui_components::{NavigationButton, ShopButton, ShopMenuComp, ShopSlot, ToolTipField};
+use crate::TextureHandles;
 
 pub fn spawn_shop_menu_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
+    mut texture_handle : ResMut<TextureHandles>,
     mod_query: Query<(Entity, &ModName, &ModSpriteHandler, &ToolTip)>,
 ) {
     let mut shop_items_vec: Vec<(Entity, String, Handle<Image>, String)> = Vec::new();
@@ -21,6 +24,8 @@ pub fn spawn_shop_menu_system(
     let (entity1, _, sprite_handler1, _) = shop_items_vec.get(0).unwrap();
     let (entity2, _, sprite_handler2, _) = shop_items_vec.get(1).unwrap();
     let (entity3, _, sprite_handler3, _) = shop_items_vec.get(2).unwrap();
+
+    let sold_sprite = texture_handle.sold_button.clone();
 
     commands.entity(*entity1).insert(ShopSlot { index: 0 });
     commands.entity(*entity2).insert(ShopSlot { index: 1 });
@@ -324,12 +329,15 @@ pub fn close_shop_menu_system(
 pub fn shop_button_system(
     mut commands: Commands,
     mut event: EventWriter<ApplyModToTargetSystem>,
+
     mut text_query: Query<&mut Text, With<ToolTipField>>,
-    mut button_query: Query<(&mut Interaction, &ShopButton), Changed<Interaction>>,
+    mut button_query: Query<(Entity ,&mut Interaction, &ShopButton), Changed<Interaction>>,
     mod_query: Query<(Entity, &ToolTip, &ShopSlot)>,
     player_query: Query<Entity, With<Player>>,
+
+    mut texture_handles : ResMut<TextureHandles>
 ) {
-    for (interaction, shop_button) in button_query.iter_mut() {
+    for (entity, interaction, shop_button) in button_query.iter_mut() {
         match *interaction {
             Interaction::Clicked => {
                 for (modification_entity, _, shop_slot) in mod_query.iter() {
@@ -338,6 +346,9 @@ pub fn shop_button_system(
                     for player_entity in player_query.iter() {
                         event.send(ApplyModToTargetSystem { mod_entity: modification_entity, target_entity: player_entity });
                     }
+
+                    spawn_sold_image(&mut commands, entity, texture_handles.sold_button.clone());
+
                     commands.entity(modification_entity).remove::<ShopSlot>();
                 }
             }
@@ -387,4 +398,29 @@ pub fn fetch_shop_slots(
             result_vector.push((entity, result_mod_name, result_mod_sprite, result_mod_tool_tip));
         }
     };
+}
+
+pub fn spawn_sold_image (
+    commands : &mut Commands,
+    entity : Entity,
+    texture_handles : Handle<Image>
+){
+    let child = commands.spawn_bundle(ImageBundle {
+        image: texture_handles.clone().into(),
+        style: Style {
+            size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
+            position: Rect {
+                left: Val::Percent(0.0),
+                bottom: Val::Percent(0.0),
+                top: Val::Percent(0.0),
+                right: Val::Percent(0.0),
+            },
+            position_type: PositionType::Absolute,
+            ..Default::default()
+        },
+        ..Default::default()
+    })
+        .id();
+
+    commands.entity(entity).add_child(child);
 }
