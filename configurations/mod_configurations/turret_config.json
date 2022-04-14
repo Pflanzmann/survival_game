@@ -1,0 +1,13 @@
+{
+  "Modification": null,
+  "ModName": {
+    "mod_name": "Turret"
+  },
+  "ModSpriteHandler": {
+    "sprite": "sprites/turret.png"
+  },
+  "ToolTip": {
+    "tooltip": "a turret helping the player"
+  },
+  "Turret": null
+}
