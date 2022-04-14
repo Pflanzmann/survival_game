@@ -1,9 +1,8 @@
 use std::any::type_name;
 use std::collections::HashMap;
 
-use bevy::asset::AssetServer;
 use bevy::ecs::system::EntityCommands;
-use bevy::prelude::{Commands, Component, Entity, Name, Plugin, ResMut};
+use bevy::prelude::{Commands, Component, Entity, Plugin, ResMut};
 use serde::de::DeserializeOwned;
 use serde_json::Value;
 
@@ -77,21 +76,10 @@ impl EntityBuilder {
             };
         }
 
-        return entity.id();
+        entity.id()
     }
 
     pub fn register_component<T: DeserializeOwned + Component>(&mut self) {
-        self.map.insert(
-            String::from(type_name::<T>().split("::").last().unwrap()),
-            Box::new(deserialize_component::<T>),
-        );
-    }
-
-    pub fn register_component_custom_handler
-    <T: DeserializeOwned + Component>(
-        &mut self,
-        function: Box<dyn Fn(&T)>,
-    ) {
         self.map.insert(
             String::from(type_name::<T>().split("::").last().unwrap()),
             Box::new(deserialize_component::<T>),

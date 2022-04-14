@@ -2,9 +2,9 @@ use bevy::prelude::{Res, State};
 use crate::AppState;
 
 pub fn show_current_state(
-    appstate: Res<State<AppState>>
+    app_state: Res<State<AppState>>
 ){
-    match appstate.current() {
+    match app_state.current() {
         AppState::Pre => {println!("Pre")}
         AppState::MainMenu => {println!("MainMenu")}
         AppState::Loading => {println!("Loading")}

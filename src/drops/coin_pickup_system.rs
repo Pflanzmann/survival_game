@@ -1,10 +1,9 @@
 use bevy::asset::AssetServer;
-use bevy::prelude::{Commands, Entity, EventReader, Query, Res, ResMut, With};
+use bevy::prelude::{Commands, EventReader, Query, Res, ResMut};
 use bevy_kira_audio::Audio;
 
 use crate::GoldWallet;
 use crate::models::events::item_collision_event::ItemCollisionEvent;
-use crate::models::items::coin::Coin;
 use crate::models::items::descriptor::gold_value::GoldValue;
 
 pub fn coin_pickup_system(
