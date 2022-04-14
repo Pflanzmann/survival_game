@@ -1,3 +1,5 @@
+extern crate core;
+
 use bevy::app::App;
 use bevy::DefaultPlugins;
 use bevy::ecs::schedule::StageLabel;

@@ -3,8 +3,8 @@
   "ModName": {
     "mod_name": "Turret"
   },
-  "ModSpriteHandler": {
-    "sprite": "sprites/turret.png"
+  "ModSpritePath": {
+    "path": "sprites/turret.png"
   },
   "ToolTip": {
     "tooltip": "a turret helping the player"

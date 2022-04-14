@@ -7,6 +7,7 @@ use crate::assets_handling::preload_mod_system::preload_mod_system;
 use crate::assets_handling::preload_player_system::{PlayerConfigHandles, preload_player_system};
 use crate::assets_handling::preload_texture_system::{preload_texture_system, TextureHandles};
 use crate::SetupStages;
+use crate::util::entity_builder::EntityBuilderPlugin;
 
 pub mod preload_texture_system;
 pub mod preload_enemy_system;
@@ -29,7 +30,10 @@ pub struct AssetHandlingPlugin;
 
 impl Plugin for AssetHandlingPlugin {
     fn build(&self, app: &mut App) {
-        app.init_resource::<TextureHandles>()
+        app
+            .add_plugin(EntityBuilderPlugin)
+
+            .init_resource::<TextureHandles>()
             .init_resource::<EnemyConfigHandles>()
             .init_resource::<ItemConfigHandles>()
             .init_resource::<PlayerConfigHandles>()
