@@ -5,6 +5,8 @@ use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
 use crate::models::modifications::turret::Turret;
 use crate::models::turret_components::{TurretOwner, TurretUint};
+use crate::models::unit_attributes::reload::Reload;
+use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::weapon_slot::WeaponSlot;
 
 pub fn turret_update_system(
@@ -44,19 +46,19 @@ pub fn turret_update_system(
                 ..Default::default()
             })
                 .insert(TurretUint)
-                .insert(TurretOwner{owner: player_entity})
-                .insert(WeaponSlot {weapon_entity: weapon_slot.weapon_entity})
+                .insert(TurretOwner { owner: player_entity })
+                .insert(WeaponSlot { weapon_entity: weapon_slot.weapon_entity })
                 .insert(Name::new("Turret"))
-                .insert(AimDirection{direction: Vec3::new(1.0,0.0,0.0)})
-            ;
+                .insert(AimDirection { direction: Vec3::new(1.0, 0.0, 0.0) })
+                .insert(Reload::new(1.0));
         }
     }
 }
 
-pub fn get_close_position_2D (
-    position : Transform
-) -> Vec2{
-    let mut result = Vec2::new(0.0 , 0.0);
+pub fn get_close_position_2D(
+    position: Transform
+) -> Vec2 {
+    let mut result = Vec2::new(0.0, 0.0);
 
     let mut rng = rand::thread_rng();
 
@@ -67,13 +69,13 @@ pub fn get_close_position_2D (
 
     if rnd_signed_x < 0 {
         result[0] = position.translation.x - rnd_x
-    }else {
+    } else {
         result[0] = position.translation.x + rnd_x
     }
 
     if rnd_signed_y < 0 {
         result[1] = position.translation.y - rnd_y
-    }else {
+    } else {
         result[1] = position.translation.y + rnd_y
     }
 

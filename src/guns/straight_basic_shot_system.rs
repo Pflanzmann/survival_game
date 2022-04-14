@@ -26,23 +26,23 @@ pub fn straight_basic_shot_system(
     texture_handle: Res<TextureHandles>,
     bullet_handle: Res<BulletConfigHandles>,
     mut bullet_shot_event_writer: EventWriter<BulletShotEvent>,
-    weapon_holder: Query<(&Transform, &AimDirection, &WeaponSlot)>,
-    mut gun_query: Query<(Entity, &mut Reload), With<StraightBasicShot>>,
+    mut weapon_holder_query: Query<(&Transform, &AimDirection, &WeaponSlot, &mut Reload)>,
+    gun_query: Query<Entity, With<StraightBasicShot>>,
 ) {
-    for (holder_transform, holder_aim_direction, holder_weapon_slot) in weapon_holder.iter() {
+    for (holder_transform, holder_aim_direction, weapon_holder_slot, mut holder_reloadable) in weapon_holder_query.iter_mut() {
         if holder_aim_direction.direction.length() == 0.0 {
             continue;
         }
 
-        let (gun_entity, mut gun_reloadable) = match gun_query.get_mut(holder_weapon_slot.weapon_entity) {
+        let gun_entity = match gun_query.get(weapon_holder_slot.weapon_entity) {
             Ok(gun) => gun,
             Err(_) => continue,
         };
 
-        if gun_reloadable.reload_timer > 0.0 {
+        if holder_reloadable.reload_timer > 0.0 {
             continue;
         }
-        gun_reloadable.reload_timer = gun_reloadable.get_total_amount();
+        holder_reloadable.reload_timer = holder_reloadable.get_total_amount();
 
         let bullet = command.spawn_bundle(SpriteBundle {
             transform: Transform::from_xyz(holder_transform.translation.x, holder_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z()),
