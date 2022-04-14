@@ -24,6 +24,9 @@ use crate::util::read_file_to_string::read_file_to_string;
 
 pub struct EntityBuilderPlugin;
 
+/// A [Plugin] to use the [EntityBuilder] and register the used types at his creation.
+///
+/// Every [Component] that has to get resolved needs to be registered.
 impl Plugin for EntityBuilderPlugin {
     fn build(&self, app: &mut App) {
         let mut entity_builder = EntityBuilder::new();
@@ -49,6 +52,32 @@ impl Plugin for EntityBuilderPlugin {
     }
 }
 
+/// [EntityBuilder] that spawns entities by the given json file,
+///
+/// Every Component has to have the same key as the name of the struct
+///
+/// ```
+/// #
+/// {
+///   "CurveShot": null,
+///   "Health": {
+///     "base_amount": 5.0,
+///     "boost_amount": 0.0
+///   }
+///   ...
+/// }
+/// ```
+///
+/// Components have to get registered and it is recommended to do so in the constructor of the
+/// [EntityBuilder]. Components have to get registered like this:
+/// ```
+/// fn example_method() {
+///     let mut entity_builder = EntityBuilder::new();
+///
+///     entity_builder.register_component::<ModName>();
+///     entity_builder.register_component::<ToolTip>();
+/// }
+/// ```
 #[derive(Default)]
 pub struct EntityBuilder {
     map: HashMap<String, Box<dyn Fn(&mut EntityCommands, &Value)>>,
