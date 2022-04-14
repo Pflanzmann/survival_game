@@ -14,6 +14,7 @@ use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::modifications::sprinting::Sprinting;
+use crate::models::modifications::turret::Turret;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
@@ -36,6 +37,9 @@ pub fn preload_mod_system(
 
     let mut child = commands.spawn();
     children.push(spawn_entity(&mut child, &mut asset_server, "configurations/mod_configurations/sprinting_config.json"));
+
+    let mut child = commands.spawn();
+    children.push(spawn_entity(&mut child, &mut asset_server, "configurations/mod_configurations/turret_config.json"));
 
     let parent = commands.spawn().insert(Name::new("Mod Entities")).id();
     commands.entity(parent).push_children(&*children);
@@ -73,6 +77,7 @@ pub fn spawn_entity(
             "GrowShot" => { entity.insert(get_component::<GrowShot>(object_data.clone())); }
             "SplitShot" => { entity.insert(get_component::<SplitShot>(object_data.clone())); }
             "Sprinting" => { entity.insert(get_component::<Sprinting>(object_data.clone())); }
+            "Turret" => { entity.insert(get_component::<Turret>(object_data.clone())); }
 
             not_found_key => panic!("Map key not handled [{}]", not_found_key),
         }
