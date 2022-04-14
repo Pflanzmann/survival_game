@@ -28,7 +28,6 @@ pub fn turret_update_system(
                 turret_transform.translation.x = pos_vec[0];
                 turret_transform.translation.y = pos_vec[1];
             }
-
         }
 
         if !turret_exists {
