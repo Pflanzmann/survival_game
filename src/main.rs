@@ -16,7 +16,7 @@ use crate::input::InputPlugin;
 use crate::models::events::EventsPlugin;
 use crate::models::resources::ResourcePlugin;
 use crate::models::resources::state_resources::AppStateTrigger;
-use crate::models::resources::ui_resources::CoinCount;
+use crate::models::resources::ui_resources::GoldWallet;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::ui_components::{CoinText, HealthBar, MainMenuComp};
 use crate::navigation::NavigationPlugin;
@@ -99,4 +99,3 @@ fn main() {
 
         .run()
 }
-
