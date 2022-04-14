@@ -3,8 +3,8 @@
   "ModName": {
     "mod_name": "Curve Shot"
   },
-  "ModSpriteHandler": {
-    "sprite": "sprites/curve_shot_icon.png"
+  "ModSpritePath": {
+    "path": "sprites/curve_shot_icon.png"
   },
   "ToolTip": {
     "tooltip": "bullet gets thicc"
