@@ -1,5 +1,4 @@
-use bevy::app::EventWriter;
-use bevy::prelude::{Entity, EventReader, Query, With, Without};
+use bevy::prelude::{Entity, EventReader, EventWriter, Query, With, Without};
 
 use crate::models::bullet::Bullet;
 use crate::models::collider::collided_entities::CollidedEntities;

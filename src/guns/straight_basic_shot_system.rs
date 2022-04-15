@@ -1,5 +1,4 @@
-use bevy::app::EventWriter;
-use bevy::prelude::{Commands, Entity, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
+use bevy::prelude::{Commands, Entity, EventWriter, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
 
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
 use crate::models::aim_direction::AimDirection;

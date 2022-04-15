@@ -1,5 +1,4 @@
-use bevy::app::EventReader;
-use bevy::prelude::{Entity, EventWriter, Query, With, Without};
+use bevy::prelude::{Entity, EventReader, EventWriter, Query, With, Without};
 
 use crate::models::enemy::Enemy;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
