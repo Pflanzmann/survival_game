@@ -43,6 +43,5 @@ impl Plugin for EnemiesPlugin {
                         .with_system(despawn_far_enemy_system)
                 )
             );
-        ;
     }
 }
