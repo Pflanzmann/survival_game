@@ -4,7 +4,7 @@ use crate::HealthBar;
 use crate::models::player::Player;
 use crate::models::sprite_layer::SpriteLayer;
 
-pub fn setup_health_bar(
+pub fn setup_player_health_bar_system(
     mut commands: Commands,
     player_query: Query<Entity, With<Player>>,
 ) {
