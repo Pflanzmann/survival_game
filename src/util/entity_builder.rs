@@ -101,7 +101,7 @@ impl EntityBuilder {
         for (component_key, object_data) in component_data_map.iter() {
             match self.map.get(component_key) {
                 None => { panic!("Type is not registered") }
-                Some(a) => a(&mut entity, &object_data),
+                Some(a) => a(&mut entity, object_data),
             };
         }
 
