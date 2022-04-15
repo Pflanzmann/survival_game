@@ -12,6 +12,15 @@ pub mod despawn_far_enemy_system;
 pub mod enemy_spawn_system;
 pub mod enemy_movement_system;
 
+
+/// This plugin manages the everything related to [Enemy] systems and how they get applied.
+///
+/// The spawning of enemies and how the assignment of the move direction get handled in in
+/// the [Update] of the [AppState::InGame]
+///
+/// The [despawn_dead_enemy_system] and [despawn_far_enemy_system] are called in the [Last]
+/// because they despawn entities as a very last step so that other systems can
+/// still react to the [PlayerDiedEvent]
 pub struct EnemiesPlugin;
 
 impl Plugin for EnemiesPlugin {
