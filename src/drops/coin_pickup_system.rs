@@ -8,8 +8,6 @@ use crate::models::items::descriptor::gold_value::GoldValue;
 
 pub fn coin_pickup_system(
     mut commands: Commands,
-    asset_server: Res<AssetServer>,
-    audio: Res<Audio>,
     mut gold_wallet: ResMut<GoldWallet>,
     mut item_pickup_events: EventReader<ItemCollisionEvent>,
     item_query: Query<&GoldValue>,
@@ -19,8 +17,6 @@ pub fn coin_pickup_system(
             Ok(value) => value,
             Err(_) => continue
         };
-
-        audio.play(asset_server.load("audio/coin_pickup_sound.ogg"));
 
         gold_wallet.number += gold_value.gold_value;
 

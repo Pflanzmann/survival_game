@@ -1,4 +1,4 @@
-use bevy::app::Events;
+use bevy::ecs::event::Events;
 use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, FlexDirection, HorizontalAlign, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, State, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
 
 use crate::{AppState, AppStateTrigger, ToAppState};

@@ -10,8 +10,6 @@ use crate::models::unit_attributes::health::Health;
 pub fn hot_dog_pickup_system(
     mut commands: Commands,
     mut item_pickup_event: EventReader<ItemCollisionEvent>,
-    asset_server: Res<AssetServer>,
-    audio: Res<Audio>,
     mut player_query: Query<&mut Health, With<Player>>,
     item_query: Query<&Heal>,
 ) {
@@ -27,7 +25,7 @@ pub fn hot_dog_pickup_system(
         };
 
         player_health.heal(item_heal.amount);
-        audio.play(asset_server.load("audio/coin_pickup_sound.ogg"));
+
         commands.entity(event.item_entity).despawn();
     }
 }

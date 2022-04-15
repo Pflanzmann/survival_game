@@ -82,7 +82,7 @@ fn main() {
         .add_startup_stage(SetupStages::AssetSetup, SystemStage::parallel())
 
         .add_plugins(DefaultPlugins)
-        .add_plugin(WorldInspectorPlugin::new())
+        // .add_plugin(WorldInspectorPlugin::new())
 
         .add_state(AppState::Pre)
 
@@ -100,7 +100,7 @@ fn main() {
         .add_plugin(BackgroundPlugin)
         .add_plugin(SpawnerPlugin)
 
-        .add_plugin(AudioPlugin)
+        // .add_plugin(AudioPlugin)
 
         .run()
 }
