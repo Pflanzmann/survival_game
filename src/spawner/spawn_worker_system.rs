@@ -9,6 +9,7 @@ use crate::models::collider::collider::Collider;
 use crate::models::enemy::Enemy;
 use crate::models::move_direction::MoveDirection;
 use crate::models::resources::spawn_task_receiver::SpawnTaskReceiver;
+use crate::models::sprite_flip::SpriteFlip;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
@@ -47,7 +48,8 @@ pub fn spawn_worker_system(
                 move_speed: MoveSpeed::new(enemy_handles.goblin.move_speed),
                 damage: Damage::new(enemy_handles.goblin.damage),
                 health: Health::new(enemy_handles.goblin.health),
-            }).insert(Name::new("Goblin"));
+            }).insert(Name::new("Goblin"))
+            .insert(SpriteFlip);
     }
 
     // let end = SystemTime::now();
