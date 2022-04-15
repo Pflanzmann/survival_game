@@ -13,6 +13,7 @@ use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_size::UnitSize;
 use crate::models::move_direction::MoveDirection;
 use crate::models::player::Player;
+use crate::models::sprite_flip::SpriteFlip;
 
 pub fn setup_player_system(
     mut commands: Commands,
@@ -39,6 +40,6 @@ pub fn setup_player_system(
             move_direction: MoveDirection { direction: Vec3::new(1.0, 0.0, 0.0) },
             move_speed: MoveSpeed::new(player_handles.player_one.move_speed),
             damage: Damage::new(player_handles.player_one.damage),
-            health: Health::new(player_handles.player_one.health),
-        });
+            health: Health::new(player_handles.player_one.health)})
+        .insert(SpriteFlip);
 }

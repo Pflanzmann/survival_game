@@ -10,6 +10,7 @@ use crate::models::collider::collider::Collider;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::move_direction::MoveDirection;
 use crate::models::sprite_layer::SpriteLayer;
+use crate::models::sprite_rotate::SpriteRotate;
 use crate::models::straight_basic_shot::StraightBasicShot;
 use crate::models::unit_attributes::attribute::*;
 use crate::models::unit_attributes::damage::Damage;
@@ -63,8 +64,11 @@ pub fn straight_basic_shot_system(
                 hit_limit: HitLimit::new(bullet_handle.basic_bullet.hit_limit),
                 collider: Collider,
                 collider_entities: CollidedEntities::default(),
-            }).insert(Name::new("Bullet")).id();
+            }).insert(Name::new("Bullet"))
+            .insert(SpriteRotate)
+            .id();
 
         bullet_shot_event_writer.send(BulletShotEvent { entity: bullet })
     }
 }
+
