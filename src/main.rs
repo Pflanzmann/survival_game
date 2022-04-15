@@ -22,6 +22,7 @@ use crate::models::resources::ui_resources::GoldWallet;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::ui_components::{CoinText, HealthBar, MainMenuComp};
 use crate::navigation::NavigationPlugin;
+use crate::spawner::SpawnerPlugin;
 use crate::ui::UiPlugin;
 use crate::units::UnitPlugin;
 
@@ -37,6 +38,7 @@ mod util;
 mod ui;
 mod background;
 mod navigation;
+mod spawner;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, StageLabel)]
 pub enum SetupStages {
@@ -96,6 +98,7 @@ fn main() {
         .add_plugin(AssetHandlingPlugin)
         .add_plugin(ResourcePlugin)
         .add_plugin(BackgroundPlugin)
+        .add_plugin(SpawnerPlugin)
 
         .add_plugin(AudioPlugin)
 

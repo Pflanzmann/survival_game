@@ -22,3 +22,4 @@ pub mod resources;
 pub mod configurations;
 pub mod turret_components;
 pub mod behaviour;
+pub mod spawner;
