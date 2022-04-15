@@ -21,3 +21,4 @@ pub mod player;
 pub mod resources;
 pub mod configurations;
 pub mod turret_components;
+pub mod behaviour;

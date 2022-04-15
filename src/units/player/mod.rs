@@ -13,6 +13,16 @@ pub mod setup_player_health_bar_system;
 pub mod player_hit_system;
 pub mod player_died_system;
 
+
+/// This plugin manages the everything related to [Player] systems and how they get applied.
+///
+/// The setup of the player happens in the main menu, because other setup-systems depend on having
+/// a player already.
+///
+/// The [player_hit_system] is called in the [PreUpdate] because it reacts to the [CollisionPlugin].
+///
+/// The [player_died_system] is called in the [Last] because it despawns the entity as a very
+/// last step so that other systems can still react to the [PlayerDiedEvent].
 pub struct PlayerPlugin;
 
 impl Plugin for PlayerPlugin {

@@ -3,10 +3,11 @@ use rand::Rng;
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
+use crate::models::behaviour::spin_aim_behaviour::SpinAimBehaviour;
 use crate::models::modifications::turret::Turret;
 use crate::models::turret_components::{TurretOwner, TurretUint};
-use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::attribute::Attribute;
+use crate::models::unit_attributes::reload::Reload;
 use crate::models::weapon_slot::WeaponSlot;
 
 pub fn turret_update_system(
@@ -50,6 +51,7 @@ pub fn turret_update_system(
                 .insert(WeaponSlot { weapon_entity: weapon_slot.weapon_entity })
                 .insert(Name::new("Turret"))
                 .insert(AimDirection { direction: Vec3::new(1.0, 0.0, 0.0) })
+                .insert(SpinAimBehaviour)
                 .insert(Reload::new(1.0));
         }
     }

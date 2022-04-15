@@ -10,6 +10,7 @@ use player::setup_player_health_bar_system::setup_player_health_bar_system;
 use player::setup_player_system::setup_player_system;
 
 use crate::{App, AppState};
+use crate::units::behaviours::BehaviourPlugin;
 use crate::units::enemies::EnemiesPlugin;
 use crate::units::fit_sprite_to_size_system::fit_sprite_to_size_system;
 use crate::units::healthbar_update_system::healthbar_update_system;
@@ -26,28 +27,23 @@ mod unit_modifications;
 mod move_unit_system;
 mod player;
 mod enemies;
+mod behaviours;
 
 pub struct UnitPlugin;
 
-/// This plugin manages the everything related to [Unit]s systems and how they get applied.
+/// This plugin manages the everything related to [Unit] systems and how they get applied.
 ///
-/// [player_hit_system] gets run in the [on_pre_update] stack because it is a system that
-/// reacts directly to the collision systems
+/// The [PlayerPlugin] is for systems specific to all player.
+/// The [EnemiesPlugin] is for systems specific to all enemies.
 ///
-/// In the [on_update] stack get all methods called that dont have to have a timing because
-/// of events. They work independently and all on their own.
-///
-/// [player_died_system], [despawn_dead_enemy_system] and [despawn_far_enemy_system] gets run in
-/// the [on_last] stack because the app panics if you try access a despawned entity
-///
-/// All system get only used in the [AppState::InGame] except for the player and health bar setup,
-/// they get called in the [AppState::MainMenu] for now.
+/// every system related to units overall get called in the [Update] of the [AppState::InGame].
 impl Plugin for UnitPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugin(UnitModificationsPlugin)
             .add_plugin(PlayerPlugin)
             .add_plugin(EnemiesPlugin)
+            .add_plugin(BehaviourPlugin)
 
             .add_system_set(
                 in_update(
