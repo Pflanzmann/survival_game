@@ -370,6 +370,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "bevy_audio"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "73a1c827ae837b62868539040176fb6d4daecf24983b98a0284d158e52cd21d5"
+dependencies = [
+ "anyhow",
+ "bevy_app 0.7.0",
+ "bevy_asset 0.7.0",
+ "bevy_ecs 0.7.0",
+ "bevy_reflect 0.7.0",
+ "bevy_utils 0.7.0",
+ "parking_lot 0.11.2",
+ "rodio",
+]
+
+[[package]]
 name = "bevy_core"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -691,6 +707,7 @@ checksum = "d518a8e5f526a9537fc8408a284caec7af22b23c3b23c0dee08bacc0930e2f1a"
 dependencies = [
  "bevy_app 0.7.0",
  "bevy_asset 0.7.0",
+ "bevy_audio",
  "bevy_core 0.7.0",
  "bevy_core_pipeline 0.7.0",
  "bevy_derive 0.7.0",
@@ -3244,6 +3261,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f65af18d50f789e74aaf23bbb3f65dcd22a3cb6e029b5bced149f6bd57c5c2a2"
 dependencies = [
  "cache-padded",
+]
+
+[[package]]
+name = "rodio"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ec0939e9f626e6c6f1989adb6226a039c855ca483053f0ee7c98b90e41cf731e"
+dependencies = [
+ "cpal",
 ]
 
 [[package]]
