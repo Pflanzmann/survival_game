@@ -7,7 +7,7 @@ pub fn sprite_rotate_system(
     mut sprite_query: Query<(&MoveDirection, &mut Transform), (Changed<MoveDirection>, With<SpriteRotate>)>,
 ) {
     for (move_direction, mut transform) in sprite_query.iter_mut() {
-        let target_pos = (transform.translation + move_direction.direction);
+        let target_pos = transform.translation + move_direction.direction;
         let diff = target_pos - transform.translation;
         let angle = diff.y.atan2(diff.x);
 

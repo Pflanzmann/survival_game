@@ -5,6 +5,7 @@ use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::enemy::Enemy;
 use crate::models::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
+use crate::models::events::damaged_event::DamagedEvent;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
@@ -20,6 +21,7 @@ use crate::models::unit_attributes::hit_limit::HitLimit;
 /// If an [Enemy] dies from the bullet it will send out an [EnemyDiedEvent].
 pub fn bullet_hit_system(
     mut bullet_stopped_event: EventWriter<BulletStoppedEvent>,
+    mut damaged_event: EventWriter<DamagedEvent>,
     mut bullet_enemy_collision_events: EventReader<BulletEnemyCollisionEvent>,
     mut enemy_died_event: EventWriter<EnemyDiedEvent>,
     mut bullets_query: Query<(&mut CollidedEntities, &Damage, Option<&HitLimit>), With<Bullet>>,
@@ -52,6 +54,8 @@ pub fn bullet_hit_system(
             collided_entities.collisions.push(enemy_entity);
 
             enemy_health.damage(bullet_damage.get_total_amount());
+            damaged_event.send(DamagedEvent::new(enemy_entity));
+
             if enemy_health.get_current_health() <= 0.0 {
                 enemy_died_event.send(EnemyDiedEvent { enemy_entity })
             }
