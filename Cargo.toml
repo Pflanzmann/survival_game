@@ -17,7 +17,8 @@ features = [
     "hdr",
     "filesystem_watcher",
     "x11",
-    "bevy_audio"
+    "bevy_audio",
+    "vorbis"
 ]
 
 [dependencies]

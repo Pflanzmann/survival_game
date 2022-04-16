@@ -3270,6 +3270,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ec0939e9f626e6c6f1989adb6226a039c855ca483053f0ee7c98b90e41cf731e"
 dependencies = [
  "cpal",
+ "lewton",
 ]
 
 [[package]]
