@@ -2,12 +2,15 @@ use bevy::prelude::{Commands, Entity, Name, Query, Res, Sprite, SpriteBundle, Tr
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
+use crate::models::behaviour::chase_target_behavior::ChaseTargetBehavior;
 use crate::models::behaviour::spin_aim_behaviour::SpinAimBehaviour;
 use crate::models::behaviour::teleport_to_target_behavior::TeleportToTargetBehavior;
 use crate::models::modifications::slime::{Slime, SlimeOwner, SlimeUnit};
 use crate::models::modifications::turret::Turret;
+use crate::models::move_direction::MoveDirection;
 use crate::models::turret_components::{TurretOwner, TurretUnit};
 use crate::models::unit_attributes::attribute::Attribute;
+use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::weapon_slot::WeaponSlot;
 use crate::util::get_close_position_2d::get_close_position_2d;
@@ -34,7 +37,7 @@ pub fn slime_update_system(
             // spawn turret
             commands.spawn_bundle(SpriteBundle {
                 sprite: Sprite {
-                    custom_size: Some(Vec2::new(128.0, 128.0)),
+                    custom_size: Some(Vec2::new(256.0, 256.0)),
                     ..Default::default()
                 },
                 texture: texture_handler.slime_unit.clone(),
@@ -43,12 +46,10 @@ pub fn slime_update_system(
             })
                 .insert(SlimeUnit)
                 .insert(SlimeOwner { owner: player_entity })
-                //.insert(WeaponSlot { weapon_entity: weapon_slot.weapon_entity })
-                .insert(Name::new("Slime"));
-                //.insert(AimDirection { direction: Vec3::new(1.0, 0.0, 0.0) })
-                //.insert(SpinAimBehaviour)
-                //.insert(TeleportToTargetBehavior { target: player_entity, distance: 2500.0, proximity_min: 300.0, proximity_max: 1000.0 , cooldown: 0.0, timer: 0.0})
-                //.insert(Reload::new(1.0));
+                .insert(Name::new("Slime"))
+                .insert(ChaseTargetBehavior{target: player_entity, proximity: 200.0})
+                .insert(MoveDirection{direction: Vec3::default()})
+                .insert(MoveSpeed::new(6.0));
         }
     }
 }
