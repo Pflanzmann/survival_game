@@ -4,19 +4,21 @@ use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::modifications::affects::attribute_affect::AttributeAffect;
 use crate::models::unit_attributes::attribute::Attribute;
 
-/// A generic system to apply an [AttributeAffect] like [AffectMoveSpeed] from the source
+/// A generic system to remove [AttributeAffect]s like [AffectMoveSpeed] from the source
 /// to the target of the [ApplyModToTargetSystem].
-//////
+///
+/// The affect changes get removed from the target [Entity].
+///
 /// ```
 /// # use bevy_ecs::prelude::;
 /// #
 /// impl Plugin for ExamplePlugin {
 ///     fn build(&self, app: &mut App) {
-///         app.add_system(apply_affect_system::<MoveSpeed, AffectMoveSpeed>)
+///         app.add_system(remove_affect_system::<MoveSpeed, AffectMoveSpeed>)
 ///     }
 /// }
 /// ```
-pub fn apply_affect_system<
+pub fn remove_affect_system<
     T: Component + Attribute,
     U: Component + AttributeAffect<T>>(
     mut apply_events: EventReader<ApplyModToTargetEvent>,
@@ -34,6 +36,6 @@ pub fn apply_affect_system<
             Err(_) => continue,
         };
 
-        affect.add_affect(&mut target_attribute);
+        affect.remove_affect(&mut target_attribute);
     }
 }
