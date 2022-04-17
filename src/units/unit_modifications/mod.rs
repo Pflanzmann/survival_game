@@ -3,14 +3,24 @@ use bevy::prelude::{App, SystemSet};
 
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
+use crate::models::modifications::affects::affect_damage::AffectDamage;
+use crate::models::modifications::affects::affect_health::AffectHealth;
+use crate::models::modifications::affects::affect_hit_limit::AffectHitLimit;
 use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
+use crate::models::modifications::affects::affect_reload::AffectReload;
+use crate::models::modifications::affects::affect_travel_range::AffectTravelRange;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::modifications::slime::Slime;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::modifications::sprinting::Sprinting;
 use crate::models::modifications::turret::Turret;
+use crate::models::unit_attributes::damage::Damage;
+use crate::models::unit_attributes::health::Health;
+use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
+use crate::models::unit_attributes::reload::Reload;
+use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::units::unit_modifications::apply_affect_system::apply_affect_system;
 use crate::units::unit_modifications::apply_bullet_mod_to_targets_gun_system::apply_bullet_mod_to_targets_gun_system;
 use crate::units::unit_modifications::apply_player_mod_to_target_system::apply_player_mod_to_target_system;
@@ -52,6 +62,11 @@ impl Plugin for UnitModificationsPlugin {
                         .with_run_criteria(on_event::<ApplyModToTargetEvent>)
 
                         .with_system(apply_affect_system::<MoveSpeed, AffectMoveSpeed>)
+                        .with_system(apply_affect_system::<Damage, AffectDamage>)
+                        .with_system(apply_affect_system::<Health, AffectHealth>)
+                        .with_system(apply_affect_system::<Reload, AffectReload>)
+                        .with_system(apply_affect_system::<TravelRange, AffectTravelRange>)
+                        .with_system(apply_affect_system::<HitLimit, AffectHitLimit>)
 
                         .with_system(apply_bullet_mod_to_targets_gun_system::<CurveShot>)
                         .with_system(apply_bullet_mod_to_targets_gun_system::<GrowShot>)
@@ -69,6 +84,11 @@ impl Plugin for UnitModificationsPlugin {
                         .with_run_criteria(on_event::<RemoveModFromTargetEvent>)
 
                         .with_system(remove_affect_system::<MoveSpeed, AffectMoveSpeed>)
+                        .with_system(remove_affect_system::<Damage, AffectDamage>)
+                        .with_system(remove_affect_system::<Health, AffectHealth>)
+                        .with_system(remove_affect_system::<Reload, AffectReload>)
+                        .with_system(remove_affect_system::<TravelRange, AffectTravelRange>)
+                        .with_system(remove_affect_system::<HitLimit, AffectHitLimit>)
 
                         .with_system(remove_bullet_mod_from_targets_gun_system::<CurveShot>)
                         .with_system(remove_bullet_mod_from_targets_gun_system::<GrowShot>)

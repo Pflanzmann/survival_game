@@ -7,7 +7,10 @@ use serde::de::DeserializeOwned;
 use serde_json::Value;
 
 use crate::App;
+use crate::models::modifications::affects::affect_damage::AffectDamage;
+use crate::models::modifications::affects::affect_health::AffectHealth;
 use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
+use crate::models::modifications::affects::affect_reload::AffectReload;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
@@ -20,7 +23,9 @@ use crate::models::modifications::sprinting::Sprinting;
 use crate::models::modifications::turret::Turret;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
+use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
+use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::util::read_file_to_string::read_file_to_string;
 
 pub struct EntityBuilderPlugin;
@@ -37,6 +42,12 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<ModSpritePath>();
 
         entity_builder.register_component::<AffectMoveSpeed>();
+        entity_builder.register_component::<AffectDamage>();
+        entity_builder.register_component::<AffectHealth>();
+        entity_builder.register_component::<AffectReload>();
+        entity_builder.register_component::<TravelRange>();
+        entity_builder.register_component::<HitLimit>();
+
         entity_builder.register_component::<Health>();
         entity_builder.register_component::<Damage>();
         entity_builder.register_component::<MoveSpeed>();
