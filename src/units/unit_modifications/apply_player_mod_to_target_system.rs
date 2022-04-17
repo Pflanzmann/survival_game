@@ -1,6 +1,6 @@
 use bevy::prelude::{Commands, Component, EventReader, Query, With};
 
-use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
+use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::modifications::descriptors::modification::Modification;
 
 /// A generic system to apply a [Bullet][Modification] from the source
@@ -19,7 +19,7 @@ use crate::models::modifications::descriptors::modification::Modification;
 /// ```
 pub fn apply_player_mod_to_target_system<T: Component + Clone>(
     mut commands: Commands,
-    mut apply_events: EventReader<ApplyModToTargetSystem>,
+    mut apply_events: EventReader<ApplyModToTargetEvent>,
     mod_query: Query<&T, With<Modification>>,
 ) {
     for apply_event in apply_events.iter() {

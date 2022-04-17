@@ -4,7 +4,7 @@ use bevy::ecs::system::EntityCommands;
 use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
 use rand::Rng;
 
-use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
+use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
@@ -326,7 +326,7 @@ pub fn close_shop_menu_system(
 
 pub fn shop_button_system(
     mut commands: Commands,
-    mut event: EventWriter<ApplyModToTargetSystem>,
+    mut event: EventWriter<ApplyModToTargetEvent>,
     mut text_query: Query<&mut Text, With<ToolTipField>>,
     mut button_query: Query<(Entity, &mut Interaction, &ShopButton), Changed<Interaction>>,
     mod_query: Query<(Entity, &ToolTip, &ShopSlot)>,
@@ -340,7 +340,7 @@ pub fn shop_button_system(
                     if shop_button.index != shop_slot.index { continue; }
 
                     for player_entity in player_query.iter() {
-                        event.send(ApplyModToTargetSystem { mod_entity: modification_entity, target_entity: player_entity });
+                        event.send(ApplyModToTargetEvent { mod_entity: modification_entity, target_entity: player_entity });
                     }
 
                     spawn_sold_image(&mut commands, entity, texture_handles.sold_button.clone());
