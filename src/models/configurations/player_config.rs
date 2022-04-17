@@ -8,4 +8,5 @@ pub struct PlayerConfig {
     pub move_speed: f32,
     pub damage: f32,
     pub health: f32,
+    pub reload: f32,
 }
