@@ -1,7 +1,7 @@
 use bevy::prelude::{Plugin, SystemSet};
 
 use crate::{App, AppState};
-use crate::units::bullet_modifications::apply_modification_system::apply_modification_system;
+use crate::units::bullet_modifications::asign_modification_to_bullet_system::asign_modification_to_bullet_system;
 use crate::units::bullet_modifications::curve_shot_system::curve_shot_system;
 use crate::units::bullet_modifications::grow_shot_system::grow_shot_system;
 use crate::units::bullet_modifications::split_shot_system::split_shot_system;
@@ -13,7 +13,7 @@ use crate::util::stage_label_helper::in_pre_update;
 mod curve_shot_system;
 mod grow_shot_system;
 mod split_shot_system;
-mod apply_modification_system;
+mod asign_modification_to_bullet_system;
 
 /// This plugin manages the [Bullet]-[Modification]s and how they get applied.
 /// All the systems get added in the [PreUpdate] so that they can react last to all
@@ -29,13 +29,13 @@ impl Plugin for BulletModificationsPlugin {
                 in_pre_update(
                     SystemSet::on_update(AppState::InGame)
 
-                        .with_system(apply_modification_system::<CurveShot>)
+                        .with_system(asign_modification_to_bullet_system::<CurveShot>)
                         .with_system(curve_shot_system)
 
-                        .with_system(apply_modification_system::<GrowShot>)
+                        .with_system(asign_modification_to_bullet_system::<GrowShot>)
                         .with_system(grow_shot_system)
 
-                        .with_system(apply_modification_system::<SplitShot>)
+                        .with_system(asign_modification_to_bullet_system::<SplitShot>)
                         .with_system(split_shot_system)
                 )
             );
