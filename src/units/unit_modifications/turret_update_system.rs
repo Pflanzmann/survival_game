@@ -3,7 +3,7 @@ use bevy::prelude::{Commands, Entity, Name, Query, Res, Sprite, SpriteBundle, Tr
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
 use crate::models::behaviour::spin_aim_behaviour::SpinAimBehaviour;
-use crate::models::behaviour::teleport_to_target_behavior::{TeleportTargetPointer, TeleportToTargetBehavior};
+use crate::models::behaviour::teleport_to_target_behavior::TeleportToTargetBehavior;
 use crate::models::modifications::turret::Turret;
 use crate::models::turret_components::{TurretOwner, TurretUint};
 use crate::models::unit_attributes::attribute::Attribute;
@@ -28,7 +28,7 @@ pub fn turret_update_system(
         }
 
         if !turret_exists {
-            let pos_vec = get_close_position_2d(*player_transform);
+            let pos_vec = get_close_position_2d(*player_transform, 300.0, 1000.0);
 
             // spawn turret
             commands.spawn_bundle(SpriteBundle {
@@ -42,12 +42,11 @@ pub fn turret_update_system(
             })
                 .insert(TurretUint)
                 .insert(TurretOwner { owner: player_entity })
-                .insert(TeleportTargetPointer{target: player_entity})
                 .insert(WeaponSlot { weapon_entity: weapon_slot.weapon_entity })
                 .insert(Name::new("Turret"))
                 .insert(AimDirection { direction: Vec3::new(1.0, 0.0, 0.0) })
                 .insert(SpinAimBehaviour)
-                .insert(TeleportToTargetBehavior)
+                .insert(TeleportToTargetBehavior { target: player_entity, distance: 2500.0, proximity_min: 300.0, proximity_max: 1000.0 , cooldown: 0.0, timer: 0.0})
                 .insert(Reload::new(1.0));
         }
     }
