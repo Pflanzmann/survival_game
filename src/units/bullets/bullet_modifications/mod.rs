@@ -1,10 +1,10 @@
 use bevy::prelude::{Plugin, SystemSet};
 
 use crate::{App, AppState};
-use crate::bullets::bullet_modifications::apply_modification_system::apply_modification_system;
-use crate::bullets::bullet_modifications::curve_shot_system::curve_shot_system;
-use crate::bullets::bullet_modifications::grow_shot_system::grow_shot_system;
-use crate::bullets::bullet_modifications::split_shot_system::split_shot_system;
+use crate::units::bullets::bullet_modifications::apply_modification_system::apply_modification_system;
+use crate::units::bullets::bullet_modifications::curve_shot_system::curve_shot_system;
+use crate::units::bullets::bullet_modifications::grow_shot_system::grow_shot_system;
+use crate::units::bullets::bullet_modifications::split_shot_system::split_shot_system;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::modifications::split_shot::SplitShot;

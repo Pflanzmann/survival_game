@@ -21,6 +21,7 @@ mod player;
 mod enemies;
 mod behaviours;
 mod sprite_rotate_system;
+pub mod bullets;
 
 pub struct UnitPlugin;
 
