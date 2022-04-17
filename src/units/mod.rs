@@ -4,6 +4,7 @@ use crate::{App, AppState};
 use crate::units::apply_damaged_component_system::apply_damage_component_system;
 use crate::units::apply_hit_effect_system::apply_hit_effect_system;
 use crate::units::behaviours::BehaviourPlugin;
+use crate::units::bullets::BulletPlugin;
 use crate::units::enemies::EnemiesPlugin;
 use crate::units::fit_sprite_to_size_system::fit_sprite_to_size_system;
 use crate::units::health_bar_update_system::healthbar_update_system;
@@ -28,7 +29,6 @@ mod apply_hit_effect_system;
 pub mod bullets;
 mod bullet_modifications;
 
-pub struct UnitPlugin;
 
 /// This plugin manages the everything related to [Unit] systems and how they get applied.
 ///
@@ -36,11 +36,14 @@ pub struct UnitPlugin;
 /// The [EnemiesPlugin] is for systems specific to all enemies.
 ///
 /// every system related to units overall get called in the [Update] of the [AppState::InGame].
+pub struct UnitPlugin;
+
 impl Plugin for UnitPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugin(UnitModificationsPlugin)
             .add_plugin(PlayerPlugin)
+            .add_plugin(BulletPlugin)
             .add_plugin(EnemiesPlugin)
             .add_plugin(BehaviourPlugin)
 
