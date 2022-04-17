@@ -8,7 +8,6 @@ use bevy::prelude::SystemStage;
 use crate::assets_handling::AssetHandlingPlugin;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::background::BackgroundPlugin;
-use units::bullets::BulletPlugin;
 use crate::collision::CollisionPlugin;
 use crate::drops::DropsPlugin;
 use crate::guns::GunPlugin;
@@ -90,7 +89,6 @@ fn main() {
         .add_plugin(UnitPlugin)
         .add_plugin(CollisionPlugin)
         .add_plugin(GunPlugin)
-        .add_plugin(BulletPlugin)
         .add_plugin(DropsPlugin)
         .add_plugin(AssetHandlingPlugin)
         .add_plugin(ResourcePlugin)
