@@ -11,6 +11,7 @@
   },
   "Sprinting": null,
   "AffectMoveSpeed": {
-    "boost_amount": 15.0
+    "operator": "Add",
+    "amount": 15.0
   }
 }

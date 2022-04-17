@@ -61,7 +61,6 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<Turret>();
         entity_builder.register_component::<Slime>();
 
-
         app.insert_non_send_resource::<EntityBuilder>(entity_builder);
     }
 }

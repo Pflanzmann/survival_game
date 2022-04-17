@@ -5,3 +5,4 @@ pub mod affect_health;
 pub mod affect_hit_limit;
 pub mod affect_reload;
 pub mod affect_travel_range;
+pub mod affect_operator;

@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, Component, EventReader, Query, With, Without};
+use bevy::prelude::{Commands, Component, EventReader, Query, Without};
 
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
 use crate::models::mod_container_slot::ModContainerSlot;
