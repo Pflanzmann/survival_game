@@ -2,7 +2,7 @@ use bevy::ecs::component::Component;
 use bevy::prelude::Entity;
 
 #[derive(Component)]
-pub struct TurretUint;
+pub struct TurretUnit;
 
 #[derive(Component)]
 pub struct TurretOwner {

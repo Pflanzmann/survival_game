@@ -14,6 +14,7 @@ use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::modifications::grow_shot::GrowShot;
+use crate::models::modifications::slime::Slime;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::modifications::sprinting::Sprinting;
 use crate::models::modifications::turret::Turret;
@@ -47,6 +48,8 @@ impl Plugin for EntityBuilderPlugin {
 
         entity_builder.register_component::<Sprinting>();
         entity_builder.register_component::<Turret>();
+        entity_builder.register_component::<Slime>();
+
 
         app.insert_non_send_resource::<EntityBuilder>(entity_builder);
     }

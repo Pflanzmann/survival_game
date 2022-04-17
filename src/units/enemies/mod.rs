@@ -3,12 +3,12 @@ use bevy::prelude::{App, Plugin, SystemSet};
 use crate::AppState;
 use crate::units::enemies::despawn_dead_enemy_system::despawn_dead_enemy_system;
 use crate::units::enemies::despawn_far_enemy_system::despawn_far_enemy_system;
-use crate::units::enemies::enemy_movement_system::enemy_set_move_direction_system;
+use crate::units::enemies::enemy_set_move_direction_system::enemy_set_move_direction_system;
 use crate::util::stage_label_helper::{in_last, in_update};
 
 pub mod despawn_dead_enemy_system;
 pub mod despawn_far_enemy_system;
-pub mod enemy_movement_system;
+pub mod enemy_set_move_direction_system;
 
 
 /// This plugin manages the everything related to [Enemy] systems and how they get applied.

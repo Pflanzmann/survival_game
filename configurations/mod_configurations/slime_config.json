@@ -1,0 +1,13 @@
+{
+  "Modification": null,
+  "ModName": {
+    "mod_name": "Slime"
+  },
+  "ModSpritePath": {
+    "path": "sprites/slime.png"
+  },
+  "ToolTip": {
+    "tooltip": "a slime helping the player"
+  },
+  "Slime": null
+}
