@@ -1,6 +1,6 @@
 use bevy::prelude::{Component, EventReader, Query};
 
-use crate::models::events::apply_mod_to_target_event::ApplyModToTargetSystem;
+use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::modifications::affects::attribute_affect::AttributeAffect;
 use crate::models::unit_attributes::attribute::Attribute;
 
@@ -21,7 +21,7 @@ use crate::models::unit_attributes::attribute::Attribute;
 pub fn apply_affect_system<
     T: Component + Attribute,
     U: Component + AttributeAffect<T>>(
-    mut apply_events: EventReader<ApplyModToTargetSystem>,
+    mut apply_events: EventReader<ApplyModToTargetEvent>,
     mut target_query: Query<&mut T>,
     affect_query: Query<&U>,
 ) {
