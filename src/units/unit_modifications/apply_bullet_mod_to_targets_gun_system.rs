@@ -9,7 +9,7 @@ use crate::models::weapon_slot::WeaponSlot;
 /// A generic system to apply a [Bullet][Modification] from the source
 /// to the target of the [ApplyModToTargetSystem].
 ///
-/// The modification gets applied from the source [Entity] with a [Modification]-Tag to
+/// The modification gets applied (cloned) from the source [Entity] with a [Modification]-Tag to
 /// the [ModContainer] from the [WeaponSlot] of the target [Entity].
 ///
 /// ```
@@ -17,15 +17,15 @@ use crate::models::weapon_slot::WeaponSlot;
 /// #
 /// impl Plugin for ExamplePlugin {
 ///     fn build(&self, app: &mut App) {
-///         app.add_system(apply_bullet_mod_to_target_system::<CurveShot>)
+///         app.add_system(apply_bullet_mod_to_targets_gun_system::<CurveShot>)
 ///     }
 /// }
 /// ```
-pub fn apply_bullet_mod_to_target_system<T: Component + Clone>(
+pub fn apply_bullet_mod_to_targets_gun_system<T: Component + Clone>(
     mut commands: Commands,
     mut apply_events: EventReader<ApplyModToTargetEvent>,
     mod_query: Query<&T, With<Modification>>,
-    player_query: Query<&WeaponSlot, With<Player>>,
+    holder_query: Query<&WeaponSlot, With<Player>>,
     gun_query: Query<&ModContainerSlot, Without<Player>>,
 ) {
     for apply_event in apply_events.iter() {
@@ -34,12 +34,12 @@ pub fn apply_bullet_mod_to_target_system<T: Component + Clone>(
             Err(_) => continue,
         };
 
-        let player_weapon_slot = match player_query.get(apply_event.target_entity) {
+        let holder_weapon_slot = match holder_query.get(apply_event.target_entity) {
             Ok(modification) => modification,
             Err(_) => continue,
         };
 
-        let weapon_mod_container = match gun_query.get(player_weapon_slot.weapon_entity) {
+        let weapon_mod_container = match gun_query.get(holder_weapon_slot.weapon_entity) {
             Ok(modification) => modification,
             Err(_) => continue,
         };

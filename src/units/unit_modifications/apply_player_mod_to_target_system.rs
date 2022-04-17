@@ -6,7 +6,7 @@ use crate::models::modifications::descriptors::modification::Modification;
 /// A generic system to apply a [Bullet][Modification] from the source
 /// to the target of the [ApplyModToTargetSystem].
 ///
-/// The mods from get applied from the source [Entity] with a [Modification]-Tag.
+/// The mod gets applied from the source [Entity] with a [Modification]-Tag.
 ///
 /// ```
 /// # use bevy_ecs::prelude::;
