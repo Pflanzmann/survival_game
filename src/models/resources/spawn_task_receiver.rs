@@ -1,6 +1,6 @@
 use std::collections::VecDeque;
 
-use crate::models::spawner::SpawnTask::SpawnTask;
+use crate::models::spawner::spawn_task::SpawnTask;
 
 #[derive(Default)]
 pub struct SpawnTaskReceiver {

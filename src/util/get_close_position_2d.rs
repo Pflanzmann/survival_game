@@ -1,7 +1,7 @@
 use bevy::prelude::{Transform, Vec2};
 use rand::Rng;
 
-pub fn get_close_position_2D(
+pub fn get_close_position_2d(
     position: Transform
 ) -> Vec2 {
     let mut result = Vec2::new(0.0, 0.0);

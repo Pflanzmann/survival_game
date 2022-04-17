@@ -1,5 +1,4 @@
-use bevy::prelude::{Commands, Entity, Name, Query, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2, Vec3, With, Without};
-use rand::Rng;
+use bevy::prelude::{Commands, Entity, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3, With, Without};
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
@@ -10,7 +9,7 @@ use crate::models::turret_components::{TurretOwner, TurretUint};
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::weapon_slot::WeaponSlot;
-use crate::util::get_close_position_2D::get_close_position_2D;
+use crate::util::get_close_position_2d::get_close_position_2d;
 
 pub fn turret_update_system(
     mut commands: Commands,
@@ -29,7 +28,7 @@ pub fn turret_update_system(
         }
 
         if !turret_exists {
-            let pos_vec = get_close_position_2D(*player_transform);
+            let pos_vec = get_close_position_2d(*player_transform);
 
             // spawn turret
             commands.spawn_bundle(SpriteBundle {

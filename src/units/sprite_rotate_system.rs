@@ -1,4 +1,4 @@
-use bevy::prelude::{Changed, Quat, Query, Sprite, Transform, Vec3, With, Without};
+use bevy::prelude::{Changed, Quat, Query, Transform, Vec3, With};
 
 use crate::models::move_direction::MoveDirection;
 use crate::models::sprite_rotate::SpriteRotate;
