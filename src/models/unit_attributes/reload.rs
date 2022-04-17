@@ -17,7 +17,7 @@ impl Attribute for Reload {
     }
 
     fn get_total_amount(&self) -> f32 {
-        self.base_amount + self.bonus_amount
+        60.0 / (self.base_amount + self.bonus_amount)
     }
 
     fn get_base_amount(&self) -> f32 {
