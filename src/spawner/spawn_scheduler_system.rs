@@ -4,7 +4,7 @@ use rand::random;
 use crate::models::player::Player;
 use crate::models::resources::spawn_task_receiver::SpawnTaskReceiver;
 use crate::models::resources::spawn_timer::SpawnTimer;
-use crate::models::spawner::SpawnTask::SpawnTask;
+use crate::models::spawner::spawn_task::SpawnTask;
 
 pub fn spawn_scheduler_system(
     time: Res<Time>,

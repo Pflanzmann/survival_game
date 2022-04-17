@@ -2,7 +2,7 @@ use std::any::type_name;
 use std::collections::HashMap;
 
 use bevy::ecs::system::EntityCommands;
-use bevy::prelude::{Commands, Component, Entity, Plugin, ResMut};
+use bevy::prelude::{Commands, Component, Entity, Plugin};
 use serde::de::DeserializeOwned;
 use serde_json::Value;
 

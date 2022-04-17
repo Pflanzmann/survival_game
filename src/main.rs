@@ -4,8 +4,6 @@ use bevy::app::App;
 use bevy::DefaultPlugins;
 use bevy::ecs::schedule::StageLabel;
 use bevy::prelude::SystemStage;
-use bevy_inspector_egui::WorldInspectorPlugin;
-use bevy_kira_audio::AudioPlugin;
 
 use crate::assets_handling::AssetHandlingPlugin;
 use crate::assets_handling::preload_texture_system::TextureHandles;
@@ -99,8 +97,6 @@ fn main() {
         .add_plugin(ResourcePlugin)
         .add_plugin(BackgroundPlugin)
         .add_plugin(SpawnerPlugin)
-
-        // .add_plugin(AudioPlugin)
 
         .run()
 }

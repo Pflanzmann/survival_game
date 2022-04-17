@@ -1,6 +1,4 @@
-use std::time::SystemTime;
-
-use bevy::prelude::{Commands, Name, Res, ResMut, Sprite, SpriteBundle, Time, Transform, Vec2, Vec3, With};
+use bevy::prelude::{Commands, Name, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
@@ -22,8 +20,6 @@ pub fn spawn_worker_system(
     texture_handles: Res<TextureHandles>,
     enemy_handles: Res<EnemyConfigHandles>,
 ) {
-    // let start_time = SystemTime::now();
-
     for _ in 0..5 {
         let spawn_task = match spawn_task_receiver.consume_task() {
             None => break,
@@ -51,7 +47,4 @@ pub fn spawn_worker_system(
             }).insert(Name::new("Goblin"))
             .insert(SpriteFlip);
     }
-
-    // let end = SystemTime::now();
-    // println!("finished after: {:?}", end.duration_since(start_time));
 }
