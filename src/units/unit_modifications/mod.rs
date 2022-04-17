@@ -6,6 +6,7 @@ use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEven
 use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::grow_shot::GrowShot;
+use crate::models::modifications::slime::Slime;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::modifications::sprinting::Sprinting;
 use crate::models::modifications::turret::Turret;
@@ -17,6 +18,8 @@ use crate::units::unit_modifications::remove_affect_system::remove_affect_system
 use crate::units::unit_modifications::remove_bullet_mod_from_targets_gun_system::remove_bullet_mod_from_targets_gun_system;
 use crate::units::unit_modifications::remove_player_mod_from_target_system::remove_player_mod_from_target_system;
 use crate::units::unit_modifications::turret_update_system::turret_update_system;
+use crate::units::unit_modifications::slime_update_system::slime_update_system;
+
 use crate::util::run_criteria::on_event::on_event;
 use crate::util::stage_label_helper::in_post_update;
 
@@ -27,6 +30,7 @@ mod turret_update_system;
 mod remove_player_mod_from_target_system;
 mod remove_bullet_mod_from_targets_gun_system;
 mod remove_affect_system;
+mod slime_update_system;
 
 /// All the apply systems have to get registered here.
 ///
@@ -55,6 +59,7 @@ impl Plugin for UnitModificationsPlugin {
 
                         .with_system(apply_player_mod_to_target_system::<Sprinting>)
                         .with_system(apply_player_mod_to_target_system::<Turret>)
+                        .with_system(apply_player_mod_to_target_system::<Slime>)
                 )
             )
 
@@ -71,10 +76,12 @@ impl Plugin for UnitModificationsPlugin {
 
                         .with_system(remove_player_mod_from_target_system::<Sprinting>)
                         .with_system(remove_player_mod_from_target_system::<Turret>)
+                        .with_system(remove_player_mod_from_target_system::<Slime>)
                 )
             )
 
-            .add_system(turret_update_system);
+            .add_system(turret_update_system)
+            .add_system(slime_update_system);
     }
 }
 

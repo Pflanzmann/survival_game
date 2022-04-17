@@ -12,6 +12,8 @@ pub fn preload_mod_system(
         entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/split_shot_config.json"),
         entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/sprinting_config.json"),
         entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/turret_config.json"),
+        entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/slime_config.json"),
+
     ];
 
     let parent = commands.spawn().insert(Name::new("Mod Entities")).id();
