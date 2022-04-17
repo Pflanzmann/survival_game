@@ -5,11 +5,13 @@ use crate::AppState;
 use crate::units::behaviours::spin_aim_behaviour_system::spin_aim_behaviour_system;
 use crate::units::behaviours::teleport_to_target_behavior_system::teleport_to_target_behavior_system;
 use crate::units::behaviours::chase_target_behavior_system::chase_target_behavior_system;
+use crate::units::behaviours::mono_directional_move_behavior_system::mono_directional_move_behavior_system;
 use crate::util::stage_label_helper::in_update;
 
 mod spin_aim_behaviour_system;
 mod teleport_to_target_behavior_system;
 mod chase_target_behavior_system;
+mod mono_directional_move_behavior_system;
 
 pub struct BehaviourPlugin;
 
@@ -23,6 +25,7 @@ impl Plugin for BehaviourPlugin {
                         .with_system(spin_aim_behaviour_system)
                         .with_system(teleport_to_target_behavior_system)
                         .with_system(chase_target_behavior_system)
+                        .with_system(mono_directional_move_behavior_system)
                 )
             );
     }
