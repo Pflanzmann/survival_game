@@ -16,7 +16,7 @@ pub fn cmd_input_system(
         string.pop();
 
         for mut text in text_query.iter_mut() {
-            text.sections[0].value = format!("{}", *string);
+            text.sections[0].value = (*string).to_string();
         }
     }
 
@@ -29,7 +29,7 @@ pub fn cmd_input_system(
         string.clear();
         debug_history.scroll_index = 0;
         for mut text in text_query.iter_mut() {
-            text.sections[0].value = format!("{}", *string);
+            text.sections[0].value = (*string).to_string();
         }
 
         return;
@@ -47,7 +47,7 @@ pub fn cmd_input_system(
 
         string.push_str(&*current_history_text.clone());
         for mut text in text_query.iter_mut() {
-            text.sections[0].value = format!("{}", *string);
+            text.sections[0].value = (*string).to_string();
         }
 
         return;
@@ -65,7 +65,7 @@ pub fn cmd_input_system(
 
         string.push_str(&*current_history_text.clone());
         for mut text in text_query.iter_mut() {
-            text.sections[0].value = format!("{}", *string);
+            text.sections[0].value = (*string).to_string();
         }
 
         return;
@@ -74,7 +74,7 @@ pub fn cmd_input_system(
     if keys.just_pressed(KeyCode::Space) {
         string.push(' ');
         for mut text in text_query.iter_mut() {
-            text.sections[0].value = format!("{}", *string);
+            text.sections[0].value = (*string).to_string();
         }
     }
 
@@ -83,7 +83,7 @@ pub fn cmd_input_system(
             string.push(ev.char);
         }
         for mut text in text_query.iter_mut() {
-            text.sections[0].value = format!("{}", *string);
+            text.sections[0].value = (*string).to_string();
         }
     }
 }
