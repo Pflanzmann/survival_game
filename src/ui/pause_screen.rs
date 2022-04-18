@@ -1,6 +1,6 @@
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, HorizontalAlign, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, EventReader, FlexDirection, HorizontalAlign, Input, JustifyContent, KeyCode, Local, NodeBundle, PositionType, Query, ReceivedCharacter, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
 
-use crate::models::ui_components::PauseMenuComp;
+use crate::models::ui_components::{DebugText, PauseMenuComp};
 
 pub fn enter_pause_system(
     mut commands: Commands,
@@ -44,9 +44,28 @@ pub fn enter_pause_system(
                 ),
                 ..Default::default()
             });
+        }).with_children(|parent| {
+        parent.spawn_bundle(TextBundle {
+            style: Style {
+                ..Default::default()
+            },
+            text: Text::with_section(
+                "".to_string(),
+                TextStyle {
+                    font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
+                    font_size: 60.0,
+                    color: Color::RED,
+                },
+                TextAlignment {
+                    vertical: VerticalAlign::Center,
+                    horizontal: HorizontalAlign::Center,
+                },
+            ),
+            ..Default::default()
         })
-        .insert(PauseMenuComp)
-        .id();
+            .insert(DebugText);
+    })
+        .insert(PauseMenuComp);
 }
 
 pub fn exit_pause_system(
@@ -55,5 +74,27 @@ pub fn exit_pause_system(
 ) {
     for entity in ui_query.iter() {
         commands.entity(entity).despawn_recursive();
+    }
+}
+
+pub fn text_input_system(
+    mut char_evr: EventReader<ReceivedCharacter>,
+    keys: Res<Input<KeyCode>>,
+    mut string: Local<String>,
+
+    mut text_query: Query<&mut Text, With<DebugText>>,
+) {
+    for ev in char_evr.iter() {
+        string.push(ev.char);
+        for mut text in text_query.iter_mut() {
+            text.sections[0].value = format!("{}", *string);
+        }
+    }
+
+    if keys.just_pressed(KeyCode::Return) {
+        string.clear();
+        for mut text in text_query.iter_mut() {
+            text.sections[0].value = format!("{}", *string);
+        }
     }
 }

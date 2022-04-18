@@ -17,7 +17,7 @@ pub fn toggle_pause_system(
         return;
     }
 
-    if input.pressed(KeyCode::Space) {
+    if input.pressed(KeyCode::Escape) {
         state_timer.0 = 0.0;
         match app_state.current() {
             AppState::Pre => {}
