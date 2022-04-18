@@ -25,6 +25,7 @@ pub mod sprite_flip;
 pub mod sprite_rotate;
 pub mod damaged_effect;
 pub mod ui_components;
+pub mod mod_register;
 
 
 
