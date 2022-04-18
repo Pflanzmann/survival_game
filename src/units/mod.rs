@@ -27,7 +27,7 @@ mod behaviors;
 mod sprite_rotate_system;
 mod apply_damaged_component_system;
 mod apply_hit_effect_system;
-pub mod bullets;
+mod bullets;
 mod bullet_modifications;
 mod rotate_unit_system;
 
