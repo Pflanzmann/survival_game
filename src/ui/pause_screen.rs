@@ -1,6 +1,8 @@
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, EventReader, FlexDirection, HorizontalAlign, Input, JustifyContent, KeyCode, Local, NodeBundle, PositionType, Query, ReceivedCharacter, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, EventReader, EventWriter, FlexDirection, HorizontalAlign, Input, JustifyContent, KeyCode, Local, NodeBundle, PositionType, Query, ReceivedCharacter, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+use bevy_inspector_egui::egui::TextBuffer;
 
 use crate::models::ui_components::pause::{DebugText, PauseMenuComp};
+use crate::models::events::debug_command_event::DebugCommandEvent;
 
 pub fn enter_pause_system(
     mut commands: Commands,
@@ -79,9 +81,9 @@ pub fn exit_pause_system(
 
 pub fn text_input_system(
     mut char_evr: EventReader<ReceivedCharacter>,
+    mut debug_event: EventWriter<DebugCommandEvent>,
     keys: Res<Input<KeyCode>>,
     mut string: Local<String>,
-
     mut text_query: Query<&mut Text, With<DebugText>>,
 ) {
     for ev in char_evr.iter() {
@@ -91,7 +93,17 @@ pub fn text_input_system(
         }
     }
 
+    if keys.just_pressed(KeyCode::Back) {
+        string.pop();
+        string.pop();
+
+        for mut text in text_query.iter_mut() {
+            text.sections[0].value = format!("{}", *string);
+        }
+    }
+
     if keys.just_pressed(KeyCode::Return) {
+        debug_event.send(DebugCommandEvent { debug_command: string.clone() });
         string.clear();
         for mut text in text_query.iter_mut() {
             text.sections[0].value = format!("{}", *string);

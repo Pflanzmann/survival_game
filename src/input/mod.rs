@@ -2,6 +2,7 @@ use bevy::prelude::{App, Plugin, SystemSet};
 
 use crate::AppState;
 use crate::input::camera_systems::setup_camera_system;
+use crate::input::cmd::CmdPlugin;
 use crate::input::gun_mod_debug_system::gun_mod_debug_system;
 use crate::input::player_control_aim_system::player_control_aim_system;
 use crate::input::player_control_movement_system::player_control_movement_system;
@@ -13,6 +14,7 @@ mod camera_systems;
 mod gun_mod_debug_system;
 mod player_control_aim_system;
 mod toggle_pause_system;
+mod cmd;
 
 /// The [StateTimer] is for the [toggle_pause_system] so that it does not trigger x times per click.
 /// [toggle_pause_system] is registered in every [AppState] for now.
@@ -25,6 +27,8 @@ pub struct InputPlugin;
 impl Plugin for InputPlugin {
     fn build(&self, app: &mut App) {
         app
+            .add_plugin(CmdPlugin)
+
             .init_resource::<StateTimer>()
 
             .add_system_set(
