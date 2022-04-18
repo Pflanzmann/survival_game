@@ -1,6 +1,9 @@
 use bevy::prelude::{Input, KeyCode, Res, ResMut, State, Time};
 
-use crate::{AppState, AppStateTrigger, ToAppState};
+use ConsoleState::Shown;
+
+use crate::{AppState, AppStateTrigger, ConsoleState, ToAppState};
+use crate::ConsoleState::Hidden;
 
 #[derive(Default)]
 pub struct StateTimer(f32);
@@ -9,6 +12,7 @@ pub fn toggle_pause_system(
     input: Res<Input<KeyCode>>,
     mut state_trigger: ResMut<AppStateTrigger>,
     app_state: ResMut<State<AppState>>,
+    mut console_state: ResMut<State<ConsoleState>>,
     mut state_timer: ResMut<StateTimer>,
     time: Res<Time>,
 ) {
@@ -28,5 +32,13 @@ pub fn toggle_pause_system(
             AppState::Paused => { state_trigger.state_change_trigger = ToAppState::ToInGame; }
             AppState::Shop => {}
         }
+    }
+
+    if input.pressed(KeyCode::Tab) {
+        state_timer.0 = 0.0;
+        match console_state.current() {
+            Shown => console_state.set(Hidden),
+            Hidden => console_state.set(Shown),
+        };
     }
 }

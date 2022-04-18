@@ -72,6 +72,13 @@ impl Default for ToAppState {
     fn default() -> Self { ToAppState::None }
 }
 
+#[derive(Debug, Clone, Eq, PartialEq, Hash)]
+pub enum ConsoleState {
+    Shown,
+    Hidden,
+}
+
+
 fn main() {
     App::new()
         .add_startup_stage(SetupStages::ConfigSetup, SystemStage::parallel())
@@ -81,6 +88,7 @@ fn main() {
         .add_plugin(WorldInspectorPlugin::new())
 
         .add_state(AppState::Pre)
+        .add_state(ConsoleState::Hidden)
 
         .add_plugin(UiPlugin)
         .add_plugin(NavigationPlugin)

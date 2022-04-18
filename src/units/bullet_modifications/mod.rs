@@ -10,7 +10,7 @@ use crate::units::bullet_modifications::curve_shot_system::curve_shot_system;
 use crate::units::bullet_modifications::grow_shot_system::grow_shot_system;
 use crate::units::bullet_modifications::split_shot_system::split_shot_system;
 use crate::util::run_criteria::on_event::on_event;
-use crate::util::stage_label_helper::{in_post_update, in_pre_update};
+use crate::util::stage_label_helper::in_post_update;
 
 mod curve_shot_system;
 mod grow_shot_system;
