@@ -57,18 +57,20 @@ pub fn apply_mod_command(
         };
 
         match target.as_str() {
-            "player" => {
+            "-p" | "player" => {
                 for player_entity in player_query.iter() {
                     apply_event.send(ApplyModToTargetEvent { mod_entity: chosen_mod, target_entity: player_entity })
                 }
             }
 
-            "enemies" => {
+            "-e" | "enemies" => {
                 for entity_entity in enemy_query.iter() {
                     apply_event.send(ApplyModToTargetEvent { mod_entity: chosen_mod, target_entity: entity_entity })
                 }
             }
-            _ => continue,
+            _ => {
+                continue;
+            }
         }
     }
 }
