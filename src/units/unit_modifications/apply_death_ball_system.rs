@@ -4,8 +4,8 @@ use bevy::prelude::{BuildChildren, Commands, Entity, EventReader, GlobalTransfor
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
-use crate::models::behaviour::aim_at_closest_target_behavior::AimAtClosestTargetBehavior;
-use crate::models::behaviour::rotate_behavior::UnitRotation;
+use crate::models::behavior::aim_at_closest_target_behavior::AimAtClosestTargetBehavior;
+use crate::models::behavior::rotate_behavior::UnitRotation;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::modifications::death_ball::DeathBall;
 use crate::models::modifications::descriptors::modification::Modification;

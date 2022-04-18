@@ -2,7 +2,7 @@ use bevy::prelude::{Commands, Entity, Name, Query, Res, ResMut, Sprite, SpriteBu
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
-use crate::models::behaviour::chase_target_behavior::ChaseTargetBehavior;
+use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
 use crate::models::bundles::enemy_bundle::EnemyBundle;
 use crate::models::collider::collider::Collider;
 use crate::models::enemy::Enemy;

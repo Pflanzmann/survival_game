@@ -1,7 +1,7 @@
 use bevy::math::{EulerRot, Quat};
 use bevy::prelude::{Query, Transform, With};
 
-use crate::models::behaviour::rotate_behavior::UnitRotation;
+use crate::models::behavior::rotate_behavior::UnitRotation;
 
 pub fn rotate_unit_system(
     mut unit_query: Query<(&mut Transform, &UnitRotation)>,

@@ -1,6 +1,6 @@
 use bevy::prelude::{Entity, Query, Transform, With, Without};
 
-use crate::models::behaviour::teleport_to_target_behavior::{TeleportToTargetBehavior};
+use crate::models::behavior::teleport_to_target_behavior::{TeleportToTargetBehavior};
 use crate::models::player::Player;
 use crate::util::get_close_position_2d::get_close_position_2d;
 

@@ -3,7 +3,7 @@ use bevy::prelude::{Plugin, SystemSet};
 use crate::{App, AppState};
 use crate::units::apply_damaged_component_system::apply_damage_component_system;
 use crate::units::apply_hit_effect_system::apply_hit_effect_system;
-use crate::units::behaviours::BehaviourPlugin;
+use crate::units::behaviors::BehaviorPlugin;
 use crate::units::bullets::BulletPlugin;
 use crate::units::enemies::EnemiesPlugin;
 use crate::units::fit_sprite_to_size_system::fit_sprite_to_size_system;
@@ -23,7 +23,7 @@ mod unit_modifications;
 mod move_unit_system;
 mod player;
 mod enemies;
-mod behaviours;
+mod behaviors;
 mod sprite_rotate_system;
 mod apply_damaged_component_system;
 mod apply_hit_effect_system;
@@ -47,7 +47,7 @@ impl Plugin for UnitPlugin {
             .add_plugin(PlayerPlugin)
             .add_plugin(BulletPlugin)
             .add_plugin(EnemiesPlugin)
-            .add_plugin(BehaviourPlugin)
+            .add_plugin(BehaviorPlugin)
 
             .add_system_set(
                 in_update(
