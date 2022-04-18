@@ -12,6 +12,7 @@ use crate::models::modifications::affects::affect_health::AffectHealth;
 use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
 use crate::models::modifications::affects::affect_reload::AffectReload;
 use crate::models::modifications::curve_shot::CurveShot;
+use crate::models::modifications::death_ball::DeathBall;
 use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
 use crate::models::modifications::descriptors::modification::Modification;
@@ -60,6 +61,7 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<Sprinting>();
         entity_builder.register_component::<Turret>();
         entity_builder.register_component::<Slime>();
+        entity_builder.register_component::<DeathBall>();
 
         app.insert_non_send_resource::<EntityBuilder>(entity_builder);
     }

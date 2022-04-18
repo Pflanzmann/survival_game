@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, Entity, EventWriter, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
+use bevy::prelude::{Commands, Entity, EventWriter, GlobalTransform, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
 
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
 use crate::models::aim_direction::AimDirection;
@@ -26,7 +26,7 @@ pub fn straight_basic_shot_system(
     texture_handle: Res<TextureHandles>,
     bullet_handle: Res<BulletConfigHandles>,
     mut bullet_shot_event_writer: EventWriter<BulletShotEvent>,
-    mut weapon_holder_query: Query<(&Transform, &AimDirection, &WeaponSlot, &mut Reload)>,
+    mut weapon_holder_query: Query<(&GlobalTransform, &AimDirection, &WeaponSlot, &mut Reload)>,
     gun_query: Query<Entity, With<StraightBasicShot>>,
 ) {
     for (holder_transform, holder_aim_direction, weapon_holder_slot, mut holder_reloadable) in weapon_holder_query.iter_mut() {

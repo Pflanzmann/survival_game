@@ -47,7 +47,7 @@ pub fn turret_update_system(
                 .insert(AimDirection { direction: Vec3::new(1.0, 0.0, 0.0) })
                 .insert(SpinAimBehaviour)
                 .insert(TeleportToTargetBehavior { target: player_entity, distance: 2500.0, proximity_min: 300.0, proximity_max: 1000.0 , cooldown: 0.0, timer: 0.0})
-                .insert(Reload::new(1.0));
+                .insert(Reload::new(40.0));
         }
     }
 }
