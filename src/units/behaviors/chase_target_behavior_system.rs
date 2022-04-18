@@ -1,4 +1,4 @@
-use bevy::prelude::{ParamSet, Query, Transform, Vec3, With, Without};
+use bevy::prelude::{Query, Transform, Vec3, With, Without};
 
 use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
 use crate::models::move_direction::MoveDirection;

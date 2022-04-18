@@ -1,6 +1,7 @@
 use bevy::prelude::{App, Plugin, Vec2};
 
 use crate::models::resources::background_tiles_resource::BackgroundTilesResource;
+use crate::models::resources::console_history::ConsoleHistory;
 use crate::models::resources::spawn_task_receiver::SpawnTaskReceiver;
 use crate::models::resources::spawn_timer::SpawnTimer;
 use crate::models::resources::state_resources::AppStateTrigger;
@@ -11,6 +12,7 @@ pub mod background_tiles_resource;
 pub mod state_resources;
 pub mod spawn_timer;
 pub mod spawn_task_receiver;
+pub mod console_history;
 
 pub struct ResourcePlugin;
 
@@ -21,6 +23,11 @@ impl Plugin for ResourcePlugin {
             .init_resource::<AppStateTrigger>()
             .init_resource::<SpawnTimer>()
             .init_resource::<SpawnTaskReceiver>()
+
+            .insert_resource::<ConsoleHistory>(ConsoleHistory {
+                history: vec![String::new()],
+                scroll_index: 0,
+            })
 
             .insert_resource::<BackgroundTilesResource>(BackgroundTilesResource {
                 current_origin: Vec2::new(-1.0, -1.0),
