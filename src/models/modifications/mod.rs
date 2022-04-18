@@ -7,3 +7,4 @@ pub mod curve_shot;
 pub mod turret;
 pub mod slime;
 pub mod death_ball;
+pub mod utils;

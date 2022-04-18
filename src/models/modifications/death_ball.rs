@@ -6,3 +6,6 @@ pub struct DeathBall {
     pub rotation_distance: f32,
     pub rotation_speed: f32,
 }
+
+#[derive(Component)]
+pub struct DeathBallUnit;
