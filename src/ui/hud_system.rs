@@ -1,11 +1,12 @@
 use bevy::prelude::*;
 
-use crate::{GoldWallet, CoinText, TextureHandles};
+use crate::{GoldWallet,TextureHandles};
 use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::mod_container::ModContainer;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::split_shot::SplitShot;
-use crate::models::ui_components::BulletHud;
+use crate::models::ui_components::hud::{BulletHud, CoinText};
+
 
 pub fn spawn_text_system(
     mut commands: Commands,

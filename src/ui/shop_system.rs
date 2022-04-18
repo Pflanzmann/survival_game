@@ -9,7 +9,8 @@ use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::player::Player;
-use crate::models::ui_components::{NavigationButton, ShopButton, ShopMenuComp, ShopSlot, ToolTipField};
+use crate::models::ui_components::game_over::NavigationButton;
+use crate::models::ui_components::shop::{ShopButton, ShopMenuComp, ShopSlot, ToolTipField};
 use crate::TextureHandles;
 
 pub fn spawn_shop_menu_system(

@@ -1,7 +1,8 @@
 use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, HorizontalAlign, JustifyContent, Name, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiCameraBundle, Val, VerticalAlign, With};
 
-use crate::MainMenuComp;
-use crate::models::ui_components::NavigationButton;
+use crate::models::ui_components::game_over::NavigationButton;
+use crate::models::ui_components::main_menu::MainMenuComp;
+
 
 pub fn spawn_main_menu_system(
     mut commands: Commands,

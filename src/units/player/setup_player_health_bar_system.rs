@@ -1,8 +1,8 @@
 use bevy::prelude::{BuildChildren, Color, Commands, Entity, Name, Query, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
 
-use crate::HealthBar;
 use crate::models::player::Player;
 use crate::models::sprite_layer::SpriteLayer;
+use crate::models::ui_components::hud::HealthBar;
 
 pub fn setup_player_health_bar_system(
     mut commands: Commands,

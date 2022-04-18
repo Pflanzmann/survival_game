@@ -1,6 +1,6 @@
 use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, EventReader, FlexDirection, HorizontalAlign, Input, JustifyContent, KeyCode, Local, NodeBundle, PositionType, Query, ReceivedCharacter, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
 
-use crate::models::ui_components::{DebugText, PauseMenuComp};
+use crate::models::ui_components::pause::{DebugText, PauseMenuComp};
 
 pub fn enter_pause_system(
     mut commands: Commands,
