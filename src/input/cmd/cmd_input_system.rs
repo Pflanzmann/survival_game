@@ -13,10 +13,7 @@ pub fn cmd_input_system(
     mut text_query: Query<&mut Text, With<DebugConsoleInput>>,
 ) {
     if keys.just_pressed(KeyCode::Back) {
-        println!("old string: {}", *string);
         string.pop();
-
-        println!("new string: {}", *string);
 
         for mut text in text_query.iter_mut() {
             text.sections[0].value = format!("{}", *string);
