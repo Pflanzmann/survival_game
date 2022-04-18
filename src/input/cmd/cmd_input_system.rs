@@ -18,6 +18,8 @@ pub fn cmd_input_system(
         for mut text in text_query.iter_mut() {
             text.sections[0].value = (*string).to_string();
         }
+
+        return;
     }
 
     if keys.just_pressed(KeyCode::Return) {
@@ -71,15 +73,8 @@ pub fn cmd_input_system(
         return;
     }
 
-    if keys.just_pressed(KeyCode::Space) {
-        string.push(' ');
-        for mut text in text_query.iter_mut() {
-            text.sections[0].value = (*string).to_string();
-        }
-    }
-
     for ev in char_evr.iter() {
-        if ev.char.is_alphabetic() {
+        if ev.char.is_ascii() {
             string.push(ev.char);
         }
         for mut text in text_query.iter_mut() {
