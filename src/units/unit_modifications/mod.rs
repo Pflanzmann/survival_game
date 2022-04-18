@@ -32,6 +32,8 @@ use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::units::unit_modifications::apply_death_ball_system::apply_death_ball_system;
 use crate::units::unit_modifications::apply_slime_system::apply_slime_system;
 use crate::units::unit_modifications::apply_turret_system::apply_turret_system;
+use crate::units::unit_modifications::helper::mod_list_deregister_system::mod_list_deregister_system;
+use crate::units::unit_modifications::helper::mod_list_register_system::mod_list_register_system;
 use crate::util::run_criteria::on_event::on_event;
 use crate::util::stage_label_helper::in_post_update;
 
@@ -59,6 +61,8 @@ impl Plugin for UnitModificationsPlugin {
                     SystemSet::new()
                         .with_run_criteria(on_event::<ApplyModToTargetEvent>)
 
+                        .with_system(mod_list_register_system)
+
                         .with_system(apply_affect_system::<MoveSpeed, AffectMoveSpeed>)
                         .with_system(apply_affect_system::<Damage, AffectDamage>)
                         .with_system(apply_affect_system::<Health, AffectHealth>)
@@ -85,6 +89,8 @@ impl Plugin for UnitModificationsPlugin {
                 in_post_update(
                     SystemSet::new()
                         .with_run_criteria(on_event::<RemoveModFromTargetEvent>)
+
+                        .with_system(mod_list_deregister_system)
 
                         .with_system(remove_affect_system::<MoveSpeed, AffectMoveSpeed>)
                         .with_system(remove_affect_system::<Damage, AffectDamage>)
