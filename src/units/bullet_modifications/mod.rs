@@ -39,7 +39,7 @@ impl Plugin for BulletModificationsPlugin {
             )
 
             .add_system_set(
-                in_pre_update(
+                in_post_update(
                     SystemSet::on_update(AppState::InGame)
 
                         .with_system(curve_shot_system)
