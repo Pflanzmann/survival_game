@@ -108,8 +108,7 @@ pub fn spawn_text_system(
             ..Default::default()
         });
     })
-        .insert(BulletHud)
-        .id();
+        .insert(BulletHud);
 }
 
 pub fn update_text_system(
