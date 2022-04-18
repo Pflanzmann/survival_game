@@ -8,7 +8,6 @@ pub fn bullet_despawn_system(
     mut bullet_stopped_event: EventReader<BulletStoppedEvent>,
 ) {
     for event in bullet_stopped_event.iter() {
-        println!("despawn");
         commands.entity(event.bullet_entity).despawn();
     }
 }

@@ -22,15 +22,12 @@ pub fn split_shot_system(
     mut command: Commands,
     texture_handle: Res<TextureHandles>,
     mut bullet_stopped_events: EventReader<BulletStoppedEvent>,
-    bullet_query: Query<(&Transform, &Bullet), With<SplitShot>>,
+    bullet_query: Query<(&Transform, &Bullet, &CollidedEntities), With<SplitShot>>,
 ) {
     for event in bullet_stopped_events.iter() {
-        let (bullet_transform, bullet) = match bullet_query.get(event.bullet_entity) {
+        let (bullet_transform, bullet, collided_entities) = match bullet_query.get(event.bullet_entity) {
             Ok(transform) => transform,
-            Err(_) => {
-                println!("bullet not found for split");
-                continue
-            }
+            Err(_) => continue,
         };
 
         let random_rotation = random::<f32>();
@@ -60,7 +57,7 @@ pub fn split_shot_system(
                 travel_range: TravelRange::new(2048.0),
                 hit_limit: HitLimit::new(1.0),
                 collider: Collider,
-                collider_entities: CollidedEntities::default(),
+                collider_entities: collided_entities.clone(),
             }).insert(Name::new("Bullet"));
         }
     }
