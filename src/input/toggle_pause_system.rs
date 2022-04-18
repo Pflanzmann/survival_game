@@ -1,9 +1,6 @@
 use bevy::prelude::{Input, KeyCode, Res, ResMut, State, Time};
 
-use ConsoleState::Shown;
-
 use crate::{AppState, AppStateTrigger, ConsoleState, ToAppState};
-use crate::ConsoleState::Hidden;
 
 #[derive(Default)]
 pub struct StateTimer(f32);
