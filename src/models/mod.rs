@@ -19,7 +19,6 @@ pub mod main_camera;
 pub mod player;
 pub mod resources;
 pub mod configurations;
-pub mod turret_components;
 pub mod behavior;
 pub mod spawner;
 pub mod sprite_flip;

@@ -13,8 +13,8 @@ pub fn apply_mod_command(
     mut debug_command_events: EventReader<DebugCommandEvent>,
     mut apply_event: EventWriter<ApplyModToTargetEvent>,
     mod_entities: Query<(Entity, &ModName), (With<Modification>, Without<Player>, Without<Enemy>)>,
-    player_query: Query<Entity, (With<Player>, Without<Enemy>)>,
-    enemy_query: Query<Entity, (With<Enemy>, Without<Player>)>,
+    player_query: Query<Entity, With<Player>>,
+    enemy_query: Query<Entity, With<Enemy>>,
 ) {
     for debug_command_event in debug_command_events.iter() {
         let command: String = debug_command_event.debug_command.clone();

@@ -30,13 +30,13 @@ use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::units::unit_modifications::apply_death_ball_system::apply_death_ball_system;
-use crate::units::unit_modifications::slime_update_system::slime_update_system;
-use crate::units::unit_modifications::turret_update_system::turret_update_system;
+use crate::units::unit_modifications::apply_slime_system::apply_slime_system;
+use crate::units::unit_modifications::apply_turret_system::apply_turret_system;
 use crate::util::run_criteria::on_event::on_event;
 use crate::util::stage_label_helper::in_post_update;
 
-mod turret_update_system;
-mod slime_update_system;
+mod apply_turret_system;
+mod apply_slime_system;
 mod helper;
 mod apply_death_ball_system;
 
@@ -71,8 +71,11 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(apply_bullet_mod_to_targets_gun_system::<SplitShot>)
 
                         .with_system(apply_player_mod_to_target_system::<Sprinting>)
+
                         .with_system(apply_player_mod_to_target_system::<Turret>)
+                        .with_system(apply_turret_system)
                         .with_system(apply_player_mod_to_target_system::<Slime>)
+                        .with_system(apply_slime_system)
                         .with_system(apply_player_mod_to_target_system::<DeathBall>)
                         .with_system(apply_death_ball_system)
                 )
@@ -99,9 +102,7 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(remove_player_mod_from_target_system::<Slime>)
                 )
             )
-
-            .add_system(turret_update_system)
-            .add_system(slime_update_system);
+        ;
     }
 }
 
