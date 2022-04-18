@@ -2,7 +2,6 @@ pub mod move_direction;
 pub mod bullet;
 pub mod straight_basic_shot;
 pub mod aim_direction;
-pub mod ui_components;
 pub mod mod_container_slot;
 pub mod events;
 pub mod collider;
@@ -26,4 +25,7 @@ pub mod spawner;
 pub mod sprite_flip;
 pub mod sprite_rotate;
 pub mod damaged_effect;
+pub mod ui_components;
+
+
 
