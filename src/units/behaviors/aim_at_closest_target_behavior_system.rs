@@ -1,7 +1,7 @@
 use bevy::prelude::{GlobalTransform, Query, Transform, Vec3, With, Without};
 
 use crate::models::aim_direction::AimDirection;
-use crate::models::behaviour::aim_at_closest_target_behavior::AimAtClosestTargetBehavior;
+use crate::models::behavior::aim_at_closest_target_behavior::AimAtClosestTargetBehavior;
 use crate::models::enemy::Enemy;
 
 pub fn aim_at_closest_target_behavior_system(

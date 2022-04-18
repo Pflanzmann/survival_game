@@ -1,10 +1,10 @@
 use bevy::prelude::{Query, With};
 
 use crate::models::aim_direction::AimDirection;
-use crate::models::behaviour::spin_aim_behaviour::SpinAimBehaviour;
+use crate::models::behavior::spin_aim_behavior::SpinAimBehavior;
 
-pub fn spin_aim_behaviour_system(
-    mut unit_query: Query<&mut AimDirection, With<SpinAimBehaviour>>,
+pub fn spin_aim_behavior_system(
+    mut unit_query: Query<&mut AimDirection, With<SpinAimBehavior>>,
 ) {
     for mut unit_aim_direction in unit_query.iter_mut() {
         let mut direction = unit_aim_direction.direction;

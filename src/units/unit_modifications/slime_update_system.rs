@@ -2,10 +2,10 @@ use bevy::prelude::{Commands, Entity, Name, Query, Res, Sprite, SpriteBundle, Tr
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
-use crate::models::behaviour::chase_target_behavior::ChaseTargetBehavior;
-use crate::models::behaviour::mono_directional_move_behavior::MonoDirectionalMoveBehavior;
-use crate::models::behaviour::spin_aim_behaviour::SpinAimBehaviour;
-use crate::models::behaviour::teleport_to_target_behavior::TeleportToTargetBehavior;
+use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
+use crate::models::behavior::mono_directional_move_behavior::MonoDirectionalMoveBehavior;
+use crate::models::behavior::spin_aim_behavior::SpinAimBehavior;
+use crate::models::behavior::teleport_to_target_behavior::TeleportToTargetBehavior;
 use crate::models::modifications::slime::{Slime, SlimeOwner, SlimeUnit};
 use crate::models::modifications::turret::Turret;
 use crate::models::move_direction::MoveDirection;

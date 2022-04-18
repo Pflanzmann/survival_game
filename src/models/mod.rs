@@ -21,7 +21,7 @@ pub mod player;
 pub mod resources;
 pub mod configurations;
 pub mod turret_components;
-pub mod behaviour;
+pub mod behavior;
 pub mod spawner;
 pub mod sprite_flip;
 pub mod sprite_rotate;
