@@ -1,5 +1,5 @@
 use bevy::math::{EulerRot, Quat};
-use bevy::prelude::{Query, Transform, With};
+use bevy::prelude::{Query, Transform};
 
 use crate::models::behavior::rotate_behavior::UnitRotation;
 

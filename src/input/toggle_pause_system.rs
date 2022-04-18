@@ -36,9 +36,10 @@ pub fn toggle_pause_system(
 
     if input.pressed(KeyCode::Tab) {
         state_timer.0 = 0.0;
+
         match console_state.current() {
-            Shown => console_state.set(Hidden),
-            Hidden => console_state.set(Shown),
-        };
+            ConsoleState::Shown => console_state.set(ConsoleState::Hidden),
+            ConsoleState::Hidden => console_state.set(ConsoleState::Shown),
+        }.expect("Error turning on the debug console.");
     }
 }

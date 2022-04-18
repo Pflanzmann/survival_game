@@ -1,5 +1,4 @@
 use bevy::prelude::{Entity, EventReader, EventWriter, Query, With, Without};
-use bevy_inspector_egui::egui::TextBuffer;
 
 use crate::models::enemy::Enemy;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
@@ -60,7 +59,6 @@ pub fn apply_mod_command(
         match target.as_str() {
             "player" => {
                 for player_entity in player_query.iter() {
-                    println!("apply stuff");
                     apply_event.send(ApplyModToTargetEvent { mod_entity: chosen_mod, target_entity: player_entity })
                 }
             }

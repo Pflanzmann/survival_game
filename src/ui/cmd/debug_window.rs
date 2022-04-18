@@ -1,5 +1,5 @@
 use bevy::core::Name;
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, HorizontalAlign, Input, JustifyContent, KeyCode, Local, NodeBundle, Overflow, PositionType, Query, ReceivedCharacter, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, HorizontalAlign, JustifyContent, NodeBundle, Overflow, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
 
 use crate::models::ui_components::debug_console::{DebugConsoleHistory, DebugConsoleInput, DebugConsoleWindow};
 
