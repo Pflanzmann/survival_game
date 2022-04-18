@@ -68,7 +68,6 @@ pub fn apply_mod_command(
                     apply_event.send(ApplyModToTargetEvent { mod_entity: chosen_mod, target_entity: entity_entity })
                 }
             }
-
             _ => continue,
         }
     }
