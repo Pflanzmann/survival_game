@@ -18,3 +18,6 @@ pub fn post_update_label_system() {
 
 }
 
+pub fn last_label_system() {
+
+}

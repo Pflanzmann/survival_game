@@ -27,7 +27,10 @@ pub fn split_shot_system(
     for event in bullet_stopped_events.iter() {
         let (bullet_transform, bullet) = match bullet_query.get(event.bullet_entity) {
             Ok(transform) => transform,
-            Err(_) => continue,
+            Err(_) => {
+                println!("bullet not found for split");
+                continue
+            }
         };
 
         let random_rotation = random::<f32>();

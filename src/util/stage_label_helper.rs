@@ -45,5 +45,6 @@ pub fn in_post_update(set: SystemSet) -> SystemSet {
 /// inside the [CoreStage::Update]
 pub fn in_last(set: SystemSet) -> SystemSet {
     set
+        .before(ScheduleLabel::Last)
         .after(ScheduleLabel::PostUpdate)
 }
