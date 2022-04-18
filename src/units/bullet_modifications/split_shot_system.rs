@@ -9,6 +9,7 @@ use crate::models::collider::collider::Collider;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::move_direction::MoveDirection;
+use crate::models::sprite_rotate::SpriteRotate;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::hit_limit::HitLimit;
@@ -55,10 +56,13 @@ pub fn split_shot_system(
                 move_speed: MoveSpeed::new(15.0),
                 damage: Damage::new(5.0),
                 travel_range: TravelRange::new(2048.0),
-                hit_limit: HitLimit::new(1.0),
+                hit_limit: HitLimit::new(2.0),
                 collider: Collider,
                 collider_entities: collided_entities.clone(),
-            }).insert(Name::new("Bullet"));
+            })
+                .insert(Name::new("Bullet"))
+                .insert(SpriteRotate)
+            ;
         }
     }
 }
