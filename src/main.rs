@@ -4,6 +4,7 @@ use bevy::app::App;
 use bevy::DefaultPlugins;
 use bevy::ecs::schedule::StageLabel;
 use bevy::prelude::SystemStage;
+use bevy_inspector_egui::WorldInspectorPlugin;
 
 use crate::assets_handling::AssetHandlingPlugin;
 use crate::assets_handling::preload_texture_system::TextureHandles;
@@ -78,7 +79,7 @@ fn main() {
         .add_startup_stage(SetupStages::AssetSetup, SystemStage::parallel())
 
         .add_plugins(DefaultPlugins)
-        // .add_plugin(WorldInspectorPlugin::new())
+        .add_plugin(WorldInspectorPlugin::new())
 
         .add_state(AppState::Pre)
 

@@ -1,0 +1,16 @@
+{
+  "Modification": null,
+  "ModName": {
+    "mod_name": "DeathBall"
+  },
+  "ModSpritePath": {
+    "path": "sprites/death_ball.png"
+  },
+  "ToolTip": {
+    "tooltip": "a death ball that makes death"
+  },
+  "DeathBall": {
+    "rotation_distance": 256.0,
+    "rotation_speed": 0.01
+  }
+}
