@@ -25,7 +25,7 @@ pub fn spawn_text_system(
             },
             ..Default::default()
         },
-        text: Text::with_section(
+        /*text: Text::with_section(
             "Coins: ".to_string(),
             TextStyle {
                 font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
@@ -36,12 +36,34 @@ pub fn spawn_text_system(
                 vertical: VerticalAlign::Center,
                 horizontal: HorizontalAlign::Center,
             },
-        ),
+        ),*/
+        text : Text{
+            sections : vec![
+                TextSection{
+                    value: "Coins: ".to_string(),
+                    style: TextStyle{
+                        font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
+                        font_size: 60.0,
+                        color: Color::WHITE,
+                    }
+                },
+                TextSection{
+                    value: "".to_string(),
+                    style: TextStyle{
+                        font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
+                        font_size: 60.0,
+                        color: Color::WHITE,
+                    }
+                }
+            ],
+            ..Default::default()
+        },
         ..Default::default()
     })
         .insert(CoinText)
         .id();
 
+        //modification hud
     commands.spawn_bundle(NodeBundle {
         style: Style {
             size: Size::new(Val::Percent(25.0), Val::Percent(5.0)),
@@ -118,7 +140,7 @@ pub fn update_text_system(
 ) {
     if coin_counter.is_changed() {
         for mut text in text_query.iter_mut() {
-            text.sections[0].value = format!("{:.0}", coin_counter.number);
+            text.sections[1].value = format!("{:.0}", coin_counter.number);
         }
     }
 }
