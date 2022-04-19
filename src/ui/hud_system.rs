@@ -151,72 +151,26 @@ pub fn update_text_system(
 
 pub fn update_bullet_hud_system(
     mut commands: Commands,
-    asset_server : Res<AssetServer>,
+    asset_server: Res<AssetServer>,
     texture_handles: Res<TextureHandles>,
     //mut containter_query: Query<(Option<&SplitShot>, Option<&CurveShot>, Option<&GrowShot>), (With<ModContainer>, Changed<SplitShot>)>,
     mut hud_query: Query<Entity, With<BulletHud>>,
     mut player_query: Query<(Entity, &mut ModRegister), With<Player>>,
-    mut mod_query : Query<(Entity, &ModSpritePath), With<Modification>>
+    mut mod_query: Query<(Entity, &ModSpritePath), With<Modification>>,
 ) {
-    /*for entity in hud_query.iter_mut() {
-        for (split, curve, grow) in containter_query.iter_mut() {
-            if split.is_some() {
-                commands.entity(entity).with_children(|parent| {
-                    parent.spawn_bundle(ImageBundle {
-                        image: texture_handles.bullet_fireball.clone().into(),
-                        style: Style {
-                            size: Size::new(Val::Percent(10.0), Val::Percent(80.0)),
-                            ..Default::default()
-                        },
-                        ..Default::default()
-                    });
-                }).id();
-            } else {}
-        }
-    }*/
-for (player_entity, mod_reg) in player_query.iter(){
-    for hud_entity in hud_query.iter(){
-        for some in mod_reg.register.iter(){
-            let (any, sprite) = match mod_query.get(*some){
-                Ok(value) => value,
-                Err(_) => continue,
-            };
-            commands.entity(hud_entity).with_children(|parent| {
-                parent.spawn_bundle(ImageBundle {
-                    image: asset_server.load(&sprite.path).into(),
-                    style: Style {
-                        size: Size::new(Val::Percent(10.0), Val::Percent(80.0)),
-                        ..Default::default()
-                    },
-                    ..Default::default()
-                });
-            }).id();
-        }
-    }
-}
-    /*
-     let enemy_position = match enemy_query.get(event.enemy_entity) {
-            Ok(transform) => transform.translation,
-            Err(_) => continue,
-        };
-     */
-
-
-
-
-    //query all mod_entities ->
-    // for ... in mod_reg.iter()
-    //      for (mod_entity, sprite) in mod_entities.get(modreg.regster)
-
-    /*for (entity, mut mod_reg) in player_query.iter() {
-        for entity in hud_query.iter_mut() {
-            let mut i = 0;
+    //right now adds every mod sprite to the hud on every frame
+    //let this react to changes on modregister (same event that triggers change in list)
+    //make sure it reacts agter list is updated
+    for (player_entity, mod_reg) in player_query.iter() {
+        for hud_entity in hud_query.iter() {
             for some in mod_reg.register.iter() {
-                println!("{}", some);
-                i += 1;
-                commands.entity(entity).with_children(|parent| {
+                let (any, sprite) = match mod_query.get(*some) {
+                    Ok(value) => value,
+                    Err(_) => continue,
+                };
+                commands.entity(hud_entity).with_children(|parent| {
                     parent.spawn_bundle(ImageBundle {
-                        image: texture_handles.bullet_fireball.clone().into(),
+                        image: asset_server.load(&sprite.path).into(),
                         style: Style {
                             size: Size::new(Val::Percent(10.0), Val::Percent(80.0)),
                             ..Default::default()
@@ -226,5 +180,5 @@ for (player_entity, mod_reg) in player_query.iter(){
                 }).id();
             }
         }
-    }*/
+    }
 }
