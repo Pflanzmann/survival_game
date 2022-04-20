@@ -2,6 +2,7 @@ use bevy::prelude::{Commands, Component, DespawnRecursiveExt, Entity, EventReade
 
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
 use crate::models::mod_container_slot::ModContainerSlot;
+use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::utils::owner::Owner;
 
 /// A generic system to remove all companions created from a [Modification].
@@ -18,13 +19,13 @@ use crate::models::modifications::utils::owner::Owner;
 ///     }
 /// }
 /// ```
-pub fn remove_units_from_mod<
+pub fn despawn_companion_from_mod_system<
     T: Component,
     U: Component
 >(
     mut commands: Commands,
     mut remove_events: EventReader<RemoveModFromTargetEvent>,
-    mod_query: Query<Entity, With<ModContainerSlot>>,
+    mod_query: Query<Entity, With<Modification>>,
     unit_query: Query<(Entity, &Owner), With<U>>,
 ) {
     for remove_event in remove_events.iter() {
