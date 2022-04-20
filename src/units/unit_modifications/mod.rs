@@ -17,12 +17,12 @@ use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
 use crate::models::modifications::affects::affect_reload::AffectReload;
 use crate::models::modifications::affects::affect_travel_range::AffectTravelRange;
 use crate::models::modifications::curve_shot::CurveShot;
-use crate::models::modifications::death_ball::DeathBall;
+use crate::models::modifications::death_ball::{DeathBall, DeathBallUnit};
 use crate::models::modifications::grow_shot::GrowShot;
-use crate::models::modifications::slime::Slime;
+use crate::models::modifications::slime::{Slime, SlimeUnit};
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::modifications::sprinting::Sprinting;
-use crate::models::modifications::turret::Turret;
+use crate::models::modifications::turret::{Turret, TurretUnit};
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::hit_limit::HitLimit;
@@ -34,6 +34,7 @@ use crate::units::unit_modifications::apply_slime_system::apply_slime_system;
 use crate::units::unit_modifications::apply_turret_system::apply_turret_system;
 use crate::units::unit_modifications::helper::mod_list_deregister_system::mod_list_deregister_system;
 use crate::units::unit_modifications::helper::mod_list_register_system::mod_list_register_system;
+use crate::units::unit_modifications::helper::remove_units_from_mod::remove_units_from_mod;
 use crate::util::run_criteria::on_event::on_event;
 use crate::util::stage_label_helper::in_post_update;
 
@@ -78,8 +79,10 @@ impl Plugin for UnitModificationsPlugin {
 
                         .with_system(apply_player_mod_to_target_system::<Turret>)
                         .with_system(apply_turret_system)
+
                         .with_system(apply_player_mod_to_target_system::<Slime>)
                         .with_system(apply_slime_system)
+
                         .with_system(apply_player_mod_to_target_system::<DeathBall>)
                         .with_system(apply_death_ball_system)
                 )
@@ -104,8 +107,15 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(remove_bullet_mod_from_targets_gun_system::<SplitShot>)
 
                         .with_system(remove_player_mod_from_target_system::<Sprinting>)
+
                         .with_system(remove_player_mod_from_target_system::<Turret>)
+                        .with_system(remove_units_from_mod::<Turret, TurretUnit>)
+
                         .with_system(remove_player_mod_from_target_system::<Slime>)
+                        .with_system(remove_units_from_mod::<Slime, SlimeUnit>)
+
+                        .with_system(remove_player_mod_from_target_system::<DeathBall>)
+                        .with_system(remove_units_from_mod::<DeathBall, DeathBallUnit>)
                 )
             )
         ;
