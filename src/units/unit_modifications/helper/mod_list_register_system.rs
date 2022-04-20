@@ -21,7 +21,7 @@ pub fn mod_list_register_system(
         };
 
         if let Some(mut register) = target {
-            register.register.insert(apply_event.target_entity);
+            register.register.insert(apply_event.mod_entity);
         } else {
             let mut register = ModRegister::default();
             register.register.insert(apply_event.mod_entity);
