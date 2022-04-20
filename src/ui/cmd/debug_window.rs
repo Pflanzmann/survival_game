@@ -65,10 +65,10 @@ pub fn setup_debug_window(
         .with_children(|parent| {
             parent.spawn_bundle(TextBundle {
                 style: Style {
-                    size: Size::new(Val::Percent(100.0), Val::Percent(92.0)),
+                    size: Size::new(Val::Percent(100.0), Val::Percent(91.0)),
                     position: Rect {
                         left: Val::Percent(0.0),
-                        bottom: Val::Percent(8.0),
+                        bottom: Val::Percent(9.0),
                         top: Val::Percent(0.0),
                         right: Val::Percent(0.0),
                     },

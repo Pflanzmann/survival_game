@@ -1,19 +1,19 @@
 use bevy::prelude::{Entity, EventReader, EventWriter, Query, With, Without};
 
 use crate::models::enemy::Enemy;
-use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::events::debug_command_event::DebugCommandEvent;
 use crate::models::events::debug_command_info_event::DebugCommandInfoEvent;
+use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
 use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::player::Player;
 
-const KEY: &str = "apply";
+const KEY: &str = "remove";
 
-pub fn apply_mod_command(
+pub fn remove_mod_command(
     mut debug_command_events: EventReader<DebugCommandEvent>,
     mut debug_command_info_event: EventWriter<DebugCommandInfoEvent>,
-    mut apply_event: EventWriter<ApplyModToTargetEvent>,
+    mut apply_event: EventWriter<RemoveModFromTargetEvent>,
     mod_entities: Query<(Entity, &ModName), (With<Modification>, Without<Player>, Without<Enemy>)>,
     player_query: Query<Entity, With<Player>>,
     enemy_query: Query<Entity, With<Enemy>>,
@@ -65,14 +65,14 @@ pub fn apply_mod_command(
         match target.as_str() {
             "-p" | "player" => {
                 for player_entity in player_query.iter() {
-                    apply_event.send(ApplyModToTargetEvent { mod_entity: chosen_mod, target_entity: player_entity });
+                    apply_event.send(RemoveModFromTargetEvent { mod_entity: chosen_mod, target_entity: player_entity });
                     counter += 1;
                 }
             }
 
             "-e" | "enemies" => {
                 for entity_entity in enemy_query.iter() {
-                    apply_event.send(ApplyModToTargetEvent { mod_entity: chosen_mod, target_entity: entity_entity });
+                    apply_event.send(RemoveModFromTargetEvent { mod_entity: chosen_mod, target_entity: entity_entity });
                     counter += 1;
                 }
             }
@@ -82,6 +82,6 @@ pub fn apply_mod_command(
             }
         }
 
-        debug_command_info_event.send(DebugCommandInfoEvent { debug_command: format!("Did apply [{}] for {} targets", typed_mod_name, counter) });
+        debug_command_info_event.send(DebugCommandInfoEvent { debug_command: format!("Did remove [{}] from {} targets", typed_mod_name, counter) });
     }
 }

@@ -4,12 +4,14 @@ use crate::ConsoleState;
 use crate::input::cmd::apply_mod_command::apply_mod_command;
 use crate::input::cmd::cmd_input_system::cmd_input_system;
 use crate::input::cmd::god_mode_command::god_mode_command;
+use crate::input::cmd::remove_mod_command::remove_mod_command;
 use crate::models::events::debug_command_event::DebugCommandEvent;
 use crate::util::run_criteria::on_event::on_event;
 
 mod apply_mod_command;
 mod cmd_input_system;
 mod god_mode_command;
+mod remove_mod_command;
 
 pub struct CmdLogicPlugin;
 
@@ -21,6 +23,7 @@ impl Plugin for CmdLogicPlugin {
                     .with_run_criteria(on_event::<DebugCommandEvent>)
 
                     .with_system(apply_mod_command)
+                    .with_system(remove_mod_command)
                     .with_system(god_mode_command)
             )
 
