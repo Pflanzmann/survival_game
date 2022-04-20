@@ -19,6 +19,6 @@ pub fn mod_list_deregister_system(
             Err(_) => continue,
         };
 
-        target.register.remove(&apply_event.target_entity);
+        target.register.remove(&apply_event.mod_entity);
     }
 }

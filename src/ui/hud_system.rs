@@ -1,10 +1,12 @@
 use bevy::prelude::*;
 
 use crate::{GoldWallet, TextureHandles};
+use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::mod_container::ModContainer;
 use crate::models::mod_register::ModRegister;
 use crate::models::modifications::curve_shot::CurveShot;
+use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::split_shot::SplitShot;
@@ -153,21 +155,24 @@ pub fn update_bullet_hud_system(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     texture_handles: Res<TextureHandles>,
-    //mut containter_query: Query<(Option<&SplitShot>, Option<&CurveShot>, Option<&GrowShot>), (With<ModContainer>, Changed<SplitShot>)>,
+    mut apply_events: EventReader<ApplyModToTargetEvent>,
     mut hud_query: Query<Entity, With<BulletHud>>,
-    mut player_query: Query<(Entity, &mut ModRegister), With<Player>>,
-    mut mod_query: Query<(Entity, &ModSpritePath), With<Modification>>,
+    mut player_query: Query<(Entity, &mut ModRegister), (With<Player>, Changed<ModRegister>)>,
+    mut mod_query: Query<(Entity, &ModSpritePath, &ModName), With<Modification>>,
 ) {
-    //right now adds every mod sprite to the hud on every frame
-    //let this react to changes on modregister (same event that triggers change in list)
-    //make sure it reacts agter list is updated
+    //reset the hud whenever a change is registered
+    //also have the changed<modregister> as run criteria
     for (player_entity, mod_reg) in player_query.iter() {
         for hud_entity in hud_query.iter() {
             for some in mod_reg.register.iter() {
-                let (any, sprite) = match mod_query.get(*some) {
+                let (any, sprite, mod_name) = match mod_query.get(*some) {
                     Ok(value) => value,
-                    Err(_) => continue,
+                    Err(_) => {
+                        println!("some error in mod_query get()");
+                        continue;
+                    }
                 };
+                println!("{}", mod_name.mod_name);
                 commands.entity(hud_entity).with_children(|parent| {
                     parent.spawn_bundle(ImageBundle {
                         image: asset_server.load(&sprite.path).into(),
