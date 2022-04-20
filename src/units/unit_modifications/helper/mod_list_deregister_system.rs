@@ -10,9 +10,8 @@ pub fn mod_list_deregister_system(
     mut target_query: Query<&mut ModRegister>,
 ) {
     for apply_event in apply_events.iter() {
-        let modification = match mod_query.get(apply_event.mod_entity) {
-            Ok(modification) => modification,
-            Err(_) => continue,
+        if mod_query.get(apply_event.mod_entity).is_err() {
+            continue;
         };
 
         let mut target = match target_query.get_mut(apply_event.target_entity) {

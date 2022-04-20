@@ -1,7 +1,6 @@
 use bevy::prelude::{Commands, Component, DespawnRecursiveExt, Entity, EventReader, Query, With};
 
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
-use crate::models::mod_container_slot::ModContainerSlot;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::utils::owner::Owner;
 
