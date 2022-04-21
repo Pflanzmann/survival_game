@@ -1,6 +1,6 @@
 use std::time::SystemTime;
 
-use bevy::prelude::{Commands, Entity, Query, Res, ResMut, Transform, With};
+use bevy::prelude::{Commands, Entity, Query, ResMut, Transform, With};
 
 use crate::collision::QuadTreeHolder;
 use crate::models::collider::collider::Collider;
@@ -9,13 +9,11 @@ use crate::models::enemy::Enemy;
 use crate::models::unit_size::UnitSize;
 use crate::util::is_colliding::is_colliding;
 
-pub fn enemy_enemy_collision_system(
+pub fn enemy_enemy_collision_system_old(
     mut commands: Commands,
-    quad_tree_holder: Res<QuadTreeHolder>,
     enemy_query: Query<(Entity, &Transform, &UnitSize), (With<Collider>, With<Enemy>)>,
 ) {
     let start_time = SystemTime::now();
-
     for (entity, _, _) in enemy_query.iter() {
         commands.entity(entity).remove::<CollisionDirections>();
     }
@@ -24,19 +22,7 @@ pub fn enemy_enemy_collision_system(
     for (entity, transform, size) in enemy_query.iter() {
         let mut collisions = CollisionDirections { collisions: Vec::new() };
 
-        let mut check_entity_list: Vec<Entity> = Vec::new();
-        quad_tree_holder.quad_tree.query_entities(
-            &mut check_entity_list,
-            &transform.translation.truncate(),
-            &size.collider_size,
-        );
-
-        for other_entity in check_entity_list.iter() {
-            let (_, other_transform, other_size) = match enemy_query.get(*other_entity) {
-                Ok(value) => value,
-                Err(_) => { continue; }
-            };
-
+        for (other_entity, other_transform, other_size) in enemy_query.iter() {
             counter += 1;
             if is_colliding(
                 transform.translation,
@@ -55,5 +41,5 @@ pub fn enemy_enemy_collision_system(
     }
 
     let end = SystemTime::now();
-    println!("new system time: {:?}, count: {}", end.duration_since(start_time), counter);
+    println!("old system time: {:?}, count: {}", end.duration_since(start_time), counter);
 }
