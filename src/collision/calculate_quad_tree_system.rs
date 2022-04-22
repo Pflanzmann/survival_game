@@ -21,7 +21,7 @@ pub fn calculate_quad_tree_system(
 
     let quad_position = player_position.truncate();
 
-    quad_tree_holder.quad_tree = Quadtree::new(5000.0, 5000.0, quad_position, 0);
+    quad_tree_holder.quad_tree = Quadtree::new(10000.0, 10000.0, quad_position, 0);
     let mut counter = 0;
     for (entity, transform, size) in entity_query.iter() {
         quad_tree_holder.quad_tree.insert(

@@ -80,7 +80,6 @@ pub enum ConsoleState {
     Hidden,
 }
 
-
 fn main() {
     App::new()
         .add_startup_stage(SetupStages::ConfigSetup, SystemStage::parallel())
