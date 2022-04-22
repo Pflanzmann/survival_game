@@ -1,11 +1,4 @@
-use bevy::math::quat;
-use bevy::prelude::{Entity, Vec2};
-use bevy_inspector_egui::egui::epaint::text::layout;
-
-pub struct DataNode {
-    entity: Entity,
-    position: Vec2,
-}
+use bevy::prelude::*;
 
 #[derive(Default)]
 pub struct Quadtree {
@@ -63,6 +56,17 @@ impl Quadtree {
         max_layer
     }
 
+    pub fn get_all_squares(&self, output: &mut Vec<(Vec2, f32, f32, usize)>) {
+        if let Some(children) = self.children.as_ref() {
+            children[0].get_all_squares(output);
+            children[1].get_all_squares(output);
+            children[2].get_all_squares(output);
+            children[3].get_all_squares(output);
+        } else {
+            output.push((self.position, self.width, self.height, self.layer));
+        }
+    }
+
     pub fn query_entities(&self, output: &mut Vec<Entity>, position: &Vec2, size: &Vec2) {
         if !self.overlap_rectangle(position, size) {
             return;
@@ -95,6 +99,11 @@ impl Quadtree {
     pub fn insert(&mut self, data: &Entity, position: &Vec2, size: &Vec2) -> bool {
         if !self.contains_rectangle(position, size) {
             return false;
+        }
+
+        if self.layer >= 15 {
+            self.items.push(*data);
+            return true;
         }
 
         if self.children.is_none() {

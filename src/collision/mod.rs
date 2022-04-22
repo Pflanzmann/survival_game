@@ -9,6 +9,7 @@ use crate::collision::enemy_enemy_collision_system_old::enemy_enemy_collision_sy
 use crate::collision::enemy_player_collision_system::enemy_player_collision_system;
 use crate::collision::item_player_collision_system::item_player_collision_system;
 use crate::collision::quad_tree::Quadtree;
+use crate::collision::show_quad_tree_system::show_quad_tree_system;
 use crate::util::stage_label_helper::{in_collision, in_update};
 
 mod enemy_player_collision_system;
@@ -18,6 +19,7 @@ mod item_player_collision_system;
 mod calculate_quad_tree_system;
 mod quad_tree;
 mod enemy_enemy_collision_system_old;
+mod show_quad_tree_system;
 
 /// this has system running to check for collision between different game objects
 ///
@@ -43,17 +45,20 @@ impl Plugin for CollisionPlugin {
             .add_system_set(
                 in_collision(
                     SystemSet::on_update(AppState::InGame)
+                        .with_run_criteria(FixedTimestep::step(0.2))
                         .with_system(enemy_player_collision_system)
                         .with_system(enemy_bullet_collision_system)
                         .with_system(enemy_enemy_collision_system)
                         .with_system(enemy_enemy_collision_system_old)
                         .with_system(item_player_collision_system)
+                        .with_system(show_quad_tree_system)
                 )
             )
 
             .add_system_set(
                 in_update(
                     SystemSet::on_update(AppState::InGame)
+                        .with_run_criteria(FixedTimestep::step(0.2))
                         .with_system(calculate_quad_tree_system)
                 )
             )

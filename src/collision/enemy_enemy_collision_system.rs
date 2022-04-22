@@ -21,6 +21,7 @@ pub fn enemy_enemy_collision_system(
     }
 
     let mut counter = 0;
+    let mut max_comp = 0;
     for (entity, transform, size) in enemy_query.iter() {
         let mut collisions = CollisionDirections { collisions: Vec::new() };
 
@@ -30,6 +31,10 @@ pub fn enemy_enemy_collision_system(
             &transform.translation.truncate(),
             &size.collider_size,
         );
+
+        if max_comp < check_entity_list.len() {
+            max_comp = check_entity_list.len();
+        }
 
         for other_entity in check_entity_list.iter() {
             let (_, other_transform, other_size) = match enemy_query.get(*other_entity) {
@@ -55,5 +60,5 @@ pub fn enemy_enemy_collision_system(
     }
 
     let end = SystemTime::now();
-    println!("new system time: {:?}, count: {}", end.duration_since(start_time), counter);
+    println!("new system time: {:?}, count: {counter} | max query: {max_comp}", end.duration_since(start_time));
 }
