@@ -80,8 +80,7 @@ pub fn spawn_main_menu_system(
             })
                 .insert(NavigationButton);
         })
-        .insert(MainMenuComp)
-        .id();
+        .insert(MainMenuComp);
 }
 
 pub fn close_main_menu_system(

@@ -77,8 +77,7 @@ pub fn spawn_menu_system(
                 });
             })
                 .insert(NavigationButton);
-        })
-        .id();
+        });
 }
 
 pub fn button_click_system(
