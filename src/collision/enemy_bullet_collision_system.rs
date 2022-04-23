@@ -1,30 +1,43 @@
-use bevy::prelude::{Entity, EventWriter, Query, Transform, With, Without};
+use bevy::prelude::{Entity, EventWriter, Query, Res, Transform, With};
 
+use crate::collision::EnemyCollisionQuadTreeHolder;
+use crate::util::quad_tree::QuadData;
 use crate::models::bullet::Bullet;
 use crate::models::collider::collider::Collider;
 use crate::models::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
 use crate::models::unit_size::UnitSize;
-use crate::models::enemy::Enemy;
 use crate::util::is_colliding::is_colliding;
 
 pub fn enemy_bullet_collision_system(
     mut bullet_hit_event: EventWriter<BulletEnemyCollisionEvent>,
-    enemy_query: Query<(Entity, &Transform, &UnitSize), (With<Collider>, With<Enemy>, Without<Bullet>)>,
-    bullet_query: Query<(Entity, &Transform, &UnitSize), (With<Collider>, With<Bullet>, Without<Enemy>)>,
+    quad_tree_holder: Res<EnemyCollisionQuadTreeHolder>,
+    bullet_query: Query<(Entity, &Transform, &UnitSize), (With<Collider>, With<Bullet>)>,
 ) {
-    for (enemy_entity, enemy_transform, enemy_size, ) in enemy_query.iter() {
-        for (bullet_entity, bullet_transform, bullet_size) in bullet_query.iter() {
+    for (bullet_entity, bullet_transform, bullet_size) in bullet_query.iter() {
+        let mut check_entity_list: Vec<QuadData> = Vec::new();
+        quad_tree_holder.quad_tree.query_entities(
+            &mut check_entity_list,
+            &bullet_transform.translation,
+            &bullet_size.collider_size,
+        );
+
+        let mut colliding_entities: Vec<Entity> = Vec::new();
+        for quad_data in check_entity_list.iter() {
             if is_colliding(
-                enemy_transform.translation,
-                enemy_size.collider_size,
+                quad_data.position,
+                quad_data.size,
                 bullet_transform.translation,
                 bullet_size.collider_size,
             ) {
-                bullet_hit_event.send(BulletEnemyCollisionEvent {
-                    enemy_entity,
-                    bullet_entity,
-                })
+                colliding_entities.push(quad_data.entity);
             }
+        }
+
+        if let Some(entity) = colliding_entities.first() {
+            bullet_hit_event.send(BulletEnemyCollisionEvent {
+                enemy_entity: *entity,
+                bullet_entity,
+            })
         }
     }
 }
