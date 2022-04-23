@@ -1,6 +1,5 @@
 use std::cmp::min;
 
-use bevy::ecs::system::EntityCommands;
 use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
 use rand::Rng;
 
@@ -16,7 +15,6 @@ use crate::TextureHandles;
 pub fn spawn_shop_menu_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
-    mut texture_handle: ResMut<TextureHandles>,
     mod_query: Query<(Entity, &ModName, &ModSpritePath, &ToolTip)>,
 ) {
     let mut shop_items_vec: Vec<(Entity, String, String, String)> = Vec::new();
@@ -307,8 +305,7 @@ pub fn spawn_shop_menu_system(
                     .insert(NavigationButton);
             });
         })
-        .insert(ShopMenuComp)
-        .id();
+        .insert(ShopMenuComp);
 }
 
 pub fn close_shop_menu_system(
@@ -332,7 +329,7 @@ pub fn shop_button_system(
     mut button_query: Query<(Entity, &mut Interaction, &ShopButton), Changed<Interaction>>,
     mod_query: Query<(Entity, &ToolTip, &ShopSlot)>,
     player_query: Query<Entity, With<Player>>,
-    mut texture_handles: ResMut<TextureHandles>,
+    texture_handles: ResMut<TextureHandles>,
 ) {
     for (entity, interaction, shop_button) in button_query.iter_mut() {
         match *interaction {
@@ -403,7 +400,7 @@ pub fn spawn_sold_image(
     texture_handles: Handle<Image>,
 ) {
     let child = commands.spawn_bundle(ImageBundle {
-        image: texture_handles.clone().into(),
+        image: texture_handles.into(),
         style: Style {
             size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
             position: Rect {

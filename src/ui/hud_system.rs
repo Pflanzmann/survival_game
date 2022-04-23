@@ -1,15 +1,10 @@
 use bevy::prelude::*;
 
-use crate::{GoldWallet, TextureHandles};
-use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
-use crate::models::mod_container::ModContainer;
+use crate::{GoldWallet};
 use crate::models::mod_register::ModRegister;
-use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
 use crate::models::modifications::descriptors::modification::Modification;
-use crate::models::modifications::grow_shot::GrowShot;
-use crate::models::modifications::split_shot::SplitShot;
 use crate::models::player::Player;
 use crate::models::ui_components::hud::{BulletHud, CoinText};
 
@@ -87,7 +82,7 @@ pub fn update_text_system(
 ) {
     if coin_counter.is_changed() {
         for mut text in text_query.iter_mut() {
-            text.sections[1].value = format!("{:.0}", coin_counter.number);
+            text.sections[1].value = coin_counter.number.to_string();
         }
     }
 }
@@ -95,24 +90,23 @@ pub fn update_text_system(
 pub fn update_bullet_hud_system(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
-    texture_handles: Res<TextureHandles>,
-    mut apply_events: EventReader<ApplyModToTargetEvent>,
-    mut hud_query: Query<Entity, With<BulletHud>>,
-    mut player_query: Query<(Entity, &mut ModRegister), (With<Player>, Changed<ModRegister>)>,
-    mut mod_query: Query<(Entity, &ModSpritePath, &ModName), With<Modification>>,
+    hud_query: Query<Entity, With<BulletHud>>,
+    player_query: Query<&ModRegister, (With<Player>, Changed<ModRegister>)>,
+    mod_query: Query<(&ModSpritePath, &ModName), With<Modification>>,
 ) {
-    for entity in hud_query.iter() {
-        for (player_entity, mod_reg) in player_query.iter() {
+    for _ in player_query.iter() {
+        for entity in hud_query.iter() {
             commands.entity(entity).despawn_descendants();
         }
     }
-    for (player_entity, mod_reg) in player_query.iter() {
+    for mod_reg in player_query.iter() {
         for hud_entity in hud_query.iter() {
-            for some in mod_reg.register.iter() {
-                let (any, sprite, mod_name) = match mod_query.get(*some) {
+            for mod_entity in mod_reg.register.iter() {
+                let (sprite, mod_name) = match mod_query.get(*mod_entity) {
                     Ok(value) => value,
                     Err(_) => continue
                 };
+
                 println!("{}", mod_name.mod_name);
                 commands.entity(hud_entity).with_children(|parent| {
                     parent.spawn_bundle(ImageBundle {
