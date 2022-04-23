@@ -18,7 +18,8 @@ features = [
     "filesystem_watcher",
     "x11",
     "bevy_audio",
-    "vorbis"
+    "vorbis",
+    "mp3"
 ]
 
 [dependencies]

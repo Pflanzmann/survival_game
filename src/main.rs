@@ -8,6 +8,7 @@ use bevy_inspector_egui::WorldInspectorPlugin;
 
 use crate::assets_handling::AssetHandlingPlugin;
 use crate::assets_handling::preload_texture_system::TextureHandles;
+use crate::Audio::CustomAudioPlugin;
 use crate::background::BackgroundPlugin;
 use crate::collision::CollisionPlugin;
 use crate::drops::DropsPlugin;
@@ -35,6 +36,7 @@ mod ui;
 mod background;
 mod navigation;
 mod spawner;
+mod Audio;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, StageLabel)]
 pub enum SetupStages {
@@ -91,6 +93,7 @@ fn main() {
         .add_state(ConsoleState::Hidden)
 
         .add_plugin(UiPlugin)
+        .add_plugin(CustomAudioPlugin)
         .add_plugin(NavigationPlugin)
         .add_plugin(EventsPlugin)
         .add_plugin(InputPlugin)
@@ -105,3 +108,4 @@ fn main() {
 
         .run()
 }
+

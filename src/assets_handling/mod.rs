@@ -6,7 +6,7 @@ use crate::assets_handling::preload_item_system::{ItemConfigHandles, preload_ite
 use crate::assets_handling::preload_mod_system::preload_mod_system;
 use crate::assets_handling::preload_player_system::{PlayerConfigHandles, preload_player_system};
 use crate::assets_handling::preload_texture_system::{preload_texture_system, TextureHandles};
-use crate::assets_handling::preload_audio_system::{preload_audio_system, SoundHandles};
+use crate::assets_handling::preload_audio_system::{preload_audio_system, SinkSoundHandles, SoundHandles};
 use crate::SetupStages;
 use crate::util::entity_builder::EntityBuilderPlugin;
 
@@ -41,6 +41,7 @@ impl Plugin for AssetHandlingPlugin {
             .init_resource::<PlayerConfigHandles>()
             .init_resource::<BulletConfigHandles>()
             .init_resource::<SoundHandles>()
+            .init_resource::<SinkSoundHandles>()
 
             .add_startup_system_to_stage(SetupStages::AssetSetup, preload_texture_system)
 
