@@ -1,4 +1,12 @@
-use bevy::prelude::*;
+use bevy::math::Vec3;
+use bevy::prelude::{Entity, Vec2};
+
+#[derive(Copy, Clone)]
+pub struct QuadData {
+    pub entity: Entity,
+    pub position: Vec3,
+    pub size: Vec2,
+}
 
 #[derive(Default)]
 pub struct Quadtree {
@@ -8,12 +16,12 @@ pub struct Quadtree {
     layer: usize,
 
     children: Option<Box<[Quadtree; 4]>>,
-    items: Vec<Entity>,
+    items: Vec<QuadData>,
 }
 
 impl Quadtree {
     pub fn new(width: f32, height: f32, position: Vec2, layer: usize) -> Self {
-        Self { width, height, position, children: Option::None, items: Vec::new(), layer }
+        Self { width, height, position, layer, ..Default::default() }
     }
 }
 
@@ -67,7 +75,7 @@ impl Quadtree {
         }
     }
 
-    pub fn query_entities(&self, output: &mut Vec<Entity>, position: &Vec2, size: &Vec2) {
+    pub fn query_entities(&self, output: &mut Vec<QuadData>, position: &Vec2, size: &Vec2) {
         if !self.overlap_rectangle(position, size) {
             return;
         }
@@ -85,7 +93,7 @@ impl Quadtree {
         }
     }
 
-    pub fn get_entities(&self, output: &mut Vec<Entity>) {
+    pub fn get_entities(&self, output: &mut Vec<QuadData>) {
         output.extend(&self.items);
 
         if let Some(children) = &self.children {
@@ -96,8 +104,8 @@ impl Quadtree {
         }
     }
 
-    pub fn insert(&mut self, data: &Entity, position: &Vec2, size: &Vec2) -> bool {
-        if !self.contains_rectangle(position, size) {
+    pub fn insert(&mut self, data: &QuadData) -> bool {
+        if !self.contains_rectangle(&data.position, &data.size) {
             return false;
         }
 
@@ -111,16 +119,16 @@ impl Quadtree {
         }
 
         if let Some(children) = self.children.as_mut() {
-            if children[0].insert(data, position, size) {
+            if children[0].insert(data) {
                 return true;
             };
-            if children[1].insert(data, position, size) {
+            if children[1].insert(data) {
                 return true;
             };
-            if children[2].insert(data, position, size) {
+            if children[2].insert(data) {
                 return true;
             };
-            if children[3].insert(data, position, size) {
+            if children[3].insert(data) {
                 return true;
             };
         }
@@ -143,7 +151,7 @@ impl Quadtree {
         ]));
     }
 
-    fn contains_rectangle(&self, position: &Vec2, size: &Vec2) -> bool {
+    fn contains_rectangle(&self, position: &Vec3, size: &Vec2) -> bool {
         let a_min_x = self.position.x - self.width / 2.0;
         let a_min_y = self.position.y - self.height / 2.0;
 

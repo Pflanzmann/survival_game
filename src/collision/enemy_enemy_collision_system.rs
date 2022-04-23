@@ -2,6 +2,7 @@ use std::time::SystemTime;
 
 use bevy::prelude::{Commands, Entity, Query, Res, ResMut, Transform, With};
 
+use crate::collision::quad_tree::QuadData;
 use crate::collision::QuadTreeHolder;
 use crate::models::collider::collider::Collider;
 use crate::models::collider::collision_directions::CollisionDirections;
@@ -25,7 +26,7 @@ pub fn enemy_enemy_collision_system(
     for (entity, transform, size) in enemy_query.iter() {
         let mut collisions = CollisionDirections { collisions: Vec::new() };
 
-        let mut check_entity_list: Vec<Entity> = Vec::new();
+        let mut check_entity_list: Vec<QuadData> = Vec::new();
         quad_tree_holder.quad_tree.query_entities(
             &mut check_entity_list,
             &transform.translation.truncate(),
@@ -37,19 +38,14 @@ pub fn enemy_enemy_collision_system(
         }
 
         for other_entity in check_entity_list.iter() {
-            let (_, other_transform, other_size) = match enemy_query.get(*other_entity) {
-                Ok(value) => value,
-                Err(_) => { continue; }
-            };
-
             counter += 1;
             if is_colliding(
                 transform.translation,
                 size.collider_size,
-                other_transform.translation,
-                other_size.collider_size,
+                other_entity.position,
+                other_entity.size,
             ) {
-                let mut direction = other_transform.translation - transform.translation;
+                let mut direction = other_entity.position - transform.translation;
 
                 direction = direction.normalize_or_zero();
 

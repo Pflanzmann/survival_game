@@ -1,7 +1,8 @@
 use std::time::SystemTime;
+
 use bevy::prelude::{Entity, Query, ResMut, Transform, Vec2, With};
 
-use crate::collision::quad_tree::Quadtree;
+use crate::collision::quad_tree::{QuadData, Quadtree};
 use crate::collision::QuadTreeHolder;
 use crate::models::collider::collider::Collider;
 use crate::models::enemy::Enemy;
@@ -25,10 +26,11 @@ pub fn calculate_quad_tree_system(
     let mut counter = 0;
     for (entity, transform, size) in entity_query.iter() {
         quad_tree_holder.quad_tree.insert(
-            &entity,
-            &transform.translation.truncate(),
-            &size.collider_size,
-        );
+            &QuadData {
+                entity: entity,
+                position: transform.translation,
+                size: size.collider_size,
+            });
         counter += 1;
     }
 

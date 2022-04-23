@@ -27,6 +27,13 @@ pub struct TreeArea;
 #[derive(Default)]
 pub struct TreeHolder(Quadtree);
 
+#[derive(Copy, Clone)]
+pub struct QuadData {
+    entity: Entity,
+    position: Vec2,
+    size: Vec2,
+}
+
 const SPAWN_AMOUNT: usize = 30000;
 const SPAWN_AREA_WIDTH: f32 = 30000.0;
 const SPAWN_AREA_HEIGHT: f32 = 30000.0;
@@ -53,9 +60,12 @@ fn collision_detection(
         }
         let mut counter = 0;
         let mut biggest_comparator = 0;
+        let mut com_add3 = 0;
+
+        let mut check_entity_list: Vec<QuadData> = Vec::new();
 
         for (entity, trans, size_a) in entity_query.iter() {
-            let mut check_list: Vec<Entity> = Vec::new();
+            let mut check_list: Vec<QuadData> = Vec::new();
             quad_tree.0.query_entities(
                 &mut check_list,
                 &trans.translation.truncate(),
@@ -65,16 +75,14 @@ fn collision_detection(
             if check_list.len() > biggest_comparator {
                 biggest_comparator = check_list.len();
             }
+            com_add3 += check_entity_list.len();
 
             for other_entity in check_list.iter() {
-                if *other_entity == entity { continue; }
+                if other_entity.entity == entity {
+                    continue;
+                }
 
-                let (_, other_transform, other_size) = match entity_query.get(*other_entity) {
-                    Ok(value) => value,
-                    Err(_) => { continue; }
-                };
-
-                if is_colliding(trans.translation, size_a.0, other_transform.translation, other_size.0) {
+                if is_colliding(trans.translation, size_a.0, other_entity.position.extend(0.0), other_entity.size) {
                     commands.entity(entity).insert(Visibility { is_visible: true });
                 }
 
@@ -83,7 +91,8 @@ fn collision_detection(
         }
 
         let end = SystemTime::now();
-        println!("new system time: {:?} | counter = {counter} | biggest_comp: {biggest_comparator}", end.duration_since(start_time));
+        let com_add2: f32 = com_add3 as f32 / counter as f32;
+        println!("new system time: {:?} | counter = {counter} | biggest_comp: {biggest_comparator} | average {com_add3}", end.duration_since(start_time));
     }
 
     if input.just_pressed(KeyCode::Numpad0) {
@@ -143,7 +152,7 @@ fn calc_tree(
 
         let start_time = SystemTime::now();
         for (entity, transform, size) in entity_query.iter() {
-            if !quad_tree.0.insert(&entity, &transform.translation.truncate(), &size.0) {
+            if !quad_tree.0.insert(&QuadData { entity, position: transform.translation.truncate(), size: size.0 }, &transform.translation.truncate(), &size.0) {
                 failed_counter += 1;
             };
             counter += 1;
@@ -300,7 +309,7 @@ pub struct Quadtree {
     layer: usize,
 
     children: Option<Box<[Quadtree; 4]>>,
-    items: Vec<Entity>,
+    items: Vec<QuadData>,
 }
 
 impl Quadtree {
@@ -359,7 +368,7 @@ impl Quadtree {
         }
     }
 
-    pub fn query_entities(&self, output: &mut Vec<Entity>, position: &Vec2, size: &Vec2) {
+    pub fn query_entities(&self, output: &mut Vec<QuadData>, position: &Vec2, size: &Vec2) {
         if !self.overlap_rectangle(position, size) {
             return;
         }
@@ -377,7 +386,7 @@ impl Quadtree {
         }
     }
 
-    pub fn get_entities(&self, output: &mut Vec<Entity>) {
+    pub fn get_entities(&self, output: &mut Vec<QuadData>) {
         output.extend(&self.items);
 
         if let Some(children) = &self.children {
@@ -388,7 +397,7 @@ impl Quadtree {
         }
     }
 
-    pub fn insert(&mut self, data: &Entity, position: &Vec2, size: &Vec2) -> bool {
+    pub fn insert(&mut self, data: &QuadData, position: &Vec2, size: &Vec2) -> bool {
         if !self.contains_rectangle(position, size) {
             return false;
         }
