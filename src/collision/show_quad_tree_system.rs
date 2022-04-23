@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::collision::QuadTreeHolder;
+use crate::collision::EnemyCollisionQuadTreeHolder;
 use crate::SpriteLayer;
 
 #[derive(Component)]
@@ -8,8 +8,8 @@ pub struct TreeArea;
 
 pub fn show_quad_tree_system(
     mut commands: Commands,
-    area_query: Query<Entity, (With<TreeArea>)>,
-    quad_tree: Res<QuadTreeHolder>,
+    area_query: Query<Entity, With<TreeArea>>,
+    quad_tree: Res<EnemyCollisionQuadTreeHolder>,
 ) {
     if quad_tree.is_changed() {
         for entity in area_query.iter() {

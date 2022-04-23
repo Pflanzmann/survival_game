@@ -1,5 +1,4 @@
-use bevy::math::Vec3;
-use bevy::prelude::{Entity, Vec2};
+use bevy::prelude::{Entity, Vec2, Vec3};
 
 #[derive(Copy, Clone)]
 pub struct QuadData {
@@ -8,7 +7,6 @@ pub struct QuadData {
     pub size: Vec2,
 }
 
-#[derive(Default)]
 pub struct Quadtree {
     width: f32,
     height: f32,
@@ -22,6 +20,19 @@ pub struct Quadtree {
 impl Quadtree {
     pub fn new(width: f32, height: f32, position: Vec2, layer: usize) -> Self {
         Self { width, height, position, layer, ..Default::default() }
+    }
+}
+
+impl Default for Quadtree {
+    fn default() -> Self {
+        Self {
+            width: 0.0,
+            height: 0.0,
+            position: Default::default(),
+            layer: 0,
+            children: None,
+            items: vec![],
+        }
     }
 }
 
@@ -75,7 +86,7 @@ impl Quadtree {
         }
     }
 
-    pub fn query_entities(&self, output: &mut Vec<QuadData>, position: &Vec2, size: &Vec2) {
+    pub fn query_entities(&self, output: &mut Vec<QuadData>, position: &Vec3, size: &Vec2) {
         if !self.overlap_rectangle(position, size) {
             return;
         }
@@ -170,7 +181,7 @@ impl Quadtree {
             && a_max_y >= b_max_y
     }
 
-    fn overlap_rectangle(&self, position: &Vec2, size: &Vec2) -> bool {
+    fn overlap_rectangle(&self, position: &Vec3, size: &Vec2) -> bool {
         let a_min_x = self.position.x - self.width / 2.0;
         let a_min_y = self.position.y - self.height / 2.0;
 
@@ -189,7 +200,7 @@ impl Quadtree {
             && a_max_y >= b_min_y
     }
 
-    fn is_contained_in(&self, position: &Vec2, size: &Vec2) -> bool {
+    fn is_contained_in(&self, position: &Vec3, size: &Vec2) -> bool {
         let b_min_x = self.position.x - self.width / 2.0;
         let b_min_y = self.position.y - self.height / 2.0;
 

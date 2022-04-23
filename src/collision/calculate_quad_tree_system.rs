@@ -1,20 +1,20 @@
-use std::time::SystemTime;
+use bevy::prelude::{Entity, Query, ResMut, Transform, With};
 
-use bevy::prelude::{Entity, Query, ResMut, Transform, Vec2, With};
-
-use crate::collision::quad_tree::{QuadData, Quadtree};
-use crate::collision::QuadTreeHolder;
+use crate::collision::{EnemyCollisionQuadTreeHolder, ItemCollisionQuadTreeHolder};
+use crate::util::quad_tree::{QuadData, Quadtree};
 use crate::models::collider::collider::Collider;
 use crate::models::enemy::Enemy;
+use crate::models::items::descriptor::item::Item;
 use crate::models::player::Player;
 use crate::models::unit_size::UnitSize;
 
 pub fn calculate_quad_tree_system(
-    mut quad_tree_holder: ResMut<QuadTreeHolder>,
+    mut enemy_quad_tree_holder: ResMut<EnemyCollisionQuadTreeHolder>,
+    mut item_tree_holder: ResMut<ItemCollisionQuadTreeHolder>,
     player_query: Query<&Transform, With<Player>>,
     entity_query: Query<(Entity, &Transform, &UnitSize), (With<Collider>, With<Enemy>)>,
+    item_query: Query<(Entity, &Transform, &UnitSize), (With<Collider>, With<Item>)>,
 ) {
-    let start_time = SystemTime::now();
     let player_position = match player_query.get_single() {
         Ok(transform) => transform.translation,
         Err(_) => return,
@@ -22,18 +22,23 @@ pub fn calculate_quad_tree_system(
 
     let quad_position = player_position.truncate();
 
-    quad_tree_holder.quad_tree = Quadtree::new(10000.0, 10000.0, quad_position, 0);
-    let mut counter = 0;
+    enemy_quad_tree_holder.quad_tree = Quadtree::new(10000.0, 10000.0, quad_position, 0);
     for (entity, transform, size) in entity_query.iter() {
-        quad_tree_holder.quad_tree.insert(
+        enemy_quad_tree_holder.quad_tree.insert(
             &QuadData {
-                entity: entity,
+                entity,
                 position: transform.translation,
                 size: size.collider_size,
             });
-        counter += 1;
     }
 
-    let end = SystemTime::now();
-    println!("calc tree time: {:?} | depth: {}", end.duration_since(start_time), quad_tree_holder.quad_tree.print_structure());
+    item_tree_holder.quad_tree = Quadtree::new(10000.0, 10000.0, quad_position, 0);
+    for (entity, transform, size) in item_query.iter() {
+        item_tree_holder.quad_tree.insert(
+            &QuadData {
+                entity,
+                position: transform.translation,
+                size: size.collider_size,
+            });
+    }
 }
