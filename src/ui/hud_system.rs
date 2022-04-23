@@ -31,18 +31,6 @@ pub fn spawn_text_system(
             },
             ..Default::default()
         },
-        /*text: Text::with_section(
-            "Coins: ".to_string(),
-            TextStyle {
-                font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
-                font_size: 60.0,
-                color: Color::WHITE,
-            },
-            TextAlignment {
-                vertical: VerticalAlign::Center,
-                horizontal: HorizontalAlign::Center,
-            },
-        ),*/
         text: Text {
             sections: vec![
                 TextSection {
@@ -66,70 +54,31 @@ pub fn spawn_text_system(
         },
         ..Default::default()
     })
-        .insert(CoinText);
+        .insert(CoinText)
+        .insert(Name::new("CoinText"));
 
     //modification hud
     commands.spawn_bundle(NodeBundle {
-        style: Style {
-            size: Size::new(Val::Percent(25.0), Val::Percent(5.0)),
-            position: Rect {
-                left: Val::Percent(5.0),
-                top: Val::Percent(2.0),
-                ..Default::default()
-            },
-            position_type: PositionType::Absolute,
-            align_items: AlignItems::Center,
-            justify_content: JustifyContent::FlexStart,
-            flex_direction: FlexDirection::Row,
-            ..Default::default()
-        },
-        color: Color::GREEN.into(),
-        ..Default::default()
-    }).with_children(|parent| {
-        parent.spawn_bundle(TextBundle {
-            /*style: Style {
-                position_type: PositionType::Absolute,
-                position: Rect {
-                    left: Val::Percent(5.0),
-                    top: Val::Percent(2.0),
-                    ..Default::default()
-                },
-                ..Default::default()
-            },*/
-            text: Text::with_section(
-                "Active Mods:  ".to_string(),
-                TextStyle {
-                    font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
-                    font_size: 30.0,
-                    color: Color::BLACK,
-                },
-                TextAlignment {
-                    vertical: VerticalAlign::Center,
-                    horizontal: HorizontalAlign::Center,
-                },
-            ),
-            ..Default::default()
-        });
-    }).with_children(|parent| {
-        parent.spawn_bundle(NodeBundle {
             style: Style {
-                size: Size::new(Val::Percent(40.0), Val::Percent(95.0)),
+                size: Size::new(Val::Percent(18.0), Val::Percent(16.0)),
                 position: Rect {
-                    left: Val::Percent(5.0),
+                    left: Val::Percent(41.0),
                     top: Val::Percent(2.0),
                     ..Default::default()
                 },
-                position_type: PositionType::Relative,
-                align_items: AlignItems::Center,
+                position_type: PositionType::Absolute,
+                align_items: AlignItems::FlexStart,
                 justify_content: JustifyContent::FlexStart,
                 flex_direction: FlexDirection::Row,
+                flex_wrap: FlexWrap::WrapReverse,
+                align_content: AlignContent::FlexStart,
                 ..Default::default()
             },
-            color: Color::NONE.into(),
-            ..Default::default()
-        })
-            .insert(BulletHud);
-    });
+        color: Color::from([0.2,0.2,0.2,0.2]).into(),
+        ..Default::default()
+    })
+        .insert(BulletHud)
+        .insert(Name::new("BulletHud"));
 }
 
 pub fn update_text_system(
@@ -162,17 +111,14 @@ pub fn update_bullet_hud_system(
             for some in mod_reg.register.iter() {
                 let (any, sprite, mod_name) = match mod_query.get(*some) {
                     Ok(value) => value,
-                    Err(_) => {
-                        println!("some error in mod_query get()");
-                        continue;
-                    }
+                    Err(_) => continue
                 };
                 println!("{}", mod_name.mod_name);
                 commands.entity(hud_entity).with_children(|parent| {
                     parent.spawn_bundle(ImageBundle {
                         image: asset_server.load(&sprite.path).into(),
                         style: Style {
-                            size: Size::new(Val::Percent(10.0), Val::Percent(80.0)),
+                            size: Size::new(Val::Percent(20.0), Val::Percent(40.0)),
                             ..Default::default()
                         },
                         ..Default::default()
