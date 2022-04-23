@@ -8,7 +8,7 @@ use bevy_inspector_egui::WorldInspectorPlugin;
 
 use crate::assets_handling::AssetHandlingPlugin;
 use crate::assets_handling::preload_texture_system::TextureHandles;
-use crate::Audio::CustomAudioPlugin;
+use crate::audio::CustomAudioPlugin;
 use crate::background::BackgroundPlugin;
 use crate::collision::CollisionPlugin;
 use crate::drops::DropsPlugin;
@@ -36,7 +36,7 @@ mod ui;
 mod background;
 mod navigation;
 mod spawner;
-mod Audio;
+mod audio;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, StageLabel)]
 pub enum SetupStages {
