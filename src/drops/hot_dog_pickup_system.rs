@@ -1,6 +1,8 @@
-use bevy::audio::Audio;
+use bevy::asset::AssetServer;
 use bevy::prelude::{Commands, EventReader, Query, Res, With};
+use bevy_kira_audio::Audio;
 use crate::assets_handling::preload_audio_system::SoundHandles;
+//use crate::assets_handling::preload_audio_system::SoundHandles;
 
 use crate::models::events::item_collision_event::ItemCollisionEvent;
 use crate::models::items::descriptor::heal::Heal;
@@ -12,6 +14,7 @@ pub fn hot_dog_pickup_system(
     mut item_pickup_event: EventReader<ItemCollisionEvent>,
     sound_handles: Res<SoundHandles>,
     audio: Res<Audio>,
+
 
     mut player_query: Query<&mut Health, With<Player>>,
     item_query: Query<&Heal>,

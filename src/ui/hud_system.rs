@@ -11,7 +11,7 @@ use crate::models::ui_components::hud::{BulletHud, CoinText};
 pub fn spawn_text_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
-    mut coin_counter: ResMut<GoldWallet>,
+    mut coin_counter: ResMut<GoldWallet>
 ) {
     coin_counter.number = 0;
 

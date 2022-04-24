@@ -1,9 +1,11 @@
-use bevy::audio::Audio;
+use bevy::asset::AssetServer;
 use bevy::prelude::{Commands, Entity, EventReader, Query, Res, ResMut, With};
+use bevy_kira_audio::Audio;
 
 
 use crate::{AppStateTrigger, ToAppState};
 use crate::assets_handling::preload_audio_system::SoundHandles;
+//use crate::assets_handling::preload_audio_system::SoundHandles;
 use crate::models::events::item_collision_event::ItemCollisionEvent;
 use crate::models::items::shop::Shop;
 

@@ -2,6 +2,7 @@ use bevy::prelude::{App, Plugin, Vec2};
 
 use crate::models::resources::background_tiles_resource::BackgroundTilesResource;
 use crate::models::resources::console_history::ConsoleHistory;
+use crate::models::resources::sound_counter::SoundCounter;
 use crate::models::resources::spawn_task_receiver::SpawnTaskReceiver;
 use crate::models::resources::spawn_timer::SpawnTimer;
 use crate::models::resources::state_resources::AppStateTrigger;
@@ -13,6 +14,7 @@ pub mod state_resources;
 pub mod spawn_timer;
 pub mod spawn_task_receiver;
 pub mod console_history;
+pub mod sound_counter;
 
 pub struct ResourcePlugin;
 
@@ -23,6 +25,7 @@ impl Plugin for ResourcePlugin {
             .init_resource::<AppStateTrigger>()
             .init_resource::<SpawnTimer>()
             .init_resource::<SpawnTaskReceiver>()
+            .init_resource::<SoundCounter>()
 
             .insert_resource::<ConsoleHistory>(ConsoleHistory {
                 history: vec![String::new()],
