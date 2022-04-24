@@ -1,18 +1,13 @@
 extern crate core;
 
 use bevy::asset::{AssetServer, Handle};
-use bevy::audio::{AudioSink, AudioSource};
 use bevy::prelude::{Res, ResMut};
+use bevy_kira_audio::AudioSource;
 
 #[derive(Default)]
 pub struct SoundHandles {
     pub coin_pickup_sound: Handle<AudioSource>,
     pub background_music: Handle<AudioSource>
-}
-
-#[derive(Default)]
-pub struct SinkSoundHandles {
-    pub background_music: Handle<AudioSink>
 }
 
 pub fn preload_audio_system(

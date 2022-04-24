@@ -17,7 +17,6 @@ features = [
     "hdr",
     "filesystem_watcher",
     "x11",
-    "bevy_audio",
     "vorbis",
     "mp3"
 ]
@@ -29,3 +28,15 @@ bevy-inspector-egui = { version = "0.10.0" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 rustc-serialize = "0.3"
+
+[dependencies.bevy_kira_audio]
+version = "0.9.0"
+# `ogg` format support is enabled by default, disable if you don't want it
+default-features = false
+# enable the features you care about
+features = [
+    "wav",
+    "flac",
+    "mp3",
+    "ogg",
+]
