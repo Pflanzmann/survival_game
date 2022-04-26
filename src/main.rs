@@ -12,6 +12,7 @@ use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::audio::CustomAudioPlugin;
 use crate::background::BackgroundPlugin;
 use crate::collision::CollisionPlugin;
+use crate::debug::DebugPlugin;
 use crate::drops::DropsPlugin;
 use crate::guns::GunPlugin;
 use crate::input::InputPlugin;
@@ -38,6 +39,7 @@ mod background;
 mod navigation;
 mod spawner;
 mod audio;
+mod debug;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, StageLabel)]
 pub enum SetupStages {
@@ -105,6 +107,7 @@ fn main() {
         .add_plugin(ResourcePlugin)
         .add_plugin(BackgroundPlugin)
         .add_plugin(SpawnerPlugin)
+        .add_plugin(DebugPlugin)
 
         .add_plugin(AudioPlugin)
 

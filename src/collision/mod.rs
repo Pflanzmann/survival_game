@@ -4,18 +4,18 @@ use bevy::prelude::{Plugin, SystemSet};
 use crate::App;
 use crate::collision::calculate_quad_tree_system::calculate_quad_tree_system;
 use crate::collision::enemy_bullet_collision_system::enemy_bullet_collision_system;
-use crate::collision::enemy_enemy_collision_system::enemy_enemy_collision_system;
+use crate::collision::solid_body_collision_system::solid_body_collision_system;
 use crate::collision::enemy_player_collision_system::enemy_player_collision_system;
 use crate::collision::item_player_collision_system::item_player_collision_system;
+use crate::debug::show_quad_tree_system::show_quad_tree_system;
 use crate::util::quad_tree::Quadtree;
 use crate::util::stage_label_helper::{in_collision, in_update};
 
 mod enemy_player_collision_system;
 mod enemy_bullet_collision_system;
-mod enemy_enemy_collision_system;
+mod solid_body_collision_system;
 mod item_player_collision_system;
 mod calculate_quad_tree_system;
-mod show_quad_tree_system;
 
 /// this has system running to check for collision between different game objects
 ///
@@ -29,7 +29,7 @@ pub struct CollisionPlugin;
 const FIXED_TIMESTEP: f64 = 0.02;
 
 #[derive(Default)]
-pub struct EnemyCollisionQuadTreeHolder {
+pub struct SolidBodyCollisionQuadTreeHolder {
     pub quad_tree: Quadtree,
 }
 
@@ -41,25 +41,24 @@ pub struct ItemCollisionQuadTreeHolder {
 impl Plugin for CollisionPlugin {
     fn build(&self, app: &mut App) {
         app
-            .init_resource::<EnemyCollisionQuadTreeHolder>()
+            .init_resource::<SolidBodyCollisionQuadTreeHolder>()
             .init_resource::<ItemCollisionQuadTreeHolder>()
 
             .add_system_set(
                 in_collision(
                     SystemSet::new()
-                        .with_run_criteria(FixedTimestep::step(FIXED_TIMESTEP))
+                        // .with_run_criteria(FixedTimestep::step(FIXED_TIMESTEP))
                         .with_system(enemy_player_collision_system)
                         .with_system(enemy_bullet_collision_system)
-                        .with_system(enemy_enemy_collision_system)
+                        .with_system(solid_body_collision_system)
                         .with_system(item_player_collision_system)
-                       // .with_system(show_quad_tree_system)
                 )
             )
-
+            
             .add_system_set(
                 in_update(
                     SystemSet::new()
-                        .with_run_criteria(FixedTimestep::step(FIXED_TIMESTEP))
+                        // .with_run_criteria(FixedTimestep::step(FIXED_TIMESTEP))
                         .with_system(calculate_quad_tree_system)
                 )
             )

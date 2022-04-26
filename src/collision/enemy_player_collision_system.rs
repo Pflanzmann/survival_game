@@ -1,7 +1,7 @@
 use bevy::prelude::{Entity, EventWriter, Query, Res, Transform, With, Without};
 
 use crate::util::quad_tree::QuadData;
-use crate::collision::EnemyCollisionQuadTreeHolder;
+use crate::collision::SolidBodyCollisionQuadTreeHolder;
 use crate::models::collider::collider::Collider;
 use crate::models::enemy::Enemy;
 use crate::models::events::player_enemy_collision_event::PlayerEnemyCollisionEvent;
@@ -11,7 +11,7 @@ use crate::util::is_colliding::is_colliding;
 
 pub fn enemy_player_collision_system(
     mut player_enemy_collision_event: EventWriter<PlayerEnemyCollisionEvent>,
-    quad_tree_holder: Res<EnemyCollisionQuadTreeHolder>,
+    quad_tree_holder: Res<SolidBodyCollisionQuadTreeHolder>,
     player_query: Query<(Entity, &Transform, &UnitSize), (With<Collider>, With<Player>, Without<Enemy>)>,
 ) {
     for (player_entity, player_transform, player_size) in player_query.iter() {

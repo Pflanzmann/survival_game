@@ -1,6 +1,6 @@
 use bevy::prelude::{Entity, EventWriter, Query, Res, Transform, With};
 
-use crate::collision::EnemyCollisionQuadTreeHolder;
+use crate::collision::SolidBodyCollisionQuadTreeHolder;
 use crate::util::quad_tree::QuadData;
 use crate::models::bullet::Bullet;
 use crate::models::collider::collider::Collider;
@@ -10,7 +10,7 @@ use crate::util::is_colliding::is_colliding;
 
 pub fn enemy_bullet_collision_system(
     mut bullet_hit_event: EventWriter<BulletEnemyCollisionEvent>,
-    quad_tree_holder: Res<EnemyCollisionQuadTreeHolder>,
+    quad_tree_holder: Res<SolidBodyCollisionQuadTreeHolder>,
     bullet_query: Query<(Entity, &Transform, &UnitSize), (With<Collider>, With<Bullet>)>,
 ) {
     for (bullet_entity, bullet_transform, bullet_size) in bullet_query.iter() {
