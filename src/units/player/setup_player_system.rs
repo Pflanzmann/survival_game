@@ -2,18 +2,19 @@ use bevy::prelude::{Commands, Name, Res, Sprite, SpriteBundle, Transform, Vec2, 
 
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
+use crate::models::aim_direction::AimDirection;
+use crate::models::bundles::player_bundle::PlayerBundle;
+use crate::models::collider::collider::Collider;
+use crate::models::collider::solid_body::SolidBody;
+use crate::models::move_direction::MoveDirection;
+use crate::models::player::Player;
+use crate::models::sprite_flip::SpriteFlip;
+use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
-use crate::models::bundles::player_bundle::PlayerBundle;
-use crate::models::collider::collider::Collider;
-use crate::models::aim_direction::AimDirection;
-use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_size::UnitSize;
-use crate::models::move_direction::MoveDirection;
-use crate::models::player::Player;
-use crate::models::sprite_flip::SpriteFlip;
 
 pub fn setup_player_system(
     mut commands: Commands,
@@ -40,6 +41,10 @@ pub fn setup_player_system(
             move_direction: MoveDirection { direction: Vec3::new(1.0, 0.0, 0.0) },
             move_speed: MoveSpeed::new(player_handles.player_one.move_speed),
             damage: Damage::new(player_handles.player_one.damage),
-            health: Health::new(player_handles.player_one.health)})
-        .insert(SpriteFlip);
+            health: Health::new(player_handles.player_one.health),
+        })
+        .insert(SpriteFlip)
+        .insert(SolidBody { weight: 0.2 })
+        .remove::<Health>()
+    ;
 }

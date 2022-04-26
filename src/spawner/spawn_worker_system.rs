@@ -5,6 +5,7 @@ use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
 use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
 use crate::models::bundles::enemy_bundle::EnemyBundle;
 use crate::models::collider::collider::Collider;
+use crate::models::collider::solid_body::SolidBody;
 use crate::models::enemy::Enemy;
 use crate::models::move_direction::MoveDirection;
 use crate::models::player::Player;
@@ -50,6 +51,9 @@ pub fn spawn_worker_system(
                     health: Health::new(enemy_handles.goblin.health),
                 }).insert(Name::new("Goblin"))
                 .insert(SpriteFlip)
+                .insert(SolidBody { weight: 0.5 })
+                .remove::<Health>()
+                // .remove::<MoveSpeed>()
                 .insert(ChaseTargetBehavior { target: player_entity, proximity: 0.0 })
             ;
         }

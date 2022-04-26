@@ -12,11 +12,11 @@ pub fn spawn_scheduler_system(
     mut spawn_task_receiver: ResMut<SpawnTaskReceiver>,
     player_query: Query<&Transform, With<Player>>,
 ) {
-    spawn_timer.timer += time.delta().as_secs_f32();
-    if spawn_timer.timer < 3.0 {
+    spawn_timer.timer -= time.delta().as_secs_f32();
+    if spawn_timer.timer > 0.0 {
         return;
     }
-    spawn_timer.timer = 0.0;
+    spawn_timer.timer = 5.0;
 
     for transform in player_query.iter() {
         for _ in 0..6 {
@@ -25,7 +25,7 @@ pub fn spawn_scheduler_system(
 
             let direction_to_spawn = Vec3::new(random_x, random_y, 0.0).normalize_or_zero();
 
-            let position_to_spawn = transform.translation + (direction_to_spawn * (256.0 * 12.0));
+            let position_to_spawn = transform.translation + (direction_to_spawn * (256.0 * 5.0));
             spawn_task_receiver.push_new_task(SpawnTask::new(position_to_spawn));
         }
     }
