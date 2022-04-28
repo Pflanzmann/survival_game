@@ -5,6 +5,7 @@ use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::models::aim_direction::AimDirection;
 use crate::models::bundles::player_bundle::PlayerBundle;
 use crate::models::collider::collider::Collider;
+use crate::models::collider::collider_type::ColliderType;
 use crate::models::collider::solid_body::SolidBody;
 use crate::models::move_direction::MoveDirection;
 use crate::models::player::Player;
@@ -45,6 +46,7 @@ pub fn setup_player_system(
         })
         .insert(SpriteFlip)
         .insert(SolidBody { weight: 0.2 })
+        .insert(ColliderType::Rectangle(Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y)))
         .remove::<Health>()
     ;
 }

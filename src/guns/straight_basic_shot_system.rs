@@ -6,6 +6,7 @@ use crate::models::bullet::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::collider::collider::Collider;
+use crate::models::collider::collider_type::ColliderType;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::move_direction::MoveDirection;
 use crate::models::sprite_layer::SpriteLayer;
@@ -65,6 +66,7 @@ pub fn straight_basic_shot_system(
                 collider_entities: CollidedEntities::default(),
             }).insert(Name::new("Bullet"))
             .insert(SpriteRotate)
+            .insert(ColliderType::Circle(bullet_handle.basic_bullet.sprite_custom_size_x))
             .id();
 
         bullet_shot_event_writer.send(BulletShotEvent { entity: bullet })
