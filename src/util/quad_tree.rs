@@ -1,11 +1,13 @@
 use bevy::prelude::{Entity, Vec2, Vec3};
 
+use crate::models::collider::collider_type::ColliderType;
+use crate::models::collider::collider_type::ColliderType::{Circle, Rectangle};
+
 #[derive(Copy, Clone)]
 pub struct QuadData {
     pub entity: Entity,
     pub position: Vec3,
-    pub size: Vec2,
-    pub weight: f32
+    pub collider_type: ColliderType,
 }
 
 pub struct Quadtree {
@@ -117,7 +119,12 @@ impl Quadtree {
     }
 
     pub fn insert(&mut self, data: &QuadData) -> bool {
-        if !self.contains_rectangle(&data.position, &data.size) {
+        let size = match data.collider_type {
+            Circle(radius) => Vec2::new(radius, radius),
+            Rectangle(size) => size,
+        };
+
+        if !self.contains_rectangle(&data.position, &size) {
             return false;
         }
 
