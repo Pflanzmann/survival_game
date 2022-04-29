@@ -66,7 +66,7 @@ pub fn straight_basic_shot_system(
                 collider_entities: CollidedEntities::default(),
             }).insert(Name::new("Bullet"))
             .insert(SpriteRotate)
-            .insert(ColliderType::Circle(bullet_handle.basic_bullet.sprite_custom_size_x))
+            .insert(ColliderType::Circle(bullet_handle.basic_bullet.sprite_custom_size_x / 2.0))
             .id();
 
         bullet_shot_event_writer.send(BulletShotEvent { entity: bullet })

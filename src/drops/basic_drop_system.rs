@@ -4,6 +4,7 @@ use rand::random;
 use crate::assets_handling::preload_item_system::ItemConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::models::collider::collider::Collider;
+use crate::models::collider::collider_type::ColliderType;
 use crate::models::enemy::Enemy;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
 use crate::models::items::coin::Coin;
@@ -12,7 +13,6 @@ use crate::models::items::descriptor::heal::Heal;
 use crate::models::items::descriptor::item::Item;
 use crate::models::items::shop::Shop;
 use crate::models::sprite_layer::SpriteLayer;
-use crate::models::unit_size::UnitSize;
 
 pub fn basic_drop_system(
     mut commands: Commands,
@@ -48,8 +48,8 @@ pub fn basic_drop_system(
                 .insert(Collider)
                 .insert(Coin)
                 .insert(Name::new("Item Coin"))
-                .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
-                .insert(GoldValue { gold_value: 1 });
+                .insert(GoldValue { gold_value: 1 })
+                .insert(ColliderType::Circle(64.0));
         }
 
         if (20.0..40.0).contains(&random) {
@@ -68,7 +68,7 @@ pub fn basic_drop_system(
                 .insert(Collider)
                 .insert(Heal { amount: item_handles.hot_dog.heal_amount })
                 .insert(Name::new("Item Heal"))
-                .insert(UnitSize { collider_size: Vec2::new(item_handles.hot_dog.sprite_custom_size_x, item_handles.hot_dog.sprite_custom_size_y) });
+                .insert(ColliderType::Circle(item_handles.hot_dog.sprite_custom_size_x / 2.0));
         }
 
         if (40.0..100.0).contains(&random) {
@@ -87,7 +87,7 @@ pub fn basic_drop_system(
                 .insert(Collider)
                 .insert(Shop)
                 .insert(Name::new("Item Barrel"))
-                .insert(UnitSize { collider_size: Vec2::new(item_handles.barrel.sprite_custom_size_x, item_handles.barrel.sprite_custom_size_y) });
+                .insert(ColliderType::Circle(item_handles.barrel.sprite_custom_size_x / 2.0));
         }
     }
 }

@@ -63,7 +63,7 @@ impl ColliderType {
                         );
 
                         let nearest_point_distance = nearest_point.distance(*other_position);
-                        let ray =  nearest_point - *other_position;
+                        let ray = nearest_point - *other_position;
                         let overlap = other_radius - nearest_point_distance;
 
                         *self_position + (ray.normalize_or_zero() * (overlap))
