@@ -14,7 +14,7 @@ pub fn calculate_quad_tree_system(
     mut enemy_quad_tree_holder: ResMut<SolidBodyCollisionQuadTreeHolder>,
     mut item_tree_holder: ResMut<ItemCollisionQuadTreeHolder>,
     player_query: Query<&Transform, With<Player>>,
-    entity_query: Query<(Entity, &Transform, &ColliderType, &SolidBody), (Without<Bullet>, Without<Item>)>,
+    entity_query: Query<(Entity, &Transform, &ColliderType, &SolidBody), (Without<Bullet>, Without<Item>, Without<Player>)>,
     item_query: Query<(Entity, &Transform, &ColliderType), (With<Collider>, With<Item>)>,
 ) {
     let player_position = match player_query.get_single() {
