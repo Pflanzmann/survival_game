@@ -5,6 +5,7 @@ use crate::models::collider::collider_type::ColliderType;
 use crate::models::collider::collider_type::ColliderType::{Circle, Rectangle};
 use crate::models::collider::solid_body::SolidBody;
 use crate::models::move_direction::MoveDirection;
+use crate::models::player::Player;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::util::quad_tree::QuadData;
@@ -12,13 +13,16 @@ use crate::util::quad_tree::QuadData;
 pub fn solid_body_collision_system(
     time: Res<Time>,
     quad_tree_holder: Res<SolidBodyCollisionQuadTreeHolder>,
-    mut solid_body_unit_query: Query<(Entity, &mut Transform, &ColliderType, &MoveDirection, &MoveSpeed, &SolidBody)>,
+    mut solid_body_unit_query: Query<(Entity, &mut Transform, &ColliderType, &mut MoveDirection, &MoveSpeed, &SolidBody)>,
 ) {
-    for (entity, mut transform, unit_size, move_direction, move_speed, solid_body) in solid_body_unit_query.iter_mut() {
+    for (entity, mut transform, unit_size, mut move_direction, move_speed, solid_body) in solid_body_unit_query.iter_mut() {
         let size = match unit_size {
             Circle(radius) => Vec2::new(*radius, *radius),
             Rectangle(size) => *size,
         };
+
+        let mut collision_resolutions: Vec2 = Vec2::default();
+        let mut collision_resolutions_counter = 0.0;
 
         let mut check_entity_list: Vec<QuadData> = Vec::new();
         quad_tree_holder.quad_tree.query_entities(
@@ -33,25 +37,19 @@ pub fn solid_body_collision_system(
             }
 
             if quad_data.collider_type.is_colliding(&quad_data.position.truncate(), unit_size, &transform.translation.truncate()) {
-                let new_direction = -(quad_data.position - transform.translation).normalize_or_zero();
-                let distance = 256.0;
-                transform.translation += -move_direction.direction * (move_speed.get_total_amount() * time.delta_seconds() * 60.0);
+                let resolution_position = unit_size.get_collision_resolution_position(&transform.translation.truncate(), &quad_data.collider_type, &quad_data.position.truncate());
 
+                collision_resolutions += resolution_position;
+                collision_resolutions_counter += 1.0;
 
-                // let vector = transform.translation - quad_data.position;
-
-                // if (vector.x / (quad_data.size.x)).abs() > (vector.y / (quad_data.size.y)).abs() {
-                //     if vector.x < 0.0 {
-                //         transform.translation.x = quad_data.position.x - (quad_data.size.x);
-                //     } else {
-                //         transform.translation.x = quad_data.position.x + (quad_data.size.x);
-                //     }
-                // } else if vector.y < 0.0 {
-                //     transform.translation.y = quad_data.position.y - (quad_data.size.y);
-                // } else {
-                //     transform.translation.y = quad_data.position.y + (quad_data.size.y);
-                // }
+                move_direction.direction += (resolution_position.extend(transform.translation.z) - transform.translation).normalize_or_zero();
             }
+        }
+
+        if collision_resolutions.length() > 0.0 {
+            transform.translation = (collision_resolutions / collision_resolutions_counter).extend(transform.translation.z);
+
+            println!("uhdsa: {:#?}", (collision_resolutions / collision_resolutions_counter).extend(transform.translation.z))
         }
     }
 }

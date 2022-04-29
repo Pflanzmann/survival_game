@@ -46,6 +46,7 @@ pub fn setup_player_system(
         })
         .insert(SpriteFlip)
         .insert(SolidBody { weight: 0.2 })
+        // .insert(ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 2.0))
         .insert(ColliderType::Rectangle(Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y)))
         .remove::<Health>()
     ;

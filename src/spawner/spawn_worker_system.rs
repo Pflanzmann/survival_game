@@ -54,6 +54,7 @@ pub fn spawn_worker_system(
                 .insert(SpriteFlip)
                 .insert(SolidBody { weight: 0.5 })
                 .insert(ColliderType::Circle(128.0))
+                // .insert(ColliderType::Rectangle(Vec2::new(256.0, 256.0)))
                 .remove::<Health>()
                 // .remove::<MoveSpeed>()
                 .insert(ChaseTargetBehavior { target: player_entity, proximity: 0.0 })
