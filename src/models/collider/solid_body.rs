@@ -1,6 +1,6 @@
 use bevy::ecs::component::Component;
 
 #[derive(Component)]
-pub struct SolidBody {
+pub struct ColliderWeight {
     pub weight: f32,
 }

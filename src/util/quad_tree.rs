@@ -53,23 +53,23 @@ impl Quadtree {
         count
     }
 
-    pub fn print_structure(&self) -> usize {
+    pub fn get_max_layer_depth(&self) -> usize {
         let mut max_layer = self.layer;
 
         if let Some(children) = self.children.as_ref() {
-            let new_layer = children[0].print_structure();
+            let new_layer = children[0].get_max_layer_depth();
             if new_layer > max_layer {
                 max_layer = new_layer;
             }
-            let new_layer = children[1].print_structure();
+            let new_layer = children[1].get_max_layer_depth();
             if new_layer > max_layer {
                 max_layer = new_layer;
             }
-            let new_layer = children[2].print_structure();
+            let new_layer = children[2].get_max_layer_depth();
             if new_layer > max_layer {
                 max_layer = new_layer;
             }
-            let new_layer = children[3].print_structure();
+            let new_layer = children[3].get_max_layer_depth();
             if new_layer > max_layer {
                 max_layer = new_layer;
             }

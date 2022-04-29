@@ -1,13 +1,11 @@
-use bevy::core::FixedTimestep;
 use bevy::prelude::{Plugin, SystemSet};
 
 use crate::App;
 use crate::collision::calculate_quad_tree_system::calculate_quad_tree_system;
 use crate::collision::enemy_bullet_collision_system::enemy_bullet_collision_system;
-use crate::collision::solid_body_collision_system::solid_body_collision_system;
 use crate::collision::enemy_player_collision_system::enemy_player_collision_system;
 use crate::collision::item_player_collision_system::item_player_collision_system;
-use crate::debug::show_quad_tree_system::show_quad_tree_system;
+use crate::collision::solid_body_collision_system::solid_body_collision_system;
 use crate::util::quad_tree::Quadtree;
 use crate::util::stage_label_helper::{in_collision, in_update};
 
@@ -54,7 +52,7 @@ impl Plugin for CollisionPlugin {
                         .with_system(item_player_collision_system)
                 )
             )
-            
+
             .add_system_set(
                 in_update(
                     SystemSet::new()
