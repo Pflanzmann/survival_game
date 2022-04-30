@@ -6,7 +6,7 @@ use crate::models::aim_direction::AimDirection;
 use crate::models::bundles::player_bundle::PlayerBundle;
 use crate::models::collider::collider::Collider;
 use crate::models::collider::collider_type::ColliderType;
-use crate::models::collider::solid_body::ColliderWeight;
+use crate::models::collider::collision_weight::CollisionWeight;
 use crate::models::move_direction::MoveDirection;
 use crate::models::player::Player;
 use crate::models::sprite_flip::SpriteFlip;
@@ -45,7 +45,7 @@ pub fn setup_player_system(
             health: Health::new(player_handles.player_one.health),
         })
         .insert(SpriteFlip)
-        .insert(ColliderWeight { weight: 0.8 })
+        .insert(CollisionWeight { weight: 0.8 })
         .insert(ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 2.0))
     ;
 }

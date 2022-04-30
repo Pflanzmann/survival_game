@@ -8,6 +8,7 @@ pub struct QuadData {
     pub entity: Entity,
     pub position: Vec3,
     pub collider_type: ColliderType,
+    pub collision_weight: f32,
 }
 
 pub struct Quadtree {

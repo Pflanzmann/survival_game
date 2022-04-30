@@ -12,27 +12,42 @@ impl ColliderType {
         match self {
             ColliderType::Circle(self_radius) => {
                 match other_collider {
-                    ColliderType::Circle(other_radius) => circle_circle_collision(&self_position, *self_radius, &other_position, *other_radius),
-                    ColliderType::Rectangle(other_size) => circle_rectangle_collision(&self_position, *self_radius, &other_position, other_size),
+                    ColliderType::Circle(other_radius) => circle_circle_collision(self_position, *self_radius, other_position, *other_radius),
+                    ColliderType::Rectangle(other_size) => circle_rectangle_collision(self_position, *self_radius, other_position, other_size),
                 }
             }
             ColliderType::Rectangle(self_size) => {
                 match other_collider {
-                    ColliderType::Circle(other_radius) => circle_rectangle_collision(&other_position, *other_radius, &self_position, self_size),
-                    ColliderType::Rectangle(other_size) => rectangle_rectangle_collision(&self_position, self_size, &other_position, other_size),
+                    ColliderType::Circle(other_radius) => circle_rectangle_collision(other_position, *other_radius, self_position, self_size),
+                    ColliderType::Rectangle(other_size) => rectangle_rectangle_collision(self_position, self_size, other_position, other_size),
                 }
             }
         }
     }
 
-    pub fn get_collision_resolution_position(&self, self_position: &Vec2, other_collider: &ColliderType, other_position: &Vec2) -> Vec2 {
+    pub fn get_collision_resolution_position(&self, self_position: &Vec2, self_weight: f32, other_collider: &ColliderType, other_position: &Vec2, other_weight: f32) -> Vec2 {
+        let proportional_weight = if other_weight == 1.0 {
+            0.0
+        } else if other_weight > self_weight {
+            let ratio = 1.0 / other_weight;
+            self_weight * ratio
+        } else if other_weight == self_weight {
+            0.5
+        } else {
+            self_weight
+        };
+
+        let weight_modifier = 1.0 - proportional_weight;
+
         match self {
             ColliderType::Circle(self_radius) => {
                 match other_collider {
                     ColliderType::Circle(other_radius) => {
                         let direction = (*other_position - *self_position).normalize_or_zero();
+                        let distance = self_position.distance(*other_position);
+                        let overlap = self_radius + other_radius - distance;
 
-                        *other_position + (-direction * (self_radius + other_radius))
+                        *self_position + (-direction * (overlap) * weight_modifier)
                     }
 
                     ColliderType::Rectangle(other_size) => {
@@ -47,7 +62,7 @@ impl ColliderType {
                         let ray = nearest_point - *self_position;
                         let overlap = self_radius - nearest_point_distance;
 
-                        *self_position - (ray.normalize_or_zero() * overlap)
+                        *self_position - (ray.normalize_or_zero() * (overlap * weight_modifier))
                     }
                 }
             }
@@ -66,7 +81,7 @@ impl ColliderType {
                         let ray = nearest_point - *other_position;
                         let overlap = other_radius - nearest_point_distance;
 
-                        *self_position + (ray.normalize_or_zero() * (overlap))
+                        *self_position + (ray.normalize_or_zero() * (overlap * weight_modifier))
                     }
 
                     ColliderType::Rectangle(other_size) => {
@@ -74,14 +89,14 @@ impl ColliderType {
 
                         if (direction.x / (other_size.x)).abs() > (direction.y / (other_size.y)).abs() {
                             if direction.x < 0.0 {
-                                Vec2::new(other_position.x - other_size.x, self_position.y)
+                                Vec2::new(other_position.x - (other_size.x * weight_modifier), self_position.y)
                             } else {
-                                Vec2::new(other_position.x + other_size.x, self_position.y)
+                                Vec2::new(other_position.x + (other_size.x * weight_modifier), self_position.y)
                             }
                         } else if direction.y < 0.0 {
-                            Vec2::new(self_position.x, other_position.y - other_size.y)
+                            Vec2::new(self_position.x, other_position.y - (other_size.y * weight_modifier))
                         } else {
-                            Vec2::new(self_position.x, other_position.y + other_size.y)
+                            Vec2::new(self_position.x, other_position.y + (other_size.y * weight_modifier))
                         }
                     }
                 }
@@ -99,7 +114,7 @@ fn circle_circle_collision(
 ) -> bool {
     let distance = a_circle_position.distance(*b_circle_position);
 
-    return distance < a_circle_radius + b_circle_radius;
+    distance < a_circle_radius + b_circle_radius
 }
 
 fn circle_rectangle_collision(

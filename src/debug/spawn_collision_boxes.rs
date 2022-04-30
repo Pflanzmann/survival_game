@@ -2,7 +2,6 @@ use bevy::prelude::*;
 
 use crate::models::collider::collider_type::ColliderType;
 use crate::models::collider::collider_type::ColliderType::{Circle, Rectangle};
-use crate::models::unit_size::UnitSize;
 
 #[derive(Component)]
 pub struct CollisionBox;
