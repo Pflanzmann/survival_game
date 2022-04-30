@@ -6,6 +6,7 @@ use crate::models::bullet::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
 use crate::models::collider::collider::Collider;
+use crate::models::collider::collider_type::ColliderType;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::move_direction::MoveDirection;
@@ -62,6 +63,7 @@ pub fn split_shot_system(
             })
                 .insert(Name::new("Bullet"))
                 .insert(SpriteRotate)
+                .insert(ColliderType::Circle(128.0))
             ;
         }
     }
