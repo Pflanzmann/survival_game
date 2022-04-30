@@ -1,4 +1,4 @@
 pub mod collider;
 pub mod collided_entities;
-pub mod solid_body;
+pub mod collision_weight;
 pub mod collider_type;

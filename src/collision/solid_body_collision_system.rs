@@ -3,14 +3,14 @@ use bevy::prelude::{Entity, Query, Res, Transform, Vec2};
 use crate::collision::SolidBodyCollisionQuadTreeHolder;
 use crate::models::collider::collider_type::ColliderType;
 use crate::models::collider::collider_type::ColliderType::{Circle, Rectangle};
-use crate::models::collider::solid_body::ColliderWeight;
+use crate::models::collider::collision_weight::CollisionWeight;
 use crate::util::quad_tree::QuadData;
 
 pub fn solid_body_collision_system(
     quad_tree_holder: Res<SolidBodyCollisionQuadTreeHolder>,
-    mut solid_body_unit_query: Query<(Entity, &mut Transform, &ColliderType, &ColliderWeight)>,
+    mut solid_body_unit_query: Query<(Entity, &mut Transform, &ColliderType, &CollisionWeight)>,
 ) {
-    for (entity, mut transform, collider_type, collider_weight) in solid_body_unit_query.iter_mut() {
+    for (entity, mut transform, collider_type, collision_weight) in solid_body_unit_query.iter_mut() {
         let size = match collider_type {
             Circle(radius) => Vec2::new(*radius, *radius),
             Rectangle(size) => *size,
@@ -32,7 +32,7 @@ pub fn solid_body_collision_system(
             }
 
             if collider_type.is_colliding(&transform.translation.truncate(), &quad_data.collider_type, &quad_data.position.truncate()) {
-                let resolution_position = collider_type.get_collision_resolution_position(&transform.translation.truncate(), &quad_data.collider_type, &quad_data.position.truncate());
+                let resolution_position = collider_type.get_collision_resolution_position(&transform.translation.truncate(), collision_weight.weight, &quad_data.collider_type, &quad_data.position.truncate(), quad_data.collision_weight);
 
                 collision_resolutions += resolution_position;
                 collision_resolutions_counter += 1.0;
