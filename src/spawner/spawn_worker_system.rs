@@ -52,6 +52,7 @@ pub fn spawn_worker_system(
                     health: Health::new(enemy_handles.goblin.health),
                 }).insert(Name::new("Goblin"))
                 .insert(SpriteFlip)
+                .insert(SteeringBehavior::default())
                 .insert(ColliderWeight { weight: 0.2 })
                 .insert(ColliderType::Circle(enemy_handles.goblin.sprite_custom_size_x / 2.0))
                 .insert(ChaseTargetBehavior { target: player_entity, proximity: 0.0 })

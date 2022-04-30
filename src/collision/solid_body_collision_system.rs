@@ -31,7 +31,7 @@ pub fn solid_body_collision_system(
                 continue;
             }
 
-            if quad_data.collider_type.is_colliding(&quad_data.position.truncate(), collider_type, &transform.translation.truncate()) {
+            if collider_type.is_colliding(&transform.translation.truncate(), &quad_data.collider_type, &quad_data.position.truncate()) {
                 let resolution_position = collider_type.get_collision_resolution_position(&transform.translation.truncate(), &quad_data.collider_type, &quad_data.position.truncate());
 
                 collision_resolutions += resolution_position;
