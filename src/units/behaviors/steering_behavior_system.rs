@@ -19,16 +19,16 @@ pub fn steering_behavior_system(
 
         let mut check_entity_list: Vec<QuadData> = Vec::new();
 
-        let check_position = transform.translation + (move_direction.direction * (size.x * 1.0));
+        let check_position = transform.translation + (move_direction.direction * (size.x * 0.5));
 
         quad_tree_holder.quad_tree.query_entities(
             &mut check_entity_list,
             &check_position,
-            &(size * 1.5),
+            &(size * 2.0),
         );
 
         let mut closest_thread: Option<QuadData> = Option::None;
-        let mut closest_distance: f32 = 10000000000000000000.0;
+        let mut closest_distance: f32 = 10000.0;
         for quad_data in check_entity_list.iter() {
             if quad_data.entity == entity {
                 continue;
