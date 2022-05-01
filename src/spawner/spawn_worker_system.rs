@@ -15,6 +15,7 @@ use crate::models::sprite_flip::SpriteFlip;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
+use crate::models::unit_attributes::meele_attack_speed::MeeleAttackSpeed;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_size::UnitSize;
 
@@ -53,6 +54,7 @@ pub fn spawn_worker_system(
                 .insert(SpriteFlip)
                 .insert(SteeringBehavior::default())
                 .insert(CollisionWeight { weight: 0.2 })
+                .insert(MeeleAttackSpeed::new(45.0))
                 .insert(ColliderType::Circle(enemy_handles.goblin.sprite_custom_size_x / 2.0))
                 .insert(ChaseTargetBehavior { target: player_entity, proximity: 0.0 })
             ;
