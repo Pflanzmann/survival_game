@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, EventReader, Query, Res, ResMut, With};
+use bevy::prelude::{Commands, DespawnRecursiveExt, EventReader, Query, Res, ResMut, With};
 
 use crate::assets_handling::preload_audio_system::SoundHandles;
 use crate::audio::sound_manager::SoundManager;
@@ -32,6 +32,6 @@ pub fn hot_dog_pickup_system(
 
         sound_manager.queue_sound(SoundHandleChannel::Pickup(sound_handles.coin_pickup_sound.clone()));
 
-        commands.entity(event.item_entity).despawn();
+        commands.entity(event.item_entity).despawn_recursive();
     }
 }

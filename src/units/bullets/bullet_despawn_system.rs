@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, EventReader};
+use bevy::prelude::{Commands, DespawnRecursiveExt, EventReader};
 
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 
@@ -8,6 +8,6 @@ pub fn bullet_despawn_system(
     mut bullet_stopped_event: EventReader<BulletStoppedEvent>,
 ) {
     for event in bullet_stopped_event.iter() {
-        commands.entity(event.bullet_entity).despawn();
+        commands.entity(event.bullet_entity).despawn_recursive();
     }
 }

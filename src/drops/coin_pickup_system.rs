@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, EventReader, Query, Res, ResMut};
+use bevy::prelude::{Commands, DespawnRecursiveExt, EventReader, Query, Res, ResMut};
 
 use crate::assets_handling::preload_audio_system::SoundHandles;
 use crate::audio::sound_manager::SoundManager;
@@ -13,7 +13,7 @@ pub fn coin_pickup_system(
     mut item_pickup_events: EventReader<ItemCollisionEvent>,
     item_query: Query<&GoldValue>,
     sound_handles: Res<SoundHandles>,
-    mut sound_manager: ResMut<SoundManager>
+    mut sound_manager: ResMut<SoundManager>,
 ) {
     for event in item_pickup_events.iter() {
         let gold_value = match item_query.get(event.item_entity) {
@@ -25,6 +25,6 @@ pub fn coin_pickup_system(
 
         sound_manager.queue_sound(SoundHandleChannel::Pickup(sound_handles.coin_pickup_sound.clone()));
 
-        commands.entity(event.item_entity).despawn();
+        commands.entity(event.item_entity).despawn_recursive();
     }
 }
