@@ -1,7 +1,10 @@
-use bevy::prelude::{Commands, Entity, EventWriter, GlobalTransform, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
+use bevy::prelude::{Commands, Entity, EventWriter, GlobalTransform, Name, Query, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2, With};
+use crate::assets_handling::preload_audio_system::SoundHandles;
 
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
+use crate::audio::sound_manager::SoundManager;
 use crate::models::aim_direction::AimDirection;
+use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 use crate::models::bullet::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
@@ -26,6 +29,9 @@ pub fn straight_basic_shot_system(
     mut command: Commands,
     texture_handle: Res<TextureHandles>,
     bullet_handle: Res<BulletConfigHandles>,
+    mut sound_manager : ResMut<SoundManager>,
+    sound_handles : Res<SoundHandles>,
+
     mut bullet_shot_event_writer: EventWriter<BulletShotEvent>,
     mut weapon_holder_query: Query<(&GlobalTransform, &AimDirection, &WeaponSlot, &mut Reload)>,
     gun_query: Query<Entity, With<StraightBasicShot>>,
@@ -69,7 +75,9 @@ pub fn straight_basic_shot_system(
             .insert(ColliderType::Circle(bullet_handle.basic_bullet.sprite_custom_size_x / 2.0))
             .id();
 
-        bullet_shot_event_writer.send(BulletShotEvent { entity: bullet })
+        bullet_shot_event_writer.send(BulletShotEvent { entity: bullet });
+
+        sound_manager.queue_sound(SoundHandleChannel::Bullet(sound_handles.shoot_sound.clone()));
     }
 }
 
