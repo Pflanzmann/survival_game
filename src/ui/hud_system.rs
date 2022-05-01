@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::{GoldWallet};
+use crate::GoldWallet;
 use crate::models::mod_register::ModRegister;
 use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
@@ -11,7 +11,7 @@ use crate::models::ui_components::hud::{BulletHud, CoinText};
 pub fn spawn_text_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
-    mut coin_counter: ResMut<GoldWallet>
+    mut coin_counter: ResMut<GoldWallet>,
 ) {
     coin_counter.number = 0;
 
@@ -54,22 +54,22 @@ pub fn spawn_text_system(
 
     //modification hud
     commands.spawn_bundle(NodeBundle {
-            style: Style {
-                size: Size::new(Val::Percent(18.0), Val::Percent(16.0)),
-                position: Rect {
-                    left: Val::Percent(41.0),
-                    top: Val::Percent(2.0),
-                    ..Default::default()
-                },
-                position_type: PositionType::Absolute,
-                align_items: AlignItems::FlexStart,
-                justify_content: JustifyContent::FlexStart,
-                flex_direction: FlexDirection::Row,
-                flex_wrap: FlexWrap::WrapReverse,
-                align_content: AlignContent::FlexStart,
+        style: Style {
+            size: Size::new(Val::Percent(18.0), Val::Percent(16.0)),
+            position: Rect {
+                left: Val::Percent(41.0),
+                top: Val::Percent(2.0),
                 ..Default::default()
             },
-        color: Color::from([0.2,0.2,0.2,0.2]).into(),
+            position_type: PositionType::Absolute,
+            align_items: AlignItems::FlexStart,
+            justify_content: JustifyContent::FlexStart,
+            flex_direction: FlexDirection::Row,
+            flex_wrap: FlexWrap::WrapReverse,
+            align_content: AlignContent::FlexStart,
+            ..Default::default()
+        },
+        color: Color::from([0.2, 0.2, 0.2, 0.2]).into(),
         ..Default::default()
     })
         .insert(BulletHud)
@@ -107,7 +107,6 @@ pub fn update_bullet_hud_system(
                     Err(_) => continue
                 };
 
-                println!("{}", mod_name.mod_name);
                 commands.entity(hud_entity).with_children(|parent| {
                     parent.spawn_bundle(ImageBundle {
                         image: asset_server.load(&sprite.path).into(),
