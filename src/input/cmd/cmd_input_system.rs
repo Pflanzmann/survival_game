@@ -14,6 +14,7 @@ pub fn cmd_input_system(
 ) {
     if keys.just_pressed(KeyCode::Back) {
         string.pop();
+        debug_history.scroll_index = 0;
 
         for mut text in text_query.iter_mut() {
             text.sections[0].value = (*string).to_string();
@@ -37,35 +38,31 @@ pub fn cmd_input_system(
         return;
     }
 
-    if keys.just_pressed(KeyCode::Up) {
+    if keys.just_pressed(KeyCode::Up) || keys.just_pressed(KeyCode::Down) {
         string.clear();
 
-        debug_history.scroll_index -= 1;
-
-        let current_history_text = match debug_history.history.get(debug_history.scroll_index % debug_history.history.len()) {
-            Some(text) => text,
-            None => return,
-        };
-
-        string.push_str(&*current_history_text.clone());
-        for mut text in text_query.iter_mut() {
-            text.sections[0].value = (*string).to_string();
+        if keys.just_pressed(KeyCode::Up) {
+            debug_history.scroll_index += 1;
+        } else {
+            debug_history.scroll_index -= 1;
         }
 
-        return;
-    }
+        debug_history.scroll_index = debug_history.scroll_index.clamp(0, debug_history.command_history.len() as i16);
 
-    if keys.just_pressed(KeyCode::Down) {
-        string.clear();
+        let current_history_text = if debug_history.scroll_index >= 0 {
+            let index = usize::try_from(debug_history.scroll_index).unwrap_or(0);
 
-        debug_history.scroll_index += 1;
+            let index = usize::clamp(index - 1, 0, debug_history.command_history.len());
 
-        let current_history_text = match debug_history.history.get(debug_history.scroll_index % debug_history.history.len()) {
-            Some(text) => text,
-            None => return,
+            match debug_history.command_history.get(index) {
+                Some(text) => text,
+                None => "",
+            }
+        } else {
+            ""
         };
 
-        string.push_str(&*current_history_text.clone());
+        string.push_str(current_history_text.trim());
         for mut text in text_query.iter_mut() {
             text.sections[0].value = (*string).to_string();
         }
@@ -77,6 +74,8 @@ pub fn cmd_input_system(
         if ev.char.is_ascii() {
             string.push(ev.char);
         }
+
+        debug_history.scroll_index = 0;
         for mut text in text_query.iter_mut() {
             text.sections[0].value = (*string).to_string();
         }

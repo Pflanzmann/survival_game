@@ -1,12 +1,20 @@
 use bevy::core::Name;
 use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, HorizontalAlign, JustifyContent, NodeBundle, Overflow, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
 
+use crate::models::resources::console_history::ConsoleHistory;
 use crate::models::ui_components::debug_console::{DebugConsoleHistory, DebugConsoleInput, DebugConsoleWindow};
 
 pub fn setup_debug_window(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
+    console_history: Res<ConsoleHistory>,
 ) {
+    let mut history_string = String::new();
+
+    for text in console_history.log.iter() {
+        history_string.push_str(text);
+    }
+
     commands
         .spawn_bundle(NodeBundle {
             style: Style {
@@ -76,7 +84,7 @@ pub fn setup_debug_window(
                     ..Default::default()
                 },
                 text: Text::with_section(
-                    "".to_string(),
+                    history_string,
                     TextStyle {
                         font_size: 18.0,
                         color: Color::from([0.6, 0.6, 0.6, 1.0]),
