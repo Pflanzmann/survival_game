@@ -13,6 +13,7 @@ use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
+use crate::models::unit_attributes::meele_attack_speed::MeeleAttackSpeed;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_size::UnitSize;
 
@@ -43,7 +44,7 @@ pub fn setup_player_system(
             health: Health::new(player_handles.player_one.health),
         })
         .insert(SpriteFlip)
+        .insert(MeeleAttackSpeed::new(45.0))
         .insert(CollisionWeight { weight: 0.8 })
-        .insert(ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 2.0))
-    ;
+        .insert(ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 2.0));
 }
