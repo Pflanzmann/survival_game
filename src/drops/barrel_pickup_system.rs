@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, Entity, EventReader, Query, Res, ResMut, With};
+use bevy::prelude::{Commands, DespawnRecursiveExt, Entity, EventReader, Query, Res, ResMut, With};
 
 use crate::{AppStateTrigger, ToAppState};
 use crate::assets_handling::preload_audio_system::SoundHandles;
@@ -25,6 +25,6 @@ pub fn barrel_pickup_system(
 
         sound_manager.queue_sound(SoundHandleChannel::Pickup(sound_handles.coin_pickup_sound.clone()));
 
-        commands.entity(event.item_entity).despawn();
+        commands.entity(event.item_entity).despawn_recursive();
     }
 }
