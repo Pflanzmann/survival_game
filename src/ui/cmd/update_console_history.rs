@@ -12,31 +12,42 @@ pub fn update_console_history(
     mut text_query: Query<&mut Text, With<DebugConsoleHistory>>,
 ) {
     for event in debug_command_events.iter() {
-        console_history.history.push(event.debug_command.clone());
-        console_history.history.push("\n".to_string());
+        console_history.command_history.insert(0, event.debug_command.clone());
+        console_history.log.insert(0, format!("{}\n", event.debug_command.clone()));
+
+        if console_history.log.len() > 30 {
+            console_history.log.pop();
+            console_history.command_history.pop();
+        }
 
         let mut history_string = String::new();
-        for text in console_history.history.iter() {
+        for text in console_history.log.iter().rev() {
             history_string.push_str(text);
         }
 
         for mut text in text_query.iter_mut() {
             text.sections[0].value = history_string.to_string();
         }
+
+        console_history.write_history_to_file();
     }
 
     for event in debug_command_info_events.iter() {
-        console_history.history.push("    -->".to_string());
-        console_history.history.push(event.debug_command.clone());
-        console_history.history.push("\n".to_string());
+        console_history.log.insert(0, format!("    --> {}\n", event.debug_command.clone()));
 
         let mut history_string = String::new();
-        for text in console_history.history.iter() {
+        for text in console_history.log.iter().rev() {
             history_string.push_str(text);
         }
 
         for mut text in text_query.iter_mut() {
             text.sections[0].value = history_string.to_string();
         }
+
+        if console_history.log.len() > 30 {
+            console_history.log.pop();
+        }
+
+        console_history.write_history_to_file();
     }
 }
