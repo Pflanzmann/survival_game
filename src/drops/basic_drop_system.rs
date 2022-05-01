@@ -3,7 +3,6 @@ use rand::random;
 
 use crate::assets_handling::preload_item_system::ItemConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
-use crate::models::collider::collider::Collider;
 use crate::models::collider::collider_type::ColliderType;
 use crate::models::enemy::Enemy;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
@@ -45,7 +44,6 @@ pub fn basic_drop_system(
                 }
             )
                 .insert(Item)
-                .insert(Collider)
                 .insert(Coin)
                 .insert(Name::new("Item Coin"))
                 .insert(GoldValue { gold_value: 1 })
@@ -65,7 +63,6 @@ pub fn basic_drop_system(
                 }
             )
                 .insert(Item)
-                .insert(Collider)
                 .insert(Heal { amount: item_handles.hot_dog.heal_amount })
                 .insert(Name::new("Item Heal"))
                 .insert(ColliderType::Circle(item_handles.hot_dog.sprite_custom_size_x / 2.0));
@@ -84,7 +81,6 @@ pub fn basic_drop_system(
                 }
             )
                 .insert(Item)
-                .insert(Collider)
                 .insert(Shop)
                 .insert(Name::new("Item Barrel"))
                 .insert(ColliderType::Circle(item_handles.barrel.sprite_custom_size_x / 2.0));

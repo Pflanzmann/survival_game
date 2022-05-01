@@ -8,7 +8,6 @@ use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 use crate::models::bullet::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
-use crate::models::collider::collider::Collider;
 use crate::models::collider::collider_type::ColliderType;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::move_direction::MoveDirection;
@@ -68,7 +67,6 @@ pub fn straight_basic_shot_system(
                 damage: Damage::new(bullet_handle.basic_bullet.damage),
                 travel_range: TravelRange::new(bullet_handle.basic_bullet.range),
                 hit_limit: HitLimit::new(bullet_handle.basic_bullet.hit_limit),
-                collider: Collider,
                 collider_entities: CollidedEntities::default(),
             }).insert(Name::new("Bullet"))
             .insert(SpriteRotate)

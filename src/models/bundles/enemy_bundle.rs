@@ -3,7 +3,6 @@ use bevy::ecs::bundle::Bundle;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
-use crate::models::collider::collider::Collider;
 use crate::models::enemy::Enemy;
 use crate::models::unit_size::UnitSize;
 use crate::models::move_direction::MoveDirection;
@@ -12,7 +11,6 @@ use crate::models::move_direction::MoveDirection;
 pub struct EnemyBundle {
     pub enemy: Enemy,
 
-    pub collider: Collider,
     pub unit_size: UnitSize,
 
     pub facing_direction: MoveDirection,
