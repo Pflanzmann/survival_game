@@ -5,7 +5,6 @@ use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
 use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
 use crate::models::behavior::steering_behavior::SteeringBehavior;
 use crate::models::bundles::enemy_bundle::EnemyBundle;
-use crate::models::collider::collider::Collider;
 use crate::models::collider::collider_type::ColliderType;
 use crate::models::collider::collision_weight::CollisionWeight;
 use crate::models::enemy::Enemy;
@@ -45,7 +44,6 @@ pub fn spawn_worker_system(
                 })
                 .insert_bundle(EnemyBundle {
                     enemy: Enemy,
-                    collider: Collider,
                     unit_size: UnitSize { collider_size: Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y) },
                     facing_direction: MoveDirection { direction: Vec3::default() },
                     move_speed: MoveSpeed::new(enemy_handles.goblin.move_speed),

@@ -5,7 +5,6 @@ use crate::{SpriteLayer, TextureHandles};
 use crate::models::bullet::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collider::collided_entities::CollidedEntities;
-use crate::models::collider::collider::Collider;
 use crate::models::collider::collider_type::ColliderType;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::models::modifications::split_shot::SplitShot;
@@ -58,7 +57,6 @@ pub fn split_shot_system(
                 damage: Damage::new(5.0),
                 travel_range: TravelRange::new(2048.0),
                 hit_limit: HitLimit::new(2.0),
-                collider: Collider,
                 collider_entities: collided_entities.clone(),
             })
                 .insert(Name::new("Bullet"))

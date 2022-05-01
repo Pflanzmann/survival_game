@@ -4,7 +4,6 @@ use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::models::aim_direction::AimDirection;
 use crate::models::bundles::player_bundle::PlayerBundle;
-use crate::models::collider::collider::Collider;
 use crate::models::collider::collider_type::ColliderType;
 use crate::models::collider::collision_weight::CollisionWeight;
 use crate::models::move_direction::MoveDirection;
@@ -36,7 +35,6 @@ pub fn setup_player_system(
         .insert(Name::new("Player"))
         .insert_bundle(PlayerBundle {
             player: Player,
-            collider: Collider,
             unit_size: UnitSize { collider_size: Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y) },
             aim_direction: AimDirection { direction: Vec3::new(1.0, 0.0, 0.0) },
             move_direction: MoveDirection { direction: Vec3::new(1.0, 0.0, 0.0) },
