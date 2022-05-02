@@ -1,5 +1,6 @@
 use bevy::prelude::{Component, EventReader, Query, With};
 
+use crate::models::attribute_container::AttributeContainer;
 use crate::models::attribute_container_slot::AttributeContainerSlot;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::modifications::affects::attribute_affect::AttributeAffect;
@@ -26,7 +27,7 @@ pub fn apply_bullet_affect_system<
     affect_query: Query<&U>,
     gun_holder_query: Query<&WeaponSlot>,
     gun_query: Query<&AttributeContainerSlot>,
-    mut target_query: Query<&mut T, With<AttributeContainerSlot>>,
+    mut target_query: Query<&mut T, With<AttributeContainer>>,
 ) {
     for apply_event in apply_events.iter() {
         let gun_holder_weapon_slot = match gun_holder_query.get(apply_event.target_entity) {

@@ -13,5 +13,9 @@
   "AffectMoveSpeed": {
     "operator": "Add",
     "amount": 15.0
+  },
+  "AffectBulletMoveSpeed": {
+    "operator": "Add",
+    "amount": 15.0
   }
 }

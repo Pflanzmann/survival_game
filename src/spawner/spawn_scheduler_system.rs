@@ -19,7 +19,7 @@ pub fn spawn_scheduler_system(
     spawn_timer.timer = 5.0;
 
     for transform in player_query.iter() {
-        for _ in 0..6 {
+        for _ in 0..5 {
             let random_x = random::<f32>() * 2.0 - 1.0;
             let random_y = random::<f32>() * 2.0 - 1.0;
 
