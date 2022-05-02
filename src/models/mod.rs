@@ -29,6 +29,7 @@ pub mod mod_register;
 pub mod audio;
 pub mod attribute_container;
 pub mod attribute_container_slot;
+pub mod child_bullet;
 
 
 
