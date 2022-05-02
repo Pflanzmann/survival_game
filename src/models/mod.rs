@@ -27,6 +27,8 @@ pub mod damaged_effect;
 pub mod ui_components;
 pub mod mod_register;
 pub mod audio;
+pub mod attribute_container;
+pub mod attribute_container_slot;
 
 
 

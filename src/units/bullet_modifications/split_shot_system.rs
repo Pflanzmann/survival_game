@@ -53,10 +53,6 @@ pub fn split_shot_system(
                 bullet: *bullet,
                 unit_size: UnitSize { collider_size: Vec2::new(128.0, 128.0) },
                 facing_direction: MoveDirection { direction },
-                move_speed: MoveSpeed::new(15.0),
-                damage: Damage::new(5.0),
-                travel_range: TravelRange::new(2048.0),
-                hit_limit: HitLimit::new(2.0),
                 collider_entities: collided_entities.clone(),
             })
                 .insert(Name::new("Bullet"))

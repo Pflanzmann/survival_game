@@ -15,11 +15,7 @@ use crate::models::sprite_layer::SpriteLayer;
 use crate::models::sprite_rotate::SpriteRotate;
 use crate::models::straight_basic_shot::StraightBasicShot;
 use crate::models::unit_attributes::attribute::*;
-use crate::models::unit_attributes::damage::Damage;
-use crate::models::unit_attributes::hit_limit::HitLimit;
-use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
-use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_size::UnitSize;
 use crate::models::weapon_slot::WeaponSlot;
 use crate::TextureHandles;
@@ -30,7 +26,6 @@ pub fn straight_basic_shot_system(
     bullet_handle: Res<BulletConfigHandles>,
     mut sound_manager : ResMut<SoundManager>,
     sound_handles : Res<SoundHandles>,
-
     mut bullet_shot_event_writer: EventWriter<BulletShotEvent>,
     mut weapon_holder_query: Query<(&GlobalTransform, &AimDirection, &WeaponSlot, &mut Reload)>,
     gun_query: Query<Entity, With<StraightBasicShot>>,
@@ -63,10 +58,6 @@ pub fn straight_basic_shot_system(
                 bullet: Bullet { source_entity: gun_entity },
                 unit_size: UnitSize { collider_size: Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y) },
                 facing_direction: MoveDirection { direction: holder_aim_direction.direction },
-                move_speed: MoveSpeed::new(bullet_handle.basic_bullet.speed),
-                damage: Damage::new(bullet_handle.basic_bullet.damage),
-                travel_range: TravelRange::new(bullet_handle.basic_bullet.range),
-                hit_limit: HitLimit::new(bullet_handle.basic_bullet.hit_limit),
                 collider_entities: CollidedEntities::default(),
             }).insert(Name::new("Bullet"))
             .insert(SpriteRotate)

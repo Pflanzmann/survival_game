@@ -3,11 +3,11 @@ use serde::Deserialize;
 
 use crate::models::unit_attributes::attribute::Attribute;
 
-#[derive(Component, Deserialize)]
+#[derive(Component, Deserialize, Copy, Clone)]
 pub struct TravelRange {
     base_amount: f32,
     bonus_amount: f32,
-    
+
     pub distance_traveled: f32,
 }
 

@@ -7,3 +7,5 @@ pub mod remove_player_mod_from_target_system;
 pub mod mod_list_register_system;
 pub mod mod_list_deregister_system;
 pub mod despawn_companion_from_mod_system;
+pub mod apply_bullet_affect_system;
+pub mod remove_bullet_affect_system;

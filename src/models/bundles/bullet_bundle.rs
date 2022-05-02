@@ -17,8 +17,4 @@ pub struct BulletBundle {
     pub collider_entities: CollidedEntities,
 
     pub facing_direction: MoveDirection,
-    pub move_speed: MoveSpeed,
-    pub damage: Damage,
-    pub hit_limit: HitLimit,
-    pub travel_range: TravelRange,
 }
