@@ -5,6 +5,7 @@ use setup_player_health_bar_system::setup_player_health_bar_system;
 use crate::{App, AppState};
 use crate::units::player::player_died_system::player_died_system;
 use crate::units::player::player_hit_system::player_hit_system;
+use crate::units::player::animate_player_system::animate_sprite_system;
 use crate::units::player::setup_player_system::setup_player_system;
 use crate::util::stage_label_helper::{in_last, in_pre_update};
 
@@ -12,6 +13,7 @@ pub mod setup_player_system;
 pub mod setup_player_health_bar_system;
 pub mod player_hit_system;
 pub mod player_died_system;
+pub mod animate_player_system;
 
 
 /// This plugin manages the everything related to [Player] systems and how they get applied.
@@ -49,6 +51,7 @@ impl Plugin for PlayerPlugin {
                 in_last(
                     SystemSet::on_update(AppState::InGame)
                         .with_system(player_died_system)
+                        .with_system(animate_sprite_system)
                 )
             )
         ;
