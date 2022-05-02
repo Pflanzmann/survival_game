@@ -1,7 +1,8 @@
-use bevy::prelude::{Commands, Name, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3};
+use bevy::core::Timer;
+use bevy::prelude::{Commands, Name, Res, ResMut, SpriteSheetBundle, TextureAtlasSprite, Transform, Vec2, Vec3};
 
+use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
-use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::models::aim_direction::AimDirection;
 use crate::models::bundles::player_bundle::PlayerBundle;
 use crate::models::collider::collider_type::ColliderType;
@@ -16,19 +17,20 @@ use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::meele_attack_speed::MeeleAttackSpeed;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_size::UnitSize;
+use crate::units::player::animate_player_system::AnimationTimer;
 
 pub fn setup_player_system(
     mut commands: Commands,
-    texture_handles: Res<TextureHandles>,
     player_handles: Res<PlayerConfigHandles>,
+    atlas_handles: ResMut<AtlasHandles>,
 ) {
     commands.spawn_bundle(
-        SpriteBundle {
-            sprite: Sprite {
+        SpriteSheetBundle {
+            sprite: TextureAtlasSprite {
                 custom_size: Some(Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y)),
                 ..Default::default()
             },
-            texture: texture_handles.player_sprite.clone(),
+            texture_atlas: atlas_handles.player_idle_atlas.clone(),
             transform: Transform::from_xyz(0.0, 0.0, SpriteLayer::GroundLevel.get_layer_z()),
             ..Default::default()
         },
@@ -46,5 +48,6 @@ pub fn setup_player_system(
         .insert(SpriteFlip)
         .insert(MeeleAttackSpeed::new(45.0))
         .insert(CollisionWeight { weight: 0.8 })
-        .insert(ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 2.0));
+        .insert(ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 2.0))
+        .insert(AnimationTimer(Timer::from_seconds(0.3, true)));
 }
