@@ -6,3 +6,4 @@ pub mod affect_hit_limit;
 pub mod affect_reload;
 pub mod affect_travel_range;
 pub mod affect_operator;
+pub mod bullet_affects;

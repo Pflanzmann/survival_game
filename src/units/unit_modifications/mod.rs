@@ -12,10 +12,12 @@ use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
 use crate::models::modifications::affects::affect_damage::AffectDamage;
 use crate::models::modifications::affects::affect_health::AffectHealth;
-use crate::models::modifications::affects::affect_hit_limit::AffectHitLimit;
 use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
 use crate::models::modifications::affects::affect_reload::AffectReload;
-use crate::models::modifications::affects::affect_travel_range::AffectTravelRange;
+use crate::models::modifications::affects::bullet_affects::affect_bullet_damage::AffectBulletDamage;
+use crate::models::modifications::affects::bullet_affects::affect_bullet_hit_limit::AffectBulletHitLimit;
+use crate::models::modifications::affects::bullet_affects::affect_bullet_move_speed::AffectBulletMoveSpeed;
+use crate::models::modifications::affects::bullet_affects::affect_bullet_travel_range::AffectBulletTravelRange;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::death_ball::{DeathBall, DeathBallUnit};
 use crate::models::modifications::grow_shot::GrowShot;
@@ -32,9 +34,11 @@ use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::units::unit_modifications::apply_death_ball_system::apply_death_ball_system;
 use crate::units::unit_modifications::apply_slime_system::apply_slime_system;
 use crate::units::unit_modifications::apply_turret_system::apply_turret_system;
+use crate::units::unit_modifications::helper::apply_bullet_affect_system::apply_bullet_affect_system;
+use crate::units::unit_modifications::helper::despawn_companion_from_mod_system::despawn_companion_from_mod_system;
 use crate::units::unit_modifications::helper::mod_list_deregister_system::mod_list_deregister_system;
 use crate::units::unit_modifications::helper::mod_list_register_system::mod_list_register_system;
-use crate::units::unit_modifications::helper::despawn_companion_from_mod_system::despawn_companion_from_mod_system;
+use crate::units::unit_modifications::helper::remove_bullet_affect_system::remove_bullet_affect_system;
 use crate::util::run_criteria::on_event::on_event;
 use crate::util::stage_label_helper::in_post_update;
 
@@ -68,8 +72,11 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(apply_affect_system::<Damage, AffectDamage>)
                         .with_system(apply_affect_system::<Health, AffectHealth>)
                         .with_system(apply_affect_system::<Reload, AffectReload>)
-                        .with_system(apply_affect_system::<TravelRange, AffectTravelRange>)
-                        .with_system(apply_affect_system::<HitLimit, AffectHitLimit>)
+
+                        .with_system(apply_bullet_affect_system::<MoveSpeed, AffectBulletMoveSpeed>)
+                        .with_system(apply_bullet_affect_system::<Damage, AffectBulletDamage>)
+                        .with_system(apply_bullet_affect_system::<TravelRange, AffectBulletTravelRange>)
+                        .with_system(apply_bullet_affect_system::<HitLimit, AffectBulletHitLimit>)
 
                         .with_system(apply_bullet_mod_to_targets_gun_system::<CurveShot>)
                         .with_system(apply_bullet_mod_to_targets_gun_system::<GrowShot>)
@@ -99,8 +106,11 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(remove_affect_system::<Damage, AffectDamage>)
                         .with_system(remove_affect_system::<Health, AffectHealth>)
                         .with_system(remove_affect_system::<Reload, AffectReload>)
-                        .with_system(remove_affect_system::<TravelRange, AffectTravelRange>)
-                        .with_system(remove_affect_system::<HitLimit, AffectHitLimit>)
+
+                        .with_system(remove_bullet_affect_system::<MoveSpeed, AffectBulletMoveSpeed>)
+                        .with_system(remove_bullet_affect_system::<Damage, AffectBulletDamage>)
+                        .with_system(remove_bullet_affect_system::<TravelRange, AffectBulletTravelRange>)
+                        .with_system(remove_bullet_affect_system::<HitLimit, AffectBulletHitLimit>)
 
                         .with_system(remove_bullet_mod_from_targets_gun_system::<CurveShot>)
                         .with_system(remove_bullet_mod_from_targets_gun_system::<GrowShot>)
