@@ -1,6 +1,7 @@
-use bevy::prelude::{Commands, Component, EventReader, Query, With};
+use bevy::prelude::{Commands, Component, EventReader, Query, With, Without};
 
 use crate::models::bullet::Bullet;
+use crate::models::child_bullet::ChildBullet;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::mod_container::ModContainer;
 use crate::models::mod_container_slot::ModContainerSlot;
@@ -23,7 +24,7 @@ use crate::models::mod_container_slot::ModContainerSlot;
 pub fn assign_modification_to_bullet_system<T: Component + Copy>(
     mut commands: Commands,
     mut bullet_shot_event: EventReader<BulletShotEvent>,
-    bullet_query: Query<&Bullet>,
+    bullet_query: Query<&Bullet, Without<ChildBullet>>,
     source_query: Query<&ModContainerSlot>,
     mod_container_query: Query<&T, With<ModContainer>>,
 ) {

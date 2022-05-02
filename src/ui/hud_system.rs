@@ -2,7 +2,6 @@ use bevy::prelude::*;
 
 use crate::GoldWallet;
 use crate::models::mod_register::ModRegister;
-use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::player::Player;
@@ -92,7 +91,7 @@ pub fn update_bullet_hud_system(
     asset_server: Res<AssetServer>,
     hud_query: Query<Entity, With<BulletHud>>,
     player_query: Query<&ModRegister, (With<Player>, Changed<ModRegister>)>,
-    mod_query: Query<(&ModSpritePath, &ModName), With<Modification>>,
+    mod_query: Query<&ModSpritePath, With<Modification>>,
 ) {
     for _ in player_query.iter() {
         for entity in hud_query.iter() {
@@ -102,7 +101,7 @@ pub fn update_bullet_hud_system(
     for mod_reg in player_query.iter() {
         for hud_entity in hud_query.iter() {
             for mod_entity in mod_reg.register.iter() {
-                let (sprite, mod_name) = match mod_query.get(*mod_entity) {
+                let sprite = match mod_query.get(*mod_entity) {
                     Ok(value) => value,
                     Err(_) => continue
                 };

@@ -1,7 +1,6 @@
 use bevy::prelude::{Component, EventReader, Query, With};
 
 use crate::models::attribute_container_slot::AttributeContainerSlot;
-use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
 use crate::models::modifications::affects::attribute_affect::AttributeAffect;
 use crate::models::unit_attributes::attribute::Attribute;

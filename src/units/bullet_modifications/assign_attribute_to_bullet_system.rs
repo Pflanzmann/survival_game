@@ -4,8 +4,6 @@ use crate::models::attribute_container::AttributeContainer;
 use crate::models::attribute_container_slot::AttributeContainerSlot;
 use crate::models::bullet::Bullet;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
-use crate::models::mod_container::ModContainer;
-use crate::models::mod_container_slot::ModContainerSlot;
 
 /// A generic system to apply [Bullet]-mods like [SplitShot] to the new shot bullet from the
 /// [BulletShotEvent].
