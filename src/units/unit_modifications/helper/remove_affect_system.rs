@@ -1,6 +1,7 @@
 use bevy::prelude::{Component, EventReader, Query};
 
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
+use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
 use crate::models::modifications::affects::attribute_affect::AttributeAffect;
 use crate::models::unit_attributes::attribute::Attribute;
 
@@ -21,17 +22,17 @@ use crate::models::unit_attributes::attribute::Attribute;
 pub fn remove_affect_system<
     T: Component + Attribute,
     U: Component + AttributeAffect<T>>(
-    mut apply_events: EventReader<ApplyModToTargetEvent>,
+    mut apply_events: EventReader<RemoveModFromTargetEvent>,
     mut target_query: Query<&mut T>,
     affect_query: Query<&U>,
 ) {
-    for apply_event in apply_events.iter() {
-        let mut target_attribute = match target_query.get_mut(apply_event.target_entity) {
+    for remove_event in apply_events.iter() {
+        let mut target_attribute = match target_query.get_mut(remove_event.target_entity) {
             Ok(attribute) => attribute,
             Err(_) => continue,
         };
 
-        let affect = match affect_query.get(apply_event.mod_entity) {
+        let affect = match affect_query.get(remove_event.mod_entity) {
             Ok(affect) => affect,
             Err(_) => continue,
         };
