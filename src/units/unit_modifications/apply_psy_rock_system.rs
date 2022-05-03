@@ -1,28 +1,37 @@
-use bevy::prelude::{BuildChildren, Commands, Entity, EventReader, GlobalTransform, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
+use bevy::prelude::{BuildChildren, Color, Commands, Entity, EventReader, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
-use crate::models::behavior::aim_at_closest_target_behavior::AimAtClosestTargetBehavior;
-use crate::models::behavior::rotate_behavior::UnitRotation;
+use crate::models::bullet::Bullet;
+use crate::models::collider::collider_type::ColliderType;
+use crate::models::collider::collision_weight::CollisionWeight;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::modifications::death_ball::{DeathBall, DeathBallUnit};
 use crate::models::modifications::descriptors::modification::Modification;
+use crate::models::modifications::psy_rock::{PsyRock, PsyRockUnit};
 use crate::models::modifications::utils::owner::Owner;
+use crate::models::move_direction::MoveDirection;
+use crate::models::player::Player;
+use crate::models::player_aim_controlled::PlayerAimControlled;
+use crate::models::player_move_controlled::PlayerMoveControlled;
 use crate::models::unit_attributes::attribute::Attribute;
+use crate::models::unit_attributes::damage::Damage;
+use crate::models::unit_attributes::meele_attack_speed::MeeleAttackSpeed;
+use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_size::UnitSize;
 use crate::models::weapon_slot::WeaponSlot;
 
-pub fn apply_death_ball_system(
+pub fn apply_psy_rock_system(
     mut commands: Commands,
     texture_handler: Res<TextureHandles>,
     mut apply_events: EventReader<ApplyModToTargetEvent>,
-    mod_query: Query<&DeathBall, With<Modification>>,
+    mod_query: Query<&PsyRock, With<Modification>>,
     owner_query: Query<(Entity, &WeaponSlot)>,
-    turret_query: Query<&Owner, With<DeathBallUnit>>,
+    turret_query: Query<&Owner, With<PsyRockUnit>>,
 ) {
     for apply_event in apply_events.iter() {
-        let death_ball = match mod_query.get(apply_event.mod_entity) {
+        let psy_rock = match mod_query.get(apply_event.mod_entity) {
             Ok(death_ball) => death_ball,
             Err(_) => continue,
         };
@@ -43,36 +52,31 @@ pub fn apply_death_ball_system(
             continue;
         }
 
-        let desired_pos = Vec3::new(death_ball.rotation_distance, 0.0, 0.0);
-
-        let base = commands.spawn()
-            .insert(Transform::default())
-            .insert(UnitRotation { angle: death_ball.rotation_speed })
-            .insert(GlobalTransform::default())
-            .id();
-
-        let child = commands.spawn_bundle(SpriteBundle {
+        commands.spawn_bundle(SpriteBundle {
             sprite: Sprite {
-                custom_size: Some(Vec2::new(128.0, 128.0)),
+                custom_size: Some(Vec2::new(160.0, 160.0)),
                 ..Default::default()
             },
-            texture: texture_handler.death_ball_unit.clone(),
-            transform: Transform::from_xyz(desired_pos.x, desired_pos.y, SpriteLayer::GroundLevel.get_layer_z()),
+            texture: texture_handler.psy_rock_unit.clone(),
+            transform: Transform::from_xyz(0.0, 0.0, SpriteLayer::GroundLevel.get_layer_z()),
             ..Default::default()
         })
-            .insert(DeathBallUnit)
+            .insert(PsyRockUnit)
             .insert(Owner::new(owner_entity))
-            .insert(WeaponSlot { weapon_entity: owner_weapon_slot.weapon_entity })
-            .insert(Name::new("DeathBall"))
-            .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
-            .insert(AimDirection { direction: Vec3::new(1.0, 0.0, 0.0) })
-            .insert(AimAtClosestTargetBehavior)
-            .insert(UnitRotation { angle: -death_ball.rotation_speed })
-            .insert(Reload::new(40.0))
+            .insert(PlayerAimControlled)
+            .insert(MoveDirection { direction: Vec3::default() })
+            .insert(AimDirection { direction: Vec3::default() })
+            .insert(MoveSpeed::new(20.0))
+            .insert(Name::new("Psy Rock"))
+            .insert(UnitSize { collider_size: Vec2::new(160.0, 160.0) })
+            .insert(ColliderType::Circle(80.0))
+            .insert(CollisionWeight { weight: 0.5 })
+            .insert(MeeleAttackSpeed::new(60.0))
+            .insert(Damage::new(10.0))
+            .insert(Player)
             .id();
 
 
-        commands.entity(owner_entity).add_child(base);
-        commands.entity(base).add_child(child);
+        commands.entity(owner_entity).remove::<Reload>();
     }
 }

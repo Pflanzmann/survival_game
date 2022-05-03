@@ -17,12 +17,8 @@ pub fn calculate_quad_tree_system(
     entity_query: Query<(Entity, &Transform, &ColliderType, &CollisionWeight), (Without<Bullet>, Without<Item>)>,
     item_query: Query<(Entity, &Transform, &ColliderType), With<Item>>,
 ) {
-    let player_position = match player_query.get_single() {
-        Ok(transform) => transform.translation,
-        Err(_) => return,
-    };
-
-    let quad_position = player_position.truncate();
+    for player_position in player_query.iter() {
+        let quad_position = player_position.translation.truncate();
 
     enemy_quad_tree_holder.0 = Quadtree::new(10000.0, 10000.0, quad_position, 0);
     for (entity, transform, collider_type, collision_weight) in entity_query.iter() {
