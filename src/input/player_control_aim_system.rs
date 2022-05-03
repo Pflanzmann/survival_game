@@ -1,11 +1,11 @@
 use bevy::prelude::*;
-use crate::models::player::Player;
 
 use crate::models::aim_direction::AimDirection;
+use crate::models::player_aim_controlled::PlayerAimControlled;
 
 pub fn player_control_aim_system(
     input: Res<Input<KeyCode>>,
-    mut player_query: Query<&mut AimDirection, With<Player>>,
+    mut player_query: Query<&mut AimDirection, With<PlayerAimControlled>>,
 ) {
     for mut player_aim_direction in player_query.iter_mut() {
         let mut direction = Vec3::default();

@@ -9,6 +9,8 @@ use crate::models::collider::collider_type::ColliderType;
 use crate::models::collider::collision_weight::CollisionWeight;
 use crate::models::move_direction::MoveDirection;
 use crate::models::player::Player;
+use crate::models::player_aim_controlled::PlayerAimControlled;
+use crate::models::player_move_controlled::PlayerMoveControlled;
 use crate::models::sprite_flip::SpriteFlip;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_attributes::attribute::Attribute;
@@ -45,6 +47,8 @@ pub fn setup_player_system(
             damage: Damage::new(player_handles.player_one.damage),
             health: Health::new(player_handles.player_one.health),
         })
+        .insert(PlayerMoveControlled)
+        .insert(PlayerAimControlled)
         .insert(SpriteFlip)
         .insert(MeeleAttackSpeed::new(45.0))
         .insert(CollisionWeight { weight: 0.8 })
