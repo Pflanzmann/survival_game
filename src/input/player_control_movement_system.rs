@@ -1,11 +1,11 @@
 use bevy::prelude::*;
 
 use crate::models::move_direction::MoveDirection;
-use crate::models::player::Player;
+use crate::models::player_move_controlled::PlayerMoveControlled;
 
 pub fn player_control_movement_system(
     input: Res<Input<KeyCode>>,
-    mut player_query: Query<&mut MoveDirection, With<Player>>,
+    mut player_query: Query<&mut MoveDirection, With<PlayerMoveControlled>>,
 ) {
     for mut player_direction in player_query.iter_mut() {
         let mut direction = Vec3::default();
