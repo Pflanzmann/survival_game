@@ -12,8 +12,9 @@ use crate::units::meele_timer_system::meele_timer_system;
 use crate::units::move_unit_system::move_unit_system;
 use crate::units::player::PlayerPlugin;
 use crate::units::rotate_unit_system::rotate_unit_system;
+use crate::units::sprite_aim_rotate_system::sprite_aim_rotate_system;
 use crate::units::sprite_flip_system::sprite_flip_system;
-use crate::units::sprite_rotate_system::sprite_rotate_system;
+use crate::units::sprite_move_rotate_system::sprite_move_rotate_system;
 use crate::units::unit_modifications::UnitModificationsPlugin;
 use crate::util::stage_label_helper::{in_last, in_update};
 
@@ -25,13 +26,15 @@ mod move_unit_system;
 mod player;
 mod enemies;
 mod behaviors;
-mod sprite_rotate_system;
+mod sprite_move_rotate_system;
+mod sprite_aim_rotate_system;
 mod apply_damaged_component_system;
 mod apply_hit_effect_system;
 mod bullets;
 mod bullet_modifications;
 mod rotate_unit_system;
 mod meele_timer_system;
+
 
 
 /// This plugin manages the everything related to [Unit] systems and how they get applied.
@@ -56,7 +59,8 @@ impl Plugin for UnitPlugin {
                     SystemSet::on_update(AppState::InGame)
                         .with_system(rotate_unit_system)
                         .with_system(sprite_flip_system)
-                        .with_system(sprite_rotate_system)
+                        .with_system(sprite_move_rotate_system)
+                        .with_system(sprite_aim_rotate_system)
                         .with_system(healthbar_update_system)
                         .with_system(fit_sprite_to_size_system)
                         .with_system(apply_damage_component_system)

@@ -1,10 +1,10 @@
 use bevy::prelude::{Changed, Quat, Query, Transform, Vec3, With};
 
 use crate::models::move_direction::MoveDirection;
-use crate::models::sprite_rotate::SpriteRotate;
+use crate::models::sprite_move_rotation::SpriteMoveRotation;
 
-pub fn sprite_rotate_system(
-    mut sprite_query: Query<(&MoveDirection, &mut Transform), (Changed<MoveDirection>, With<SpriteRotate>)>,
+pub fn sprite_move_rotate_system(
+    mut sprite_query: Query<(&MoveDirection, &mut Transform), (Changed<MoveDirection>, With<SpriteMoveRotation>)>,
 ) {
     for (move_direction, mut transform) in sprite_query.iter_mut() {
         let target_pos = transform.translation + move_direction.direction;

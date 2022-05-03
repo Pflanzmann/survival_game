@@ -11,7 +11,7 @@ use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::move_direction::MoveDirection;
-use crate::models::sprite_rotate::SpriteRotate;
+use crate::models::sprite_move_rotation::SpriteMoveRotation;
 use crate::models::unit_size::UnitSize;
 
 /// A system to split the [Bullet] that has [SplitShot] applied to it.
@@ -55,7 +55,7 @@ pub fn split_shot_system(
             })
                 .insert(Name::new("Bullet"))
                 .insert(ChildBullet)
-                .insert(SpriteRotate)
+                .insert(SpriteMoveRotation)
                 .insert(ColliderType::Circle(128.0))
                 .id();
 
