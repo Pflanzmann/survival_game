@@ -1,0 +1,13 @@
+{
+  "Modification": null,
+  "ModName": {
+    "mod_name": "Psy Rock"
+  },
+  "ModSpritePath": {
+    "path": "sprites/psy_rock.png"
+  },
+  "ToolTip": {
+    "tooltip": "a psy rock that rocks"
+  },
+  "PsyRock": null
+}

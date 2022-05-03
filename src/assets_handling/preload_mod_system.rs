@@ -14,7 +14,7 @@ pub fn preload_mod_system(
         entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/turret_config.json"),
         entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/slime_config.json"),
         entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/death_ball.json"),
-
+        entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/psy_rock.json"),
     ];
 
     let parent = commands.spawn().insert(Name::new("Mod Entities")).id();

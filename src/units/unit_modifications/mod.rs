@@ -1,5 +1,6 @@
 use bevy::app::Plugin;
 use bevy::prelude::{App, SystemSet};
+use bevy::utils::tracing::subscriber::with_default;
 
 use helper::apply_affect_system::apply_affect_system;
 use helper::apply_bullet_mod_to_targets_gun_system::apply_bullet_mod_to_targets_gun_system;
@@ -21,6 +22,7 @@ use crate::models::modifications::affects::bullet_affects::affect_bullet_travel_
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::death_ball::{DeathBall, DeathBallUnit};
 use crate::models::modifications::grow_shot::GrowShot;
+use crate::models::modifications::psy_rock::{PsyRock, PsyRockUnit};
 use crate::models::modifications::slime::{Slime, SlimeUnit};
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::modifications::sprinting::Sprinting;
@@ -32,6 +34,7 @@ use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::units::unit_modifications::apply_death_ball_system::apply_death_ball_system;
+use crate::units::unit_modifications::apply_psy_rock_system::apply_psy_rock_system;
 use crate::units::unit_modifications::apply_slime_system::apply_slime_system;
 use crate::units::unit_modifications::apply_turret_system::apply_turret_system;
 use crate::units::unit_modifications::helper::apply_bullet_affect_system::apply_bullet_affect_system;
@@ -39,6 +42,7 @@ use crate::units::unit_modifications::helper::despawn_companion_from_mod_system:
 use crate::units::unit_modifications::helper::mod_list_deregister_system::mod_list_deregister_system;
 use crate::units::unit_modifications::helper::mod_list_register_system::mod_list_register_system;
 use crate::units::unit_modifications::helper::remove_bullet_affect_system::remove_bullet_affect_system;
+use crate::units::unit_modifications::psy_rock_system::psy_rock_system;
 use crate::util::run_criteria::on_event::on_event;
 use crate::util::stage_label_helper::in_post_update;
 
@@ -46,6 +50,8 @@ mod apply_turret_system;
 mod apply_slime_system;
 mod helper;
 mod apply_death_ball_system;
+mod apply_psy_rock_system;
+mod psy_rock_system;
 
 /// All the apply systems have to get registered here.
 ///
@@ -92,9 +98,12 @@ impl Plugin for UnitModificationsPlugin {
 
                         .with_system(apply_player_mod_to_target_system::<DeathBall>)
                         .with_system(apply_death_ball_system)
+
+                        .with_system(apply_player_mod_to_target_system::<PsyRock>)
+                        .with_system(apply_psy_rock_system)
                 )
             )
-
+            .add_system(psy_rock_system)
             .add_system_set(
                 in_post_update(
                     SystemSet::new()
@@ -126,6 +135,9 @@ impl Plugin for UnitModificationsPlugin {
 
                         .with_system(remove_player_mod_from_target_system::<DeathBall>)
                         .with_system(despawn_companion_from_mod_system::<DeathBall, DeathBallUnit>)
+
+                        .with_system(remove_player_mod_from_target_system::<PsyRock>)
+                        .with_system(despawn_companion_from_mod_system::<PsyRock, PsyRockUnit>)
                 )
             )
         ;

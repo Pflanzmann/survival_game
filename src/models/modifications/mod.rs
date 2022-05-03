@@ -8,3 +8,4 @@ pub mod turret;
 pub mod slime;
 pub mod death_ball;
 pub mod utils;
+pub mod psy_rock;
