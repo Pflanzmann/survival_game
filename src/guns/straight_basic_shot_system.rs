@@ -12,7 +12,7 @@ use crate::models::collider::collider_type::ColliderType;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::move_direction::MoveDirection;
 use crate::models::sprite_layer::SpriteLayer;
-use crate::models::sprite_rotate::SpriteRotate;
+use crate::models::sprite_move_rotation::SpriteMoveRotation;
 use crate::models::straight_basic_shot::StraightBasicShot;
 use crate::models::unit_attributes::attribute::*;
 use crate::models::unit_attributes::reload::Reload;
@@ -60,7 +60,7 @@ pub fn straight_basic_shot_system(
                 facing_direction: MoveDirection { direction: holder_aim_direction.direction },
                 collider_entities: CollidedEntities::default(),
             }).insert(Name::new("Bullet"))
-            .insert(SpriteRotate)
+            .insert(SpriteMoveRotation)
             .insert(ColliderType::Circle(bullet_handle.basic_bullet.sprite_custom_size_x / 2.0))
             .id();
 
