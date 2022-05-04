@@ -4,12 +4,12 @@ use crate::models::behavior::steering_behavior::SteeringBehavior;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
 use crate::models::move_direction::MoveDirection;
-use crate::models::resources::solid_body_collision_quad_tree::SolidBodyCollisionQuadTree;
+use crate::models::resources::solid_body_quad_tree::{SolidBodyData, SolidBodyQuadTree};
 use crate::util::quad_tree::QuadData;
 
 pub fn steering_behavior_system(
     mut units_query: Query<(Entity, &Transform, &ColliderType, &MoveDirection, &mut SteeringBehavior)>,
-    quad_tree_holder: Res<SolidBodyCollisionQuadTree>,
+    quad_tree_holder: Res<SolidBodyQuadTree>,
 ) {
     for (entity, transform, collider_type, move_direction, mut steering_behavior) in units_query.iter_mut() {
         let size = match collider_type {
@@ -17,7 +17,7 @@ pub fn steering_behavior_system(
             Rectangle(size) => *size,
         };
 
-        let mut check_entity_list: Vec<QuadData> = Vec::new();
+        let mut check_entity_list: Vec<QuadData<SolidBodyData>> = Vec::new();
 
         let check_position = transform.translation + (move_direction.direction * (size.x * 0.5));
 
@@ -27,14 +27,14 @@ pub fn steering_behavior_system(
             &(size * 2.0),
         );
 
-        let mut closest_thread: Option<QuadData> = Option::None;
+        let mut closest_thread: Option<QuadData<SolidBodyData>> = Option::None;
         let mut closest_distance: f32 = 10000.0;
         for quad_data in check_entity_list.iter() {
-            if quad_data.entity == entity {
+            if quad_data.data.entity == entity {
                 continue;
             }
 
-            if collider_type.is_colliding(&check_position.truncate(), &quad_data.collider_type, &quad_data.position.truncate()) {
+            if collider_type.is_colliding(&check_position.truncate(), &quad_data.data.collider_type, &quad_data.position.truncate()) {
                 let distance = transform.translation.truncate().distance(quad_data.position.truncate());
 
                 if distance < closest_distance {

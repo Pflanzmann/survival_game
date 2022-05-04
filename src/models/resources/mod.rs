@@ -3,7 +3,7 @@ use bevy::prelude::{App, Plugin, Vec2};
 use crate::models::resources::background_tiles_resource::BackgroundTilesResource;
 use crate::models::resources::console_history::{ConsoleHistory, read_history_from_file};
 use crate::models::resources::item_collision_quad_tree::ItemCollisionQuadTree;
-use crate::models::resources::solid_body_collision_quad_tree::SolidBodyCollisionQuadTree;
+use crate::models::resources::solid_body_quad_tree::SolidBodyQuadTree;
 use crate::models::resources::spawn_task_receiver::SpawnTaskReceiver;
 use crate::models::resources::spawn_timer::SpawnTimer;
 use crate::models::resources::state_resources::AppStateTrigger;
@@ -15,7 +15,7 @@ pub mod state_resources;
 pub mod spawn_timer;
 pub mod spawn_task_receiver;
 pub mod console_history;
-pub mod solid_body_collision_quad_tree;
+pub mod solid_body_quad_tree;
 pub mod item_collision_quad_tree;
 
 pub struct ResourcePlugin;
@@ -36,7 +36,7 @@ impl Plugin for ResourcePlugin {
             })
 
             .init_resource::<ItemCollisionQuadTree>()
-            .init_resource::<SolidBodyCollisionQuadTree>()
+            .init_resource::<SolidBodyQuadTree>()
         ;
     }
 }
