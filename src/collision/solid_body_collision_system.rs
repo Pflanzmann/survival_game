@@ -1,13 +1,13 @@
 use bevy::prelude::{Entity, Query, Res, Transform, Vec2};
 
-use crate::collision::SolidBodyCollisionQuadTreeHolder;
-use crate::models::collider::collider_type::ColliderType;
-use crate::models::collider::collider_type::ColliderType::{Circle, Rectangle};
-use crate::models::collider::collision_weight::CollisionWeight;
+use crate::models::collision::collider_type::ColliderType;
+use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
+use crate::models::collision::collision_weight::CollisionWeight;
+use crate::models::resources::solid_body_collision_quad_tree::SolidBodyCollisionQuadTree;
 use crate::util::quad_tree::QuadData;
 
 pub fn solid_body_collision_system(
-    quad_tree_holder: Res<SolidBodyCollisionQuadTreeHolder>,
+    quad_tree_holder: Res<SolidBodyCollisionQuadTree>,
     mut solid_body_unit_query: Query<(Entity, &mut Transform, &ColliderType, &CollisionWeight)>,
 ) {
     for (entity, mut transform, collider_type, collision_weight) in solid_body_unit_query.iter_mut() {
@@ -20,7 +20,7 @@ pub fn solid_body_collision_system(
         let mut collision_resolutions_counter = 0.0;
 
         let mut check_entity_list: Vec<QuadData> = Vec::new();
-        quad_tree_holder.quad_tree.query_entities(
+        quad_tree_holder.query_entities(
             &mut check_entity_list,
             &transform.translation,
             &size,

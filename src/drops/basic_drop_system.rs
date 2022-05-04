@@ -3,7 +3,7 @@ use rand::random;
 
 use crate::assets_handling::preload_item_system::ItemConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
-use crate::models::collider::collider_type::ColliderType;
+use crate::models::collision::collider_type::ColliderType;
 use crate::models::enemy::Enemy;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
 use crate::models::items::coin::Coin;

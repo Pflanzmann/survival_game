@@ -1,6 +1,6 @@
 use bevy::prelude::{Changed, Query, Sprite};
 
-use crate::models::collider::collider_type::ColliderType;
+use crate::models::collision::collider_type::ColliderType;
 use crate::models::unit_size::UnitSize;
 
 pub fn fit_sprite_to_size_system(

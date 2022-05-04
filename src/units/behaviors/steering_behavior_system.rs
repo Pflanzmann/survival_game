@@ -1,15 +1,15 @@
 use bevy::prelude::*;
 
-use crate::collision::SolidBodyCollisionQuadTreeHolder;
 use crate::models::behavior::steering_behavior::SteeringBehavior;
-use crate::models::collider::collider_type::ColliderType;
-use crate::models::collider::collider_type::ColliderType::{Circle, Rectangle};
+use crate::models::collision::collider_type::ColliderType;
+use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
 use crate::models::move_direction::MoveDirection;
+use crate::models::resources::solid_body_collision_quad_tree::SolidBodyCollisionQuadTree;
 use crate::util::quad_tree::QuadData;
 
 pub fn steering_behavior_system(
     mut units_query: Query<(Entity, &Transform, &ColliderType, &MoveDirection, &mut SteeringBehavior)>,
-    quad_tree_holder: Res<SolidBodyCollisionQuadTreeHolder>,
+    quad_tree_holder: Res<SolidBodyCollisionQuadTree>,
 ) {
     for (entity, transform, collider_type, move_direction, mut steering_behavior) in units_query.iter_mut() {
         let size = match collider_type {
@@ -21,7 +21,7 @@ pub fn steering_behavior_system(
 
         let check_position = transform.translation + (move_direction.direction * (size.x * 0.5));
 
-        quad_tree_holder.quad_tree.query_entities(
+        quad_tree_holder.query_entities(
             &mut check_entity_list,
             &check_position,
             &(size * 2.0),

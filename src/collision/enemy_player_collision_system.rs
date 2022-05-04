@@ -1,15 +1,15 @@
 use bevy::prelude::{Entity, EventWriter, Query, Res, Transform, Vec2, With};
 
-use crate::collision::SolidBodyCollisionQuadTreeHolder;
-use crate::models::collider::collider_type::ColliderType;
-use crate::models::collider::collider_type::ColliderType::*;
+use crate::models::collision::collider_type::ColliderType;
+use crate::models::collision::collider_type::ColliderType::*;
 use crate::models::events::player_enemy_collision_event::PlayerEnemyCollisionEvent;
 use crate::models::player::Player;
+use crate::models::resources::solid_body_collision_quad_tree::SolidBodyCollisionQuadTree;
 use crate::util::quad_tree::QuadData;
 
 pub fn enemy_player_collision_system(
     mut player_enemy_collision_event: EventWriter<PlayerEnemyCollisionEvent>,
-    quad_tree_holder: Res<SolidBodyCollisionQuadTreeHolder>,
+    quad_tree_holder: Res<SolidBodyCollisionQuadTree>,
     player_query: Query<(Entity, &Transform, &ColliderType), With<Player>>,
 ) {
     for (player_entity, player_transform, player_collider_type) in player_query.iter() {
@@ -20,7 +20,7 @@ pub fn enemy_player_collision_system(
             Rectangle(size) => *size,
         };
 
-        quad_tree_holder.quad_tree.query_entities(
+        quad_tree_holder.query_entities(
             &mut check_entity_list,
             &player_transform.translation,
             &size,

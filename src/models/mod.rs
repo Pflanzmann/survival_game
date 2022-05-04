@@ -4,7 +4,7 @@ pub mod straight_basic_shot;
 pub mod aim_direction;
 pub mod mod_container_slot;
 pub mod events;
-pub mod collider;
+pub mod collision;
 pub mod sprite_layer;
 pub mod bundles;
 pub mod tile;
