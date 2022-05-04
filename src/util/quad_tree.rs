@@ -1,33 +1,33 @@
-use bevy::prelude::{Entity, Vec2, Vec3};
-
-use crate::models::collision::collider_type::ColliderType;
-use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
+use bevy::prelude::{Vec2, Vec3};
 
 #[derive(Copy, Clone)]
-pub struct QuadData {
-    pub entity: Entity,
+pub struct QuadData<T> where T: Copy + Clone {
+    // pub entity: Entity,
     pub position: Vec3,
-    pub collider_type: ColliderType,
-    pub collision_weight: f32,
+    pub size: Vec2,
+
+    pub data: T,
+    // pub collider_type: ColliderType,
+    // pub collision_weight: f32,
 }
 
-pub struct Quadtree {
+pub struct Quadtree<T> where T: Copy + Clone {
     width: f32,
     height: f32,
     position: Vec2,
     layer: usize,
 
-    children: Option<Box<[Quadtree; 4]>>,
-    items: Vec<QuadData>,
+    children: Option<Box<[Quadtree<T>; 4]>>,
+    items: Vec<QuadData<T>>,
 }
 
-impl Quadtree {
+impl<T> Quadtree<T> where T: Copy + Clone {
     pub fn new(width: f32, height: f32, position: Vec2, layer: usize) -> Self {
         Self { width, height, position, layer, ..Default::default() }
     }
 }
 
-impl Default for Quadtree {
+impl<T> Default for Quadtree<T> where T: Copy + Clone {
     fn default() -> Self {
         Self {
             width: 0.0,
@@ -40,7 +40,7 @@ impl Default for Quadtree {
     }
 }
 
-impl Quadtree {
+impl<T> Quadtree<T> where T: Copy + Clone {
     pub fn size(&self) -> usize {
         let mut count = self.items.len();
 
@@ -90,7 +90,7 @@ impl Quadtree {
         }
     }
 
-    pub fn query_entities(&self, output: &mut Vec<QuadData>, position: &Vec3, size: &Vec2) {
+    pub fn query_entities(&self, output: &mut Vec<QuadData<T>>, position: &Vec3, size: &Vec2) {
         if !self.overlap_rectangle(position, size) {
             return;
         }
@@ -108,7 +108,7 @@ impl Quadtree {
         }
     }
 
-    pub fn get_entities(&self, output: &mut Vec<QuadData>) {
+    pub fn get_entities(&self, output: &mut Vec<QuadData<T>>) {
         output.extend(&self.items);
 
         if let Some(children) = &self.children {
@@ -119,18 +119,13 @@ impl Quadtree {
         }
     }
 
-    pub fn insert(&mut self, data: &QuadData) -> bool {
-        let size = match data.collider_type {
-            Circle(radius) => Vec2::new(radius, radius),
-            Rectangle(size) => size,
-        };
-
-        if !self.contains_rectangle(&data.position, &size) {
+    pub fn insert(&mut self, quad_data: &QuadData<T>) -> bool {
+        if !self.contains_rectangle(&quad_data.position, &quad_data.size) {
             return false;
         }
 
         if self.layer >= 15 {
-            self.items.push(*data);
+            self.items.push(*quad_data);
             return true;
         }
 
@@ -139,21 +134,21 @@ impl Quadtree {
         }
 
         if let Some(children) = self.children.as_mut() {
-            if children[0].insert(data) {
+            if children[0].insert(quad_data) {
                 return true;
             };
-            if children[1].insert(data) {
+            if children[1].insert(quad_data) {
                 return true;
             };
-            if children[2].insert(data) {
+            if children[2].insert(quad_data) {
                 return true;
             };
-            if children[3].insert(data) {
+            if children[3].insert(quad_data) {
                 return true;
             };
         }
 
-        self.items.push(*data);
+        self.items.push(*quad_data);
         true
     }
 
