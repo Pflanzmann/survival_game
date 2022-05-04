@@ -1,7 +1,7 @@
 use bevy::prelude::{Entity, EventReader, EventWriter, Query, With, Without};
 
 use crate::models::bullet::Bullet;
-use crate::models::collider::collided_entities::CollidedEntities;
+use crate::models::collision::collided_entities::CollidedEntities;
 use crate::models::enemy::Enemy;
 use crate::models::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;

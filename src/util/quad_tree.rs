@@ -1,7 +1,7 @@
 use bevy::prelude::{Entity, Vec2, Vec3};
 
-use crate::models::collider::collider_type::ColliderType;
-use crate::models::collider::collider_type::ColliderType::{Circle, Rectangle};
+use crate::models::collision::collider_type::ColliderType;
+use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
 
 #[derive(Copy, Clone)]
 pub struct QuadData {

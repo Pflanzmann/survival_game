@@ -1,15 +1,15 @@
 use bevy::prelude::{Entity, EventWriter, Query, Res, Transform, Vec2, With};
 
-use crate::collision::SolidBodyCollisionQuadTreeHolder;
 use crate::models::bullet::Bullet;
-use crate::models::collider::collider_type::ColliderType;
-use crate::models::collider::collider_type::ColliderType::{Circle, Rectangle};
+use crate::models::collision::collider_type::ColliderType;
+use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
 use crate::models::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
+use crate::models::resources::solid_body_collision_quad_tree::SolidBodyCollisionQuadTree;
 use crate::util::quad_tree::QuadData;
 
 pub fn enemy_bullet_collision_system(
     mut bullet_hit_event: EventWriter<BulletEnemyCollisionEvent>,
-    quad_tree_holder: Res<SolidBodyCollisionQuadTreeHolder>,
+    quad_tree_holder: Res<SolidBodyCollisionQuadTree>,
     bullet_query: Query<(Entity, &Transform, &ColliderType), With<Bullet>>,
 ) {
     for (bullet_entity, bullet_transform, bullet_collider_type) in bullet_query.iter() {
@@ -20,7 +20,7 @@ pub fn enemy_bullet_collision_system(
             Rectangle(size) => *size,
         };
 
-        quad_tree_holder.quad_tree.query_entities(
+        quad_tree_holder.query_entities(
             &mut check_entity_list,
             &bullet_transform.translation,
             &size,

@@ -1,4 +1,4 @@
-use bevy::prelude::{Plugin, SystemSet};
+use bevy::prelude::{Deref, DerefMut, Plugin, SystemSet};
 
 use crate::App;
 use crate::collision::calculate_quad_tree_system::calculate_quad_tree_system;
@@ -21,31 +21,16 @@ mod calculate_quad_tree_system;
 /// the regular update ticks. This scheduling is also necessary to order the firing and reaction
 /// to events as well as possible despawns of entities. Otherwise we ran into problems with events
 /// that try to react on entities that don't exist anymore
-
 pub struct CollisionPlugin;
 
 const FIXED_TIMESTEP: f64 = 0.02;
 
-#[derive(Default)]
-pub struct SolidBodyCollisionQuadTreeHolder {
-    pub quad_tree: Quadtree,
-}
-
-#[derive(Default)]
-pub struct ItemCollisionQuadTreeHolder {
-    pub quad_tree: Quadtree,
-}
-
 impl Plugin for CollisionPlugin {
     fn build(&self, app: &mut App) {
         app
-            .init_resource::<SolidBodyCollisionQuadTreeHolder>()
-            .init_resource::<ItemCollisionQuadTreeHolder>()
-
             .add_system_set(
                 in_collision(
                     SystemSet::new()
-                        // .with_run_criteria(FixedTimestep::step(FIXED_TIMESTEP))
                         .with_system(enemy_player_collision_system)
                         .with_system(enemy_bullet_collision_system)
                         .with_system(solid_body_collision_system)
@@ -56,7 +41,6 @@ impl Plugin for CollisionPlugin {
             .add_system_set(
                 in_update(
                     SystemSet::new()
-                        // .with_run_criteria(FixedTimestep::step(FIXED_TIMESTEP))
                         .with_system(calculate_quad_tree_system)
                 )
             )

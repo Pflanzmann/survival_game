@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::collision::SolidBodyCollisionQuadTreeHolder;
+use crate::models::resources::solid_body_collision_quad_tree::SolidBodyCollisionQuadTree;
 use crate::SpriteLayer;
 
 #[derive(Component)]
@@ -9,7 +9,7 @@ pub struct TreeArea;
 pub fn show_quad_tree_system(
     mut commands: Commands,
     area_query: Query<Entity, With<TreeArea>>,
-    quad_tree: Res<SolidBodyCollisionQuadTreeHolder>,
+    quad_tree: Res<SolidBodyCollisionQuadTree>,
 ) {
     if quad_tree.is_changed() {
         for entity in area_query.iter() {
@@ -17,7 +17,7 @@ pub fn show_quad_tree_system(
         }
 
         let mut output: Vec<(Vec2, f32, f32, usize)> = Vec::new();
-        quad_tree.quad_tree.get_all_squares(&mut output);
+        quad_tree.get_all_squares(&mut output);
 
         for (pos, width, height, layer) in output {
             let color = 0.1 * layer as f32;
