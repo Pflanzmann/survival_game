@@ -1,9 +1,14 @@
+use bevy::prelude::{Commands, Name, Res, ResMut, SpriteSheetBundle, TextureAtlasSprite, Transform, Vec2, Vec3};
 use bevy::core::Timer;
 use bevy::prelude::{Commands, Name, Res, ResMut, SpriteSheetBundle, TextureAtlasSprite, Vec2};
 
 use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::models::aim_direction::AimDirection;
+use crate::models::animation::animation_state::CurrentAnimationState;
+use crate::models::animation::idle_animation_component::IdleAnimation;
+use crate::models::animation::walking_animation_component::{MoveAnimationDown, MoveAnimationSide, MoveAnimationUp};
+use crate::models::bundles::player_bundle::PlayerBundle;
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::collider_weight::ColliderWeight;
@@ -58,6 +63,10 @@ pub fn setup_player_system(
 
         .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
         .insert(SpriteFlip)
-
-        .insert(AnimationTimer(Timer::from_seconds(0.3, true)));
+       
+        .insert(IdleAnimation::new(0.0, 3, 0, 10))
+        .insert(MoveAnimationSide::new(0.0, 4, 4, 15))
+        .insert(MoveAnimationUp::new(0.0, 4, 5, 15))
+        .insert(MoveAnimationDown::new(0.0, 4, 3, 15))
+        .insert(CurrentAnimationState::new());
 }

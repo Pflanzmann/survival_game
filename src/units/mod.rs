@@ -15,7 +15,7 @@ use crate::units::move_unit_system::move_unit_system;
 use crate::units::player::PlayerPlugin;
 use crate::units::rotate_unit_system::rotate_unit_system;
 use crate::units::sprite_aim_rotate_system::sprite_aim_rotate_system;
-use crate::units::sprite_flip_system::sprite_flip_system;
+use crate::units::sprite_flip_system::{sprite_atlas_flip_system, sprite_flip_system};
 use crate::units::sprite_move_rotate_system::sprite_move_rotate_system;
 use crate::units::time_alive_system::time_alive_system;
 use crate::units::unit_modifications::UnitModificationsPlugin;
@@ -67,6 +67,7 @@ impl Plugin for UnitPlugin {
                     SystemSet::on_update(AppState::InGame)
                         .with_system(rotate_unit_system)
                         .with_system(sprite_flip_system)
+                        .with_system(sprite_atlas_flip_system)
                         .with_system(sprite_move_rotate_system)
                         .with_system(sprite_aim_rotate_system)
                         .with_system(healthbar_update_system)
