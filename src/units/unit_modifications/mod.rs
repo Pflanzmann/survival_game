@@ -22,6 +22,7 @@ use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::death_ball::{DeathBall, DeathBallUnit};
 use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::modifications::psy_rock::{PsyRock, PsyRockUnit};
+use crate::models::modifications::radiation::{Radiation, RadiationUnit};
 use crate::models::modifications::slime::{Slime, SlimeUnit};
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::modifications::sprinting::Sprinting;
@@ -34,6 +35,7 @@ use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::units::unit_modifications::apply_death_ball_system::apply_death_ball_system;
 use crate::units::unit_modifications::apply_psy_rock_system::{apply_psy_rock_system, renew_mods_for_psy_rock_system};
+use crate::units::unit_modifications::apply_radiation_system::apply_radiation_system;
 use crate::units::unit_modifications::apply_slime_system::apply_slime_system;
 use crate::units::unit_modifications::apply_turret_system::apply_turret_system;
 use crate::units::unit_modifications::helper::apply_bullet_affect_system::apply_bullet_affect_system;
@@ -49,6 +51,7 @@ mod apply_slime_system;
 mod helper;
 mod apply_death_ball_system;
 mod apply_psy_rock_system;
+mod apply_radiation_system;
 
 /// All the apply systems have to get registered here.
 ///
@@ -99,6 +102,9 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(apply_player_mod_to_target_system::<PsyRock>)
                         .with_system(apply_psy_rock_system)
                         .with_system(renew_mods_for_psy_rock_system)
+
+                        .with_system(apply_player_mod_to_target_system::<Radiation>)
+                        .with_system(apply_radiation_system)
                 )
             )
 
@@ -136,6 +142,9 @@ impl Plugin for UnitModificationsPlugin {
 
                         .with_system(remove_player_mod_from_target_system::<PsyRock>)
                         .with_system(despawn_companion_from_mod_system::<PsyRock, PsyRockUnit>)
+
+                        .with_system(remove_player_mod_from_target_system::<Radiation>)
+                        .with_system(despawn_companion_from_mod_system::<Radiation, RadiationUnit>)
                 )
             )
         ;

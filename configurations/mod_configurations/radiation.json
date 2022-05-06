@@ -1,0 +1,13 @@
+{
+  "Modification": null,
+  "ModName": {
+    "mod_name": "Radiation"
+  },
+  "ModSpritePath": {
+    "path": "sprites/radiation.png"
+  },
+  "ToolTip": {
+    "tooltip": "kills the video star"
+  },
+  "Radiation": null
+}
