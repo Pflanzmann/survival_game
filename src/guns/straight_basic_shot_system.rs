@@ -1,6 +1,6 @@
 use bevy::prelude::{Commands, Entity, EventWriter, GlobalTransform, Name, Query, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2, With};
-use crate::assets_handling::preload_audio_system::SoundHandles;
 
+use crate::assets_handling::preload_audio_system::SoundHandles;
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
 use crate::audio::sound_manager::SoundManager;
 use crate::models::aim_direction::AimDirection;
@@ -15,8 +15,12 @@ use crate::models::sprite_layer::SpriteLayer;
 use crate::models::sprite_move_rotation::SpriteMoveRotation;
 use crate::models::straight_basic_shot::StraightBasicShot;
 use crate::models::unit_attributes::attribute::*;
+use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::damage_interval::DamageInterval;
+use crate::models::unit_attributes::hit_limit::HitLimit;
+use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
+use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_size::UnitSize;
 use crate::models::weapon_slot::WeaponSlot;
 use crate::TextureHandles;
@@ -25,8 +29,8 @@ pub fn straight_basic_shot_system(
     mut command: Commands,
     texture_handle: Res<TextureHandles>,
     bullet_handle: Res<BulletConfigHandles>,
-    mut sound_manager : ResMut<SoundManager>,
-    sound_handles : Res<SoundHandles>,
+    mut sound_manager: ResMut<SoundManager>,
+    sound_handles: Res<SoundHandles>,
     mut bullet_shot_event_writer: EventWriter<BulletShotEvent>,
     mut weapon_holder_query: Query<(&GlobalTransform, &AimDirection, &WeaponSlot, &mut Reload)>,
     gun_query: Query<Entity, With<StraightBasicShot>>,
@@ -61,6 +65,10 @@ pub fn straight_basic_shot_system(
                 facing_direction: MoveDirection { direction: holder_aim_direction.direction },
                 collider_entities: DamagedEntities::default(),
             }).insert(Name::new("Bullet"))
+            .insert(MoveSpeed::default())
+            .insert(Damage::default())
+            .insert(HitLimit::new(1.0))
+            .insert(TravelRange::new(2048.0))
             .insert(SpriteMoveRotation)
             .insert(DamageInterval::new(60.0))
             .insert(ColliderType::Circle(bullet_handle.basic_bullet.sprite_custom_size_x / 2.0))

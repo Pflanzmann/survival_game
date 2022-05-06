@@ -19,7 +19,7 @@ pub fn apply_death_ball_system(
     mut apply_events: EventReader<ApplyModToTargetEvent>,
     mod_query: Query<&DeathBall, With<Modification>>,
     owner_query: Query<(Entity, &WeaponSlot)>,
-    turret_query: Query<&Owner, With<DeathBallUnit>>,
+    unit_query: Query<&Owner, With<DeathBallUnit>>,
 ) {
     for apply_event in apply_events.iter() {
         let death_ball = match mod_query.get(apply_event.mod_entity) {
@@ -33,7 +33,7 @@ pub fn apply_death_ball_system(
         };
 
         let mut unit_exists = false;
-        for owner in turret_query.iter() {
+        for owner in unit_query.iter() {
             if owner_entity == owner.entity {
                 unit_exists = true;
             }

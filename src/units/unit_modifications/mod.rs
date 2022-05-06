@@ -1,6 +1,5 @@
 use bevy::app::Plugin;
 use bevy::prelude::{App, SystemSet};
-use bevy::utils::tracing::subscriber::with_default;
 
 use helper::apply_affect_system::apply_affect_system;
 use helper::apply_bullet_mod_to_targets_gun_system::apply_bullet_mod_to_targets_gun_system;
@@ -34,7 +33,7 @@ use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::units::unit_modifications::apply_death_ball_system::apply_death_ball_system;
-use crate::units::unit_modifications::apply_psy_rock_system::apply_psy_rock_system;
+use crate::units::unit_modifications::apply_psy_rock_system::{apply_psy_rock_system, renew_mods_for_psy_rock_system};
 use crate::units::unit_modifications::apply_slime_system::apply_slime_system;
 use crate::units::unit_modifications::apply_turret_system::apply_turret_system;
 use crate::units::unit_modifications::helper::apply_bullet_affect_system::apply_bullet_affect_system;
@@ -101,6 +100,7 @@ impl Plugin for UnitModificationsPlugin {
 
                         .with_system(apply_player_mod_to_target_system::<PsyRock>)
                         .with_system(apply_psy_rock_system)
+                        .with_system(renew_mods_for_psy_rock_system)
                 )
             )
             .add_system(psy_rock_system)

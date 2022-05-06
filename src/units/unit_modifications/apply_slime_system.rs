@@ -16,22 +16,22 @@ pub fn apply_slime_system(
     texture_handler: Res<TextureHandles>,
     mut apply_events: EventReader<ApplyModToTargetEvent>,
     mod_query: Query<&Slime, With<Modification>>,
-    slime_owner: Query<(Entity, &Transform)>,
-    slime_query: Query<&Owner, With<SlimeUnit>>,
+    owner_query: Query<(Entity, &Transform)>,
+    unit_query: Query<&Owner, With<SlimeUnit>>,
 ) {
     for apply_event in apply_events.iter() {
-        let slime_mod = match mod_query.get(apply_event.mod_entity) {
+        let _slime_mod = match mod_query.get(apply_event.mod_entity) {
             Ok(slime) => slime,
             Err(_) => continue,
         };
 
-        let (owner_entity, owner_transform) = match slime_owner.get(apply_event.target_entity) {
+        let (owner_entity, owner_transform) = match owner_query.get(apply_event.target_entity) {
             Ok(owner) => owner,
             Err(_) => continue,
         };
 
         let mut unit_exists = false;
-        for owner in slime_query.iter() {
+        for owner in unit_query.iter() {
             if owner_entity == owner.entity {
                 unit_exists = true;
             }
