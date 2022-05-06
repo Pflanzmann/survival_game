@@ -8,11 +8,12 @@ use crate::models::collision::collided_entities::DamagedEntities;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
+use crate::models::input::player_aim_controlled::PlayerAimControlled;
+use crate::models::mirror_aim_to_move_direction::MirrorAimToMoveDirection;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::psy_rock::{PsyRock, PsyRockUnit};
 use crate::models::modifications::utils::owner::Owner;
 use crate::models::move_direction::MoveDirection;
-use crate::models::player_aim_controlled::PlayerAimControlled;
 use crate::models::sprite_move_rotation::SpriteMoveRotation;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
@@ -68,6 +69,7 @@ pub fn apply_psy_rock_system(
             .insert(PlayerAimControlled)
             .insert(MoveDirection { direction: Vec3::default() })
             .insert(AimDirection { direction: Vec3::default() })
+            .insert(MirrorAimToMoveDirection)
             .insert(MoveSpeed::new(20.0))
             .insert(UnitSize { collider_size: Vec2::new(160.0, 160.0) })
             .insert(ColliderType::Circle(80.0))

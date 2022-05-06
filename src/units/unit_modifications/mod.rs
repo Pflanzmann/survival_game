@@ -41,7 +41,6 @@ use crate::units::unit_modifications::helper::despawn_companion_from_mod_system:
 use crate::units::unit_modifications::helper::mod_list_deregister_system::mod_list_deregister_system;
 use crate::units::unit_modifications::helper::mod_list_register_system::mod_list_register_system;
 use crate::units::unit_modifications::helper::remove_bullet_affect_system::remove_bullet_affect_system;
-use crate::units::unit_modifications::psy_rock_system::psy_rock_system;
 use crate::util::run_criteria::on_event::on_event;
 use crate::util::stage_label_helper::in_post_update;
 
@@ -50,7 +49,6 @@ mod apply_slime_system;
 mod helper;
 mod apply_death_ball_system;
 mod apply_psy_rock_system;
-mod psy_rock_system;
 
 /// All the apply systems have to get registered here.
 ///
@@ -103,7 +101,7 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(renew_mods_for_psy_rock_system)
                 )
             )
-            .add_system(psy_rock_system)
+
             .add_system_set(
                 in_post_update(
                     SystemSet::new()

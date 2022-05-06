@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
 use crate::models::move_direction::MoveDirection;
-use crate::models::player_move_controlled::PlayerMoveControlled;
+use crate::models::input::player_move_controlled::PlayerMoveControlled;
 
 pub fn player_control_movement_system(
     input: Res<Input<KeyCode>>,

@@ -30,6 +30,6 @@ pub mod audio;
 pub mod attribute_container;
 pub mod attribute_container_slot;
 pub mod child_bullet;
-pub mod player_move_controlled;
-pub mod player_aim_controlled;
 pub mod sprite_aim_rotation;
+pub mod input;
+pub mod mirror_aim_to_move_direction;
