@@ -1,4 +1,6 @@
-use bevy::prelude::{BuildChildren, Commands, Entity, Name, NonSend};
+use std::fs;
+
+use bevy::prelude::{BuildChildren, Commands, Name, NonSend};
 
 use crate::util::entity_builder::EntityBuilder;
 
@@ -6,18 +8,16 @@ pub fn preload_mod_system(
     mut commands: Commands,
     entity_builder: NonSend<EntityBuilder>,
 ) {
-    let children: Vec<Entity> = vec![
-        entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/grow_shot_config.json"),
-        entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/curve_shot_config.json"),
-        entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/split_shot_config.json"),
-        entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/sprinting_config.json"),
-        entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/turret_config.json"),
-        entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/slime_config.json"),
-        entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/death_ball.json"),
-        entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/psy_rock.json"),
-        entity_builder.spawn_entity(&mut commands, "configurations/mod_configurations/radiation.json"),
-    ];
-
     let parent = commands.spawn().insert(Name::new("Mod Entities")).id();
-    commands.entity(parent).push_children(&*children);
+
+    let base_path = "configurations/mod_configurations/";
+    let paths = fs::read_dir(base_path).unwrap();
+
+    for path in paths {
+        let mut file_path = String::new();
+        file_path.push_str(base_path);
+
+        let child = entity_builder.spawn_entity(&mut commands, path.unwrap().path().display().to_string().as_str());
+        commands.entity(parent).add_child(child);
+    }
 }
