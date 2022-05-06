@@ -12,12 +12,19 @@ pub fn update_console_history(
     mut text_query: Query<&mut Text, With<DebugConsoleHistory>>,
 ) {
     for event in debug_command_events.iter() {
-        console_history.command_history.insert(0, event.debug_command.clone());
-        console_history.log.insert(0, format!("{}\n", event.debug_command.clone()));
+        if let Some(first) = console_history.command_history.first() {
+            if *first != event.debug_command {
+                console_history.command_history.insert(0, event.debug_command.clone());
+                console_history.log.insert(0, format!("{}\n", event.debug_command.clone()));
+            }
+        }
 
-        if console_history.log.len() > 30 {
-            console_history.log.pop();
+        while console_history.command_history.len() > 30 {
             console_history.command_history.pop();
+        }
+
+        while console_history.log.len() > 30 {
+            console_history.log.pop();
         }
 
         let mut history_string = String::new();
@@ -34,6 +41,10 @@ pub fn update_console_history(
 
     for event in debug_command_info_events.iter() {
         console_history.log.insert(0, format!("    --> {}\n", event.debug_command.clone()));
+
+        while console_history.command_history.len() > 30 {
+            console_history.command_history.pop();
+        }
 
         let mut history_string = String::new();
         for text in console_history.log.iter().rev() {
