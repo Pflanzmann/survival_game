@@ -15,6 +15,7 @@ use crate::models::sprite_layer::SpriteLayer;
 use crate::models::sprite_move_rotation::SpriteMoveRotation;
 use crate::models::straight_basic_shot::StraightBasicShot;
 use crate::models::unit_attributes::attribute::*;
+use crate::models::unit_attributes::damage_interval::DamageInterval;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_size::UnitSize;
 use crate::models::weapon_slot::WeaponSlot;
@@ -61,6 +62,7 @@ pub fn straight_basic_shot_system(
                 collider_entities: DamagedEntities::default(),
             }).insert(Name::new("Bullet"))
             .insert(SpriteMoveRotation)
+            .insert(DamageInterval::new(60.0))
             .insert(ColliderType::Circle(bullet_handle.basic_bullet.sprite_custom_size_x / 2.0))
             .id();
 

@@ -4,16 +4,14 @@ use serde::Deserialize;
 use crate::models::unit_attributes::attribute::Attribute;
 
 #[derive(Component, Deserialize)]
-pub struct MeeleAttackSpeed {
+pub struct DamageInterval {
     base_amount: f32,
     bonus_amount: f32,
-
-    pub reload_timer: f32,
 }
 
-impl Attribute for MeeleAttackSpeed {
+impl Attribute for DamageInterval {
     fn new(base_amount: f32) -> Self {
-        MeeleAttackSpeed { base_amount, bonus_amount: 0.0, reload_timer: 0.0 }
+        DamageInterval { base_amount, bonus_amount: 0.0 }
     }
 
     fn get_total_amount(&self) -> f32 {

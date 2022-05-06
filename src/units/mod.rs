@@ -9,7 +9,6 @@ use crate::units::clear_damaged_entities_system::clear_damaged_entities_system;
 use crate::units::enemies::EnemiesPlugin;
 use crate::units::fit_sprite_to_size_system::fit_sprite_to_size_system;
 use crate::units::health_bar_update_system::healthbar_update_system;
-use crate::units::meele_timer_system::meele_timer_system;
 use crate::units::move_unit_system::move_unit_system;
 use crate::units::player::PlayerPlugin;
 use crate::units::rotate_unit_system::rotate_unit_system;
@@ -34,7 +33,6 @@ mod apply_hit_effect_system;
 mod bullets;
 mod bullet_modifications;
 mod rotate_unit_system;
-mod meele_timer_system;
 mod clear_damaged_entities_system;
 
 
@@ -66,7 +64,6 @@ impl Plugin for UnitPlugin {
                         .with_system(fit_sprite_to_size_system)
                         .with_system(apply_damage_component_system)
                         .with_system(apply_hit_effect_system)
-                        .with_system(meele_timer_system)
                         .with_system(clear_damaged_entities_system)
                 )
             )
