@@ -1,4 +1,4 @@
-use bevy::prelude::{Changed, Transform, Quat, Query, Vec3, With, GlobalTransform};
+use bevy::prelude::{Changed, Quat, Query, Transform, Vec3, With};
 
 use crate::models::aim_direction::AimDirection;
 use crate::models::sprite_aim_rotation::SpriteAimRotation;

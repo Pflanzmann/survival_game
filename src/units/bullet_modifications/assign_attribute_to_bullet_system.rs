@@ -23,7 +23,7 @@ use crate::models::events::bullet_shot_event::BulletShotEvent;
 pub fn assign_attribute_to_bullet_system<T: Component + Copy>(
     mut commands: Commands,
     mut bullet_shot_event: EventReader<BulletShotEvent>,
-    bullet_query: Query<&Bullet>,
+    bullet_query: Query<&Bullet, With<T>>,
     source_query: Query<&AttributeContainerSlot>,
     attribute_container_query: Query<&T, With<AttributeContainer>>,
 ) {

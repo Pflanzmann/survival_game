@@ -18,22 +18,22 @@ pub fn apply_turret_system(
     texture_handler: Res<TextureHandles>,
     mut apply_events: EventReader<ApplyModToTargetEvent>,
     mod_query: Query<&Turret, With<Modification>>,
-    turret_owner: Query<(Entity, &Transform, &WeaponSlot)>,
-    turret_query: Query<&Owner, (With<TurretUnit>, Without<Turret>)>,
+    owner_query: Query<(Entity, &Transform, &WeaponSlot)>,
+    unit_query: Query<&Owner, (With<TurretUnit>, Without<Turret>)>,
 ) {
     for apply_event in apply_events.iter() {
-        let turret_mod = match mod_query.get(apply_event.mod_entity) {
+        let _turret_mod = match mod_query.get(apply_event.mod_entity) {
             Ok(turret) => turret,
             Err(_) => continue,
         };
 
-        let (owner_entity, owner_transform, owner_weapon_slot) = match turret_owner.get(apply_event.target_entity) {
+        let (owner_entity, owner_transform, owner_weapon_slot) = match owner_query.get(apply_event.target_entity) {
             Ok(owner) => owner,
             Err(_) => continue,
         };
 
         let mut unit_exists = false;
-        for owner in turret_query.iter() {
+        for owner in unit_query.iter() {
             if owner_entity == owner.entity {
                 unit_exists = true;
             }

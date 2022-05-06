@@ -6,7 +6,7 @@ use crate::models::unit_size::UnitSize;
 pub fn fit_sprite_to_size_system(
     mut target_query: Query<(&mut Sprite, &UnitSize, Option<&mut ColliderType>), Changed<UnitSize>>
 ) {
-    for (mut sprite, unit_size, mut collider_type) in target_query.iter_mut() {
+    for (mut sprite, unit_size, collider_type) in target_query.iter_mut() {
         sprite.custom_size = Option::Some(unit_size.collider_size);
 
         if let Some(mut collider_type) = collider_type {

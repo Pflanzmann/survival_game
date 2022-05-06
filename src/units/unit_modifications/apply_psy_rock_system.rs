@@ -1,22 +1,22 @@
-use bevy::prelude::{BuildChildren, Color, Commands, Entity, EventReader, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
+use bevy::prelude::{Commands, Entity, EventReader, EventWriter, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
+use crate::models::behavior::teleport_to_target_behavior::TeleportToTargetBehavior;
 use crate::models::bullet::Bullet;
-use crate::models::collider::collider_type::ColliderType;
-use crate::models::collider::collision_weight::CollisionWeight;
+use crate::models::collision::collided_entities::DamagedEntities;
+use crate::models::collision::collider_type::ColliderType;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
-use crate::models::modifications::death_ball::{DeathBall, DeathBallUnit};
+use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::psy_rock::{PsyRock, PsyRockUnit};
 use crate::models::modifications::utils::owner::Owner;
 use crate::models::move_direction::MoveDirection;
-use crate::models::player::Player;
 use crate::models::player_aim_controlled::PlayerAimControlled;
-use crate::models::player_move_controlled::PlayerMoveControlled;
+use crate::models::sprite_move_rotation::SpriteMoveRotation;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
-use crate::models::unit_attributes::meele_attack_speed::MeeleAttackSpeed;
+use crate::models::unit_attributes::damage_interval::DamageInterval;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_size::UnitSize;
@@ -26,12 +26,13 @@ pub fn apply_psy_rock_system(
     mut commands: Commands,
     texture_handler: Res<TextureHandles>,
     mut apply_events: EventReader<ApplyModToTargetEvent>,
+    mut bullet_shot_event: EventWriter<BulletShotEvent>,
     mod_query: Query<&PsyRock, With<Modification>>,
     owner_query: Query<(Entity, &WeaponSlot)>,
-    turret_query: Query<&Owner, With<PsyRockUnit>>,
+    unit_query: Query<&Owner, With<PsyRockUnit>>,
 ) {
     for apply_event in apply_events.iter() {
-        let psy_rock = match mod_query.get(apply_event.mod_entity) {
+        let _psy_rock = match mod_query.get(apply_event.mod_entity) {
             Ok(death_ball) => death_ball,
             Err(_) => continue,
         };
@@ -42,7 +43,7 @@ pub fn apply_psy_rock_system(
         };
 
         let mut unit_exists = false;
-        for owner in turret_query.iter() {
+        for owner in unit_query.iter() {
             if owner_entity == owner.entity {
                 unit_exists = true;
             }
@@ -52,7 +53,7 @@ pub fn apply_psy_rock_system(
             continue;
         }
 
-        commands.spawn_bundle(SpriteBundle {
+        let bullet = commands.spawn_bundle(SpriteBundle {
             sprite: Sprite {
                 custom_size: Some(Vec2::new(160.0, 160.0)),
                 ..Default::default()
@@ -61,22 +62,40 @@ pub fn apply_psy_rock_system(
             transform: Transform::from_xyz(0.0, 0.0, SpriteLayer::GroundLevel.get_layer_z()),
             ..Default::default()
         })
+            .insert(Name::new("Psy Rock"))
             .insert(PsyRockUnit)
             .insert(Owner::new(owner_entity))
             .insert(PlayerAimControlled)
             .insert(MoveDirection { direction: Vec3::default() })
             .insert(AimDirection { direction: Vec3::default() })
             .insert(MoveSpeed::new(20.0))
-            .insert(Name::new("Psy Rock"))
             .insert(UnitSize { collider_size: Vec2::new(160.0, 160.0) })
             .insert(ColliderType::Circle(80.0))
-            .insert(CollisionWeight { weight: 0.5 })
-            .insert(MeeleAttackSpeed::new(60.0))
-            .insert(Damage::new(10.0))
-            .insert(Player)
-            .id();
-
+            .insert(DamagedEntities::default())
+            .insert(DamageInterval::new(60.0))
+            .insert(Damage::new(2.0))
+            .insert(Bullet { source_entity: owner_weapon_slot.weapon_entity })
+            .insert(SpriteMoveRotation)
+            .insert(TeleportToTargetBehavior::new(owner_entity, 3000.0, 300.0, 500.0, 0.0))
+            .id()
+            ;
 
         commands.entity(owner_entity).remove::<Reload>();
+
+        bullet_shot_event.send(BulletShotEvent { entity: bullet });
+    }
+}
+
+pub fn renew_mods_for_psy_rock_system(
+    mut bullet_shot_event: EventWriter<BulletShotEvent>,
+    mut apply_mod_events: EventReader<ApplyModToTargetEvent>,
+    unit_query: Query<(Entity, &Owner), With<PsyRockUnit>>,
+) {
+    for (entity, owner) in unit_query.iter() {
+        for event in apply_mod_events.iter() {
+            if owner.entity == event.target_entity {
+                bullet_shot_event.send(BulletShotEvent { entity });
+            }
+        }
     }
 }

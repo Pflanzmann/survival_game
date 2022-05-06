@@ -3,7 +3,7 @@ use serde::Deserialize;
 
 use crate::models::unit_attributes::attribute::Attribute;
 
-#[derive(Component, Deserialize, Copy, Clone)]
+#[derive(Component, Deserialize, Copy, Clone, Default)]
 pub struct Damage {
     base_amount: f32,
     bonus_amount: f32,

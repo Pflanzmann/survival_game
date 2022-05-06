@@ -1,4 +1,4 @@
-use bevy::prelude::{Deref, DerefMut, Plugin, SystemSet};
+use bevy::prelude::{Plugin, SystemSet};
 
 use crate::App;
 use crate::collision::calculate_quad_tree_system::calculate_quad_tree_system;
@@ -6,7 +6,6 @@ use crate::collision::enemy_bullet_collision_system::enemy_bullet_collision_syst
 use crate::collision::enemy_player_collision_system::enemy_player_collision_system;
 use crate::collision::item_player_collision_system::item_player_collision_system;
 use crate::collision::solid_body_collision_system::solid_body_collision_system;
-use crate::util::quad_tree::Quadtree;
 use crate::util::stage_label_helper::{in_collision, in_update};
 
 mod enemy_player_collision_system;
@@ -22,8 +21,6 @@ mod calculate_quad_tree_system;
 /// to events as well as possible despawns of entities. Otherwise we ran into problems with events
 /// that try to react on entities that don't exist anymore
 pub struct CollisionPlugin;
-
-const FIXED_TIMESTEP: f64 = 0.02;
 
 impl Plugin for CollisionPlugin {
     fn build(&self, app: &mut App) {
