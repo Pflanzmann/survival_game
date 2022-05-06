@@ -25,7 +25,7 @@ pub fn bullet_hit_system(
     mut damaged_event: EventWriter<DamagedEvent>,
     mut bullet_enemy_collision_events: EventReader<BulletEnemyCollisionEvent>,
     mut enemy_died_event: EventWriter<EnemyDiedEvent>,
-    mut bullets_query: Query<(&mut DamagedEntities, &Damage, Option<&HitLimit>), With<Bullet>>,
+    mut bullets_query: Query<(&mut DamagedEntities, &Damage, Option<&mut HitLimit>), With<Bullet>>,
     mut enemy_query: Query<(Entity, &mut Health), (With<Enemy>, Without<Bullet>)>,
 ) {
     for event in bullet_enemy_collision_events.iter() {
@@ -39,8 +39,8 @@ pub fn bullet_hit_system(
             Err(_) => continue,
         };
 
-        if let Some(hit_limit) = hit_limit {
-            if damaged_entities.len() >= hit_limit.get_total_amount() as usize {
+        if let Some(hit_limit) = hit_limit.as_ref() {
+            if hit_limit.hit_counter >= hit_limit.get_total_amount() as i32 {
                 continue;
             }
         }
@@ -59,8 +59,10 @@ pub fn bullet_hit_system(
             enemy_died_event.send(EnemyDiedEvent { enemy_entity })
         }
 
-        if let Some(hit_limit) = hit_limit {
-            if damaged_entities.len() >= hit_limit.get_total_amount() as usize {
+        if let Some(mut hit_limit) = hit_limit {
+            hit_limit.hit_counter += 1;
+
+            if hit_limit.hit_counter >= hit_limit.get_total_amount() as i32 {
                 bullet_stopped_event.send(BulletStoppedEvent { bullet_entity: event.bullet_entity });
                 continue;
             }

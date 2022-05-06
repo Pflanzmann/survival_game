@@ -12,6 +12,12 @@ use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::move_direction::MoveDirection;
 use crate::models::sprite_move_rotation::SpriteMoveRotation;
+use crate::models::unit_attributes::attribute::Attribute;
+use crate::models::unit_attributes::damage::Damage;
+use crate::models::unit_attributes::damage_interval::DamageInterval;
+use crate::models::unit_attributes::hit_limit::HitLimit;
+use crate::models::unit_attributes::move_speed::MoveSpeed;
+use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_size::UnitSize;
 
 /// A system to split the [Bullet] that has [SplitShot] applied to it.
@@ -53,10 +59,15 @@ pub fn split_shot_system(
                 facing_direction: MoveDirection { direction },
                 collider_entities: collided_entities.clone(),
             })
-                .insert(Name::new("Bullet"))
                 .insert(ChildBullet)
+                .insert(Name::new("Bullet"))
+                .insert(MoveSpeed::default())
+                .insert(Damage::default())
+                .insert(HitLimit::new(1.0))
+                .insert(TravelRange::new(2048.0))
                 .insert(SpriteMoveRotation)
-                .insert(ColliderType::Circle(128.0))
+                .insert(DamageInterval::new(60.0))
+                .insert(ColliderType::Circle(1.0))
                 .id();
 
             bullet_shot_event_writer.send(BulletShotEvent { entity: bullet });
