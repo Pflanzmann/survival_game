@@ -5,7 +5,7 @@ use crate::{SpriteLayer, TextureHandles};
 use crate::models::bullet::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::child_bullet::ChildBullet;
-use crate::models::collision::collided_entities::CollidedEntities;
+use crate::models::collision::collided_entities::DamagedEntities;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
@@ -21,7 +21,7 @@ pub fn split_shot_system(
     texture_handle: Res<TextureHandles>,
     mut bullet_shot_event_writer: EventWriter<BulletShotEvent>,
     mut bullet_stopped_events: EventReader<BulletStoppedEvent>,
-    bullet_query: Query<(&Transform, &Bullet, &CollidedEntities), With<SplitShot>>,
+    bullet_query: Query<(&Transform, &Bullet, &DamagedEntities), With<SplitShot>>,
 ) {
     for event in bullet_stopped_events.iter() {
         let (bullet_transform, bullet, collided_entities) = match bullet_query.get(event.bullet_entity) {

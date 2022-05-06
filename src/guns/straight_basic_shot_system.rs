@@ -7,7 +7,7 @@ use crate::models::aim_direction::AimDirection;
 use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 use crate::models::bullet::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
-use crate::models::collision::collided_entities::CollidedEntities;
+use crate::models::collision::collided_entities::DamagedEntities;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::move_direction::MoveDirection;
@@ -58,7 +58,7 @@ pub fn straight_basic_shot_system(
                 bullet: Bullet { source_entity: gun_entity },
                 unit_size: UnitSize { collider_size: Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y) },
                 facing_direction: MoveDirection { direction: holder_aim_direction.direction },
-                collider_entities: CollidedEntities::default(),
+                collider_entities: DamagedEntities::default(),
             }).insert(Name::new("Bullet"))
             .insert(SpriteMoveRotation)
             .insert(ColliderType::Circle(bullet_handle.basic_bullet.sprite_custom_size_x / 2.0))
