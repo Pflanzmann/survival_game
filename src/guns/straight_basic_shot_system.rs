@@ -64,7 +64,8 @@ pub fn straight_basic_shot_system(
                 unit_size: UnitSize { collider_size: Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y) },
                 facing_direction: MoveDirection { direction: holder_aim_direction.direction },
                 collider_entities: DamagedEntities::default(),
-            }).insert(Name::new("Bullet"))
+            })
+            .insert(Name::new("Bullet"))
             .insert(MoveSpeed::default())
             .insert(Damage::default())
             .insert(HitLimit::new(1.0))
