@@ -22,8 +22,8 @@ pub fn apply_death_ball_system(
     unit_query: Query<&Owner, With<DeathBallUnit>>,
 ) {
     for apply_event in apply_events.iter() {
-        let death_ball = match mod_query.get(apply_event.mod_entity) {
-            Ok(death_ball) => death_ball,
+        let modification = match mod_query.get(apply_event.mod_entity) {
+            Ok(modification) => modification,
             Err(_) => continue,
         };
 
@@ -43,11 +43,11 @@ pub fn apply_death_ball_system(
             continue;
         }
 
-        let desired_pos = Vec3::new(death_ball.rotation_distance, 0.0, 0.0);
+        let desired_pos = Vec3::new(modification.rotation_distance, 0.0, 0.0);
 
         let base = commands.spawn()
             .insert(Transform::default())
-            .insert(UnitRotation { angle: death_ball.rotation_speed })
+            .insert(UnitRotation { angle: modification.rotation_speed })
             .insert(GlobalTransform::default())
             .id();
 
@@ -67,7 +67,7 @@ pub fn apply_death_ball_system(
             .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
             .insert(AimDirection { direction: Vec3::new(1.0, 0.0, 0.0) })
             .insert(AimAtClosestTargetBehavior)
-            .insert(UnitRotation { angle: -death_ball.rotation_speed })
+            .insert(UnitRotation { angle: -modification.rotation_speed })
             .insert(Reload::new(40.0))
             .id();
 

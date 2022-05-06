@@ -33,8 +33,8 @@ pub fn apply_psy_rock_system(
     unit_query: Query<&Owner, With<PsyRockUnit>>,
 ) {
     for apply_event in apply_events.iter() {
-        let _psy_rock = match mod_query.get(apply_event.mod_entity) {
-            Ok(death_ball) => death_ball,
+        let _modification = match mod_query.get(apply_event.mod_entity) {
+            Ok(modification) => modification,
             Err(_) => continue,
         };
 

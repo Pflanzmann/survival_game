@@ -20,6 +20,7 @@ pub struct TextureHandles {
     pub slime_unit: Handle<Image>,
     pub death_ball_unit: Handle<Image>,
     pub psy_rock_unit: Handle<Image>,
+    pub radiation: Handle<Image>,
 }
 
 pub fn preload_texture_system(
@@ -39,6 +40,7 @@ pub fn preload_texture_system(
     texture_handles.slime_unit = asset_server.load("sprites/slime.png");
     texture_handles.death_ball_unit = asset_server.load("sprites/death_ball.png");
     texture_handles.psy_rock_unit = asset_server.load("sprites/psy_rock.png");
+    texture_handles.radiation = asset_server.load("sprites/radiation.png");
 
     texture_handles.player_sprite = asset_server.load(&player_handles.player_one.sprite_path);
     texture_handles.enemy_goblin = asset_server.load(&enemy_handle.goblin.sprite_path);

@@ -20,8 +20,8 @@ pub fn apply_slime_system(
     unit_query: Query<&Owner, With<SlimeUnit>>,
 ) {
     for apply_event in apply_events.iter() {
-        let _slime_mod = match mod_query.get(apply_event.mod_entity) {
-            Ok(slime) => slime,
+        let _modification = match mod_query.get(apply_event.mod_entity) {
+            Ok(modification) => modification,
             Err(_) => continue,
         };
 

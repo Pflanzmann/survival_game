@@ -1,4 +1,4 @@
-use bevy::prelude::{Entity, Query, ResMut, Transform, Vec2, With, Without};
+use bevy::prelude::{Entity, GlobalTransform, Query, ResMut, Vec2, With, Without};
 
 use crate::models::bullet::Bullet;
 use crate::models::collision::collider_type::ColliderType;
@@ -13,9 +13,9 @@ use crate::util::quad_tree::{QuadData, Quadtree};
 pub fn calculate_quad_tree_system(
     mut enemy_quad_tree_holder: ResMut<SolidBodyQuadTree>,
     mut item_tree_holder: ResMut<ItemCollisionQuadTree>,
-    player_query: Query<&Transform, With<Player>>,
-    entity_query: Query<(Entity, &Transform, &ColliderType, &CollisionWeight), (Without<Bullet>, Without<Item>)>,
-    item_query: Query<(Entity, &Transform, &ColliderType), With<Item>>,
+    player_query: Query<&GlobalTransform, With<Player>>,
+    entity_query: Query<(Entity, &GlobalTransform, &ColliderType, &CollisionWeight), (Without<Bullet>, Without<Item>)>,
+    item_query: Query<(Entity, &GlobalTransform, &ColliderType), With<Item>>,
 ) {
     for player_position in player_query.iter() {
         let quad_position = player_position.translation.truncate();

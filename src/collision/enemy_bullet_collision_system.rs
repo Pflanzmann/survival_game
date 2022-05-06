@@ -1,16 +1,16 @@
-use bevy::prelude::{Entity, EventWriter, Query, Res, Transform, Vec2, With};
+use bevy::prelude::{Entity, EventWriter, GlobalTransform, Query, Res, Vec2, With};
 
 use crate::models::bullet::Bullet;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
 use crate::models::events::bullet_enemy_collision_event::BulletEnemyCollisionEvent;
-use crate::models::resources::solid_body_quad_tree::{SolidBodyQuadTree, SolidBodyData};
+use crate::models::resources::solid_body_quad_tree::{SolidBodyData, SolidBodyQuadTree};
 use crate::util::quad_tree::QuadData;
 
 pub fn enemy_bullet_collision_system(
     mut bullet_hit_event: EventWriter<BulletEnemyCollisionEvent>,
     quad_tree_holder: Res<SolidBodyQuadTree>,
-    bullet_query: Query<(Entity, &Transform, &ColliderType), With<Bullet>>,
+    bullet_query: Query<(Entity, &GlobalTransform, &ColliderType), With<Bullet>>,
 ) {
     for (bullet_entity, bullet_transform, bullet_collider_type) in bullet_query.iter() {
         let mut check_entity_list: Vec<QuadData<SolidBodyData>> = Vec::new();
@@ -26,21 +26,16 @@ pub fn enemy_bullet_collision_system(
             &size,
         );
 
-        let mut colliding_entity: Option<Entity> = None;
-        let mut last_distance: f32 = 1000000000.0;
+        let mut colliding_entities: Vec<Entity> = Vec::new();
         for quad_data in check_entity_list.iter() {
             if bullet_collider_type.is_colliding(&bullet_transform.translation.truncate(), &quad_data.data.collider_type, &quad_data.position.truncate()) {
-                let current_distance = quad_data.position.distance(bullet_transform.translation);
-                if current_distance < last_distance {
-                    colliding_entity = Some(quad_data.data.entity);
-                    last_distance = current_distance;
-                }
+                colliding_entities.push(quad_data.data.entity);
             }
         }
 
-        if let Some(entity) = colliding_entity {
+        for colliding_entity in colliding_entities.iter() {
             bullet_hit_event.send(BulletEnemyCollisionEvent {
-                enemy_entity: entity,
+                enemy_entity: *colliding_entity,
                 bullet_entity,
             })
         }
