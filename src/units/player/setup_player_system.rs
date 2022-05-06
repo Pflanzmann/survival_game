@@ -1,9 +1,11 @@
-use bevy::core::Timer;
 use bevy::prelude::{Commands, Name, Res, ResMut, SpriteSheetBundle, TextureAtlasSprite, Transform, Vec2, Vec3};
 
 use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::models::aim_direction::AimDirection;
+use crate::models::animation::animation_state::CurrentAnimationState;
+use crate::models::animation::idle_animation_component::IdleAnimation;
+use crate::models::animation::walking_animation_component::{MoveAnimationDown, MoveAnimationSide, MoveAnimationUp};
 use crate::models::bundles::player_bundle::PlayerBundle;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::collider_weight::ColliderWeight;
@@ -35,7 +37,7 @@ pub fn setup_player_system(
                 custom_size: Some(Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y)),
                 ..Default::default()
             },
-            texture_atlas: atlas_handles.player_idle_atlas.clone(),
+            texture_atlas: atlas_handles.player_atlas.clone(),
             transform: Transform::from_xyz(0.0, 0.0, SpriteLayer::GroundLevel.get_layer_z()),
             ..Default::default()
         },
@@ -60,5 +62,11 @@ pub fn setup_player_system(
         .insert(SolidBodyCollider {
             offset: Vec3::new(0.0, -80.0, 0.0),
             collider_type: ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 3.0),
-        }).insert(AnimationTimer(Timer::from_seconds(0.3, true)));
+        }).insert(AnimationTimer(Timer::from_seconds(0.3, true)))
+        .insert(ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 2.0))
+        .insert(IdleAnimation::new(0.0, 3, 0, 10))
+        .insert(MoveAnimationSide::new(0.0, 4, 4, 15))
+        .insert(MoveAnimationUp::new(0.0, 4, 5, 15))
+        .insert(MoveAnimationDown::new(0.0, 4, 3, 15))
+        .insert(CurrentAnimationState::new());
 }

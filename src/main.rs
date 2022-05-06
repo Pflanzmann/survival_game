@@ -6,6 +6,7 @@ use bevy::ecs::schedule::StageLabel;
 use bevy::prelude::SystemStage;
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
+use crate::animation::AnimationPlugin;
 
 use crate::assets_handling::AssetHandlingPlugin;
 use crate::assets_handling::preload_texture_system::TextureHandles;
@@ -40,6 +41,7 @@ mod navigation;
 mod spawner;
 mod audio;
 mod debug;
+mod animation;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, StageLabel)]
 pub enum SetupStages {
@@ -96,6 +98,7 @@ fn main() {
 
         .add_plugin(UiPlugin)
         .add_plugin(CustomAudioPlugin)
+        .add_plugin(AnimationPlugin)
         .add_plugin(NavigationPlugin)
         .add_plugin(EventsPlugin)
         .add_plugin(InputPlugin)

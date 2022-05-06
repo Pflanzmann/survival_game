@@ -31,6 +31,7 @@ pub mod attribute_container;
 pub mod attribute_container_slot;
 pub mod child_bullet;
 pub mod sprite_aim_rotation;
+pub mod animation;
 pub mod animation_components;
 pub mod input;
 pub mod mirror_aim_to_move_direction;
