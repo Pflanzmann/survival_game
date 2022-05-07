@@ -28,7 +28,7 @@ pub fn cmd_input_system(
             return;
         }
 
-        debug_event.send(DebugCommandEvent { debug_command: string.clone() });
+        debug_event.send(DebugCommandEvent::send_command(string.clone()));
         string.clear();
         debug_history.scroll_index = 0;
         for mut text in text_query.iter_mut() {

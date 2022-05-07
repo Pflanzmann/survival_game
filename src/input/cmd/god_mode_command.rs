@@ -17,25 +17,17 @@ pub fn god_mode_command(
     player_query: Query<Entity, With<Player>>,
 ) {
     for debug_command_event in debug_command_events.iter() {
-        let command: String = debug_command_event.debug_command.clone();
-        let mut arguments = command.split_whitespace();
-
-        let key = match arguments.next() {
-            Some(value) => value.to_lowercase(),
-            None => continue,
-        };
-
-        if key != KEY {
+        if debug_command_event.key != KEY {
             continue;
         }
 
-        let parameter = match arguments.next() {
+        let value = match debug_command_event.values.first() {
             Some(value) => value.to_lowercase(),
             None => continue,
         };
 
         let mut counter = 0;
-        match parameter.to_lowercase().as_str() {
+        match value.as_str() {
             "on" => {
                 for entity in player_query.iter() {
                     commands.entity(entity).remove::<Health>();

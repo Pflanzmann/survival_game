@@ -15,10 +15,10 @@ pub fn update_console_history(
         if let Some(first) = console_history.command_history.first() {
             if *first != event.debug_command {
                 console_history.command_history.insert(0, event.debug_command.clone());
-                console_history.log.insert(0, format!("{}\n", event.debug_command.clone()));
             }
         }
 
+        console_history.log.insert(0, format!("{}\n", event.debug_command.clone()));
         while console_history.command_history.len() > 30 {
             console_history.command_history.pop();
         }
