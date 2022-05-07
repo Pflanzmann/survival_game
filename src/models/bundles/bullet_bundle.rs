@@ -1,7 +1,7 @@
 use bevy::ecs::bundle::Bundle;
 
 use crate::models::bullet::Bullet;
-use crate::models::collision::collided_entities::DamagedEntities;
+use crate::models::collision::damaged_entities::DamagedEntities;
 use crate::models::unit_size::UnitSize;
 use crate::models::move_direction::MoveDirection;
 

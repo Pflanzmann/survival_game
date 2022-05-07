@@ -7,7 +7,7 @@ use crate::models::aim_direction::AimDirection;
 use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 use crate::models::bullet::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
-use crate::models::collision::collided_entities::DamagedEntities;
+use crate::models::collision::damaged_entities::DamagedEntities;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::move_direction::MoveDirection;
