@@ -5,13 +5,14 @@ use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::models::aim_direction::AimDirection;
 use crate::models::bundles::player_bundle::PlayerBundle;
-use crate::models::collision::collided_entities::DamagedEntities;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::collision_weight::CollisionWeight;
-use crate::models::move_direction::MoveDirection;
-use crate::models::player::Player;
+use crate::models::collision::damaged_entities::DamagedEntities;
 use crate::models::input::player_aim_controlled::PlayerAimControlled;
 use crate::models::input::player_move_controlled::PlayerMoveControlled;
+use crate::models::mod_register::ModRegister;
+use crate::models::move_direction::MoveDirection;
+use crate::models::player::Player;
 use crate::models::sprite_flip::SpriteFlip;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_attributes::attribute::Attribute;
@@ -48,6 +49,7 @@ pub fn setup_player_system(
             damage: Damage::new(player_handles.player_one.damage),
             health: Health::new(player_handles.player_one.health),
         })
+        .insert(ModRegister::default())
         .insert(PlayerMoveControlled)
         .insert(PlayerAimControlled)
         .insert(SpriteFlip)
