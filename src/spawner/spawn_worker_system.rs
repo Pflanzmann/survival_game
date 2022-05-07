@@ -5,7 +5,7 @@ use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
 use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
 use crate::models::behavior::steering_behavior::SteeringBehavior;
 use crate::models::bundles::enemy_bundle::EnemyBundle;
-use crate::models::collision::collided_entities::DamagedEntities;
+use crate::models::collision::damaged_entities::DamagedEntities;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::collision_weight::CollisionWeight;
 use crate::models::enemy::Enemy;

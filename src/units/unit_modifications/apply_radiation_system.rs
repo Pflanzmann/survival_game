@@ -2,7 +2,7 @@ use bevy::prelude::{BuildChildren, Commands, Entity, EventReader, Name, Query, R
 
 use crate::models::behavior::rotate_behavior::UnitRotation;
 use crate::models::bullet::Bullet;
-use crate::models::collision::collided_entities::DamagedEntities;
+use crate::models::collision::damaged_entities::DamagedEntities;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::modifications::descriptors::modification::Modification;

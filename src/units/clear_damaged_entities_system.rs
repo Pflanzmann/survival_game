@@ -1,6 +1,6 @@
 use bevy::prelude::{Query, Res, Time};
 
-use crate::models::collision::collided_entities::DamagedEntities;
+use crate::models::collision::damaged_entities::DamagedEntities;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage_interval::DamageInterval;
 

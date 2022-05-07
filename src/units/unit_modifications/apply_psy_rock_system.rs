@@ -4,7 +4,7 @@ use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
 use crate::models::behavior::teleport_to_target_behavior::TeleportToTargetBehavior;
 use crate::models::bullet::Bullet;
-use crate::models::collision::collided_entities::DamagedEntities;
+use crate::models::collision::damaged_entities::DamagedEntities;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::events::bullet_shot_event::BulletShotEvent;

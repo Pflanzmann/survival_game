@@ -1,6 +1,6 @@
 use bevy::prelude::{Entity, EventReader, EventWriter, Query, Res, Time, With, Without};
 
-use crate::models::collision::collided_entities::{DamagedEntities, DamagedEntity};
+use crate::models::collision::damaged_entities::{DamagedEntities, DamagedEntity};
 use crate::models::enemy::Enemy;
 use crate::models::events::enemy_died_event::EnemyDiedEvent;
 use crate::models::events::player_died_event::PlayerDiedEvent;
