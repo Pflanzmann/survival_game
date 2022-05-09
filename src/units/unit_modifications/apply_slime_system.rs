@@ -41,7 +41,7 @@ pub fn apply_slime_system(
             continue;
         }
 
-        let pos_vec = get_close_position_2d(*owner_transform, 300.0, 1000.0);
+        let pos_vec = get_close_position_2d(owner_transform.translation.x, owner_transform.translation.y, 300.0, 1000.0);
 
         commands.spawn_bundle(SpriteBundle {
             sprite: Sprite {

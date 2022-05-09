@@ -1,10 +1,11 @@
-use bevy::prelude::{Transform, Vec2};
+use bevy::prelude::Vec2;
 use rand::Rng;
 
 pub fn get_close_position_2d(
-    position: Transform,
-    prox_min :f32,
-    prox_max : f32
+    position_x: f32,
+    position_y: f32,
+    prox_min: f32,
+    prox_max: f32,
 ) -> Vec2 {
     let mut result = Vec2::new(0.0, 0.0);
 
@@ -16,15 +17,15 @@ pub fn get_close_position_2d(
     let rnd_y = rng.gen_range(prox_min..prox_max);
 
     if rnd_signed_x < 0 {
-        result[0] = position.translation.x - rnd_x
+        result[0] = position_x - rnd_x
     } else {
-        result[0] = position.translation.x + rnd_x
+        result[0] = position_x + rnd_x
     }
 
     if rnd_signed_y < 0 {
-        result[1] = position.translation.y - rnd_y
+        result[1] = position_y - rnd_y
     } else {
-        result[1] = position.translation.y + rnd_y
+        result[1] = position_y + rnd_y
     }
     return result;
 }
