@@ -48,7 +48,7 @@ pub fn apply_turret_system(
             continue;
         }
 
-        let pos_vec = get_close_position_2d(*owner_transform, 300.0, 1000.0);
+        let pos_vec = get_close_position_2d(owner_transform.translation.x, owner_transform.translation.y, 300.0, 1000.0);
 
         commands.spawn_bundle(SpriteBundle {
             sprite: Sprite {
@@ -73,6 +73,7 @@ pub fn apply_turret_system(
             .insert(AimDirection { direction: Vec2::new(1.0, 0.0) })
             .insert(SpinAimBehavior)
             .insert(TeleportToTargetBehavior::new(owner_entity, 2500.0, 300.0, 700.0, 0.0))
-            .insert(Reload::new(40.0));
+            .insert(Reload::new(40.0))
+            .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) });
     }
 }
