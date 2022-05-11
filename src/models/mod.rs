@@ -33,3 +33,4 @@ pub mod child_bullet;
 pub mod sprite_aim_rotation;
 pub mod input;
 pub mod mirror_aim_to_move_direction;
+pub mod damaged_entities;

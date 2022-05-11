@@ -1,7 +1,6 @@
-use bevy::ecs::component::Component;
 use bevy::prelude::Vec2;
 
-#[derive(Component, Copy, Clone)]
+#[derive(Copy, Clone)]
 pub enum ColliderType {
     Circle(f32),
     Rectangle(Vec2),

@@ -36,6 +36,7 @@ mod bullet_modifications;
 mod rotate_unit_system;
 mod clear_damaged_entities_system;
 mod mirror_aim_to_move_direction_system;
+mod hit_system;
 
 
 /// This plugin manages the everything related to [Unit] systems and how they get applied.

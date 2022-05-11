@@ -4,11 +4,10 @@ use crate::{App, AppState};
 use crate::units::bullet_modifications::BulletModificationsPlugin;
 use crate::units::bullets::bullet_check_stop_system::bullet_check_stop_system;
 use crate::units::bullets::bullet_despawn_system::bullet_despawn_system;
-use crate::units::bullets::bullet_hit_system::bullet_hit_system;
+use crate::units::hit_system::hit_system;
 use crate::util::stage_label_helper::{in_last, in_pre_update, in_update};
 
 mod bullet_check_stop_system;
-mod bullet_hit_system;
 mod bullet_despawn_system;
 
 /// This plugin manages the [Bullet] systems and how they get applied.
@@ -31,7 +30,7 @@ impl Plugin for BulletPlugin {
 
             .add_system_set(
                 in_pre_update(SystemSet::on_update(AppState::InGame)
-                    .with_system(bullet_hit_system)
+                    .with_system(hit_system)
                 )
             )
 

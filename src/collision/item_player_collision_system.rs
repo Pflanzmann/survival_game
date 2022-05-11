@@ -1,33 +1,33 @@
 use bevy::prelude::{*};
 
-use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
+use crate::models::collision::solid_body_collider::SolidBodyCollider;
 use crate::models::events::item_collision_event::ItemCollisionEvent;
 use crate::models::player::Player;
 use crate::models::resources::item_collision_quad_tree::{ItemCollisionQuadTree, ItemData};
 use crate::util::quad_tree::QuadData;
 
 pub fn item_player_collision_system(
-    mut coin_pickup_event: EventWriter<ItemCollisionEvent>,
-    mut player_query: Query<(Entity, &Transform, &ColliderType), With<Player>>,
-    item_tree_holder: Res<ItemCollisionQuadTree>,
+    mut item_collision_event: EventWriter<ItemCollisionEvent>,
+    mut player_query: Query<(Entity, &Transform, &SolidBodyCollider), With<Player>>,
+    item_quad_tree: Res<ItemCollisionQuadTree>,
 ) {
     for (player_entity, player_transform, player_collider_size) in player_query.iter_mut() {
-        let size = match player_collider_size {
-            Circle(radius) => Vec2::new(*radius, *radius),
-            Rectangle(size) => *size,
+        let size = match player_collider_size.collider_type {
+            Circle(radius) => Vec2::new(radius, radius),
+            Rectangle(size) => size,
         };
 
         let mut check_entity_list: Vec<QuadData<ItemData>> = Vec::new();
-        item_tree_holder.query_entities(
+        item_quad_tree.query_entities(
             &mut check_entity_list,
             &player_transform.translation,
             &size,
         );
 
         for quad_data in check_entity_list.iter() {
-            if quad_data.data.collider_type.is_colliding(&quad_data.position.truncate(), player_collider_size, &player_transform.translation.truncate()) {
-                coin_pickup_event.send(ItemCollisionEvent { player_entity, item_entity: quad_data.data.entity });
+            if quad_data.data.collider_type.is_colliding(&quad_data.position.truncate(), &player_collider_size.collider_type, &player_transform.translation.truncate()) {
+                item_collision_event.send(ItemCollisionEvent { player_entity, item_entity: quad_data.data.entity });
             }
         }
     }

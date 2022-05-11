@@ -1,8 +1,8 @@
 use bevy::prelude::{Entity, EventReader, EventWriter, Query, Res, Time, With, Without};
 
-use crate::models::collision::damaged_entities::{DamagedEntities, DamagedEntity};
+use crate::models::damaged_entities::{DamagedEntities, DamagedEntity};
 use crate::models::enemy::Enemy;
-use crate::models::events::enemy_died_event::EnemyDiedEvent;
+use crate::models::events::target_died_event::TargetDiedEvent;
 use crate::models::events::player_died_event::PlayerDiedEvent;
 use crate::models::events::player_enemy_collision_event::PlayerEnemyCollisionEvent;
 use crate::models::player::Player;
@@ -13,7 +13,7 @@ use crate::models::unit_attributes::health::Health;
 pub fn player_hit_system(
     time: Res<Time>,
     mut player_enemy_collision_events: EventReader<PlayerEnemyCollisionEvent>,
-    mut enemy_died_event: EventWriter<EnemyDiedEvent>,
+    mut enemy_died_event: EventWriter<TargetDiedEvent>,
     mut player_died_event: EventWriter<PlayerDiedEvent>,
     mut player_query: Query<(Entity, Option<&mut Health>, &Damage, &mut DamagedEntities), (With<Player>, Without<Enemy>)>,
     mut enemy_query: Query<(Entity, Option<&mut Health>, &Damage, &mut DamagedEntities), (With<Enemy>, Without<Player>)>,
@@ -48,7 +48,7 @@ pub fn player_hit_system(
             if let Some(mut enemy_health) = enemy_health {
                 enemy_health.damage(player_damage.get_total_amount());
                 if enemy_health.get_current_health() <= 0.0 {
-                    enemy_died_event.send(EnemyDiedEvent { enemy_entity })
+                    enemy_died_event.send(TargetDiedEvent { target_entity: enemy_entity })
                 }
             }
         }
