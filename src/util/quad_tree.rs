@@ -2,13 +2,9 @@ use bevy::prelude::{Vec2, Vec3};
 
 #[derive(Copy, Clone)]
 pub struct QuadData<T> where T: Copy + Clone {
-    // pub entity: Entity,
     pub position: Vec3,
     pub size: Vec2,
-
     pub data: T,
-    // pub collider_type: ColliderType,
-    // pub collision_weight: f32,
 }
 
 pub struct Quadtree<T> where T: Copy + Clone {

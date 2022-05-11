@@ -6,8 +6,9 @@ use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::models::aim_direction::AimDirection;
 use crate::models::bundles::player_bundle::PlayerBundle;
 use crate::models::collision::collider_type::ColliderType;
-use crate::models::collision::collision_weight::CollisionWeight;
-use crate::models::collision::damaged_entities::DamagedEntities;
+use crate::models::collision::collider_weight::ColliderWeight;
+use crate::models::collision::solid_body_collider::SolidBodyCollider;
+use crate::models::damaged_entities::DamagedEntities;
 use crate::models::input::player_aim_controlled::PlayerAimControlled;
 use crate::models::input::player_move_controlled::PlayerMoveControlled;
 use crate::models::mod_register::ModRegister;
@@ -55,7 +56,9 @@ pub fn setup_player_system(
         .insert(SpriteFlip)
         .insert(DamagedEntities::default())
         .insert(DamageInterval::new(60.0))
-        .insert(CollisionWeight { weight: 0.8 })
-        .insert(ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 2.0))
-        .insert(AnimationTimer(Timer::from_seconds(0.3, true)));
+        .insert(ColliderWeight { weight: 0.8 })
+        .insert(SolidBodyCollider {
+            offset: Vec3::new(0.0, -80.0, 0.0),
+            collider_type: ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 3.0),
+        }).insert(AnimationTimer(Timer::from_seconds(0.3, true)));
 }

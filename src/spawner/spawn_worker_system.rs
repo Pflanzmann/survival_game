@@ -5,9 +5,11 @@ use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
 use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
 use crate::models::behavior::steering_behavior::SteeringBehavior;
 use crate::models::bundles::enemy_bundle::EnemyBundle;
-use crate::models::collision::damaged_entities::DamagedEntities;
 use crate::models::collision::collider_type::ColliderType;
-use crate::models::collision::collision_weight::CollisionWeight;
+use crate::models::collision::collider_weight::ColliderWeight;
+use crate::models::collision::hit_box_collider::HitBoxCollider;
+use crate::models::collision::solid_body_collider::SolidBodyCollider;
+use crate::models::damaged_entities::DamagedEntities;
 use crate::models::enemy::Enemy;
 use crate::models::move_direction::MoveDirection;
 use crate::models::player::Player;
@@ -51,13 +53,20 @@ pub fn spawn_worker_system(
                     move_speed: MoveSpeed::new(enemy_handles.goblin.move_speed),
                     damage: Damage::new(enemy_handles.goblin.damage),
                     health: Health::new(enemy_handles.goblin.health),
-                }).insert(Name::new("Goblin"))
+                })
+                .insert(Name::new("Goblin"))
                 .insert(SpriteFlip)
                 .insert(SteeringBehavior::default())
-                .insert(CollisionWeight { weight: 0.2 })
                 .insert(DamagedEntities::default())
                 .insert(DamageInterval::new(60.0))
-                .insert(ColliderType::Circle(enemy_handles.goblin.sprite_custom_size_x / 2.0))
+                .insert(ColliderWeight { weight: 0.2 })
+                .insert(SolidBodyCollider {
+                    offset: Vec3::new(0.0, -80.0, 0.0),
+                    collider_type: ColliderType::Circle(enemy_handles.goblin.sprite_custom_size_x / 3.0),
+                })
+                .insert(HitBoxCollider {
+                    collider_type: ColliderType::Circle(enemy_handles.goblin.sprite_custom_size_x / 2.0)
+                })
                 .insert(ChaseTargetBehavior { target: player_entity, proximity: 0.0 })
             ;
         }
