@@ -1,16 +1,16 @@
 use bevy::ecs::component::Component;
-use bevy::math::Vec3;
-use bevy::prelude::Entity;
+use bevy::prelude::Vec2;
 
 #[derive(Component)]
 pub struct TeleportingScript {
-    pub timer: f32,
-    pub target_pos: Vec3,
-    pub did_port: bool
+    pub progress: f32,
+    pub duration: f32,
+    pub target_pos: Vec2,
+    pub did_port: bool,
 }
 
 impl TeleportingScript {
-    pub fn new(target: Vec3) -> Self {
-        Self { timer: 0.0, target_pos: target, did_port: false }
+    pub fn new(target: Vec2, duration: f32) -> Self {
+        Self { progress: 0.0, duration: duration, target_pos: target, did_port: false }
     }
 }

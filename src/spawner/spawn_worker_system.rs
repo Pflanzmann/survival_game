@@ -30,7 +30,7 @@ pub fn spawn_worker_system(
     player_query: Query<Entity, With<Player>>,
 ) {
     for player_entity in player_query.iter() {
-        for _ in 0..0 {
+        for _ in 0..50 {
             let spawn_task = match spawn_task_receiver.consume_task() {
                 None => break,
                 Some(task) => task,
