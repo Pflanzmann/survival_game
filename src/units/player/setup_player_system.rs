@@ -25,7 +25,6 @@ use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_size::UnitSize;
-use crate::units::player::animate_player_system::AnimationTimer;
 
 pub fn setup_player_system(
     mut commands: Commands,
