@@ -69,7 +69,7 @@ pub fn apply_psy_rock_system(
             .insert(Owner::new(owner_entity))
             .insert(PlayerAimControlled)
             .insert(MoveDirection { direction: Vec3::default() })
-            .insert(AimDirection { direction: Vec3::default() })
+            .insert(AimDirection::default())
             .insert(MirrorAimToMoveDirection)
             .insert(MoveSpeed::new(20.0))
             .insert(UnitSize { collider_size: Vec2::new(160.0, 160.0) })

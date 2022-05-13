@@ -58,7 +58,7 @@ pub fn apply_turret_system(
             .insert(Owner::new(owner_entity))
             .insert(WeaponSlot { weapon_entity: owner_weapon_slot.weapon_entity })
             .insert(Name::new("Turret"))
-            .insert(AimDirection { direction: Vec3::new(1.0, 0.0, 0.0) })
+            .insert(AimDirection::default())
             .insert(SpinAimBehavior)
             .insert(TeleportToTargetBehavior::new(owner_entity, 2500.0, 300.0, 700.0, 0.0))
             .insert(Reload::new(40.0));

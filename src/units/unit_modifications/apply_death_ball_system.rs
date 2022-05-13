@@ -65,7 +65,7 @@ pub fn apply_death_ball_system(
             .insert(WeaponSlot { weapon_entity: owner_weapon_slot.weapon_entity })
             .insert(Name::new("DeathBall"))
             .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
-            .insert(AimDirection { direction: Vec3::new(1.0, 0.0, 0.0) })
+            .insert(AimDirection::default())
             .insert(AimAtClosestTargetBehavior)
             .insert(UnitRotation { angle: -modification.rotation_speed })
             .insert(Reload::new(40.0))
