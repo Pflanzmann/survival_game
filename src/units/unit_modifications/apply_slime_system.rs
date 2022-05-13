@@ -56,7 +56,7 @@ pub fn apply_slime_system(
             .insert(Owner::new(owner_entity))
             .insert(Name::new("Slime"))
             .insert(ChaseTargetBehavior { target: owner_entity, proximity: 200.0 })
-            .insert(MoveDirection { direction: Vec3::default() })
+            .insert(MoveDirection::default())
             .insert(MoveSpeed::new(6.0));
     }
 }

@@ -64,7 +64,7 @@ pub fn straight_basic_shot_system(
             .insert_bundle(BulletBundle {
                 bullet: Bullet { source_entity: gun_entity },
                 unit_size: UnitSize { collider_size: Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y) },
-                facing_direction: MoveDirection { direction: holder_aim_direction.direction.extend(0.0) },
+                facing_direction: MoveDirection { direction: holder_aim_direction.direction },
                 collider_entities: DamagedEntities::default(),
             })
             .insert(Name::new("Bullet"))

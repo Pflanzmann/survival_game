@@ -49,7 +49,7 @@ pub fn spawn_worker_system(
                 .insert_bundle(EnemyBundle {
                     enemy: Enemy,
                     unit_size: UnitSize { collider_size: Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y) },
-                    facing_direction: MoveDirection { direction: Vec3::default() },
+                    facing_direction: MoveDirection::default(),
                     move_speed: MoveSpeed::new(enemy_handles.goblin.move_speed),
                     damage: Damage::new(enemy_handles.goblin.damage),
                     health: Health::new(enemy_handles.goblin.health),
@@ -61,7 +61,7 @@ pub fn spawn_worker_system(
                 .insert(DamageInterval::new(60.0))
                 .insert(ColliderWeight { weight: 0.2 })
                 .insert(SolidBodyCollider {
-                    offset: Vec3::new(0.0, -80.0, 0.0),
+                    offset: Vec2::new(0.0, -80.0),
                     collider_type: ColliderType::Circle(enemy_handles.goblin.sprite_custom_size_x / 3.0),
                 })
                 .insert(HitBoxCollider {

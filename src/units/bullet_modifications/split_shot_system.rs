@@ -39,10 +39,10 @@ pub fn split_shot_system(
         let random_rotation = random::<f32>();
 
         let directions = vec![
-            Vec3::new(1.0 - random_rotation, random_rotation, 0.0).normalize(),
-            Vec3::new(-random_rotation, 1.0 - random_rotation, 0.0).normalize(),
-            Vec3::new(-1.0 + random_rotation, -random_rotation, 0.0).normalize(),
-            Vec3::new(random_rotation, -1.0 + random_rotation, 0.0).normalize(),
+            Vec2::new(1.0 - random_rotation, random_rotation).normalize(),
+            Vec2::new(-random_rotation, 1.0 - random_rotation).normalize(),
+            Vec2::new(-1.0 + random_rotation, -random_rotation).normalize(),
+            Vec2::new(random_rotation, -1.0 + random_rotation).normalize(),
         ];
 
         for direction in directions {

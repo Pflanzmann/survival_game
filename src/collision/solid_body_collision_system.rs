@@ -16,7 +16,7 @@ pub fn solid_body_collision_system(
             Rectangle(size) => size,
         };
 
-        let self_position = transform.translation + solid_body_collider.offset;
+        let self_position = transform.translation.truncate() + solid_body_collider.offset;
 
         let mut collision_resolutions: Vec2 = Vec2::default();
         let mut collision_resolutions_counter = 0.0;
@@ -24,7 +24,7 @@ pub fn solid_body_collision_system(
         let mut check_entity_list: Vec<QuadData<SolidBodyData>> = Vec::new();
         quad_tree_holder.query_entities(
             &mut check_entity_list,
-            &self_position,
+            &self_position.extend(0.0),
             &size,
         );
 
@@ -33,9 +33,9 @@ pub fn solid_body_collision_system(
                 continue;
             }
 
-            if solid_body_collider.collider_type.is_colliding(&self_position.truncate(), &quad_data.data.collider_type, &quad_data.position.truncate()) {
+            if solid_body_collider.collider_type.is_colliding(&self_position, &quad_data.data.collider_type, &quad_data.position.truncate()) {
                 let resolution_position = solid_body_collider.collider_type.get_collision_resolution_position(
-                    &self_position.truncate(),
+                    &self_position,
                     collision_weight.weight,
                     &quad_data.data.collider_type,
                     &quad_data.position.truncate(),
@@ -48,7 +48,7 @@ pub fn solid_body_collision_system(
         }
 
         if collision_resolutions.length() > 0.0 {
-            transform.translation = (collision_resolutions / collision_resolutions_counter).extend(transform.translation.z) - solid_body_collider.offset;
+            transform.translation = ((collision_resolutions / collision_resolutions_counter) - solid_body_collider.offset).extend(transform.translation.z);
         }
     }
 }

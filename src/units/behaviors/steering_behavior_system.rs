@@ -19,12 +19,12 @@ pub fn steering_behavior_system(
 
         let mut check_entity_list: Vec<QuadData<SolidBodyData>> = Vec::new();
 
-        let unit_position = transform.translation + solid_body_collider.offset;
+        let unit_position = transform.translation.truncate() + solid_body_collider.offset;
         let check_position = unit_position + (move_direction.direction * (size.x * 0.5));
 
         quad_tree_holder.query_entities(
             &mut check_entity_list,
-            &check_position,
+            &check_position.extend(0.0),
             &(size * 2.0),
         );
 
@@ -35,8 +35,8 @@ pub fn steering_behavior_system(
                 continue;
             }
 
-            if solid_body_collider.collider_type.is_colliding(&check_position.truncate(), &quad_data.data.collider_type, &quad_data.position.truncate()) {
-                let distance = unit_position.truncate().distance(quad_data.position.truncate());
+            if solid_body_collider.collider_type.is_colliding(&check_position, &quad_data.data.collider_type, &quad_data.position.truncate()) {
+                let distance = unit_position.distance(quad_data.position.truncate());
 
                 if distance < closest_distance {
                     closest_distance = distance;
@@ -46,12 +46,12 @@ pub fn steering_behavior_system(
         }
 
         if let Some(thread) = closest_thread {
-            let new_check_position = (unit_position) + (move_direction.direction * (unit_position).distance(thread.position));
-            let avoid_direction = (new_check_position - thread.position).normalize_or_zero();
+            let new_check_position = (unit_position) + (move_direction.direction * (unit_position).distance(thread.position.truncate()));
+            let avoid_direction = (new_check_position - thread.position.truncate()).normalize_or_zero();
 
             let avoid_position = check_position + (avoid_direction * 300.0);
 
-            steering_behavior.direction = (move_direction.direction + (avoid_position - (unit_position))).normalize_or_zero().truncate();
+            steering_behavior.direction = (move_direction.direction + (avoid_position - (unit_position))).normalize_or_zero();
         } else {
             steering_behavior.direction = Vec2::default();
         }

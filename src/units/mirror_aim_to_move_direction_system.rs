@@ -8,6 +8,6 @@ pub fn mirror_aim_to_move_direction_system(
     mut unit_query: Query<(&mut MoveDirection, &AimDirection), (With<MirrorAimToMoveDirection>, Changed<AimDirection>)>,
 ) {
     for (mut move_direction, aim_direction) in unit_query.iter_mut() {
-        move_direction.direction = aim_direction.direction.extend(0.0);
+        move_direction.direction = aim_direction.direction;
     }
 }
