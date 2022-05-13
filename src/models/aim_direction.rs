@@ -1,8 +1,8 @@
 use bevy::ecs::component::Component;
-use bevy::prelude::Vec3;
+use bevy::prelude::Vec2;
 
-#[derive(Component)]
+#[derive(Component, Default)]
 pub struct AimDirection {
-    pub direction: Vec3,
+    pub direction: Vec2,
 }
 
