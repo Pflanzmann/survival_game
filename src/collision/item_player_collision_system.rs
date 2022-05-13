@@ -21,12 +21,12 @@ pub fn item_player_collision_system(
         let mut check_entity_list: Vec<QuadData<ItemData>> = Vec::new();
         item_quad_tree.query_entities(
             &mut check_entity_list,
-            &player_transform.translation,
+            &player_transform.translation.truncate(),
             &size,
         );
 
         for quad_data in check_entity_list.iter() {
-            if quad_data.data.collider_type.is_colliding(&quad_data.position.truncate(), &player_collider_size.collider_type, &player_transform.translation.truncate()) {
+            if quad_data.data.collider_type.is_colliding(&quad_data.position, &player_collider_size.collider_type, &player_transform.translation.truncate()) {
                 item_collision_event.send(ItemCollisionEvent { player_entity, item_entity: quad_data.data.entity });
             }
         }

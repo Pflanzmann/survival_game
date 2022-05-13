@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, Entity, Name, Query, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
+use bevy::prelude::{Commands, Entity, Name, Query, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2, With};
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;

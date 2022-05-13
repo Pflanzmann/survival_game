@@ -1,5 +1,5 @@
 use bevy::ecs::component::Component;
-use bevy::prelude::{Vec2, Vec3};
+use bevy::prelude::Vec2;
 
 use crate::models::collision::collider_type::ColliderType;
 

@@ -22,7 +22,7 @@ pub fn enemy_solid_body_collision_system(
 
         quad_tree.query_entities(
             &mut check_entity_list,
-            &transform.translation,
+            &transform.translation.truncate(),
             &size,
         );
 
@@ -30,7 +30,7 @@ pub fn enemy_solid_body_collision_system(
             if hit_box_collider.collider_type.is_colliding(
                 &transform.translation.truncate(),
                 &quad_data.data.collider_type,
-                &quad_data.position.truncate(),
+                &quad_data.position,
             ) {
                 enemy_hit_event.send(EnemyCollisionEvent {
                     target_entity: quad_data.data.entity,

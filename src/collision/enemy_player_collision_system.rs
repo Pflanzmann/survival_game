@@ -24,12 +24,12 @@ pub fn enemy_player_collision_system(
 
         quad_tree.query_entities(
             &mut check_entity_list,
-            &self_position.extend(0.0),
+            &self_position,
             &size,
         );
 
         for quad_data in check_entity_list.iter() {
-            if quad_data.data.collider_type.is_colliding(&quad_data.position.truncate(), &player_solid_body_collider.collider_type, &self_position) {
+            if quad_data.data.collider_type.is_colliding(&quad_data.position, &player_solid_body_collider.collider_type, &self_position) {
                 player_enemy_collision_event.send(PlayerEnemyCollisionEvent { player_entity, enemy_entity: quad_data.data.entity })
             }
         }

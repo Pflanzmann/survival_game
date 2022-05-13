@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, EventReader, EventWriter, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
+use bevy::prelude::{Commands, EventReader, EventWriter, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
 use rand::random;
 
 use crate::{SpriteLayer, TextureHandles};
