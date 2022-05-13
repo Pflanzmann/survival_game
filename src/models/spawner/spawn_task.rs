@@ -6,7 +6,7 @@ pub struct SpawnTask {
 
 impl SpawnTask {
     pub fn new(position: Vec3) -> Self {
-        SpawnTask { position: position }
+        SpawnTask { position }
     }
 
     pub fn get_position(&self) -> Vec3 {

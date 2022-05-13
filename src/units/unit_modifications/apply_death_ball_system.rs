@@ -5,6 +5,7 @@ use crate::models::aim_direction::AimDirection;
 use crate::models::behavior::aim_at_closest_target_behavior::AimAtClosestTargetBehavior;
 use crate::models::behavior::rotate_behavior::UnitRotation;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
+use crate::models::layerable::Layerable;
 use crate::models::modifications::death_ball::{DeathBall, DeathBallUnit};
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::utils::owner::Owner;
@@ -57,7 +58,7 @@ pub fn apply_death_ball_system(
                 ..Default::default()
             },
             texture: texture_handler.death_ball_unit.clone(),
-            transform: Transform::from_xyz(desired_pos.x, desired_pos.y, SpriteLayer::GroundLevel.get_layer_z()),
+            transform: Transform::from_translation(desired_pos),
             ..Default::default()
         })
             .insert(DeathBallUnit)

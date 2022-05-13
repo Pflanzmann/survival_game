@@ -5,6 +5,7 @@ use crate::models::aim_direction::AimDirection;
 use crate::models::behavior::spin_aim_behavior::SpinAimBehavior;
 use crate::models::behavior::teleport_to_target_behavior::TeleportToTargetBehavior;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
+use crate::models::layerable::Layerable;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::turret::{Turret, TurretUnit};
 use crate::models::modifications::utils::owner::Owner;
@@ -51,9 +52,10 @@ pub fn apply_turret_system(
                 ..Default::default()
             },
             texture: texture_handler.turret_unit.clone(),
-            transform: Transform::from_xyz(pos_vec[0], pos_vec[1], SpriteLayer::GroundLevel.get_layer_z()),
+            transform: Transform::from_xyz(pos_vec[0], pos_vec[1], 0.0),
             ..Default::default()
         })
+            .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
             .insert(TurretUnit)
             .insert(Owner::new(owner_entity))
             .insert(WeaponSlot { weapon_entity: owner_weapon_slot.weapon_entity })
