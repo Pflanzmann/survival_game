@@ -10,7 +10,7 @@ pub fn teleport_to_target_behavior_system(
 ) {
     for (player_entity, player_transform) in target_query.iter() {
         for (target_behavior, mut turret_transform) in unit_query.iter_mut() {
-            if player_entity == target_behavior.target && player_transform.translation.distance(turret_transform.translation) > target_behavior.distance {
+            if player_entity == target_behavior.target && player_transform.translation.truncate().distance(turret_transform.translation.truncate()) > target_behavior.distance {
                 let pos_vec = get_close_position_2d(*player_transform, target_behavior.proximity_min, target_behavior.proximity_max);
 
                 turret_transform.translation.x = pos_vec[0];
