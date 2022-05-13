@@ -11,6 +11,7 @@ use crate::models::collision::solid_body_collider::SolidBodyCollider;
 use crate::models::damaged_entities::DamagedEntities;
 use crate::models::input::player_aim_controlled::PlayerAimControlled;
 use crate::models::input::player_move_controlled::PlayerMoveControlled;
+use crate::models::layerable::Layerable;
 use crate::models::mod_register::ModRegister;
 use crate::models::move_direction::MoveDirection;
 use crate::models::player::Player;
@@ -36,10 +37,10 @@ pub fn setup_player_system(
                 ..Default::default()
             },
             texture_atlas: atlas_handles.player_idle_atlas.clone(),
-            transform: Transform::from_xyz(0.0, 0.0, SpriteLayer::GroundLevel.get_layer_z()),
             ..Default::default()
         },
     )
+        .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
         .insert(Name::new("Player"))
         .insert_bundle(PlayerBundle {
             player: Player,

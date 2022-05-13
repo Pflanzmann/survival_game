@@ -10,6 +10,7 @@ use crate::models::damaged_entities::DamagedEntities;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::input::player_aim_controlled::PlayerAimControlled;
+use crate::models::layerable::Layerable;
 use crate::models::mirror_aim_to_move_direction::MirrorAimToMoveDirection;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::psy_rock::{PsyRock, PsyRockUnit};
@@ -30,7 +31,7 @@ pub fn apply_psy_rock_system(
     mut apply_events: EventReader<ApplyModToTargetEvent>,
     mut bullet_shot_event: EventWriter<BulletShotEvent>,
     mod_query: Query<&PsyRock, With<Modification>>,
-    owner_query: Query<(Entity, &WeaponSlot)>,
+    owner_query: Query<(Entity, &Transform)>,
     unit_query: Query<&Owner, With<PsyRockUnit>>,
 ) {
     for apply_event in apply_events.iter() {
@@ -39,7 +40,7 @@ pub fn apply_psy_rock_system(
             Err(_) => continue,
         };
 
-        let (owner_entity, _owner_weapon_slot) = match owner_query.get(apply_event.target_entity) {
+        let (owner_entity, owner_transform) = match owner_query.get(apply_event.target_entity) {
             Ok(owner) => owner,
             Err(_) => continue,
         };
@@ -61,14 +62,16 @@ pub fn apply_psy_rock_system(
                 ..Default::default()
             },
             texture: texture_handler.psy_rock_unit.clone(),
-            transform: Transform::from_xyz(0.0, 0.0, SpriteLayer::GroundLevel.get_layer_z()),
+            transform: Transform::from_translation(owner_transform.translation),
             ..Default::default()
         })
+            .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
             .insert(Name::new("Psy Rock"))
             .insert(PsyRockUnit)
             .insert(Owner::new(owner_entity))
             .insert(PlayerAimControlled)
-            .insert(MoveDirection::default())            .insert(AimDirection::default())
+            .insert(MoveDirection::default())
+            .insert(AimDirection::default())
             .insert(MirrorAimToMoveDirection)
             .insert(MoveSpeed::new(20.0))
             .insert(UnitSize { collider_size: Vec2::new(160.0, 160.0) })

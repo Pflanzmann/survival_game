@@ -3,6 +3,7 @@ use bevy::prelude::{Commands, Entity, EventReader, Name, Query, Res, Sprite, Spr
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
+use crate::models::layerable::Layerable;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::slime::{Slime, SlimeUnit};
 use crate::models::modifications::utils::owner::Owner;
@@ -49,9 +50,10 @@ pub fn apply_slime_system(
                 ..Default::default()
             },
             texture: texture_handler.slime_unit.clone(),
-            transform: Transform::from_xyz(pos_vec[0], pos_vec[1], SpriteLayer::GroundLevel.get_layer_z()),
+            transform: Transform::from_xyz(pos_vec[0], pos_vec[1], 0.0),
             ..Default::default()
         })
+            .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
             .insert(SlimeUnit)
             .insert(Owner::new(owner_entity))
             .insert(Name::new("Slime"))

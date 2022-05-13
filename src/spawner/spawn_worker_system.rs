@@ -11,6 +11,7 @@ use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::collision::solid_body_collider::SolidBodyCollider;
 use crate::models::damaged_entities::DamagedEntities;
 use crate::models::enemy::Enemy;
+use crate::models::layerable::Layerable;
 use crate::models::move_direction::MoveDirection;
 use crate::models::player::Player;
 use crate::models::resources::spawn_task_receiver::SpawnTaskReceiver;
@@ -42,10 +43,11 @@ pub fn spawn_worker_system(
                         custom_size: Some(Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y)),
                         ..Default::default()
                     },
-                    transform: Transform::from_xyz(spawn_task.get_position().x, spawn_task.get_position().y, SpriteLayer::GroundLevel.get_layer_z()),
+                    transform: Transform::from_translation(spawn_task.get_position()),
                     texture: texture_handles.enemy_goblin.clone(),
                     ..Default::default()
                 })
+                .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
                 .insert_bundle(EnemyBundle {
                     enemy: Enemy,
                     unit_size: UnitSize { collider_size: Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y) },
@@ -62,7 +64,7 @@ pub fn spawn_worker_system(
                 .insert(ColliderWeight { weight: 0.2 })
                 .insert(SolidBodyCollider {
                     offset: Vec2::new(0.0, -80.0),
-                    collider_type: ColliderType::Circle(enemy_handles.goblin.sprite_custom_size_x / 3.0),
+                    collider_type: ColliderType::Circle(enemy_handles.goblin.sprite_custom_size_x / 4.0),
                 })
                 .insert(HitBoxCollider {
                     collider_type: ColliderType::Circle(enemy_handles.goblin.sprite_custom_size_x / 2.0)

@@ -9,6 +9,7 @@ use crate::units::clear_damaged_entities_system::clear_damaged_entities_system;
 use crate::units::enemies::EnemiesPlugin;
 use crate::units::fit_sprite_to_size_system::fit_sprite_to_size_system;
 use crate::units::health_bar_update_system::healthbar_update_system;
+use crate::units::layerable_system::layerable_system;
 use crate::units::mirror_aim_to_move_direction_system::mirror_aim_to_move_direction_system;
 use crate::units::move_unit_system::move_unit_system;
 use crate::units::player::PlayerPlugin;
@@ -37,6 +38,7 @@ mod rotate_unit_system;
 mod clear_damaged_entities_system;
 mod mirror_aim_to_move_direction_system;
 mod hit_system;
+mod layerable_system;
 
 
 /// This plugin manages the everything related to [Unit] systems and how they get applied.
@@ -76,6 +78,7 @@ impl Plugin for UnitPlugin {
                 in_last(
                     SystemSet::on_update(AppState::InGame)
                         .with_system(move_unit_system)
+                        .with_system(layerable_system)
                 )
             );
     }
