@@ -24,7 +24,7 @@ pub fn spawn_collision_boxes(
                                 custom_size: Some(Vec2::new(radius * 2.0, radius * 2.0)),
                                 ..Default::default()
                             },
-                            transform: Transform::from_translation(solid_collider.offset + Vec3::new(0.0, 0.0, 2.0)),
+                            transform: Transform::from_translation(solid_collider.offset.extend(2.0)),
                             texture: asset_server.load("sprites/collider_circle.png"),
                             ..Default::default()
                         }
@@ -37,7 +37,7 @@ pub fn spawn_collision_boxes(
                                 custom_size: Some(size),
                                 ..Default::default()
                             },
-                            transform: Transform::from_translation(solid_collider.offset + Vec3::new(0.0, 0.0, 2.0)),
+                            transform: Transform::from_translation(solid_collider.offset.extend(2.0)),
                             ..Default::default()
                         }
                     }
@@ -97,7 +97,7 @@ pub fn init_collision_boxes(
                                 custom_size: Some(Vec2::new(radius * 2.0, radius * 2.0)),
                                 ..Default::default()
                             },
-                            transform: Transform::from_translation(solid_body_collider.offset + Vec3::new(0.0, 0.0, 2.0)),
+                            transform: Transform::from_translation(solid_body_collider.offset.extend(2.0)),
                             texture: asset_server.load("sprites/collider_circle.png"),
                             ..Default::default()
                         }
@@ -110,7 +110,7 @@ pub fn init_collision_boxes(
                                 custom_size: Some(size),
                                 ..Default::default()
                             },
-                            transform: Transform::from_translation(solid_body_collider.offset + Vec3::new(0.0, 0.0, 2.0)),
+                            transform: Transform::from_translation(solid_body_collider.offset.extend(2.0)),
                             ..Default::default()
                         }
                     }

@@ -51,7 +51,7 @@ pub fn calculate_quad_tree_system(
 
             solid_body_tree.insert(
                 &QuadData {
-                    position: transform.translation + solid_body_collider.offset,
+                    position: transform.translation + solid_body_collider.offset.extend(0.0),
                     size,
                     data: SolidBodyData {
                         entity,

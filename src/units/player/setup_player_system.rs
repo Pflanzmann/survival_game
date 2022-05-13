@@ -45,7 +45,7 @@ pub fn setup_player_system(
             player: Player,
             unit_size: UnitSize { collider_size: Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y) },
             aim_direction: AimDirection::default(),
-            move_direction: MoveDirection { direction: Vec3::default() },
+            move_direction: MoveDirection::default(),
             move_speed: MoveSpeed::new(player_handles.player_one.move_speed),
             damage: Damage::new(player_handles.player_one.damage),
             health: Health::new(player_handles.player_one.health),
@@ -58,7 +58,7 @@ pub fn setup_player_system(
         .insert(DamageInterval::new(60.0))
         .insert(ColliderWeight { weight: 0.8 })
         .insert(SolidBodyCollider {
-            offset: Vec3::new(0.0, -80.0, 0.0),
+            offset: Vec2::new(0.0, -80.0),
             collider_type: ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 3.0),
         }).insert(AnimationTimer(Timer::from_seconds(0.3, true)));
 }

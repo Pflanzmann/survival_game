@@ -1,4 +1,4 @@
-use bevy::prelude::{Query, Transform, Vec3, Without};
+use bevy::prelude::{Query, Transform, Vec2, Without};
 
 use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
 use crate::models::move_direction::MoveDirection;
@@ -13,10 +13,10 @@ pub fn chase_target_behavior_system(
             Err(_) => continue
         };
 
-        if actor_transform.translation.distance(target_transform.translation) < chase_target_behavior.proximity {
-            move_direction.direction = Vec3::default();
+        if actor_transform.translation.truncate().distance(target_transform.translation.truncate()) < chase_target_behavior.proximity {
+            move_direction.direction = Vec2::default();
         } else {
-            move_direction.direction = (target_transform.translation - actor_transform.translation).normalize_or_zero();
+            move_direction.direction = (target_transform.translation.truncate() - actor_transform.translation.truncate()).normalize_or_zero();
         }
     }
 }
