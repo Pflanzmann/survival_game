@@ -12,6 +12,7 @@ use crate::models::items::descriptor::gold_value::GoldValue;
 use crate::models::items::descriptor::heal::Heal;
 use crate::models::items::descriptor::item::Item;
 use crate::models::items::shop::Shop;
+use crate::models::layerable::Layerable;
 use crate::models::sprite_layer::SpriteLayer;
 
 pub fn basic_drop_system(
@@ -28,7 +29,7 @@ pub fn basic_drop_system(
         };
 
         let mut drop_translation = enemy_position;
-        drop_translation.z = SpriteLayer::LowGroundLevel.get_layer_z();
+        drop_translation.z = 0.0;
 
         let random = random::<f32>() * 100.0;
 
@@ -45,6 +46,7 @@ pub fn basic_drop_system(
                 }
             )
                 .insert(Item)
+                .insert(Layerable::new(SpriteLayer::LowGroundLevel.get_layer_z()))
                 .insert(Coin)
                 .insert(Name::new("Item Coin"))
                 .insert(GoldValue { gold_value: 1 })
@@ -66,6 +68,7 @@ pub fn basic_drop_system(
                 }
             )
                 .insert(Item)
+                .insert(Layerable::new(SpriteLayer::LowGroundLevel.get_layer_z()))
                 .insert(Heal { amount: item_handles.hot_dog.heal_amount })
                 .insert(Name::new("Item Heal"))
                 .insert(HitBoxCollider {
@@ -86,6 +89,7 @@ pub fn basic_drop_system(
                 }
             )
                 .insert(Item)
+                .insert(Layerable::new(SpriteLayer::LowGroundLevel.get_layer_z()))
                 .insert(Shop)
                 .insert(Name::new("Item Barrel"))
                 .insert(HitBoxCollider {
