@@ -1,7 +1,7 @@
 use bevy::prelude::{Plugin, SystemSet};
 
 use crate::{App, ConsoleState};
-use crate::ui::cmd::debug_window::{exit_debug_console_system, setup_debug_window};
+use crate::ui::cmd::debug_window::{exit_debug_console_system, setup_debug_info_window, setup_debug_window};
 use crate::ui::cmd::update_console_history::update_console_history;
 
 mod debug_window;
@@ -15,6 +15,7 @@ impl Plugin for CmdUiPlugin {
             .add_system_set(
                 SystemSet::on_exit(ConsoleState::Hidden)
                     .with_system(setup_debug_window)
+                    .with_system(setup_debug_info_window)
             )
 
             .add_system_set(

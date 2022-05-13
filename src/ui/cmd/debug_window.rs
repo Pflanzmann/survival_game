@@ -1,8 +1,9 @@
 use bevy::core::Name;
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, HorizontalAlign, JustifyContent, NodeBundle, Overflow, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, HorizontalAlign, JustifyContent, NodeBundle, Overflow, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextSection, TextStyle, Val, VerticalAlign, With};
+use bevy::ui::AlignContent;
 
 use crate::models::resources::console_history::ConsoleHistory;
-use crate::models::ui_components::debug_console::{DebugConsoleHistory, DebugConsoleInput, DebugConsoleWindow};
+use crate::models::ui_components::debug_console::{DebugConsoleHistory, DebugConsoleInput, DebugConsoleWindow, DebugFpsCounter};
 
 pub fn setup_debug_window(
     mut commands: Commands,
@@ -97,10 +98,68 @@ pub fn setup_debug_window(
                 ),
                 ..Default::default()
             }).insert(DebugConsoleHistory);
-        })
-    ;
+        });
 }
 
+pub fn setup_debug_info_window(
+    mut commands: Commands,
+    asset_loader: Res<AssetServer>,
+) {
+    commands
+        .spawn_bundle(NodeBundle {
+            style: Style {
+                size: Size::new(Val::Percent(15.0), Val::Percent(40.0)),
+                position: Rect {
+                    left: Val::Percent(80.0),
+                    bottom: Val::Percent(10.0),
+                    ..Default::default()
+                },
+                position_type: PositionType::Absolute,
+                align_content: AlignContent::FlexStart,
+                ..Default::default()
+            },
+            color: Color::from([0.2, 0.2, 0.2, 0.8]).into(),
+            ..Default::default()
+        })
+        .insert(Name::new("Debug info"))
+        .insert(DebugConsoleWindow)
+        .with_children(|parent| {
+            parent.spawn_bundle(TextBundle {
+                style: Style {
+                    position_type: PositionType::Absolute,
+                    flex_direction: FlexDirection::RowReverse,
+                    position: Rect {
+                        left: Val::Percent(5.0),
+                        bottom: Val::Percent(90.0),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                text: Text {
+                    alignment: TextAlignment { vertical: VerticalAlign::Top, ..Default::default() },
+                    sections: vec![
+                        TextSection {
+                            value: "Fps: ".to_string(),
+                            style: TextStyle {
+                                font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
+                                font_size: 20.0,
+                                color: Color::WHITE,
+                            },
+                        },
+                        TextSection {
+                            value: "".to_string(),
+                            style: TextStyle {
+                                font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
+                                font_size: 20.0,
+                                color: Color::WHITE,
+                            },
+                        },
+                    ],
+                },
+                ..Default::default()
+            }).insert(DebugFpsCounter);
+        });
+}
 
 pub fn exit_debug_console_system(
     mut commands: Commands,
