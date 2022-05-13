@@ -1,5 +1,6 @@
-use bevy::prelude::{BuildChildren, Commands, Entity, EventReader, Name, Query, Res, Sprite, SpriteBundle, Vec2, With};
+use bevy::prelude::{BuildChildren, Commands, Entity, EventReader, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
 
+use crate::{SpriteLayer, TextureHandles};
 use crate::models::behavior::rotate_behavior::UnitRotation;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
@@ -13,7 +14,6 @@ use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::damage_interval::DamageInterval;
 use crate::models::unit_size::UnitSize;
-use crate::TextureHandles;
 
 pub fn apply_radiation_system(
     mut commands: Commands,
@@ -50,6 +50,7 @@ pub fn apply_radiation_system(
                 custom_size: Some(Vec2::new(128.0, 128.0)),
                 ..Default::default()
             },
+            transform: Transform::from_xyz(0.0, 0.0, -100.0),
             texture: texture_handler.radiation.clone(),
             ..Default::default()
         })
