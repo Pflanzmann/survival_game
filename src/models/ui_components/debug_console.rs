@@ -8,3 +8,6 @@ pub struct DebugConsoleInput;
 
 #[derive(Component)]
 pub struct DebugConsoleHistory;
+
+#[derive(Component)]
+pub struct DebugFpsCounter;
