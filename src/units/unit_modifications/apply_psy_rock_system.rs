@@ -23,7 +23,6 @@ use crate::models::unit_attributes::damage_interval::DamageInterval;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_size::UnitSize;
-use crate::models::weapon_slot::WeaponSlot;
 
 pub fn apply_psy_rock_system(
     mut commands: Commands,

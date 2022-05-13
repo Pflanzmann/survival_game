@@ -4,6 +4,9 @@ use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
 use crate::models::behavior::spin_aim_behavior::SpinAimBehavior;
 use crate::models::behavior::teleport_to_target_behavior::TeleportToTargetBehavior;
+use crate::models::collision::collider_type::ColliderType;
+use crate::models::collision::collider_weight::ColliderWeight;
+use crate::models::collision::solid_body_collider::SolidBodyCollider;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::layerable::Layerable;
 use crate::models::modifications::descriptors::modification::Modification;
@@ -11,6 +14,7 @@ use crate::models::modifications::turret::{Turret, TurretUnit};
 use crate::models::modifications::utils::owner::Owner;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::reload::Reload;
+use crate::models::unit_size::UnitSize;
 use crate::models::weapon_slot::WeaponSlot;
 use crate::util::get_close_position_2d::get_close_position_2d;
 
@@ -58,9 +62,15 @@ pub fn apply_turret_system(
             .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
             .insert(TurretUnit)
             .insert(Owner::new(owner_entity))
+            .insert(SolidBodyCollider {
+                offset: Vec2::new(0.0, 80.0),
+                collider_type: ColliderType::Circle(128.0 / 3.0),
+            })
+            .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
+            .insert(ColliderWeight { weight: 1.0 })
             .insert(WeaponSlot { weapon_entity: owner_weapon_slot.weapon_entity })
             .insert(Name::new("Turret"))
-            .insert(AimDirection::default())
+            .insert(AimDirection { direction: Vec2::new(1.0, 0.0) })
             .insert(SpinAimBehavior)
             .insert(TeleportToTargetBehavior::new(owner_entity, 2500.0, 300.0, 700.0, 0.0))
             .insert(Reload::new(40.0));
