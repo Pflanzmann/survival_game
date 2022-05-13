@@ -1,28 +1,24 @@
-use bevy::prelude::{Changed, Children, Query, Transform, With, Without};
+use bevy::prelude::{Changed, Query, Transform, With};
 
-use crate::models::enemy::Enemy;
 use crate::models::player::Player;
 use crate::models::ui_components::hud::HealthBar;
-use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::attribute::Attribute;
+use crate::models::unit_attributes::health::Health;
 
 pub fn healthbar_update_system(
-    mut children_query: Query<&mut Transform, (With<HealthBar>, Without<Player>, Without<Enemy>)>,
-    mut player_query: Query<(&Health, &Children), (With<Player>, Without<Enemy>, Changed<Health>)>,
+    mut health_bar_query: Query<(&mut Transform, &HealthBar)>,
+    player_query: Query<&Health, (With<Player>, Changed<Health>)>,
 ) {
-    for (player_health, children) in player_query.iter_mut() {
-        for &child in children.iter() {
-            let mut health_bar = match children_query.get_mut(child) {
-                Ok(value) => value,
-                Err(_) => continue
-            };
+    for (mut health_bar_transform, health_bar) in health_bar_query.iter_mut() {
+        let player_health = match player_query.get(health_bar.owner) {
+            Ok(value) => value,
+            Err(_) => continue
+        };
 
-            if player_health.get_current_health() / player_health.get_current_health() < 0.0 {
-                health_bar.scale.x = 0.01
-            } else {
-                health_bar.scale.x = player_health.get_current_health() / player_health.get_total_amount();
-            }
+        if player_health.get_current_health() / player_health.get_current_health() < 0.0 {
+            health_bar_transform.scale.x = 0.01
+        } else {
+            health_bar_transform.scale.x = player_health.get_current_health() / player_health.get_total_amount();
         }
     }
 }
-
