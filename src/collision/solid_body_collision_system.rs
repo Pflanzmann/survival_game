@@ -24,7 +24,7 @@ pub fn solid_body_collision_system(
         let mut check_entity_list: Vec<QuadData<SolidBodyData>> = Vec::new();
         quad_tree_holder.query_entities(
             &mut check_entity_list,
-            &self_position.extend(0.0),
+            &self_position,
             &size,
         );
 
@@ -33,12 +33,12 @@ pub fn solid_body_collision_system(
                 continue;
             }
 
-            if solid_body_collider.collider_type.is_colliding(&self_position, &quad_data.data.collider_type, &quad_data.position.truncate()) {
+            if solid_body_collider.collider_type.is_colliding(&self_position, &quad_data.data.collider_type, &quad_data.position) {
                 let resolution_position = solid_body_collider.collider_type.get_collision_resolution_position(
                     &self_position,
                     collision_weight.weight,
                     &quad_data.data.collider_type,
-                    &quad_data.position.truncate(),
+                    &quad_data.position,
                     quad_data.data.collision_weight,
                 );
 

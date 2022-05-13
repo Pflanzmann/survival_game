@@ -1,4 +1,4 @@
-use bevy::prelude::{GlobalTransform, Query, Transform, Vec2, Vec3, With, Without};
+use bevy::prelude::{GlobalTransform, Query, Transform, Vec2, With, Without};
 
 use crate::models::aim_direction::AimDirection;
 use crate::models::behavior::aim_at_closest_target_behavior::AimAtClosestTargetBehavior;

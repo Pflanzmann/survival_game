@@ -1,8 +1,8 @@
-use bevy::prelude::{Vec2, Vec3};
+use bevy::prelude::Vec2;
 
 #[derive(Copy, Clone)]
 pub struct QuadData<T> where T: Copy + Clone {
-    pub position: Vec3,
+    pub position: Vec2,
     pub size: Vec2,
     pub data: T,
 }
@@ -86,7 +86,7 @@ impl<T> Quadtree<T> where T: Copy + Clone {
         }
     }
 
-    pub fn query_entities(&self, output: &mut Vec<QuadData<T>>, position: &Vec3, size: &Vec2) {
+    pub fn query_entities(&self, output: &mut Vec<QuadData<T>>, position: &Vec2, size: &Vec2) {
         if !self.overlap_rectangle(position, size) {
             return;
         }
@@ -162,7 +162,7 @@ impl<T> Quadtree<T> where T: Copy + Clone {
         ]));
     }
 
-    fn contains_rectangle(&self, position: &Vec3, size: &Vec2) -> bool {
+    fn contains_rectangle(&self, position: &Vec2, size: &Vec2) -> bool {
         let a_min_x = self.position.x - self.width / 2.0;
         let a_min_y = self.position.y - self.height / 2.0;
 
@@ -181,7 +181,7 @@ impl<T> Quadtree<T> where T: Copy + Clone {
             && a_max_y >= b_max_y
     }
 
-    fn overlap_rectangle(&self, position: &Vec3, size: &Vec2) -> bool {
+    fn overlap_rectangle(&self, position: &Vec2, size: &Vec2) -> bool {
         let a_min_x = self.position.x - self.width / 2.0;
         let a_min_y = self.position.y - self.height / 2.0;
 
@@ -200,7 +200,7 @@ impl<T> Quadtree<T> where T: Copy + Clone {
             && a_max_y >= b_min_y
     }
 
-    fn is_contained_in(&self, position: &Vec3, size: &Vec2) -> bool {
+    fn is_contained_in(&self, position: &Vec2, size: &Vec2) -> bool {
         let b_min_x = self.position.x - self.width / 2.0;
         let b_min_y = self.position.y - self.height / 2.0;
 

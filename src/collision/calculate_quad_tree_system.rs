@@ -33,7 +33,7 @@ pub fn calculate_quad_tree_system(
 
             hit_box_tree.insert(
                 &QuadData {
-                    position: transform.translation,
+                    position: transform.translation.truncate(),
                     size,
                     data: HitBoxData {
                         entity,
@@ -51,7 +51,7 @@ pub fn calculate_quad_tree_system(
 
             solid_body_tree.insert(
                 &QuadData {
-                    position: transform.translation + solid_body_collider.offset.extend(0.0),
+                    position: transform.translation.truncate() + solid_body_collider.offset,
                     size,
                     data: SolidBodyData {
                         entity,
@@ -70,7 +70,7 @@ pub fn calculate_quad_tree_system(
 
             item_tree.insert(
                 &QuadData {
-                    position: transform.translation,
+                    position: transform.translation.truncate(),
                     size,
                     data: ItemData {
                         entity,

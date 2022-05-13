@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, Entity, EventReader, EventWriter, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
+use bevy::prelude::{Commands, Entity, EventReader, EventWriter, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
