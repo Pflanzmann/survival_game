@@ -17,6 +17,7 @@ use crate::units::rotate_unit_system::rotate_unit_system;
 use crate::units::sprite_aim_rotate_system::sprite_aim_rotate_system;
 use crate::units::sprite_flip_system::sprite_flip_system;
 use crate::units::sprite_move_rotate_system::sprite_move_rotate_system;
+use crate::units::time_alive_system::time_alive_system;
 use crate::units::unit_modifications::UnitModificationsPlugin;
 use crate::units::unit_push_system::unit_push_system;
 use crate::util::stage_label_helper::{in_last, in_update};
@@ -41,6 +42,7 @@ mod mirror_aim_to_move_direction_system;
 mod hit_system;
 mod layerable_system;
 mod unit_push_system;
+mod time_alive_system;
 
 
 /// This plugin manages the everything related to [Unit] systems and how they get applied.
@@ -74,6 +76,7 @@ impl Plugin for UnitPlugin {
                         .with_system(clear_damaged_entities_system)
                         .with_system(mirror_aim_to_move_direction_system)
                         .with_system(unit_push_system)
+                        .with_system(time_alive_system)
                 )
             )
 
