@@ -5,9 +5,10 @@ use crate::{SpriteLayer, TextureHandles};
 use crate::models::bullet::Bullet;
 use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::child_bullet::ChildBullet;
-use crate::models::damaged_entities::DamagedEntities;
 use crate::models::collision::collider_type::ColliderType;
+use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
+use crate::models::damaged_entities::DamagedEntities;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::models::modifications::split_shot::SplitShot;
@@ -61,16 +62,15 @@ pub fn split_shot_system(
                 collider_entities: collided_entities.clone(),
             })
                 .insert(ChildBullet)
-                .insert(Name::new("Bullet"))
+                .insert(Name::new("SplitShot Bullet"))
                 .insert(MoveSpeed::default())
                 .insert(Damage::default())
                 .insert(HitLimit::new(1.0))
                 .insert(TravelRange::new(2048.0))
                 .insert(SpriteMoveRotation)
                 .insert(DamageInterval::new(60.0))
-                .insert(HitBoxCollider {
-                    collider_type: ColliderType::Circle(128.0 / 2.0)
-                })
+                .insert(HitBoxCollider { collider_type: ColliderType::Circle(128.0 / 2.0) }).insert(EnemyHitBoxCollision)
+                .insert(EnemyHitBoxCollision)
                 .id();
 
             bullet_shot_event_writer.send(BulletShotEvent { entity: bullet });
