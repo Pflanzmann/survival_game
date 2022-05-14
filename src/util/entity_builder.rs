@@ -2,7 +2,7 @@ use std::any::type_name;
 use std::collections::HashMap;
 
 use bevy::ecs::system::EntityCommands;
-use bevy::prelude::{Commands, Component, Entity, Plugin};
+use bevy::prelude::{AssetServer, Commands, Component, Entity, Plugin, Res, Sprite, SpriteBundle, Vec2};
 use serde::de::DeserializeOwned;
 use serde_json::Value;
 
@@ -41,6 +41,7 @@ use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
+use crate::models::util::sprite_bundle_wrapper::SpriteBundleWrapper;
 use crate::util::read_file_to_string::read_file_to_string;
 
 pub struct EntityBuilderPlugin;
@@ -135,12 +136,28 @@ impl EntityBuilder {
     pub fn spawn_entity(
         &self,
         commands: &mut Commands,
+        asset_server: &Res<AssetServer>,
         config_path: &str,
     ) -> Entity {
         let mut entity = commands.spawn();
 
         let my_string = read_file_to_string(config_path);
-        let component_data_map: HashMap<String, serde_json::Value> = serde_json::from_str(&my_string).unwrap();
+        let mut component_data_map: HashMap<String, serde_json::Value> = serde_json::from_str(&my_string).unwrap();
+
+        match component_data_map.remove("SpriteBundleWrapper") {
+            None => {}
+            Some(object_data) => {
+                let handle: SpriteBundleWrapper = serde_json::from_value(object_data.clone()).expect("Not well formatted string: {:#?}");
+                entity.insert_bundle(SpriteBundle {
+                    sprite: Sprite {
+                        custom_size: Some(Vec2::new(handle.sprite_x, handle.sprite_y)),
+                        ..Default::default()
+                    },
+                    texture: asset_server.load(&handle.path),
+                    ..Default::default()
+                });
+            }
+        };
 
         for (component_key, object_data) in component_data_map.iter() {
             match self.map.get(component_key) {
