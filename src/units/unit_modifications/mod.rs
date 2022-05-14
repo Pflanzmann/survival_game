@@ -20,6 +20,7 @@ use crate::models::modifications::affects::bullet_affects::affect_bullet_move_sp
 use crate::models::modifications::affects::bullet_affects::affect_bullet_travel_range::AffectBulletTravelRange;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::death_ball::{DeathBall, DeathBallUnit};
+use crate::models::modifications::explosion_shot::ExplosionShot;
 use crate::models::modifications::gravity_shot::GravityShot;
 use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::modifications::knock_back_shot::KnockBackShot;
@@ -91,6 +92,7 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(apply_bullet_mod_to_targets_gun_system::<SplitShot>)
                         .with_system(apply_bullet_mod_to_targets_gun_system::<GravityShot>)
                         .with_system(apply_bullet_mod_to_targets_gun_system::<KnockBackShot>)
+                        .with_system(apply_bullet_mod_to_targets_gun_system::<ExplosionShot>)
 
                         .with_system(apply_player_mod_to_target_system::<Sprinting>)
 
@@ -134,6 +136,7 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(remove_bullet_mod_from_targets_gun_system::<SplitShot>)
                         .with_system(remove_bullet_mod_from_targets_gun_system::<GravityShot>)
                         .with_system(remove_bullet_mod_from_targets_gun_system::<KnockBackShot>)
+                        .with_system(remove_bullet_mod_from_targets_gun_system::<ExplosionShot>)
 
                         .with_system(remove_player_mod_from_target_system::<Sprinting>)
 

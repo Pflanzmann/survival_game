@@ -12,3 +12,4 @@ pub mod psy_rock;
 pub mod radiation;
 pub mod gravity_shot;
 pub mod knock_back_shot;
+pub mod explosion_shot;

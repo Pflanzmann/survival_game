@@ -1,0 +1,17 @@
+{
+  "Modification": null,
+  "ModName": {
+    "mod_name": "Explosion Shot"
+  },
+  "ModSpritePath": {
+    "path": "sprites/explosion.png"
+  },
+  "ToolTip": {
+    "tooltip": "Funny tooltip that has a joke with gravity"
+  },
+  "ExplosionShot": {
+    "radius": 500.0,
+    "explosion_sprite_path": "sprites/explosion.png",
+    "explosion_time_alive": 0.1
+  }
+}

@@ -21,7 +21,7 @@ use crate::models::mod_container_slot::ModContainerSlot;
 /// }
 /// ```
 ///
-pub fn assign_modification_to_bullet_system<T: Component + Copy>(
+pub fn assign_modification_to_bullet_system<T: Component + Clone>(
     mut commands: Commands,
     mut bullet_shot_event: EventReader<BulletShotEvent>,
     bullet_query: Query<&Bullet, Without<ChildBullet>>,
