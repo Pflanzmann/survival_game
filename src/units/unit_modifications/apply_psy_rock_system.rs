@@ -3,6 +3,7 @@ use bevy::prelude::{Commands, Entity, EventReader, EventWriter, Name, Query, Res
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
 use crate::models::behavior::teleport_to_target_behavior::TeleportToTargetBehavior;
+use crate::models::bullet::Bullet;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
@@ -23,6 +24,7 @@ use crate::models::unit_attributes::damage_interval::DamageInterval;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_size::UnitSize;
+use crate::models::weapon_slot::WeaponSlot;
 
 pub fn apply_psy_rock_system(
     mut commands: Commands,
@@ -30,7 +32,7 @@ pub fn apply_psy_rock_system(
     mut apply_events: EventReader<ApplyModToTargetEvent>,
     mut bullet_shot_event: EventWriter<BulletShotEvent>,
     mod_query: Query<&PsyRock, With<Modification>>,
-    owner_query: Query<(Entity, &Transform)>,
+    owner_query: Query<(Entity, &Transform, &WeaponSlot)>,
     unit_query: Query<&Owner, With<PsyRockUnit>>,
 ) {
     for apply_event in apply_events.iter() {
@@ -39,7 +41,7 @@ pub fn apply_psy_rock_system(
             Err(_) => continue,
         };
 
-        let (owner_entity, owner_transform) = match owner_query.get(apply_event.target_entity) {
+        let (owner_entity, owner_transform, owner_weapon_slot) = match owner_query.get(apply_event.target_entity) {
             Ok(owner) => owner,
             Err(_) => continue,
         };
@@ -80,6 +82,7 @@ pub fn apply_psy_rock_system(
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(160.0 / 2.0) })
             .insert(EnemyHitBoxCollision)
             .insert(SpriteMoveRotation)
+            .insert(Bullet { source_entity: owner_weapon_slot.weapon_entity })
             .insert(TeleportToTargetBehavior::new(owner_entity, 3000.0, 300.0, 500.0, 0.0))
             .id()
             ;
