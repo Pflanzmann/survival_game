@@ -23,6 +23,7 @@ use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::modifications::gravity_shot::GravityShot;
 use crate::models::modifications::grow_shot::GrowShot;
+use crate::models::modifications::knock_back_shot::KnockBackShot;
 use crate::models::modifications::psy_rock::PsyRock;
 use crate::models::modifications::radiation::Radiation;
 use crate::models::modifications::slime::Slime;
@@ -70,6 +71,7 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<GrowShot>();
         entity_builder.register_component::<SplitShot>();
         entity_builder.register_component::<GravityShot>();
+        entity_builder.register_component::<KnockBackShot>();
 
         entity_builder.register_component::<Sprinting>();
         entity_builder.register_component::<Turret>();
