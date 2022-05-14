@@ -1,0 +1,23 @@
+{
+  "Modification": null,
+  "ModName": {
+    "mod_name": "Gravity Shot"
+  },
+  "ModSpritePath": {
+    "path": "sprites/gravity_shot.png"
+  },
+  "ToolTip": {
+    "tooltip": "Funny tooltip that has a joke with gravity"
+  },
+  "GravityShot": {
+    "pulse_time": 0.5,
+    "pulse_timer": 0.5,
+    "radius": 500.0,
+    "push_duration": 0.2,
+    "push_force": 600.0
+  },
+  "AffectBulletHitLimit": {
+    "operator": "Add",
+    "amount": 3.0
+  }
+}
