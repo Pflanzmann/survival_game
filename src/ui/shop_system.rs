@@ -1,6 +1,6 @@
 use std::cmp::min;
 
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+use bevy::prelude::{AlignContent, AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, FlexWrap, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
 use rand::Rng;
 
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
@@ -20,13 +20,33 @@ pub fn spawn_shop_menu_system(
     let mut shop_items_vec: Vec<(Entity, String, String, String)> = Vec::new();
     fetch_shop_slots(3, &mut shop_items_vec, mod_query);
 
-    let (entity1, _, sprite_handler1, _) = shop_items_vec.get(0).unwrap();
-    let (entity2, _, sprite_handler2, _) = shop_items_vec.get(1).unwrap();
-    let (entity3, _, sprite_handler3, _) = shop_items_vec.get(2).unwrap();
+    let mut shop_slot_vector: Vec<Entity> = Vec::new();
+    for (index, (mod_entity, _, sprite_handler, _)) in shop_items_vec.iter().enumerate() {
+        let entity = commands.spawn_bundle(ButtonBundle {
+            style: Style {
+                size: Size::new(Val::Percent(25.0), Val::Percent(70.0)),
+                align_items: AlignItems::Center,
+                justify_content: JustifyContent::SpaceEvenly,
+                flex_direction: FlexDirection::ColumnReverse,
+                ..Default::default()
+            },
+            color: Color::GRAY.into(),
+            ..Default::default()
+        }).with_children(|parent| {
+            parent.spawn_bundle(ImageBundle {
+                image: asset_loader.load(sprite_handler).into(),
+                style: Style {
+                    size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
+                    ..Default::default()
+                },
+                ..Default::default()
+            }).insert(Interaction::default())
+                .insert(ShopButton { index });
+        }).id();
 
-    commands.entity(*entity1).insert(ShopSlot { index: 0 });
-    commands.entity(*entity2).insert(ShopSlot { index: 1 });
-    commands.entity(*entity3).insert(ShopSlot { index: 2 });
+        commands.entity(*mod_entity).insert(ShopSlot { index });
+        shop_slot_vector.push(entity);
+    }
 
     commands
         .spawn_bundle(NodeBundle {
@@ -81,142 +101,15 @@ pub fn spawn_shop_menu_system(
                     },
                     position_type: PositionType::Relative,
                     align_items: AlignItems::Center,
+                    flex_wrap: FlexWrap::WrapReverse,
                     justify_content: JustifyContent::SpaceEvenly,
                     flex_direction: FlexDirection::Row,
+                    align_content: AlignContent::FlexStart,
                     ..Default::default()
                 },
                 color: Color::WHITE.into(),
                 ..Default::default()
-            }).with_children(|parent| {
-
-                //first item
-                parent.spawn_bundle(ButtonBundle {
-                    style: Style {
-                        size: Size::new(Val::Percent(25.0), Val::Percent(70.0)),
-                        align_items: AlignItems::Center,
-                        justify_content: JustifyContent::SpaceEvenly,
-                        flex_direction: FlexDirection::ColumnReverse,
-                        ..Default::default()
-                    },
-                    color: Color::BLACK.into(),
-                    ..Default::default()
-                }).with_children(|parent| {
-                    parent.spawn_bundle(ImageBundle {
-                        image: asset_loader.load(sprite_handler1).into(),
-                        style: Style {
-                            size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
-                            ..Default::default()
-                        },
-                        ..Default::default()
-                    }).insert(Interaction::default())
-                        .insert(ShopButton { index: 0 });
-
-                    /*parent.spawn_bundle(TextBundle {
-                        style: Style {
-                            ..Default::default()
-                        },
-                        text: Text::with_section(
-                            name.mod_name.to_string(),
-                            TextStyle {
-                                font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
-                                font_size: 30.0,
-                                color: Color::RED,
-                            },
-                            TextAlignment {
-                                vertical: VerticalAlign::Center,
-                                horizontal: HorizontalAlign::Center,
-                            },
-                        ),
-                        ..Default::default()
-                    });*/
-                });
-                //.insert(ShopButtonOne);
-
-                //second item
-                parent.spawn_bundle(ButtonBundle {
-                    style: Style {
-                        size: Size::new(Val::Percent(25.0), Val::Percent(70.0)),
-                        align_items: AlignItems::Center,
-                        justify_content: JustifyContent::SpaceEvenly,
-                        flex_direction: FlexDirection::ColumnReverse,
-                        ..Default::default()
-                    },
-                    color: Color::BLACK.into(),
-                    ..Default::default()
-                }).with_children(|parent| {
-                    parent.spawn_bundle(ImageBundle {
-                        image: asset_loader.load(sprite_handler2).into(),
-                        style: Style {
-                            size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
-                            ..Default::default()
-                        },
-                        ..Default::default()
-                    }).insert(Interaction::default())
-                        .insert(ShopButton { index: 1 });
-
-                    /*parent.spawn_bundle(TextBundle {
-                        style: Style {
-                            ..Default::default()
-                        },
-                        text: Text::with_section(
-                            name.mod_name.to_string(),
-                            TextStyle {
-                                font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
-                                font_size: 30.0,
-                                color: Color::RED,
-                            },
-                            TextAlignment {
-                                vertical: VerticalAlign::Center,
-                                horizontal: HorizontalAlign::Center,
-                            },
-                        ),
-                        ..Default::default()
-                    });*/
-                });
-
-
-                //third item
-                parent.spawn_bundle(ButtonBundle {
-                    style: Style {
-                        size: Size::new(Val::Percent(25.0), Val::Percent(70.0)),
-                        align_items: AlignItems::Center,
-                        justify_content: JustifyContent::SpaceEvenly,
-                        flex_direction: FlexDirection::ColumnReverse,
-                        ..Default::default()
-                    },
-                    color: Color::BLACK.into(),
-                    ..Default::default()
-                }).with_children(|parent| {
-                    parent.spawn_bundle(ImageBundle {
-                        image: asset_loader.load(sprite_handler3).into(),
-                        style: Style {
-                            size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
-                            ..Default::default()
-                        },
-                        ..Default::default()
-                    }).insert(Interaction::default())
-                        .insert(ShopButton { index: 2 });
-
-                    /*parent.spawn_bundle(TextBundle {
-                        style: Style {
-                            ..Default::default()
-                        },
-                        text: Text::with_section(
-                            name.mod_name.to_string(),
-                            TextStyle {
-                                font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
-                                font_size: 30.0,
-                                color: Color::RED,
-                            },
-                            TextAlignment {
-                                vertical: VerticalAlign::Center,
-                                horizontal: HorizontalAlign::Center,
-                            },
-                        ),
-                        ..Default::default()
-                    });*/
-                });
-            });
+            }).push_children(shop_slot_vector.as_slice());
 
             // Third UI Row (tooltip and close button)
             parent.spawn_bundle(NodeBundle {
