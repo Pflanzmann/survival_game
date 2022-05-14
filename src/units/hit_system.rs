@@ -28,7 +28,7 @@ pub fn hit_system(
     mut target_query: Query<(Entity, &mut Health), With<Enemy>>,
 ) {
     for event in enemy_collision_events.iter() {
-        let (mut damaged_entities, damage, hit_limit) = match hitting_query.get_mut(event.source_entity) {
+        let (mut source_entities, source_damage, source_hit_limit) = match hitting_query.get_mut(event.source_entity) {
             Ok(val) => val,
             Err(_) => continue,
         };
@@ -38,27 +38,27 @@ pub fn hit_system(
             Err(_) => continue,
         };
 
-        if let Some(hit_limit) = hit_limit.as_ref() {
+        if let Some(hit_limit) = source_hit_limit.as_ref() {
             if hit_limit.hit_counter >= hit_limit.get_total_amount() as i32 {
                 continue;
             }
         }
 
         let damaged_entity = DamagedEntity::new(target_entity, time.seconds_since_startup());
-        if damaged_entities.contains(&damaged_entity) {
+        if source_entities.contains(&damaged_entity) {
             continue;
         }
 
-        damaged_entities.push(damaged_entity);
+        source_entities.push(damaged_entity);
 
-        enemy_health.damage(damage.get_total_amount());
-        damaged_event.send(DamagedEvent::new(target_entity));
+        enemy_health.damage(source_damage.get_total_amount());
+        damaged_event.send(DamagedEvent::new(event.source_entity, target_entity));
 
         if enemy_health.get_current_health() <= 0.0 {
             target_died_event.send(TargetDiedEvent { target_entity })
         }
 
-        if let Some(mut hit_limit) = hit_limit {
+        if let Some(mut hit_limit) = source_hit_limit {
             hit_limit.hit_counter += 1;
 
             if hit_limit.hit_counter >= hit_limit.get_total_amount() as i32 {

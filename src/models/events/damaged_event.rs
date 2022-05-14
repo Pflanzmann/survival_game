@@ -1,11 +1,12 @@
 use bevy::prelude::Entity;
 
 pub struct DamagedEvent {
-    pub damaged_entity: Entity,
+    pub source_entity: Entity,
+    pub target_entity: Entity,
 }
 
 impl DamagedEvent {
-    pub fn new(damaged_entity: Entity) -> Self {
-        Self { damaged_entity}
+    pub fn new(source_entity: Entity, target_entity: Entity) -> Self {
+        DamagedEvent { source_entity, target_entity }
     }
 }
