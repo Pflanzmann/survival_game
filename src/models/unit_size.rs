@@ -3,5 +3,5 @@ use bevy::prelude::Vec2;
 
 #[derive(Component)]
 pub struct UnitSize {
-    pub collider_size: Vec2,
+    pub unit_size: Vec2,
 }

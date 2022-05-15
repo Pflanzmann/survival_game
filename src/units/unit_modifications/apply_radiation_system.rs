@@ -57,7 +57,7 @@ pub fn apply_radiation_system(
             .insert(Name::new("Radiation"))
             .insert(RadiationUnit)
             .insert(Owner::new(owner_entity))
-            .insert(UnitSize { collider_size: Vec2::new(1024.0, 1024.0) })
+            .insert(UnitSize { unit_size: Vec2::new(1024.0, 1024.0) })
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(1024.0 / 2.0) })
             .insert(UnitRotation { angle: 0.1 })
             .insert(Damage::new(8.0))
