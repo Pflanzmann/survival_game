@@ -4,7 +4,6 @@ use crate::{SpriteLayer, TextureHandles};
 use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
 use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
 use crate::models::behavior::steering_behavior::SteeringBehavior;
-use crate::models::bundles::enemy_bundle::EnemyBundle;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::collider_weight::ColliderWeight;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
@@ -48,14 +47,12 @@ pub fn spawn_worker_system(
                     ..Default::default()
                 })
                 .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
-                .insert_bundle(EnemyBundle {
-                    enemy: Enemy,
-                    unit_size: UnitSize { collider_size: Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y) },
-                    facing_direction: MoveDirection::default(),
-                    move_speed: MoveSpeed::new(enemy_handles.goblin.move_speed),
-                    damage: Damage::new(enemy_handles.goblin.damage),
-                    health: Health::new(enemy_handles.goblin.health),
-                })
+                .insert(Enemy)
+                .insert(UnitSize { collider_size: Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y) })
+                .insert(MoveDirection::default())
+                .insert(MoveSpeed::new(enemy_handles.goblin.move_speed))
+                .insert(Damage::new(enemy_handles.goblin.damage))
+                .insert(Health::new(enemy_handles.goblin.health))
                 .insert(Name::new("Goblin"))
                 .insert(SpriteFlip)
                 .insert(SteeringBehavior::default())
