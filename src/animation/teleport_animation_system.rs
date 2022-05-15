@@ -6,7 +6,8 @@ use crate::audio::sound_manager::SoundManager;
 use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 use crate::models::behavior::teleporting_script::TeleportingScript;
 use crate::models::player::Player;
-use crate::models::unit_size::UnitSize;
+use crate::models::unit_attributes::attribute::Attribute;
+use crate::models::unit_attributes::unit_size::UnitSize;
 
 pub fn teleport_animation_system(
     mut commands: Commands,
@@ -24,8 +25,8 @@ pub fn teleport_animation_system(
         };
 
         if teleporting.progress < (teleporting.duration / 2.0) && custom_size.x > 0.0 {
-            custom_size.x -= time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.unit_size.x;
-            custom_size.y += time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.unit_size.y;
+            custom_size.x -= time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.proportional_unit_size().x;
+            custom_size.y += time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.proportional_unit_size().y;
             sprite.custom_size = Some(custom_size);
         }
 
@@ -37,8 +38,8 @@ pub fn teleport_animation_system(
                 teleporting.did_port = true;
                 sound_manager.queue_sound(SoundHandleChannel::Misc(sound_handles.teleport_sound.clone()));
             }
-            custom_size.x += time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.unit_size.x;
-            custom_size.y -= time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.unit_size.y;
+            custom_size.x += time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.proportional_unit_size().x;
+            custom_size.y -= time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.proportional_unit_size().y;
             sprite.custom_size = Some(custom_size);
         }
 
@@ -50,7 +51,7 @@ pub fn teleport_animation_system(
                 teleporting.did_port = true;
                 sound_manager.queue_sound(SoundHandleChannel::Misc(sound_handles.teleport_sound.clone()));
             }
-            unit_size.unit_size = unit_size.unit_size;
+            unit_size.add_bonus_amount(0.0);
             commands.entity(entity).remove::<TeleportingScript>();
         }
     }

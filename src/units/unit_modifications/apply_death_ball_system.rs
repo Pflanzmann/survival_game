@@ -9,7 +9,7 @@ use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::utils::owner::Owner;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::reload::Reload;
-use crate::models::unit_size::UnitSize;
+use crate::models::unit_attributes::unit_size::UnitSize;
 use crate::models::weapon_slot::WeaponSlot;
 use crate::TextureHandles;
 
@@ -64,7 +64,7 @@ pub fn apply_death_ball_system(
             .insert(DeathBallUnit)
             .insert(Owner::new(owner_entity))
 
-            .insert(UnitSize { unit_size: modification.unit_size })
+            .insert(UnitSize::new_size(modification.unit_size))
             .insert(UnitRotation { angle: -modification.rotation_speed })
 
             .insert(WeaponSlot { weapon_entity: owner_weapon_slot.weapon_entity })

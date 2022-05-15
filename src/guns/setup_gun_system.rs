@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, Entity, Name, Query, Res, With};
+use bevy::prelude::{Commands, Entity, Name, Query, Res, Vec2, With};
 
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
@@ -14,6 +14,7 @@ use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::travel_range::TravelRange;
+use crate::models::unit_attributes::unit_size::UnitSize;
 use crate::models::weapon_slot::WeaponSlot;
 
 pub fn setup_gun_system(
@@ -35,6 +36,7 @@ pub fn setup_gun_system(
             .insert(HitLimit::new(bullet_handle.basic_bullet.hit_limit))
             .insert(MoveSpeed::new(bullet_handle.basic_bullet.speed))
             .insert(TravelRange::new(bullet_handle.basic_bullet.range))
+            .insert(UnitSize::new_size(Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y)))
             .id();
 
         let gun_entity = commands.spawn()

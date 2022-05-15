@@ -11,7 +11,7 @@ use crate::models::modifications::utils::owner::Owner;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::damage_interval::DamageInterval;
-use crate::models::unit_size::UnitSize;
+use crate::models::unit_attributes::unit_size::UnitSize;
 use crate::TextureHandles;
 
 pub fn apply_radiation_system(
@@ -57,7 +57,7 @@ pub fn apply_radiation_system(
             .insert(RadiationUnit)
             .insert(Owner::new(owner_entity))
 
-            .insert(UnitSize { unit_size: modification.unit_size })
+            .insert(UnitSize::new_size(modification.unit_size))
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(0.0) })
             .insert(EnemyHitBoxCollision)
 

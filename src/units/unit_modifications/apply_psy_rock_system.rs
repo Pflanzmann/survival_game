@@ -23,7 +23,7 @@ use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::damage_interval::DamageInterval;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
-use crate::models::unit_size::UnitSize;
+use crate::models::unit_attributes::unit_size::UnitSize;
 use crate::models::weapon_slot::WeaponSlot;
 
 pub fn apply_psy_rock_system(
@@ -77,7 +77,7 @@ pub fn apply_psy_rock_system(
             .insert(MirrorAimToMoveDirection)
             .insert(MoveSpeed::new(0.0))
 
-            .insert(UnitSize { unit_size: modification.unit_size })
+            .insert(UnitSize::new_size(modification.unit_size))
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(0.0) })
             .insert(EnemyHitBoxCollision)
 

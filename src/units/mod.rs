@@ -7,7 +7,7 @@ use crate::units::behaviors::BehaviorPlugin;
 use crate::units::bullets::BulletPlugin;
 use crate::units::clear_damaged_entities_system::clear_damaged_entities_system;
 use crate::units::enemies::EnemiesPlugin;
-use crate::units::fit_sprite_to_size_system::fit_sprite_to_size_system;
+use crate::units::unit_size_change_system::unit_size_change_system;
 use crate::units::health_bar_update_system::healthbar_update_system;
 use crate::units::layerable_system::layerable_system;
 use crate::units::mirror_aim_to_move_direction_system::mirror_aim_to_move_direction_system;
@@ -24,7 +24,7 @@ use crate::util::stage_label_helper::{in_last, in_update};
 
 mod sprite_flip_system;
 mod health_bar_update_system;
-mod fit_sprite_to_size_system;
+mod unit_size_change_system;
 mod unit_modifications;
 mod move_unit_system;
 mod player;
@@ -71,7 +71,7 @@ impl Plugin for UnitPlugin {
                         .with_system(sprite_move_rotate_system)
                         .with_system(sprite_aim_rotate_system)
                         .with_system(healthbar_update_system)
-                        .with_system(fit_sprite_to_size_system)
+                        .with_system(unit_size_change_system)
                         .with_system(apply_damage_component_system)
                         .with_system(apply_hit_effect_system)
                         .with_system(clear_damaged_entities_system)

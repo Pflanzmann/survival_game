@@ -6,3 +6,4 @@ pub mod hit_limit;
 pub mod travel_range;
 pub mod reload;
 pub mod damage_interval;
+pub mod unit_size;
