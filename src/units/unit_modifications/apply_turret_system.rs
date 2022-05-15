@@ -27,7 +27,7 @@ pub fn apply_turret_system(
     unit_query: Query<&Owner, (With<TurretUnit>, Without<Turret>)>,
 ) {
     for apply_event in apply_events.iter() {
-        let _modification = match mod_query.get(apply_event.mod_entity) {
+        let modification = match mod_query.get(apply_event.mod_entity) {
             Ok(modification) => modification,
             Err(_) => continue,
         };
@@ -59,20 +59,21 @@ pub fn apply_turret_system(
             transform: Transform::from_xyz(pos_vec[0], pos_vec[1], 0.0),
             ..Default::default()
         })
-            .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
+            .insert(Name::new("Turret"))
             .insert(TurretUnit)
             .insert(Owner::new(owner_entity))
-            .insert(SolidBodyCollider {
-                offset: Vec2::new(0.0, 80.0),
-                collider_type: ColliderType::Circle(128.0 / 3.0),
-            })
-            .insert(UnitSize { unit_size: Vec2::new(128.0, 128.0) })
-            .insert(ColliderWeight { weight: 1.0 })
             .insert(WeaponSlot { weapon_entity: owner_weapon_slot.weapon_entity })
-            .insert(Name::new("Turret"))
+
+            .insert(UnitSize { unit_size: modification.unit_size })
+            .insert(SolidBodyCollider { offset: Vec2::new(0.0, 80.0), collider_type: ColliderType::Circle(128.0 / 3.0) })
+            .insert(ColliderWeight { weight: 1.0 })
+
+            .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
+
             .insert(AimDirection { direction: Vec2::new(1.0, 0.0) })
+            .insert(Reload::new(modification.reload))
             .insert(SpinAimBehavior)
-            .insert(TeleportToTargetBehavior::new(owner_entity, 2500.0, 300.0, 700.0, 0.0))
-            .insert(Reload::new(40.0));
+            .insert(TeleportToTargetBehavior::new(owner_entity, modification.teleport_distance, modification.teleport_proximity_min, modification.teleport_proximity_max, modification.teleport_cooldown))
+        ;
     }
 }

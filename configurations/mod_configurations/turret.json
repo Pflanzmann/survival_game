@@ -9,5 +9,15 @@
   "ToolTip": {
     "tooltip": "a turret helping the player"
   },
-  "Turret": null
+  "Turret": {
+    "unit_size": [
+      128.0,
+      128.0
+    ],
+    "reload": 40,
+    "teleport_distance": 2500.0,
+    "teleport_proximity_min": 300.0,
+    "teleport_proximity_max": 700.0,
+    "teleport_cooldown": 0.0
+  }
 }
