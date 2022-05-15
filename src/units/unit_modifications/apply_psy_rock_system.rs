@@ -36,7 +36,7 @@ pub fn apply_psy_rock_system(
     unit_query: Query<&Owner, With<PsyRockUnit>>,
 ) {
     for apply_event in apply_events.iter() {
-        let _modification = match mod_query.get(apply_event.mod_entity) {
+        let modification = match mod_query.get(apply_event.mod_entity) {
             Ok(modification) => modification,
             Err(_) => continue,
         };
@@ -66,24 +66,28 @@ pub fn apply_psy_rock_system(
             transform: Transform::from_translation(owner_transform.translation),
             ..Default::default()
         })
-            .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
             .insert(Name::new("Psy Rock"))
             .insert(PsyRockUnit)
             .insert(Owner::new(owner_entity))
+            .insert(Bullet { source_entity: owner_weapon_slot.weapon_entity })
+
+            .insert(AimDirection::default())
             .insert(PlayerAimControlled)
             .insert(MoveDirection::default())
-            .insert(AimDirection::default())
             .insert(MirrorAimToMoveDirection)
-            .insert(MoveSpeed::new(20.0))
-            .insert(UnitSize { unit_size: Vec2::new(160.0, 160.0) })
-            .insert(DamagedEntities::default())
-            .insert(DamageInterval::new(60.0))
-            .insert(Damage::new(2.0))
-            .insert(HitBoxCollider { collider_type: ColliderType::Circle(160.0 / 2.0) })
+            .insert(MoveSpeed::new(0.0))
+
+            .insert(UnitSize { unit_size: modification.unit_size })
+            .insert(HitBoxCollider { collider_type: ColliderType::Circle(0.0) })
             .insert(EnemyHitBoxCollision)
+
+            .insert(Damage::new(0.0))
+            .insert(DamageInterval::new(modification.damage_interval))
+            .insert(DamagedEntities::default())
+            .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
             .insert(SpriteMoveRotation)
-            .insert(Bullet { source_entity: owner_weapon_slot.weapon_entity })
-            .insert(TeleportToTargetBehavior::new(owner_entity, 3000.0, 300.0, 500.0, 0.0))
+
+            .insert(TeleportToTargetBehavior::new(owner_entity, modification.teleport_distance, modification.teleport_proximity_min, modification.teleport_proximity_max, modification.teleport_cooldown))
             .id()
             ;
 
