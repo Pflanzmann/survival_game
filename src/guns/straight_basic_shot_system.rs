@@ -6,7 +6,6 @@ use crate::audio::sound_manager::SoundManager;
 use crate::models::aim_direction::AimDirection;
 use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 use crate::models::bullet::Bullet;
-use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
@@ -61,12 +60,10 @@ pub fn straight_basic_shot_system(
             texture: texture_handle.bullet_fireball.clone(),
             ..Default::default()
         })
-            .insert_bundle(BulletBundle {
-                bullet: Bullet { source_entity: gun_entity },
-                unit_size: UnitSize { collider_size: Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y) },
-                facing_direction: MoveDirection { direction: holder_aim_direction.direction },
-                collider_entities: DamagedEntities::default(),
-            })
+            .insert(Bullet { source_entity: gun_entity })
+            .insert(UnitSize { collider_size: Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y) })
+            .insert(MoveDirection { direction: holder_aim_direction.direction })
+            .insert(DamagedEntities::default())
             .insert(Name::new("Bullet"))
             .insert(MoveSpeed::default())
             .insert(Damage::default())
