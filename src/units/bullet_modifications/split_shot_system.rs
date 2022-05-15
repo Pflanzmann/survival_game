@@ -3,7 +3,6 @@ use rand::random;
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::bullet::Bullet;
-use crate::models::bundles::bullet_bundle::BulletBundle;
 use crate::models::child_bullet::ChildBullet;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
@@ -55,12 +54,11 @@ pub fn split_shot_system(
                 },
                 texture: texture_handle.bullet_fireball.clone(),
                 ..Default::default()
-            }).insert_bundle(BulletBundle {
-                bullet: *bullet,
-                unit_size: UnitSize { collider_size: Vec2::new(128.0, 128.0) },
-                facing_direction: MoveDirection { direction },
-                collider_entities: collided_entities.clone(),
             })
+                .insert(*bullet)
+                .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
+                .insert(MoveDirection { direction })
+                .insert(collided_entities.clone())
                 .insert(ChildBullet)
                 .insert(Name::new("SplitShot Bullet"))
                 .insert(MoveSpeed::default())
