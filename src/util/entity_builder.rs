@@ -11,10 +11,12 @@ use crate::models::modifications::affects::affect_damage::AffectDamage;
 use crate::models::modifications::affects::affect_health::AffectHealth;
 use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
 use crate::models::modifications::affects::affect_reload::AffectReload;
+use crate::models::modifications::affects::affect_unit_size::AffectUnitSize;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_damage::AffectBulletDamage;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_hit_limit::AffectBulletHitLimit;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_move_speed::AffectBulletMoveSpeed;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_travel_range::AffectBulletTravelRange;
+use crate::models::modifications::affects::bullet_affects::affect_bullet_unit_size::AffectBulletUnitSize;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::death_ball::DeathBall;
 use crate::models::modifications::descriptors::mod_name::ModName;
@@ -55,11 +57,13 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<AffectDamage>();
         entity_builder.register_component::<AffectHealth>();
         entity_builder.register_component::<AffectReload>();
+        entity_builder.register_component::<AffectUnitSize>();
 
         entity_builder.register_component::<AffectBulletDamage>();
         entity_builder.register_component::<AffectBulletHitLimit>();
         entity_builder.register_component::<AffectBulletMoveSpeed>();
         entity_builder.register_component::<AffectBulletTravelRange>();
+        entity_builder.register_component::<AffectBulletUnitSize>();
 
         entity_builder.register_component::<TravelRange>();
         entity_builder.register_component::<HitLimit>();

@@ -18,7 +18,7 @@ use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
-use crate::models::unit_size::UnitSize;
+use crate::models::unit_attributes::unit_size::UnitSize;
 
 /// A system to split the [Bullet] that has [SplitShot] applied to it.
 /// The shot gets split when the bullet stops.
@@ -58,7 +58,7 @@ pub fn split_shot_system(
                 .insert(*bullet)
                 .insert(ChildBullet)
 
-                .insert(UnitSize { unit_size: Vec2::new(128.0, 128.0) })
+                .insert(UnitSize::new_size(Vec2::new(128.0, 128.0)))
                 .insert(HitBoxCollider { collider_type: ColliderType::Circle(128.0 / 2.0) }).insert(EnemyHitBoxCollision)
                 .insert(EnemyHitBoxCollision)
 

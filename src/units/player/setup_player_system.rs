@@ -21,7 +21,7 @@ use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
-use crate::models::unit_size::UnitSize;
+use crate::models::unit_attributes::unit_size::UnitSize;
 
 pub fn setup_player_system(
     mut commands: Commands,
@@ -41,8 +41,8 @@ pub fn setup_player_system(
         .insert(Name::new("Player"))
         .insert(Player)
 
-        .insert(UnitSize { unit_size: Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y) })
-        .insert(SolidBodyCollider { offset: Vec2::new(0.0, -player_handles.player_one.sprite_custom_size_x / 4.0), collider_type: ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 4.0) })
+        .insert(UnitSize::new_size(Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y)))
+        .insert(SolidBodyCollider { offset: Vec2::new(0.0, -player_handles.player_one.sprite_custom_size_y / 4.0), collider_type: ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 4.0) })
         .insert(ColliderWeight { weight: 0.8 })
 
         .insert_bundle(DamageBundle::new(player_handles.player_one.damage, 60.0))

@@ -20,7 +20,7 @@ use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::travel_range::TravelRange;
-use crate::models::unit_size::UnitSize;
+use crate::models::unit_attributes::unit_size::UnitSize;
 use crate::models::weapon_slot::WeaponSlot;
 use crate::TextureHandles;
 
@@ -61,7 +61,7 @@ pub fn straight_basic_shot_system(
             .insert(Name::new("Bullet"))
             .insert(Bullet { source_entity: gun_entity })
 
-            .insert(UnitSize { unit_size: Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y) })
+            .insert(UnitSize::new_size(Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y)))
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(bullet_handle.basic_bullet.sprite_custom_size_x / 2.0) })
             .insert(EnemyHitBoxCollision)
 

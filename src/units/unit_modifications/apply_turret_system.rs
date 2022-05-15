@@ -14,7 +14,7 @@ use crate::models::modifications::turret::{Turret, TurretUnit};
 use crate::models::modifications::utils::owner::Owner;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::reload::Reload;
-use crate::models::unit_size::UnitSize;
+use crate::models::unit_attributes::unit_size::UnitSize;
 use crate::models::weapon_slot::WeaponSlot;
 use crate::util::get_close_position_2d::get_close_position_2d;
 
@@ -64,7 +64,7 @@ pub fn apply_turret_system(
             .insert(Owner::new(owner_entity))
             .insert(WeaponSlot { weapon_entity: owner_weapon_slot.weapon_entity })
 
-            .insert(UnitSize { unit_size: modification.unit_size })
+            .insert(UnitSize::new_size(modification.unit_size))
             .insert(SolidBodyCollider { offset: Vec2::new(0.0, 80.0), collider_type: ColliderType::Circle(128.0 / 3.0) })
             .insert(ColliderWeight { weight: 1.0 })
 

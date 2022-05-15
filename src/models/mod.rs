@@ -12,7 +12,6 @@ pub mod unit_attributes;
 pub mod modifications;
 pub mod items;
 pub mod weapon_slot;
-pub mod unit_size;
 pub mod enemy;
 pub mod mod_container;
 pub mod main_camera;

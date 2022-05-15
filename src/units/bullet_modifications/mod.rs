@@ -12,6 +12,7 @@ use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
+use crate::models::unit_attributes::unit_size::UnitSize;
 use crate::units::bullet_modifications::assign_attribute_to_bullet_system::assign_attribute_to_bullet_system;
 use crate::units::bullet_modifications::assign_modification_to_bullet_system::assign_modification_to_bullet_system;
 use crate::units::bullet_modifications::curve_shot_system::curve_shot_system;
@@ -51,6 +52,7 @@ impl Plugin for BulletModificationsPlugin {
                         .with_system(assign_attribute_to_bullet_system::<HitLimit>)
                         .with_system(assign_attribute_to_bullet_system::<MoveSpeed>)
                         .with_system(assign_attribute_to_bullet_system::<TravelRange>)
+                        .with_system(assign_attribute_to_bullet_system::<UnitSize>)
 
                         .with_system(assign_modification_to_bullet_system::<CurveShot>)
                         .with_system(assign_modification_to_bullet_system::<GrowShot>)
