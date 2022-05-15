@@ -6,6 +6,7 @@ use serde::Deserialize;
 pub struct Turret {
     pub unit_size: Vec2,
     pub reload: f32,
+    
     pub teleport_distance: f32,
     pub teleport_proximity_min: f32,
     pub teleport_proximity_max: f32,
