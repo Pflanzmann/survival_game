@@ -24,8 +24,8 @@ pub fn teleport_animation_system(
         };
 
         if teleporting.progress < (teleporting.duration / 2.0) && custom_size.x > 0.0 {
-            custom_size.x -= time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.collider_size.x;
-            custom_size.y += time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.collider_size.y;
+            custom_size.x -= time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.unit_size.x;
+            custom_size.y += time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.unit_size.y;
             sprite.custom_size = Some(custom_size);
         }
 
@@ -37,8 +37,8 @@ pub fn teleport_animation_system(
                 teleporting.did_port = true;
                 sound_manager.queue_sound(SoundHandleChannel::Misc(sound_handles.teleport_sound.clone()));
             }
-            custom_size.x += time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.collider_size.x;
-            custom_size.y -= time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.collider_size.y;
+            custom_size.x += time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.unit_size.x;
+            custom_size.y -= time.delta_seconds() / (teleporting.duration / 2.0) * unit_size.unit_size.y;
             sprite.custom_size = Some(custom_size);
         }
 
@@ -50,7 +50,7 @@ pub fn teleport_animation_system(
                 teleporting.did_port = true;
                 sound_manager.queue_sound(SoundHandleChannel::Misc(sound_handles.teleport_sound.clone()));
             }
-            unit_size.collider_size = unit_size.collider_size;
+            unit_size.unit_size = unit_size.unit_size;
             commands.entity(entity).remove::<TeleportingScript>();
         }
     }

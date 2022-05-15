@@ -73,7 +73,6 @@ pub fn apply_turret_system(
             .insert(AimDirection { direction: Vec2::new(1.0, 0.0) })
             .insert(SpinAimBehavior)
             .insert(TeleportToTargetBehavior::new(owner_entity, 2500.0, 300.0, 700.0, 0.0))
-            .insert(Reload::new(40.0))
-            .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) });
+            .insert(Reload::new(40.0));
     }
 }
