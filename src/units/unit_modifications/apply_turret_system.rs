@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, Entity, EventReader, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With, Without};
+use bevy::prelude::{Commands, Entity, EventReader, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
@@ -24,7 +24,7 @@ pub fn apply_turret_system(
     mut apply_events: EventReader<ApplyModToTargetEvent>,
     mod_query: Query<&Turret, With<Modification>>,
     owner_query: Query<(Entity, &Transform, &WeaponSlot)>,
-    unit_query: Query<&Owner, (With<TurretUnit>, Without<Turret>)>,
+    unit_query: Query<&Owner, With<TurretUnit>>,
 ) {
     for apply_event in apply_events.iter() {
         let modification = match mod_query.get(apply_event.mod_entity) {

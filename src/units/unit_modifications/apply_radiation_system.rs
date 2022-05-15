@@ -1,6 +1,5 @@
 use bevy::prelude::{BuildChildren, Commands, Entity, EventReader, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
 
-use crate::models::behavior::rotate_behavior::UnitRotation;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
@@ -24,7 +23,7 @@ pub fn apply_radiation_system(
     unit_query: Query<&Owner, With<RadiationUnit>>,
 ) {
     for apply_event in apply_events.iter() {
-        let _modification = match mod_query.get(apply_event.mod_entity) {
+        let modification = match mod_query.get(apply_event.mod_entity) {
             Ok(modification) => modification,
             Err(_) => continue,
         };
@@ -57,13 +56,14 @@ pub fn apply_radiation_system(
             .insert(Name::new("Radiation"))
             .insert(RadiationUnit)
             .insert(Owner::new(owner_entity))
-            .insert(UnitSize { unit_size: Vec2::new(1024.0, 1024.0) })
-            .insert(HitBoxCollider { collider_type: ColliderType::Circle(1024.0 / 2.0) })
-            .insert(UnitRotation { angle: 0.1 })
-            .insert(Damage::new(8.0))
-            .insert(DamagedEntities::default())
-            .insert(DamageInterval::new(90.0))
+
+            .insert(UnitSize { unit_size: modification.unit_size })
+            .insert(HitBoxCollider { collider_type: ColliderType::Circle(0.0) })
             .insert(EnemyHitBoxCollision)
+
+            .insert(Damage::new(modification.damage))
+            .insert(DamageInterval::new(modification.damage_interval))
+            .insert(DamagedEntities::default())
             .id();
 
         commands.entity(owner_entity).add_child(child);

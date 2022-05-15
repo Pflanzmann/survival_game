@@ -9,5 +9,12 @@
   "ToolTip": {
     "tooltip": "kills the video star"
   },
-  "Radiation": null
+  "Radiation": {
+    "unit_size": [
+      1024.0,
+      1024.0
+    ],
+    "damage": 8.0,
+    "damage_interval": 90.0
+  }
 }
