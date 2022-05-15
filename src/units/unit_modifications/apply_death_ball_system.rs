@@ -60,15 +60,17 @@ pub fn apply_death_ball_system(
             transform: Transform::from_translation(desired_pos),
             ..Default::default()
         })
+            .insert(Name::new("DeathBall"))
             .insert(DeathBallUnit)
             .insert(Owner::new(owner_entity))
+
+            .insert(UnitSize { unit_size: modification.unit_size })
+            .insert(UnitRotation { angle: -modification.rotation_speed })
+
             .insert(WeaponSlot { weapon_entity: owner_weapon_slot.weapon_entity })
-            .insert(Name::new("DeathBall"))
-            .insert(UnitSize { unit_size: Vec2::new(128.0, 128.0) })
             .insert(AimDirection::default())
             .insert(AimAtClosestTargetBehavior)
-            .insert(UnitRotation { angle: -modification.rotation_speed })
-            .insert(Reload::new(40.0))
+            .insert(Reload::new(modification.reload))
             .id();
 
 
