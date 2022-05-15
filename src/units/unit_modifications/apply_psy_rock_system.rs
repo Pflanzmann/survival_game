@@ -75,7 +75,7 @@ pub fn apply_psy_rock_system(
             .insert(AimDirection::default())
             .insert(MirrorAimToMoveDirection)
             .insert(MoveSpeed::new(20.0))
-            .insert(UnitSize { collider_size: Vec2::new(160.0, 160.0) })
+            .insert(UnitSize { unit_size: Vec2::new(160.0, 160.0) })
             .insert(DamagedEntities::default())
             .insert(DamageInterval::new(60.0))
             .insert(Damage::new(2.0))

@@ -12,7 +12,7 @@ pub fn grow_shot_system(
     mut bullet_query: Query<(&mut UnitSize, &mut Damage, &GrowShot), With<TravelRange>>,
 ) {
     for (mut unit_size, mut damage, grow_shot) in bullet_query.iter_mut() {
-        unit_size.collider_size += grow_shot.size_step;
+        unit_size.unit_size += grow_shot.size_step;
         damage.add_bonus_amount(grow_shot.damage_step);
     }
 }

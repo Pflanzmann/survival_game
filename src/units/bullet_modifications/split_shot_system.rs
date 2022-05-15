@@ -58,7 +58,7 @@ pub fn split_shot_system(
                 .insert(*bullet)
                 .insert(ChildBullet)
 
-                .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
+                .insert(UnitSize { unit_size: Vec2::new(128.0, 128.0) })
                 .insert(HitBoxCollider { collider_type: ColliderType::Circle(128.0 / 2.0) }).insert(EnemyHitBoxCollision)
                 .insert(EnemyHitBoxCollision)
 

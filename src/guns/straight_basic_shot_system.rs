@@ -61,7 +61,7 @@ pub fn straight_basic_shot_system(
             .insert(Name::new("Bullet"))
             .insert(Bullet { source_entity: gun_entity })
 
-            .insert(UnitSize { collider_size: Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y) })
+            .insert(UnitSize { unit_size: Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y) })
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(bullet_handle.basic_bullet.sprite_custom_size_x / 2.0) })
             .insert(EnemyHitBoxCollision)
 

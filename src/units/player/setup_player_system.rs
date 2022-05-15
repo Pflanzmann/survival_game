@@ -40,7 +40,7 @@ pub fn setup_player_system(
         .insert(Name::new("Player"))
         .insert(Player)
 
-        .insert(UnitSize { collider_size: Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y) })
+        .insert(UnitSize { unit_size: Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y) })
         .insert(SolidBodyCollider { offset: Vec2::new(0.0, -player_handles.player_one.sprite_custom_size_x / 4.0), collider_type: ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 4.0) })
         .insert(ColliderWeight { weight: 0.8 })
 

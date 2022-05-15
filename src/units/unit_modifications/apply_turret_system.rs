@@ -66,7 +66,7 @@ pub fn apply_turret_system(
                 offset: Vec2::new(0.0, 80.0),
                 collider_type: ColliderType::Circle(128.0 / 3.0),
             })
-            .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
+            .insert(UnitSize { unit_size: Vec2::new(128.0, 128.0) })
             .insert(ColliderWeight { weight: 1.0 })
             .insert(WeaponSlot { weapon_entity: owner_weapon_slot.weapon_entity })
             .insert(Name::new("Turret"))

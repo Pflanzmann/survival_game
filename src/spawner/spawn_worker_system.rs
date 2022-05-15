@@ -47,7 +47,7 @@ pub fn spawn_worker_system(
                 .insert(Name::new("Goblin"))
                 .insert(Enemy)
 
-                .insert(UnitSize { collider_size: Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y) })
+                .insert(UnitSize { unit_size: Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y) })
                 .insert(SolidBodyCollider { offset: Vec2::new(0.0, -80.0), collider_type: ColliderType::Circle(enemy_handles.goblin.sprite_custom_size_x / 4.0) })
                 .insert(HitBoxCollider { collider_type: ColliderType::Circle(enemy_handles.goblin.sprite_custom_size_x / 2.0) })
                 .insert(ColliderWeight { weight: 0.2 })
