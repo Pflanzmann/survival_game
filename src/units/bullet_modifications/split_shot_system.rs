@@ -3,6 +3,7 @@ use rand::random;
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::bullet::Bullet;
+use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::child_bullet::ChildBullet;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
@@ -14,8 +15,6 @@ use crate::models::modifications::split_shot::SplitShot;
 use crate::models::move_direction::MoveDirection;
 use crate::models::sprite_move_rotation::SpriteMoveRotation;
 use crate::models::unit_attributes::attribute::Attribute;
-use crate::models::unit_attributes::damage::Damage;
-use crate::models::unit_attributes::damage_interval::DamageInterval;
 use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
@@ -55,20 +54,24 @@ pub fn split_shot_system(
                 texture: texture_handle.bullet_fireball.clone(),
                 ..Default::default()
             })
-                .insert(*bullet)
-                .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
-                .insert(MoveDirection { direction })
-                .insert(collided_entities.clone())
-                .insert(ChildBullet)
                 .insert(Name::new("SplitShot Bullet"))
-                .insert(MoveSpeed::default())
-                .insert(Damage::default())
-                .insert(HitLimit::new(1.0))
-                .insert(TravelRange::new(2048.0))
-                .insert(SpriteMoveRotation)
-                .insert(DamageInterval::new(60.0))
+                .insert(*bullet)
+                .insert(ChildBullet)
+
+                .insert(UnitSize { collider_size: Vec2::new(128.0, 128.0) })
                 .insert(HitBoxCollider { collider_type: ColliderType::Circle(128.0 / 2.0) }).insert(EnemyHitBoxCollision)
                 .insert(EnemyHitBoxCollision)
+
+                .insert_bundle(DamageBundle::new(0.0, 60.0))
+                .insert(collided_entities.clone())
+
+                .insert(MoveSpeed::default())
+                .insert(MoveDirection { direction })
+
+                .insert(HitLimit::new(1.0))
+                .insert(TravelRange::new(2048.0))
+
+                .insert(SpriteMoveRotation)
                 .id();
 
             bullet_shot_event_writer.send(BulletShotEvent { entity: bullet });
