@@ -1,5 +1,3 @@
-use bevy::prelude::{Commands, Name, Res, ResMut, SpriteSheetBundle, TextureAtlasSprite, Transform, Vec2, Vec3};
-use bevy::core::Timer;
 use bevy::prelude::{Commands, Name, Res, ResMut, SpriteSheetBundle, TextureAtlasSprite, Vec2};
 
 use crate::assets_handling::preload_animation_system::AtlasHandles;
@@ -8,7 +6,6 @@ use crate::models::aim_direction::AimDirection;
 use crate::models::animation::animation_state::CurrentAnimationState;
 use crate::models::animation::idle_animation_component::IdleAnimation;
 use crate::models::animation::walking_animation_component::{MoveAnimationDown, MoveAnimationSide, MoveAnimationUp};
-use crate::models::bundles::player_bundle::PlayerBundle;
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::collider_weight::ColliderWeight;
@@ -37,7 +34,7 @@ pub fn setup_player_system(
                 custom_size: Some(Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y)),
                 ..Default::default()
             },
-            texture_atlas: atlas_handles.player_idle_atlas.clone(),
+            texture_atlas: atlas_handles.player_atlas.clone(),
             ..Default::default()
         },
     )
@@ -62,7 +59,7 @@ pub fn setup_player_system(
 
         .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
         .insert(SpriteFlip)
-       
+
         .insert(IdleAnimation::new(0.0, 3, 0, 10))
         .insert(MoveAnimationSide::new(0.0, 4, 4, 15))
         .insert(MoveAnimationUp::new(0.0, 4, 5, 15))
