@@ -10,6 +10,11 @@
     "tooltip": "a death ball that makes death"
   },
   "DeathBall": {
+    "unit_size": [
+      128.0,
+      128.0
+    ],
+    "reload": 40.0,
     "rotation_distance": 256.0,
     "rotation_speed": 0.01
   }
