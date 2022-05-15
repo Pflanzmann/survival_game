@@ -4,7 +4,6 @@ use bevy::prelude::{Commands, Name, Res, ResMut, SpriteSheetBundle, TextureAtlas
 use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 use crate::models::aim_direction::AimDirection;
-use crate::models::bundles::player_bundle::PlayerBundle;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::collider_weight::ColliderWeight;
 use crate::models::collision::solid_body_collider::SolidBodyCollider;
@@ -42,15 +41,13 @@ pub fn setup_player_system(
     )
         .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
         .insert(Name::new("Player"))
-        .insert_bundle(PlayerBundle {
-            player: Player,
-            unit_size: UnitSize { collider_size: Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y) },
-            aim_direction: AimDirection::default(),
-            move_direction: MoveDirection::default(),
-            move_speed: MoveSpeed::new(player_handles.player_one.move_speed),
-            damage: Damage::new(player_handles.player_one.damage),
-            health: Health::new(player_handles.player_one.health),
-        })
+        .insert(Player)
+        .insert(UnitSize { collider_size: Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y) })
+        .insert(AimDirection::default())
+        .insert(MoveDirection::default())
+        .insert(MoveSpeed::new(player_handles.player_one.move_speed))
+        .insert(Damage::new(player_handles.player_one.damage))
+        .insert(Health::new(player_handles.player_one.health))
         .insert(ModRegister::default())
         .insert(PlayerMoveControlled)
         .insert(PlayerAimControlled)
