@@ -1,4 +1,5 @@
 use bevy::prelude::{AssetServer, Commands, EventReader, Query, Res, Sprite, SpriteBundle, Transform, Vec2};
+use rand::random;
 
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_solid_body_collision::EnemySolidBodyCollision;
@@ -21,6 +22,11 @@ pub fn explosion_shot_system(
             Ok(source) => source,
             Err(_) => continue,
         };
+
+        let chance = random::<f32>();
+        if chance > explosion_shot.explosion_chance {
+            continue;
+        }
 
         commands.spawn_bundle(SpriteBundle {
             sprite: Sprite {

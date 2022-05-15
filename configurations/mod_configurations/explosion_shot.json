@@ -10,8 +10,9 @@
     "tooltip": "Funny tooltip that has a joke with gravity"
   },
   "ExplosionShot": {
-    "radius": 500.0,
     "explosion_sprite_path": "sprites/explosion.png",
+    "explosion_chance": 0.2,
+    "radius": 500.0,
     "explosion_time_alive": 0.1
   }
 }
