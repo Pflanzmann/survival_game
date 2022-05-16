@@ -17,15 +17,15 @@ pub fn get_close_position_2d(
     let rnd_y = rng.gen_range(prox_min..prox_max);
 
     if rnd_signed_x < 0 {
-        result[0] = position_x - rnd_x
+        result.x = position_x - rnd_x
     } else {
-        result[0] = position_x + rnd_x
+        result.x = position_x + rnd_x
     }
 
     if rnd_signed_y < 0 {
-        result[1] = position_y - rnd_y
+        result.y = position_y - rnd_y
     } else {
-        result[1] = position_y + rnd_y
+        result.y = position_y + rnd_y
     }
     return result;
 }

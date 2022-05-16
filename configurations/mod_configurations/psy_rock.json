@@ -16,8 +16,8 @@
     ],
     "damage_interval": 60.0,
     "teleport_distance": 3000.0,
-    "teleport_proximity_min": 300.0,
-    "teleport_proximity_max": 500.0,
+    "teleport_proximity_min": 250.0,
+    "teleport_proximity_max": 400.0,
     "teleport_cooldown": 0.0
   }
 }
