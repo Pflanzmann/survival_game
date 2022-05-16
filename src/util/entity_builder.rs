@@ -29,6 +29,7 @@ use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::modifications::knock_back_shot::KnockBackShot;
 use crate::models::modifications::psy_rock::PsyRock;
 use crate::models::modifications::radiation::Radiation;
+use crate::models::modifications::shield::Shield;
 use crate::models::modifications::slime::Slime;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::modifications::sprinting::Sprinting;
@@ -85,6 +86,7 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<DeathBall>();
         entity_builder.register_component::<PsyRock>();
         entity_builder.register_component::<Radiation>();
+        entity_builder.register_component::<Shield>();
 
         app.insert_non_send_resource::<EntityBuilder>(entity_builder);
     }

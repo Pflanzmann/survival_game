@@ -26,6 +26,7 @@ use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::modifications::knock_back_shot::KnockBackShot;
 use crate::models::modifications::psy_rock::{PsyRock, PsyRockUnit};
 use crate::models::modifications::radiation::{Radiation, RadiationUnit};
+use crate::models::modifications::shield::{Shield, ShieldUnit};
 use crate::models::modifications::slime::{Slime, SlimeUnit};
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::modifications::sprinting::Sprinting;
@@ -39,6 +40,7 @@ use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::units::unit_modifications::apply_death_ball_system::apply_death_ball_system;
 use crate::units::unit_modifications::apply_psy_rock_system::{apply_psy_rock_system, renew_mods_for_psy_rock_system};
 use crate::units::unit_modifications::apply_radiation_system::apply_radiation_system;
+use crate::units::unit_modifications::apply_shield_system::apply_shield_system;
 use crate::units::unit_modifications::apply_slime_system::apply_slime_system;
 use crate::units::unit_modifications::apply_turret_system::apply_turret_system;
 use crate::units::unit_modifications::helper::apply_bullet_affect_system::apply_bullet_affect_system;
@@ -55,6 +57,7 @@ mod helper;
 mod apply_death_ball_system;
 mod apply_psy_rock_system;
 mod apply_radiation_system;
+mod apply_shield_system;
 
 /// All the apply systems have to get registered here.
 ///
@@ -111,6 +114,9 @@ impl Plugin for UnitModificationsPlugin {
 
                         .with_system(apply_player_mod_to_target_system::<Radiation>)
                         .with_system(apply_radiation_system)
+
+                        .with_system(apply_player_mod_to_target_system::<Shield>)
+                        .with_system(apply_shield_system)
                 )
             )
 
@@ -154,6 +160,9 @@ impl Plugin for UnitModificationsPlugin {
 
                         .with_system(remove_player_mod_from_target_system::<Radiation>)
                         .with_system(despawn_companion_from_mod_system::<Radiation, RadiationUnit>)
+
+                        .with_system(remove_player_mod_from_target_system::<Shield>)
+                        .with_system(despawn_companion_from_mod_system::<Shield, ShieldUnit>)
                 )
             )
         ;

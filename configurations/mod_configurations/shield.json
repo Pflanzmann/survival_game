@@ -1,0 +1,24 @@
+{
+  "Modification": null,
+  "ModName": {
+    "mod_name": "Shield"
+  },
+  "ModSpritePath": {
+    "path": "sprites/shield.png"
+  },
+  "ToolTip": {
+    "tooltip": "A Shield that knocks stuff away even better"
+  },
+  "Shield": {
+    "unit_size": [
+      128.0,
+      150.0
+    ],
+    "damage": 2.0,
+    "damage_interval": 90.0,
+    "push_duration": 0.2,
+    "push_force": -2000.0,
+    "rotation_distance": 300.0,
+    "rotation_speed": 0.03
+  }
+}

@@ -32,7 +32,7 @@ impl Plugin for BehaviorPlugin {
             .add_system_set(
                 in_update(
                     SystemSet::on_update(AppState::InGame)
-                        .with_run_criteria(FixedTimestep::step(0.2))
+                        .with_run_criteria(FixedTimestep::step(0.1))
                         .with_system(spin_aim_behavior_system)
                         .with_system(teleport_to_target_behavior_system)
                         .with_system(chase_target_behavior_system)
