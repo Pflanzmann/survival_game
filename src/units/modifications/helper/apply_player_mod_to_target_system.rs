@@ -13,7 +13,7 @@ use crate::models::modifications::descriptors::modification::Modification;
 /// #
 /// impl Plugin for ExamplePlugin {
 ///     fn build(&self, app: &mut App) {
-///         app.add_system(apply_bullet_mod_to_target_system::<CurveShot>)
+///         app.add_system(apply_player_mod_to_target_system::<CurveShot>)
 ///     }
 /// }
 /// ```

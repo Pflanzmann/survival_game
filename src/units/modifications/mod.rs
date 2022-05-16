@@ -37,17 +37,17 @@ use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::travel_range::TravelRange;
-use crate::units::unit_modifications::apply_death_ball_system::apply_death_ball_system;
-use crate::units::unit_modifications::apply_psy_rock_system::{apply_psy_rock_system, renew_mods_for_psy_rock_system};
-use crate::units::unit_modifications::apply_radiation_system::apply_radiation_system;
-use crate::units::unit_modifications::apply_shield_system::apply_shield_system;
-use crate::units::unit_modifications::apply_slime_system::apply_slime_system;
-use crate::units::unit_modifications::apply_turret_system::apply_turret_system;
-use crate::units::unit_modifications::helper::apply_bullet_affect_system::apply_bullet_affect_system;
-use crate::units::unit_modifications::helper::despawn_companion_from_mod_system::despawn_companion_from_mod_system;
-use crate::units::unit_modifications::helper::mod_list_deregister_system::mod_list_deregister_system;
-use crate::units::unit_modifications::helper::mod_list_register_system::mod_list_register_system;
-use crate::units::unit_modifications::helper::remove_bullet_affect_system::remove_bullet_affect_system;
+use crate::units::modifications::apply_death_ball_system::apply_death_ball_system;
+use crate::units::modifications::apply_psy_rock_system::{apply_psy_rock_system, renew_mods_for_psy_rock_system};
+use crate::units::modifications::apply_radiation_system::apply_radiation_system;
+use crate::units::modifications::apply_shield_system::apply_shield_system;
+use crate::units::modifications::apply_slime_system::apply_slime_system;
+use crate::units::modifications::apply_turret_system::apply_turret_system;
+use crate::units::modifications::helper::apply_bullet_affect_system::apply_bullet_affect_system;
+use crate::units::modifications::helper::despawn_companion_from_mod_system::despawn_companion_from_mod_system;
+use crate::units::modifications::helper::mod_list_deregister_system::mod_list_deregister_system;
+use crate::units::modifications::helper::mod_list_register_system::mod_list_register_system;
+use crate::units::modifications::helper::remove_bullet_affect_system::remove_bullet_affect_system;
 use crate::util::run_criteria::on_event::on_event;
 use crate::util::stage_label_helper::in_post_update;
 
@@ -58,6 +58,7 @@ mod apply_death_ball_system;
 mod apply_psy_rock_system;
 mod apply_radiation_system;
 mod apply_shield_system;
+pub mod bullet_modifications;
 
 /// All the apply systems have to get registered here.
 ///

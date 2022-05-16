@@ -24,13 +24,13 @@ pub fn apply_affect_system<
     affect_query: Query<&U>,
 ) {
     for apply_event in apply_events.iter() {
-        let mut target_attribute = match target_query.get_mut(apply_event.target_entity) {
-            Ok(attribute) => attribute,
+        let affect = match affect_query.get(apply_event.mod_entity) {
+            Ok(affect) => affect,
             Err(_) => continue,
         };
 
-        let affect = match affect_query.get(apply_event.mod_entity) {
-            Ok(affect) => affect,
+        let mut target_attribute = match target_query.get_mut(apply_event.target_entity) {
+            Ok(attribute) => attribute,
             Err(_) => continue,
         };
 

@@ -1,7 +1,7 @@
 use bevy::prelude::{Plugin, SystemSet};
 
 use crate::{App, AppState};
-use crate::units::bullet_modifications::BulletModificationsPlugin;
+use crate::units::modifications::bullet_modifications::BulletModificationsPlugin;
 use crate::units::bullets::bullet_check_stop_system::bullet_check_stop_system;
 use crate::units::bullets::bullet_despawn_system::bullet_despawn_system;
 use crate::units::hit_system::hit_system;

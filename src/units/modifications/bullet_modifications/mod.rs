@@ -18,11 +18,11 @@ use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_attributes::unit_size::UnitSize;
-use crate::units::bullet_modifications::curve_shot_system::curve_shot_system;
-use crate::units::bullet_modifications::explosion_shot_system::explosion_shot_system;
-use crate::units::bullet_modifications::gravity_shot::gravity_shot_system;
-use crate::units::bullet_modifications::grow_shot_system::grow_shot_system;
-use crate::units::bullet_modifications::split_shot_system::split_shot_system;
+use crate::units::modifications::bullet_modifications::curve_shot_system::curve_shot_system;
+use crate::units::modifications::bullet_modifications::explosion_shot_system::explosion_shot_system;
+use crate::units::modifications::bullet_modifications::gravity_shot::gravity_shot_system;
+use crate::units::modifications::bullet_modifications::grow_shot_system::grow_shot_system;
+use crate::units::modifications::bullet_modifications::split_shot_system::split_shot_system;
 use crate::util::run_criteria::on_event::on_event;
 use crate::util::stage_label_helper::in_post_update;
 

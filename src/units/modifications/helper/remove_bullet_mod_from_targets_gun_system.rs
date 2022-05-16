@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, Component, EventReader, Query, Without};
+use bevy::prelude::{Commands, Component, EventReader, Query};
 
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
 use crate::models::mod_container_slot::ModContainerSlot;
@@ -22,8 +22,8 @@ use crate::models::weapon_slot::WeaponSlot;
 pub fn remove_bullet_mod_from_targets_gun_system<T: Component>(
     mut commands: Commands,
     mut remove_events: EventReader<RemoveModFromTargetEvent>,
-    holder_query: Query<&WeaponSlot, Without<ModContainerSlot>>,
-    gun_query: Query<&ModContainerSlot, Without<WeaponSlot>>,
+    holder_query: Query<&WeaponSlot>,
+    gun_query: Query<&ModContainerSlot>,
 ) {
     for remove_event in remove_events.iter() {
         let holder_weapon_slot = match holder_query.get(remove_event.target_entity) {
