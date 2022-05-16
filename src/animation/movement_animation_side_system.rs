@@ -15,15 +15,8 @@ pub fn movement_animation_side_system(
             continue;
         }
 
-        match state.state {
-            AnimationState::WalkSide => {
-                animation_data.progress += time.delta_seconds() * speed.get_total_amount();
-                sprite.index = (animation_data.progress as usize % animation_data.framecount) + (4 * animation_data.atlas_row);
-            }
-            AnimationState::WalkUp => {}
-            AnimationState::WalkDown => {}
-            AnimationState::Idle => {}
-        }
+        animation_data.progress += time.delta_seconds() * speed.get_total_amount();
+        sprite.index = (animation_data.progress as usize % animation_data.framecount) + (4 * animation_data.atlas_row);
     }
 }
 
