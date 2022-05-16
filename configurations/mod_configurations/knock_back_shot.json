@@ -9,7 +9,7 @@
   "ToolTip": {
     "tooltip": "Knocks stuff away nicely"
   },
-  "KnockBack": {
+  "KnockBackShot": {
     "push_duration": 0.3,
     "push_force": 1000.0
   },

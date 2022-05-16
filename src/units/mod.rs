@@ -7,8 +7,8 @@ use crate::units::behaviors::BehaviorPlugin;
 use crate::units::bullets::BulletPlugin;
 use crate::units::clear_damaged_entities_system::clear_damaged_entities_system;
 use crate::units::enemies::EnemiesPlugin;
-use crate::units::unit_size_change_system::unit_size_change_system;
 use crate::units::health_bar_update_system::healthbar_update_system;
+use crate::units::knock_back_system::knock_back_system;
 use crate::units::layerable_system::layerable_system;
 use crate::units::mirror_aim_to_move_direction_system::mirror_aim_to_move_direction_system;
 use crate::units::move_unit_system::move_unit_system;
@@ -20,6 +20,7 @@ use crate::units::sprite_move_rotate_system::sprite_move_rotate_system;
 use crate::units::time_alive_system::time_alive_system;
 use crate::units::unit_modifications::UnitModificationsPlugin;
 use crate::units::unit_push_system::unit_push_system;
+use crate::units::unit_size_change_system::unit_size_change_system;
 use crate::util::stage_label_helper::{in_last, in_update};
 
 mod sprite_flip_system;
@@ -43,6 +44,7 @@ mod hit_system;
 mod layerable_system;
 mod unit_push_system;
 mod time_alive_system;
+mod knock_back_system;
 
 
 /// This plugin manages the everything related to [Unit] systems and how they get applied.
@@ -78,6 +80,7 @@ impl Plugin for UnitPlugin {
                         .with_system(mirror_aim_to_move_direction_system)
                         .with_system(unit_push_system)
                         .with_system(time_alive_system)
+                        .with_system(knock_back_system)
                 )
             )
 

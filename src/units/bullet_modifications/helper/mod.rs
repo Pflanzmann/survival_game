@@ -1,0 +1,3 @@
+pub mod assign_with_associate_component_to_bullet_system;
+pub mod assign_attribute_to_bullet_system;
+pub mod assign_modification_to_bullet_system;
