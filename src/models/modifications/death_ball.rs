@@ -8,7 +8,7 @@ pub struct DeathBall {
     pub reload: f32,
 
     pub rotation_distance: f32,
-    pub rotation_speed: f32,
+    pub revolutions_per_min: f32,
 }
 
 #[derive(Component)]

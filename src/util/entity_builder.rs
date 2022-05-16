@@ -166,6 +166,6 @@ fn deserialize_component<T: DeserializeOwned + Component>(
 fn get_component<T: DeserializeOwned + Component>(
     value: serde_json::Value
 ) -> T {
-    serde_json::from_value(value).expect("Not well formatted string: {:#?}")
+    serde_json::from_value(value).expect("Not well formatted string: ")
 }
 

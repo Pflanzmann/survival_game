@@ -19,6 +19,6 @@
     "push_duration": 0.2,
     "push_force": -2000.0,
     "rotation_distance": 300.0,
-    "rotation_speed": 0.03
+    "revolutions_per_min": 15
   }
 }

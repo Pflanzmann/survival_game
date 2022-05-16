@@ -50,7 +50,7 @@ pub fn apply_shield_system(
 
         let base = commands.spawn()
             .insert(Transform::default())
-            .insert(UnitRotation { angle: modification.rotation_speed })
+            .insert(UnitRotation { revolutions_per_min: modification.revolutions_per_min })
             .insert(GlobalTransform::default())
             .id();
 
@@ -73,7 +73,7 @@ pub fn apply_shield_system(
             .insert(HitBoxCollider { collider_type: ColliderType::Rectangle(Vec2::new(0.0, 0.0)) })
             .insert(EnemyHitBoxCollision)
 
-            .insert(UnitRotation { angle: -modification.rotation_speed })
+            .insert(UnitRotation { revolutions_per_min: -modification.revolutions_per_min })
 
             .insert(KnockBackShot { push_duration: modification.push_duration, push_force: modification.push_force })
             .insert(MoveDirection { direction: Vec2::new(1.0, 0.0) })
