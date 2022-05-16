@@ -6,7 +6,7 @@ use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::explosion_shot::ExplosionShot;
 use crate::models::modifications::gravity_shot::GravityShot;
 use crate::models::modifications::grow_shot::GrowShot;
-use crate::models::modifications::knock_back_shot::KnockBackShot;
+use crate::models::modifications::knock_back::KnockBack;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::hit_limit::HitLimit;
@@ -58,7 +58,7 @@ impl Plugin for BulletModificationsPlugin {
                         .with_system(assign_modification_to_bullet_system::<GrowShot>)
                         .with_system(assign_modification_to_bullet_system::<SplitShot>)
                         .with_system(assign_modification_to_bullet_system::<GravityShot>)
-                        .with_system(assign_modification_to_bullet_system::<KnockBackShot>)
+                        .with_system(assign_modification_to_bullet_system::<KnockBack>)
                         .with_system(assign_modification_to_bullet_system::<ExplosionShot>)
                 )
             )
