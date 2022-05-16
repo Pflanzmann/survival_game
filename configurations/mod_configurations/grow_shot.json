@@ -10,7 +10,7 @@
     "tooltip": "bullet gets bigger and doller"
   },
   "GrowShot": {
-    "damage_step": 1.0,
-    "size_step": 0.05
+    "damage_per_second": 3.0,
+    "size_per_second": 2.0
   }
 }
