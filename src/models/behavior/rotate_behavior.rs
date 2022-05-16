@@ -2,5 +2,5 @@ use bevy::ecs::component::Component;
 
 #[derive(Component)]
 pub struct UnitRotation {
-    pub angle: f32,
+    pub revolutions_per_min: f32,
 }
