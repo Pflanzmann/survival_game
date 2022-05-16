@@ -5,17 +5,17 @@ use crate::models::attribute_container_slot::AttributeContainerSlot;
 use crate::models::bullet::Bullet;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 
-/// A generic system to apply [Bullet]-mods like [SplitShot] to the new shot bullet from the
+/// A generic system to apply [Attriubutes] like [TravelTime] to the new shot bullet from the
 /// [BulletShotEvent].
 ///
-/// The mods from get applied from the [ModContainer] associated to the weapon.
+/// The attribute gets applied from the [AttributeContainer] associated to the weapon.
 ///
 /// ```
 /// # use bevy_ecs::prelude::;
 /// #
 /// impl Plugin for ExamplePlugin {
 ///     fn build(&self, app: &mut App) {
-///         app.add_system(apply_modification_system::<SplitShot>)
+///         app.add_system(assign_attribute_to_bullet_system::<SplitShot>)
 ///     }
 /// }
 /// ```

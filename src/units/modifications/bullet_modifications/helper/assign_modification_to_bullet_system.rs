@@ -16,7 +16,7 @@ use crate::models::mod_container_slot::ModContainerSlot;
 /// #
 /// impl Plugin for ExamplePlugin {
 ///     fn build(&self, app: &mut App) {
-///         app.add_system(apply_modification_system::<SplitShot>)
+///         app.add_system(assign_modification_to_bullet_system::<SplitShot>)
 ///     }
 /// }
 /// ```

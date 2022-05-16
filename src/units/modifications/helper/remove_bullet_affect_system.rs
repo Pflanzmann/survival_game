@@ -8,7 +8,7 @@ use crate::models::weapon_slot::WeaponSlot;
 
 /// A generic system to apply an [AttributeAffect] like [AffectMoveSpeed] from the source
 /// to the target of the [ApplyModToTargetSystem].
-//////
+///
 /// ```
 /// # use bevy_ecs::prelude::;
 /// #
@@ -29,6 +29,11 @@ pub fn remove_bullet_affect_system<
     mut target_query: Query<&mut T, With<AttributeContainerSlot>>,
 ) {
     for remove_event in remove_events.iter() {
+        let affect = match affect_query.get(remove_event.mod_entity) {
+            Ok(affect) => affect,
+            Err(_) => continue,
+        };
+
         let gun_holder_weapon_slot = match gun_holder_query.get(remove_event.target_entity) {
             Ok(attribute) => attribute,
             Err(_) => continue,
@@ -40,11 +45,6 @@ pub fn remove_bullet_affect_system<
         };
 
         let mut target = match target_query.get_mut(gun_holder_weapon_slot.container_entity) {
-            Ok(affect) => affect,
-            Err(_) => continue,
-        };
-
-        let affect = match affect_query.get(remove_event.mod_entity) {
             Ok(affect) => affect,
             Err(_) => continue,
         };

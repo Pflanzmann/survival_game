@@ -14,7 +14,7 @@ use crate::models::modifications::utils::owner::Owner;
 /// #
 /// impl Plugin for ExamplePlugin {
 ///     fn build(&self, app: &mut App) {
-///         app.add_system(remove_units_from_mod::<Turret, TurretUnit>)
+///         app.add_system(despawn_companion_from_mod_system::<Turret, TurretUnit>)
 ///     }
 /// }
 /// ```

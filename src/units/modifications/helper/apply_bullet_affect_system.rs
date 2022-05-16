@@ -15,7 +15,7 @@ use crate::models::weapon_slot::WeaponSlot;
 /// #
 /// impl Plugin for ExamplePlugin {
 ///     fn build(&self, app: &mut App) {
-///         app.add_system(apply_affect_system::<MoveSpeed, AffectMoveSpeed>)
+///         app.add_system(apply_bullet_affect_system::<MoveSpeed, AffectBulletMoveSpeed>)
 ///     }
 /// }
 /// ```
@@ -30,6 +30,11 @@ pub fn apply_bullet_affect_system<
     mut target_query: Query<&mut T, With<AttributeContainer>>,
 ) {
     for apply_event in apply_events.iter() {
+        let affect = match affect_query.get(apply_event.mod_entity) {
+            Ok(affect) => affect,
+            Err(_) => continue,
+        };
+
         let gun_holder_weapon_slot = match gun_holder_query.get(apply_event.target_entity) {
             Ok(attribute) => attribute,
             Err(_) => continue,
@@ -41,11 +46,6 @@ pub fn apply_bullet_affect_system<
         };
 
         let mut target = match target_query.get_mut(gun_holder_weapon_slot.container_entity) {
-            Ok(affect) => affect,
-            Err(_) => continue,
-        };
-
-        let affect = match affect_query.get(apply_event.mod_entity) {
             Ok(affect) => affect,
             Err(_) => continue,
         };
