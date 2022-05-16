@@ -1,7 +1,7 @@
 {
   "Modification": null,
   "ModName": {
-    "mod_name": "KnockBack Shot"
+    "mod_name": "Knock Back Shot"
   },
   "ModSpritePath": {
     "path": "sprites/knock_back_shot.png"
@@ -9,7 +9,7 @@
   "ToolTip": {
     "tooltip": "Knocks stuff away nicely"
   },
-  "KnockBackShot": {
+  "KnockBack": {
     "push_duration": 0.3,
     "push_force": 1000.0
   },
