@@ -23,7 +23,7 @@ use crate::models::modifications::death_ball::{DeathBall, DeathBallUnit};
 use crate::models::modifications::explosion_shot::ExplosionShot;
 use crate::models::modifications::gravity_shot::GravityShot;
 use crate::models::modifications::grow_shot::GrowShot;
-use crate::models::modifications::knock_back::KnockBack;
+use crate::models::modifications::knock_back_shot::KnockBackShot;
 use crate::models::modifications::psy_rock::{PsyRock, PsyRockUnit};
 use crate::models::modifications::radiation::{Radiation, RadiationUnit};
 use crate::models::modifications::shield::{Shield, ShieldUnit};
@@ -94,7 +94,7 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(apply_bullet_mod_to_targets_gun_system::<GrowShot>)
                         .with_system(apply_bullet_mod_to_targets_gun_system::<SplitShot>)
                         .with_system(apply_bullet_mod_to_targets_gun_system::<GravityShot>)
-                        .with_system(apply_bullet_mod_to_targets_gun_system::<KnockBack>)
+                        .with_system(apply_bullet_mod_to_targets_gun_system::<KnockBackShot>)
                         .with_system(apply_bullet_mod_to_targets_gun_system::<ExplosionShot>)
 
                         .with_system(apply_player_mod_to_target_system::<Sprinting>)
@@ -141,7 +141,7 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(remove_bullet_mod_from_targets_gun_system::<GrowShot>)
                         .with_system(remove_bullet_mod_from_targets_gun_system::<SplitShot>)
                         .with_system(remove_bullet_mod_from_targets_gun_system::<GravityShot>)
-                        .with_system(remove_bullet_mod_from_targets_gun_system::<KnockBack>)
+                        .with_system(remove_bullet_mod_from_targets_gun_system::<KnockBackShot>)
                         .with_system(remove_bullet_mod_from_targets_gun_system::<ExplosionShot>)
 
                         .with_system(remove_player_mod_from_target_system::<Sprinting>)
