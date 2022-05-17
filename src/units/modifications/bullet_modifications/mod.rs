@@ -12,6 +12,7 @@ use crate::models::modifications::explosion_shot::ExplosionShot;
 use crate::models::modifications::gravity_shot::GravityShot;
 use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::modifications::knock_back_shot::KnockBackShot;
+use crate::models::modifications::lightning::Lightning;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::hit_limit::HitLimit;
@@ -22,6 +23,7 @@ use crate::units::modifications::bullet_modifications::curve_shot_system::curve_
 use crate::units::modifications::bullet_modifications::explosion_shot_system::explosion_shot_system;
 use crate::units::modifications::bullet_modifications::gravity_shot::gravity_shot_system;
 use crate::units::modifications::bullet_modifications::grow_shot_system::grow_shot_system;
+use crate::units::modifications::bullet_modifications::lightning_system::lightning_system;
 use crate::units::modifications::bullet_modifications::split_shot_system::split_shot_system;
 use crate::util::run_criteria::on_event::on_event;
 use crate::util::stage_label_helper::in_post_update;
@@ -32,6 +34,7 @@ mod split_shot_system;
 mod gravity_shot;
 mod explosion_shot_system;
 mod helper;
+mod lightning_system;
 
 /// This plugin manages the [Bullet]-[Modification]s and how they get applied.
 /// All the systems get added in the [PreUpdate] so that they can react last to all
@@ -60,6 +63,7 @@ impl Plugin for BulletModificationsPlugin {
                         .with_system(assign_modification_to_bullet_system::<GravityShot>)
                         .with_system(assign_with_associate_component_to_bullet_system::<KnockBackShot, KnockBack>)
                         .with_system(assign_modification_to_bullet_system::<ExplosionShot>)
+                        .with_system(assign_modification_to_bullet_system::<Lightning>)
                 )
             )
 
@@ -72,6 +76,7 @@ impl Plugin for BulletModificationsPlugin {
                         .with_system(split_shot_system)
                         .with_system(gravity_shot_system)
                         .with_system(explosion_shot_system)
+                        .with_system(lightning_system)
                 )
             );
     }
