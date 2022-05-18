@@ -23,6 +23,7 @@ pub struct TextureHandles {
     pub psy_rock_unit: Handle<Image>,
     pub radiation: Handle<Image>,
     pub shield: Handle<Image>,
+    pub sword: Handle<Image>,
 }
 
 pub fn preload_texture_system(
@@ -45,6 +46,7 @@ pub fn preload_texture_system(
     texture_handles.radiation = asset_server.load("sprites/radiation.png");
     texture_handles.enemy_golem = asset_server.load("sprites/stone_golem.png");
     texture_handles.shield = asset_server.load("sprites/shield.png");
+    texture_handles.sword = asset_server.load("sprites/sword.png");
 
     texture_handles.player_sprite = asset_server.load(&player_handles.player_one.sprite_path);
     texture_handles.enemy_goblin = asset_server.load(&enemy_handle.goblin.sprite_path);
