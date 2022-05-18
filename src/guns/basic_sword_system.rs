@@ -8,6 +8,7 @@ use crate::models::aim_direction::AimDirection;
 use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 use crate::models::bullet::Bullet;
 use crate::models::bundles::damage_bundle::DamageBundle;
+use crate::models::collision::collider_owner::ColliderOwner;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
@@ -38,6 +39,8 @@ pub fn basic_sword_system(
         }
         holder_reloadable.reload_timer = holder_reloadable.get_total_amount();
 
+        let bullet = command.spawn().id();
+
         let mut collider_entities: Vec<Entity> = Vec::new();
         for index in 0..(400 / 64) {
             let collider = command.spawn()
@@ -45,17 +48,15 @@ pub fn basic_sword_system(
                 .insert(GlobalTransform::default())
                 .insert(Bullet { source_entity: weapon_holder_slot.weapon_entity })
                 .insert(HitBoxCollider { collider_type: ColliderType::Circle(32.0) })
-                .insert_bundle(DamageBundle::new(10.0, 60.0))
-                .insert(TimeAlive { time_alive: holder_reloadable.get_total_amount() })
-                .insert(MoveDirection { direction: holder_aim_direction.direction })
                 .insert(EnemyHitBoxCollision)
+                .insert(ColliderOwner(bullet))
                 .id();
 
             bullet_shot_event_writer.send(BulletShotEvent { entity: collider });
             collider_entities.push(collider)
         }
 
-        let bullet = command.spawn_bundle(SpriteBundle {
+        command.entity(bullet).insert_bundle(SpriteBundle {
             transform: Transform::from_rotation(Quat::from_rotation_arc_2d(Vec2::new(0.0, 1.0), holder_aim_direction.direction)),
             sprite: Sprite {
                 custom_size: Some(Vec2::new(64.0, 400.0)),
@@ -67,8 +68,9 @@ pub fn basic_sword_system(
         })
             .insert(Name::new("SwordHit"))
             .insert(TimeAlive { time_alive: 0.4 })
-            .push_children(&*collider_entities)
-            .id();
+            .insert(MoveDirection { direction: holder_aim_direction.direction })
+            .insert_bundle(DamageBundle::new(5.0, 60.0))
+            .push_children(&*collider_entities);
 
         command.entity(entity).add_child(bullet);
 

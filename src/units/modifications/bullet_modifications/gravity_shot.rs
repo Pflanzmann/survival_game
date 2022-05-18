@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, GlobalTransform, Query, Res, Time, Transform, Vec2};
+use bevy::prelude::{Commands, GlobalTransform, Query, Res, Time, Vec2};
 
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::modifications::gravity_shot::GravityShot;
