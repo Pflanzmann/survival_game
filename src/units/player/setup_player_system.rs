@@ -21,6 +21,7 @@ use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
+use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::unit_size::UnitSize;
 
 pub fn setup_player_system(
@@ -55,6 +56,7 @@ pub fn setup_player_system(
         .insert(PlayerAimControlled)
 
         .insert(Health::new(player_handles.player_one.health))
+        .insert(Reload::new(player_handles.player_one.reload))
         .insert(ModRegister::default())
 
         .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
