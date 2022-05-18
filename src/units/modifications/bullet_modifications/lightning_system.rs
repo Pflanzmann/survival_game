@@ -1,5 +1,5 @@
 use bevy::core::Name;
-use bevy::prelude::{AssetServer, Commands, Entity, EventReader, EventWriter, Quat, Query, Res, Sprite, SpriteBundle, Transform, Vec2};
+use bevy::prelude::{AssetServer, Commands, Entity, EventReader, EventWriter, GlobalTransform, Quat, Query, Res, Sprite, SpriteBundle, Transform, Vec2};
 use bevy::sprite::Anchor;
 use rand::random;
 
@@ -21,7 +21,7 @@ pub fn lightning_system(
     quad_tree: Res<HitBoxQuadTree>,
     mut enemy_hit_event: EventWriter<EnemyCollisionEvent>,
     mut damaged_events: EventReader<DamagedEvent>,
-    source_query: Query<(&Transform, &Damage, &Lightning)>,
+    source_query: Query<(&GlobalTransform, &Damage, &Lightning)>,
 ) {
     for event in damaged_events.iter() {
         let (transform, damage, lightning) = match source_query.get(event.source_entity) {
