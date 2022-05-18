@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, EventReader, EventWriter, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
+use bevy::prelude::{Commands, EventReader, EventWriter, GlobalTransform, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
 use rand::random;
 
 use crate::{SpriteLayer, TextureHandles};
@@ -27,7 +27,7 @@ pub fn split_shot_system(
     texture_handle: Res<TextureHandles>,
     mut bullet_shot_event_writer: EventWriter<BulletShotEvent>,
     mut bullet_stopped_events: EventReader<BulletStoppedEvent>,
-    bullet_query: Query<(&Transform, &Bullet, &DamagedEntities), With<SplitShot>>,
+    bullet_query: Query<(&GlobalTransform, &Bullet, &DamagedEntities), With<SplitShot>>,
 ) {
     for event in bullet_stopped_events.iter() {
         let (bullet_transform, bullet, collided_entities) = match bullet_query.get(event.bullet_entity) {

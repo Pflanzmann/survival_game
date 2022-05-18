@@ -1,4 +1,4 @@
-use bevy::prelude::{AssetServer, Commands, EventReader, Query, Res, Sprite, SpriteBundle, Transform, Vec2};
+use bevy::prelude::{AssetServer, Commands, EventReader, GlobalTransform, Query, Res, Sprite, SpriteBundle, Transform, Vec2};
 use rand::random;
 
 use crate::models::collision::collider_type::ColliderType;
@@ -15,7 +15,7 @@ pub fn explosion_shot_system(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     mut damaged_events: EventReader<DamagedEvent>,
-    source_query: Query<(&Transform, &Damage, &ExplosionShot)>,
+    source_query: Query<(&GlobalTransform, &Damage, &ExplosionShot)>,
 ) {
     for event in damaged_events.iter() {
         let (transform, damage, explosion_shot) = match source_query.get(event.source_entity) {
