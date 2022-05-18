@@ -13,6 +13,7 @@ use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::gun::basic_sword::BasicSword;
+use crate::models::move_direction::MoveDirection;
 use crate::models::time_alive::TimeAlive;
 use crate::models::unit_attributes::attribute::*;
 use crate::models::unit_attributes::reload::Reload;
@@ -46,6 +47,7 @@ pub fn basic_sword_system(
                 .insert(HitBoxCollider { collider_type: ColliderType::Circle(32.0) })
                 .insert_bundle(DamageBundle::new(10.0, 60.0))
                 .insert(TimeAlive { time_alive: holder_reloadable.get_total_amount() })
+                .insert(MoveDirection { direction: holder_aim_direction.direction })
                 .insert(EnemyHitBoxCollision)
                 .id();
 

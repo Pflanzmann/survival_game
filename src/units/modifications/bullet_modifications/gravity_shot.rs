@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, Query, Res, Time, Transform, Vec2};
+use bevy::prelude::{Commands, GlobalTransform, Query, Res, Time, Transform, Vec2};
 
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::modifications::gravity_shot::GravityShot;
@@ -10,7 +10,7 @@ pub fn gravity_shot_system(
     mut commands: Commands,
     time: Res<Time>,
     solid_body_tree: Res<SolidBodyQuadTree>,
-    mut bullet_query: Query<(&Transform, &mut GravityShot)>,
+    mut bullet_query: Query<(&GlobalTransform, &mut GravityShot)>,
 ) {
     for (transform, mut gravity_shot) in bullet_query.iter_mut() {
         gravity_shot.pulse_timer -= time.delta_seconds();
