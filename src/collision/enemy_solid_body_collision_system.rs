@@ -1,5 +1,6 @@
 use bevy::prelude::{Entity, EventWriter, GlobalTransform, Query, Res, Vec2, With};
 
+use crate::models::collision::collider_owner::ColliderOwner;
 use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
 use crate::models::collision::enemy_solid_body_collision::EnemySolidBodyCollision;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
@@ -10,10 +11,15 @@ use crate::util::quad_tree::QuadData;
 pub fn enemy_solid_body_collision_system(
     mut enemy_hit_event: EventWriter<EnemyCollisionEvent>,
     quad_tree: Res<SolidBodyQuadTree>,
-    source_query: Query<(Entity, &GlobalTransform, &HitBoxCollider), With<EnemySolidBodyCollision>>,
+    source_query: Query<(Entity, &GlobalTransform, &HitBoxCollider, Option<&ColliderOwner>), With<EnemySolidBodyCollision>>,
 ) {
-    for (entity, transform, hit_box_collider) in source_query.iter() {
+    for (entity, transform, hit_box_collider, collision_owner) in source_query.iter() {
         let mut check_entity_list: Vec<QuadData<SolidBodyData>> = Vec::new();
+
+        let entity = match collision_owner {
+            Some(owner) => *(*owner),
+            None => entity,
+        };
 
         let size = match hit_box_collider.collider_type {
             Circle(radius) => Vec2::new(radius, radius),
