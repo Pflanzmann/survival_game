@@ -7,6 +7,7 @@ use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
+use crate::models::knock_back::KnockBack;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::knock_back_shot::KnockBackShot;
 use crate::models::modifications::shield::{Shield, ShieldUnit};
@@ -75,7 +76,7 @@ pub fn apply_shield_system(
 
             .insert(UnitRotation { revolutions_per_min: -modification.revolutions_per_min })
 
-            .insert(KnockBackShot { push_duration: modification.push_duration, push_force: modification.push_force })
+            .insert(KnockBack { push_duration: modification.push_duration, push_force: modification.push_force })
             .insert(MoveDirection { direction: Vec2::new(1.0, 0.0) })
             .insert(ChaseTargetBehavior { target: owner_entity, proximity: 0.0 })
             .id();
