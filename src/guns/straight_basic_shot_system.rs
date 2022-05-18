@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, Entity, EventWriter, GlobalTransform, Name, Query, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2, With};
+use bevy::prelude::{Commands, EventWriter, GlobalTransform, Name, Query, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2, With};
 
 use crate::assets_handling::preload_audio_system::SoundHandles;
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
@@ -11,10 +11,10 @@ use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
+use crate::models::gun::straight_basic_shot::StraightBasicShot;
 use crate::models::move_direction::MoveDirection;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::sprite_move_rotation::SpriteMoveRotation;
-use crate::models::straight_basic_shot::StraightBasicShot;
 use crate::models::unit_attributes::attribute::*;
 use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
@@ -31,18 +31,12 @@ pub fn straight_basic_shot_system(
     mut sound_manager: ResMut<SoundManager>,
     sound_handles: Res<SoundHandles>,
     mut bullet_shot_event_writer: EventWriter<BulletShotEvent>,
-    mut weapon_holder_query: Query<(&GlobalTransform, &AimDirection, &WeaponSlot, &mut Reload)>,
-    gun_query: Query<Entity, With<StraightBasicShot>>,
+    mut weapon_holder_query: Query<(&GlobalTransform, &AimDirection, &WeaponSlot, &mut Reload), With<StraightBasicShot>>,
 ) {
     for (holder_transform, holder_aim_direction, weapon_holder_slot, mut holder_reloadable) in weapon_holder_query.iter_mut() {
         if holder_aim_direction.direction.length() == 0.0 {
             continue;
         }
-
-        let gun_entity = match gun_query.get(weapon_holder_slot.weapon_entity) {
-            Ok(gun) => gun,
-            Err(_) => continue,
-        };
 
         if holder_reloadable.reload_timer > 0.0 {
             continue;
@@ -59,7 +53,7 @@ pub fn straight_basic_shot_system(
             ..Default::default()
         })
             .insert(Name::new("Bullet"))
-            .insert(Bullet { source_entity: gun_entity })
+            .insert(Bullet { source_entity: weapon_holder_slot.weapon_entity })
 
             .insert(UnitSize::new_size(Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y)))
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(bullet_handle.basic_bullet.sprite_custom_size_x / 2.0) })

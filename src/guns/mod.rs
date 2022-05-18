@@ -1,14 +1,18 @@
 use bevy::prelude::{Plugin, SystemSet};
 
 use crate::{App, AppState};
+use crate::guns::basic_sword_system::basic_sword_system;
 use crate::guns::gun_reloading_timer_system::gun_reloading_timer_system;
 use crate::guns::setup_basic_gun_system::setup_basic_gun_system;
+use crate::guns::setup_sword_system::setup_sword_system;
 use crate::guns::straight_basic_shot_system::straight_basic_shot_system;
 use crate::util::stage_label_helper::in_update;
 
 mod straight_basic_shot_system;
 mod setup_basic_gun_system;
 mod gun_reloading_timer_system;
+mod setup_sword_system;
+mod basic_sword_system;
 
 pub struct GunPlugin;
 
@@ -25,6 +29,7 @@ impl Plugin for GunPlugin {
                 in_update(
                     SystemSet::new()
                         .with_system(setup_basic_gun_system)
+                        .with_system(setup_sword_system)
                 )
             )
 
@@ -32,6 +37,7 @@ impl Plugin for GunPlugin {
                 in_update(
                     SystemSet::on_update(AppState::InGame)
                         .with_system(straight_basic_shot_system)
+                        .with_system(basic_sword_system)
                         .with_system(gun_reloading_timer_system)
                 )
             );

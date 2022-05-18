@@ -10,6 +10,8 @@ use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::collider_weight::ColliderWeight;
 use crate::models::collision::solid_body_collider::SolidBodyCollider;
+use crate::models::gun::basic_sword::BasicSword;
+use crate::models::gun::straight_basic_shot::StraightBasicShot;
 use crate::models::input::player_aim_controlled::PlayerAimControlled;
 use crate::models::input::player_move_controlled::PlayerMoveControlled;
 use crate::models::layerable::Layerable;
@@ -56,6 +58,7 @@ pub fn setup_player_system(
         .insert(PlayerAimControlled)
 
         .insert(Health::new(player_handles.player_one.health))
+        .insert(StraightBasicShot)
         .insert(Reload::new(player_handles.player_one.reload))
         .insert(ModRegister::default())
 
