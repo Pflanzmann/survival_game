@@ -46,13 +46,11 @@ pub fn basic_sword_system(
             let collider = command.spawn()
                 .insert(Transform::from_translation(Vec3::new(0.0, index as f32 * 64.0, 0.0)))
                 .insert(GlobalTransform::default())
-                .insert(Bullet { source_entity: weapon_holder_slot.weapon_entity })
                 .insert(HitBoxCollider { collider_type: ColliderType::Circle(32.0) })
                 .insert(EnemyHitBoxCollision)
                 .insert(ColliderOwner(bullet))
                 .id();
 
-            bullet_shot_event_writer.send(BulletShotEvent { entity: collider });
             collider_entities.push(collider)
         }
 
@@ -69,10 +67,12 @@ pub fn basic_sword_system(
             .insert(Name::new("SwordHit"))
             .insert(TimeAlive { time_alive: 0.4 })
             .insert(MoveDirection { direction: holder_aim_direction.direction })
-            .insert_bundle(DamageBundle::new(5.0, 60.0))
+            .insert_bundle(DamageBundle::new(0.5, 60.0))
+            .insert(Bullet { source_entity: weapon_holder_slot.weapon_entity })
             .push_children(&*collider_entities);
 
         command.entity(entity).add_child(bullet);
+        bullet_shot_event_writer.send(BulletShotEvent { entity: bullet });
 
         sound_manager.queue_sound(SoundHandleChannel::Bullet(sound_handles.shoot_sound.clone()));
     }

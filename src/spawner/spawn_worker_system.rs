@@ -1,7 +1,10 @@
-use bevy::prelude::{Commands, Entity, Name, Query, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2, With};
+use bevy::prelude::{Commands, Entity, Name, Query, Res, ResMut, SpriteBundle, SpriteSheetBundle, TextureAtlasSprite, Transform, Vec2, With};
 
-use crate::{SpriteLayer, TextureHandles};
+use crate::SpriteLayer;
+use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
+use crate::models::animation::animation_state::CurrentAnimationState;
+use crate::models::animation::walking_animation_component::{MoveAnimationSide, MoveAnimationUp};
 use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
 use crate::models::behavior::steering_behavior::SteeringBehavior;
 use crate::models::bundles::damage_bundle::DamageBundle;
@@ -23,9 +26,9 @@ use crate::models::unit_attributes::unit_size::UnitSize;
 pub fn spawn_worker_system(
     mut commands: Commands,
     mut spawn_task_receiver: ResMut<SpawnTaskReceiver>,
-    texture_handles: Res<TextureHandles>,
     enemy_handles: Res<EnemyConfigHandles>,
     player_query: Query<Entity, With<Player>>,
+    atlas_handles: ResMut<AtlasHandles>,
 ) {
     for player_entity in player_query.iter() {
         for _ in 0..50 {
@@ -35,13 +38,13 @@ pub fn spawn_worker_system(
             };
 
             commands.spawn_bundle(
-                SpriteBundle {
-                    sprite: Sprite {
+                SpriteSheetBundle {
+                    sprite: TextureAtlasSprite {
                         custom_size: Some(Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y)),
                         ..Default::default()
                     },
                     transform: Transform::from_translation(spawn_task.get_position()),
-                    texture: texture_handles.enemy_goblin.clone(),
+                    texture_atlas: atlas_handles.goblin_atlas.clone(),
                     ..Default::default()
                 })
                 .insert(Name::new("Goblin"))
@@ -64,7 +67,9 @@ pub fn spawn_worker_system(
 
                 .insert(SteeringBehavior::default())
                 .insert(ChaseTargetBehavior { target: player_entity, proximity: 0.0 })
-            ;
+
+                .insert(MoveAnimationSide::new(0.0, 3, 2, 15))
+                .insert(CurrentAnimationState::new());
         }
     }
 }

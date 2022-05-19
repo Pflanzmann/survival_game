@@ -9,7 +9,6 @@ use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::knock_back::KnockBack;
 use crate::models::modifications::descriptors::modification::Modification;
-use crate::models::modifications::knock_back_shot::KnockBackShot;
 use crate::models::modifications::shield::{Shield, ShieldUnit};
 use crate::models::modifications::utils::owner::Owner;
 use crate::models::move_direction::MoveDirection;

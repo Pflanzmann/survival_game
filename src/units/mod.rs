@@ -2,7 +2,7 @@ use bevy::prelude::{Plugin, SystemSet};
 
 use crate::{App, AppState};
 use crate::units::apply_damaged_component_system::apply_damage_component_system;
-use crate::units::apply_hit_effect_system::apply_hit_effect_system;
+use crate::units::apply_hit_effect_system::{apply_hit_effect_sprite_atlas_system, apply_hit_effect_sprite_system};
 use crate::units::behaviors::BehaviorPlugin;
 use crate::units::bullets::BulletPlugin;
 use crate::units::clear_damaged_entities_system::clear_damaged_entities_system;
@@ -74,7 +74,8 @@ impl Plugin for UnitPlugin {
                         .with_system(healthbar_update_system)
                         .with_system(unit_size_change_system)
                         .with_system(apply_damage_component_system)
-                        .with_system(apply_hit_effect_system)
+                        .with_system(apply_hit_effect_sprite_system)
+                        .with_system(apply_hit_effect_sprite_atlas_system)
                         .with_system(clear_damaged_entities_system)
                         .with_system(mirror_aim_to_move_direction_system)
                         .with_system(unit_push_system)
