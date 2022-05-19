@@ -5,6 +5,7 @@ use crate::models::animation::animation_state::{AnimationState, CurrentAnimation
 use crate::models::animation::walking_animation_component::MoveAnimationDown;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
+use crate::SPRITE_ROW_LENGTH;
 
 pub fn movement_animation_down_system(
     time: Res<Time>,
@@ -16,7 +17,7 @@ pub fn movement_animation_down_system(
         }
 
         animation_data.progress += time.delta_seconds() * speed.get_total_amount();
-        sprite.index = (animation_data.progress as usize % animation_data.framecount) + (4 * animation_data.atlas_row);
+        sprite.index = (animation_data.progress as usize % animation_data.framecount) + (SPRITE_ROW_LENGTH * animation_data.atlas_row);
     }
 }
 
