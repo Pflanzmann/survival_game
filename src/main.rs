@@ -43,6 +43,8 @@ mod audio;
 mod debug;
 mod animation;
 
+const SPRITE_ROW_LENGTH: usize = 4;
+
 #[derive(Debug, Clone, PartialEq, Eq, Hash, StageLabel)]
 pub enum SetupStages {
     ConfigSetup,

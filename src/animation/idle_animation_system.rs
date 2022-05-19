@@ -3,6 +3,7 @@ use bevy::prelude::*;
 
 use crate::models::animation::animation_state::{AnimationState, CurrentAnimationState};
 use crate::models::animation::idle_animation_component::IdleAnimation;
+use crate::SPRITE_ROW_LENGTH;
 
 pub fn idle_animation_system(
     time: Res<Time>,
@@ -14,7 +15,7 @@ pub fn idle_animation_system(
         }
 
         animation_data.progress += time.delta_seconds() * 2.0;
-        sprite.index = (animation_data.progress as usize % animation_data.framecount) + (4 * animation_data.atlas_row);
+        sprite.index = (animation_data.progress as usize % animation_data.framecount) + (SPRITE_ROW_LENGTH * animation_data.atlas_row);
     }
 }
 
