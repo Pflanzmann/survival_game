@@ -3,6 +3,7 @@ use bevy::prelude::{AssetServer, Commands, Entity, EventReader, EventWriter, Glo
 use bevy::sprite::Anchor;
 use rand::random;
 
+use crate::models::animation::fade_animation::FadeAnimation;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::damaged_entities::DamagedEntities;
 use crate::models::events::damaged_event::DamagedEvent;
@@ -74,6 +75,7 @@ pub fn lightning_system(
                         .insert(Name::new("Lightning"))
                         .insert(TimeAlive { time_alive: lightning.sprite_time_alive })
                         .insert(DamagedEntities::default())
+                        .insert(FadeAnimation { fade_time: -lightning.sprite_time_alive })
                         .insert(Damage::new(damage.get_total_amount())).id();
 
                     position = quad_data.position;
