@@ -10,7 +10,7 @@ use crate::models::bullet::Bullet;
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::collision::collider_owner::ColliderOwner;
 use crate::models::collision::collider_type::ColliderType;
-use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
+use crate::models::collision::enemy_hit_box_collider::EnemyHitBoxCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::gun::basic_sword::BasicSword;
@@ -47,7 +47,7 @@ pub fn basic_sword_system(
                 .insert(Transform::from_translation(Vec3::new(0.0, index as f32 * 64.0, 0.0)))
                 .insert(GlobalTransform::default())
                 .insert(HitBoxCollider { collider_type: ColliderType::Circle(32.0) })
-                .insert(EnemyHitBoxCollision)
+                .insert(EnemyHitBoxCollider)
                 .insert(ColliderOwner(bullet))
                 .id();
 

@@ -5,7 +5,7 @@ use crate::models::aim_direction::AimDirection;
 use crate::models::behavior::teleport_to_target_behavior::TeleportToTargetBehavior;
 use crate::models::bullet::Bullet;
 use crate::models::collision::collider_type::ColliderType;
-use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
+use crate::models::collision::enemy_hit_box_collider::EnemyHitBoxCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::damaged_entities::DamagedEntities;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
@@ -79,7 +79,7 @@ pub fn apply_psy_rock_system(
 
             .insert(UnitSize::new_size(modification.unit_size))
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(0.0) })
-            .insert(EnemyHitBoxCollision)
+            .insert(EnemyHitBoxCollider)
 
             .insert(Damage::new(0.0))
             .insert(DamageInterval::new(modification.damage_interval))

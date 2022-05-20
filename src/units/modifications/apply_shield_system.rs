@@ -4,7 +4,7 @@ use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
 use crate::models::behavior::rotate_behavior::UnitRotation;
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::collision::collider_type::ColliderType;
-use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
+use crate::models::collision::enemy_hit_box_collider::EnemyHitBoxCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::knock_back::KnockBack;
@@ -71,7 +71,7 @@ pub fn apply_shield_system(
 
             .insert(UnitSize::new_size(modification.unit_size))
             .insert(HitBoxCollider { collider_type: ColliderType::Rectangle(Vec2::new(0.0, 0.0)) })
-            .insert(EnemyHitBoxCollision)
+            .insert(EnemyHitBoxCollider)
 
             .insert(UnitRotation { revolutions_per_min: -modification.revolutions_per_min })
 

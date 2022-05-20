@@ -8,7 +8,7 @@ use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 use crate::models::bullet::Bullet;
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::collision::collider_type::ColliderType;
-use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
+use crate::models::collision::enemy_hit_box_collider::EnemyHitBoxCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::gun::straight_basic_shot::StraightBasicShot;
@@ -57,7 +57,7 @@ pub fn straight_basic_shot_system(
 
             .insert(UnitSize::new_size(Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y)))
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(bullet_handle.basic_bullet.sprite_custom_size_x / 2.0) })
-            .insert(EnemyHitBoxCollision)
+            .insert(EnemyHitBoxCollider)
 
             .insert_bundle(DamageBundle::new(0.0, 60.0))
 

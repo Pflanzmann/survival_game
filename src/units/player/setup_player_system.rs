@@ -9,6 +9,7 @@ use crate::models::animation::walking_animation_component::{MoveAnimationDown, M
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::collider_weight::ColliderWeight;
+use crate::models::collision::item_collider::ItemCollider;
 use crate::models::collision::solid_body_collider::SolidBodyCollider;
 use crate::models::gun::basic_sword::BasicSword;
 use crate::models::gun::straight_basic_shot::StraightBasicShot;
@@ -47,6 +48,7 @@ pub fn setup_player_system(
         .insert(UnitSize::new_size(Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y)))
         .insert(SolidBodyCollider { offset: Vec2::new(0.0, -player_handles.player_one.sprite_custom_size_y / 4.0), collider_type: ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 4.0) })
         .insert(ColliderWeight { weight: 0.8 })
+        .insert(ItemCollider)
 
         .insert_bundle(DamageBundle::new(player_handles.player_one.damage, 60.0))
 

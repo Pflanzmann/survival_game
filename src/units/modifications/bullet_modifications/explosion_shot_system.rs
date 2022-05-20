@@ -2,7 +2,7 @@ use bevy::prelude::{AssetServer, Commands, EventReader, GlobalTransform, Query, 
 use rand::random;
 
 use crate::models::collision::collider_type::ColliderType;
-use crate::models::collision::enemy_solid_body_collision::EnemySolidBodyCollision;
+use crate::models::collision::enemy_solid_body_collider::EnemySolidBodyCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::damaged_entities::DamagedEntities;
 use crate::models::events::damaged_event::DamagedEvent;
@@ -41,7 +41,7 @@ pub fn explosion_shot_system(
             .insert(DamagedEntities::default())
             .insert(Damage::new(damage.get_total_amount()))
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(explosion_shot.radius) })
-            .insert(EnemySolidBodyCollision)
+            .insert(EnemySolidBodyCollider)
         ;
     }
 }

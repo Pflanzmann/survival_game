@@ -1,6 +1,7 @@
 use bevy::prelude::{*};
 
 use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
+use crate::models::collision::item_collider::ItemCollider;
 use crate::models::collision::solid_body_collider::SolidBodyCollider;
 use crate::models::events::item_collision_event::ItemCollisionEvent;
 use crate::models::player::Player;
@@ -9,7 +10,7 @@ use crate::util::quad_tree::QuadData;
 
 pub fn item_player_collision_system(
     mut item_collision_event: EventWriter<ItemCollisionEvent>,
-    mut player_query: Query<(Entity, &Transform, &SolidBodyCollider), With<Player>>,
+    mut player_query: Query<(Entity, &Transform, &SolidBodyCollider), With<ItemCollider>>,
     item_quad_tree: Res<ItemCollisionQuadTree>,
 ) {
     for (player_entity, player_transform, player_collider_size) in player_query.iter_mut() {
