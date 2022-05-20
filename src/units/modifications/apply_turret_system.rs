@@ -73,7 +73,7 @@ pub fn apply_turret_system(
             .insert(AimDirection { direction: Vec2::new(1.0, 0.0) })
             .insert(Reload::new(modification.reload))
             .insert(SpinAimBehavior)
-            .insert(TeleportToTargetBehavior::new(owner_entity, modification.teleport_distance, modification.teleport_proximity_min, modification.teleport_proximity_max, modification.teleport_cooldown))
+            .insert(TeleportToTargetBehavior::new(owner_entity, modification.teleport_distance, modification.teleport_proximity_min, modification.teleport_proximity_max, modification.teleport_cooldown, modification.teleport_duration))
         ;
     }
 }

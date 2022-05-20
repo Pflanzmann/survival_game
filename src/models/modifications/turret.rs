@@ -11,6 +11,7 @@ pub struct Turret {
     pub teleport_proximity_min: f32,
     pub teleport_proximity_max: f32,
     pub teleport_cooldown: f32,
+    pub teleport_duration: f32
 }
 
 #[derive(Component)]

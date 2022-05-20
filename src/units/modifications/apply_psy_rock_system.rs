@@ -87,7 +87,7 @@ pub fn apply_psy_rock_system(
             .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
             .insert(SpriteMoveRotation)
 
-            .insert(TeleportToTargetBehavior::new(owner_entity, modification.teleport_distance, modification.teleport_proximity_min, modification.teleport_proximity_max, modification.teleport_cooldown))
+            .insert(TeleportToTargetBehavior::new(owner_entity, modification.teleport_distance, modification.teleport_proximity_min, modification.teleport_proximity_max, modification.teleport_cooldown, modification.teleport_duration))
             .id()
             ;
 

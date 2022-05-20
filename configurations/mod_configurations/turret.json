@@ -18,6 +18,7 @@
     "teleport_distance": 2500.0,
     "teleport_proximity_min": 250.0,
     "teleport_proximity_max": 400.0,
-    "teleport_cooldown": 0.0
+    "teleport_cooldown": 0.0,
+    "teleport_duration": 0.5
   }
 }
