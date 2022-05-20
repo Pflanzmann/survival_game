@@ -6,7 +6,7 @@ use crate::models::bullet::Bullet;
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::child_bullet::ChildBullet;
 use crate::models::collision::collider_type::ColliderType;
-use crate::models::collision::enemy_hit_box_collision::EnemyHitBoxCollision;
+use crate::models::collision::enemy_hit_box_collider::EnemyHitBoxCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::damaged_entities::DamagedEntities;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
@@ -59,8 +59,8 @@ pub fn split_shot_system(
                 .insert(ChildBullet)
 
                 .insert(UnitSize::new_size(Vec2::new(128.0, 128.0)))
-                .insert(HitBoxCollider { collider_type: ColliderType::Circle(128.0 / 2.0) }).insert(EnemyHitBoxCollision)
-                .insert(EnemyHitBoxCollision)
+                .insert(HitBoxCollider { collider_type: ColliderType::Circle(128.0 / 2.0) }).insert(EnemyHitBoxCollider)
+                .insert(EnemyHitBoxCollider)
 
                 .insert_bundle(DamageBundle::new(0.0, 60.0))
                 .insert(collided_entities.clone())
