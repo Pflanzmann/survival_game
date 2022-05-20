@@ -3,7 +3,6 @@ use bevy::prelude::{AssetServer, Res, ResMut, TextureAtlas, Vec2};
 
 #[derive(Default)]
 pub struct AtlasHandles {
-    pub player_idle_atlas: Handle<TextureAtlas>,
     pub player_atlas: Handle<TextureAtlas>,
     pub goblin_atlas: Handle<TextureAtlas>,
 }
