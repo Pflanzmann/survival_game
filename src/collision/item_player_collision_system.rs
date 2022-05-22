@@ -27,7 +27,7 @@ pub fn item_player_collision_system(
 
         for quad_data in check_entity_list.iter() {
             if quad_data.data.collider_type.is_colliding(&quad_data.position, &player_collider_size.collider_type, &player_transform.translation.truncate()) {
-                item_collision_event.send(ItemCollisionEvent { player_entity, item_entity: quad_data.data.entity });
+                item_collision_event.send(ItemCollisionEvent { target_entity: player_entity, source_entity: quad_data.data.entity });
             }
         }
     }

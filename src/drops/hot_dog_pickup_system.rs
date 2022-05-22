@@ -17,12 +17,12 @@ pub fn hot_dog_pickup_system(
     item_query: Query<&Heal>,
 ) {
     for event in item_pickup_event.iter() {
-        let item_heal = match item_query.get(event.item_entity) {
+        let item_heal = match item_query.get(event.source_entity) {
             Ok(value) => value,
             Err(_) => continue
         };
 
-        let mut player_health = match player_query.get_mut(event.player_entity) {
+        let mut player_health = match player_query.get_mut(event.target_entity) {
             Ok(value) => value,
             Err(_) => continue
         };
@@ -31,6 +31,6 @@ pub fn hot_dog_pickup_system(
 
         sound_manager.queue_sound(SoundHandleChannel::Pickup(sound_handles.coin_pickup_sound.clone()));
 
-        commands.entity(event.item_entity).despawn_recursive();
+        commands.entity(event.target_entity).despawn_recursive();
     }
 }

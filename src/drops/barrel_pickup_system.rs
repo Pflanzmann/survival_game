@@ -16,7 +16,7 @@ pub fn barrel_pickup_system(
     item_query: Query<Entity, With<Shop>>,
 ) {
     for event in item_pickup_event.iter() {
-        let _item = match item_query.get(event.item_entity) {
+        let _item = match item_query.get(event.source_entity) {
             Ok(value) => value,
             Err(_) => continue
         };
@@ -25,6 +25,6 @@ pub fn barrel_pickup_system(
 
         sound_manager.queue_sound(SoundHandleChannel::Pickup(sound_handles.coin_pickup_sound.clone()));
 
-        commands.entity(event.item_entity).despawn_recursive();
+        commands.entity(event.source_entity).despawn_recursive();
     }
 }
