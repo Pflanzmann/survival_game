@@ -4,7 +4,6 @@ use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
 use crate::models::collision::item_collider::ItemCollider;
 use crate::models::collision::solid_body_collider::SolidBodyCollider;
 use crate::models::events::item_collision_event::ItemCollisionEvent;
-use crate::models::player::Player;
 use crate::models::resources::item_collision_quad_tree::{ItemCollisionQuadTree, ItemData};
 use crate::util::quad_tree::QuadData;
 

@@ -68,7 +68,7 @@ pub fn setup_player_system(
         .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
         .insert(SpriteFlip)
 
-        .insert(IdleAnimation::new(0.0, 3, 0, 10))
+        .insert(IdleAnimation::new(0.0, 3, 0, 0.5))
         .insert(MoveAnimationSide::new(0.0, 4, 4, 15))
         .insert(MoveAnimationUp::new(0.0, 4, 5, 15))
         .insert(MoveAnimationDown::new(0.0, 4, 3, 15))

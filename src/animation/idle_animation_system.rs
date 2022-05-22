@@ -14,8 +14,8 @@ pub fn idle_animation_system(
             continue;
         }
 
-        animation_data.progress += time.delta_seconds() * 2.0;
-        sprite.index = (animation_data.progress as usize % animation_data.framecount) + (SPRITE_ROW_LENGTH * animation_data.atlas_row);
+        animation_data.progress += (time.delta_seconds() * animation_data.animation_frame_count as f32) / animation_data.duration;
+        sprite.index = (animation_data.progress as usize % animation_data.animation_frame_count) + (SPRITE_ROW_LENGTH * animation_data.atlas_row);
     }
 }
 

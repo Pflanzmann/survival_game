@@ -11,8 +11,8 @@
   },
   "ExplosionShot": {
     "explosion_sprite_path": "sprites/explosion.png",
-    "explosion_chance": 0.2,
+    "explosion_chance": 0.5,
     "radius": 500.0,
-    "explosion_time_alive": 0.1
+    "explosion_time_alive": 0.5
   }
 }

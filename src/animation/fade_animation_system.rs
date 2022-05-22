@@ -1,5 +1,4 @@
-use bevy::prelude::{Color, Commands, Entity, Query, Res, Sprite, Time};
-use bevy::sprite::TextureAtlasSprite;
+use bevy::prelude::{Commands, Entity, Query, Res, Sprite, Time};
 
 use crate::models::animation::fade_animation::FadeAnimation;
 

@@ -5,6 +5,7 @@ use bevy::prelude::{AssetServer, Res, ResMut, TextureAtlas, Vec2};
 pub struct AtlasHandles {
     pub player_atlas: Handle<TextureAtlas>,
     pub goblin_atlas: Handle<TextureAtlas>,
+    pub explosion_atlas: Handle<TextureAtlas>,
 }
 
 pub fn preload_animation_system(
@@ -14,4 +15,5 @@ pub fn preload_animation_system(
 ) {
     atlas_handles.player_atlas = texture_atlases.add(TextureAtlas::from_grid(asset_server.load("sprite_sheets/hero1.png"), Vec2::new(16.0, 16.0), 4, 6));
     atlas_handles.goblin_atlas = texture_atlases.add(TextureAtlas::from_grid(asset_server.load("sprite_sheets/goblin.png"), Vec2::new(64.0, 80.0), 4, 4));
+    atlas_handles.explosion_atlas = texture_atlases.add(TextureAtlas::from_grid(asset_server.load("sprite_sheets/explosion.png"), Vec2::new(192.0, 192.0), 5, 6));
 }
