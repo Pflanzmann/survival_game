@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::GoldWallet;
+use crate::GoldStorage;
 use crate::models::mod_register::ModRegister;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
 use crate::models::modifications::descriptors::modification::Modification;
@@ -10,10 +10,7 @@ use crate::models::ui_components::hud::{BulletHud, CoinText};
 pub fn spawn_text_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
-    mut coin_counter: ResMut<GoldWallet>,
 ) {
-    coin_counter.number = 0;
-
     // coin counter
     commands.spawn_bundle(TextBundle {
         style: Style {
@@ -77,11 +74,11 @@ pub fn spawn_text_system(
 
 pub fn update_text_system(
     mut text_query: Query<&mut Text, With<CoinText>>,
-    coin_counter: Res<GoldWallet>,
+    gold_storage_query: Query<&GoldStorage, (Changed<GoldStorage>, With<Player>)>,
 ) {
-    if coin_counter.is_changed() {
+    for gold_storage in gold_storage_query.iter() {
         for mut text in text_query.iter_mut() {
-            text.sections[1].value = coin_counter.number.to_string();
+            text.sections[1].value = gold_storage.number.to_string();
         }
     }
 }

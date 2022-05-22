@@ -8,9 +8,7 @@ use crate::models::resources::solid_body_quad_tree::SolidBodyQuadTree;
 use crate::models::resources::spawn_task_receiver::SpawnTaskReceiver;
 use crate::models::resources::spawn_timer::SpawnTimer;
 use crate::models::resources::state_resources::AppStateTrigger;
-use crate::models::resources::ui_resources::GoldWallet;
 
-pub mod ui_resources;
 pub mod background_tiles_resource;
 pub mod state_resources;
 pub mod spawn_timer;
@@ -25,7 +23,6 @@ pub struct ResourcePlugin;
 impl Plugin for ResourcePlugin {
     fn build(&self, app: &mut App) {
         app
-            .init_resource::<GoldWallet>()
             .init_resource::<AppStateTrigger>()
             .init_resource::<SpawnTimer>()
             .init_resource::<SpawnTaskReceiver>()

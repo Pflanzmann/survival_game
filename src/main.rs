@@ -20,7 +20,7 @@ use crate::input::InputPlugin;
 use crate::models::events::EventsPlugin;
 use crate::models::resources::ResourcePlugin;
 use crate::models::resources::state_resources::AppStateTrigger;
-use crate::models::resources::ui_resources::GoldWallet;
+use models::gold_storage::GoldStorage;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::navigation::NavigationPlugin;
 use crate::spawner::SpawnerPlugin;

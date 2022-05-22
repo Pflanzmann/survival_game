@@ -2,6 +2,7 @@ use bevy::prelude::{Commands, Name, Res, ResMut, SpriteSheetBundle, TextureAtlas
 
 use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
+use crate::GoldStorage;
 use crate::models::aim_direction::AimDirection;
 use crate::models::animation::animation_state::CurrentAnimationState;
 use crate::models::animation::idle_animation_component::IdleAnimation;
@@ -67,6 +68,8 @@ pub fn setup_player_system(
 
         .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
         .insert(SpriteFlip)
+
+        .insert(GoldStorage::default())
 
         .insert(IdleAnimation::new(0.0, 3, 0, 0.5))
         .insert(MoveAnimationSide::new(0.0, 4, 4, 15))
