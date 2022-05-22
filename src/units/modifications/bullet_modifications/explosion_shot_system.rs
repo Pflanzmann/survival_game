@@ -1,6 +1,11 @@
-use bevy::prelude::{AssetServer, Commands, EventReader, GlobalTransform, Query, Res, Sprite, SpriteBundle, Transform, Vec2};
+use bevy::prelude::{Commands, EventReader, GlobalTransform, Query, Res, SpriteSheetBundle, Transform, Vec2};
+use bevy::sprite::TextureAtlasSprite;
 use rand::random;
 
+use crate::assets_handling::preload_animation_system::AtlasHandles;
+use crate::models::animation::animation_state::CurrentAnimationState;
+use crate::models::animation::animation_state::AnimationState::Idle;
+use crate::models::animation::idle_animation_component::IdleAnimation;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_solid_body_collider::EnemySolidBodyCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
@@ -13,7 +18,7 @@ use crate::models::unit_attributes::damage::Damage;
 
 pub fn explosion_shot_system(
     mut commands: Commands,
-    asset_server: Res<AssetServer>,
+    atlas_handles: Res<AtlasHandles>,
     mut damaged_events: EventReader<DamagedEvent>,
     source_query: Query<(&GlobalTransform, &Damage, &ExplosionShot)>,
 ) {
@@ -28,15 +33,17 @@ pub fn explosion_shot_system(
             continue;
         }
 
-        commands.spawn_bundle(SpriteBundle {
-            sprite: Sprite {
+        commands.spawn_bundle(SpriteSheetBundle {
+            sprite: TextureAtlasSprite {
                 custom_size: Some(Vec2::new(explosion_shot.radius * 2.0, explosion_shot.radius * 2.0)),
                 ..Default::default()
             },
-            texture: asset_server.load(&explosion_shot.explosion_sprite_path),
+            texture_atlas: atlas_handles.explosion_atlas.clone(),
             transform: Transform::from_translation(transform.translation),
             ..Default::default()
         })
+            .insert(IdleAnimation::new(0.0, 30, 0, explosion_shot.explosion_time_alive))
+            .insert(CurrentAnimationState { state: Idle })
             .insert(TimeAlive { time_alive: explosion_shot.explosion_time_alive })
             .insert(DamagedEntities::default())
             .insert(Damage::new(damage.get_total_amount()))

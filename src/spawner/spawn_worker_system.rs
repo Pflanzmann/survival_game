@@ -1,10 +1,9 @@
-use bevy::prelude::{Commands, Entity, Name, Query, Res, ResMut, SpriteBundle, SpriteSheetBundle, TextureAtlasSprite, Transform, Vec2, With};
+use bevy::prelude::{Commands, Entity, Name, Query, Res, ResMut, SpriteSheetBundle, TextureAtlasSprite, Transform, Vec2, With};
 
-use crate::SpriteLayer;
 use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
 use crate::models::animation::animation_state::CurrentAnimationState;
-use crate::models::animation::walking_animation_component::{MoveAnimationSide, MoveAnimationUp};
+use crate::models::animation::walking_animation_component::MoveAnimationSide;
 use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
 use crate::models::behavior::steering_behavior::SteeringBehavior;
 use crate::models::bundles::damage_bundle::DamageBundle;
@@ -22,13 +21,14 @@ use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::unit_size::UnitSize;
+use crate::SpriteLayer;
 
 pub fn spawn_worker_system(
     mut commands: Commands,
     mut spawn_task_receiver: ResMut<SpawnTaskReceiver>,
     enemy_handles: Res<EnemyConfigHandles>,
     player_query: Query<Entity, With<Player>>,
-    atlas_handles: ResMut<AtlasHandles>,
+    atlas_handles: Res<AtlasHandles>,
 ) {
     for player_entity in player_query.iter() {
         for _ in 0..50 {

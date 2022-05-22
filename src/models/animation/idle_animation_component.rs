@@ -3,15 +3,15 @@ use bevy::ecs::component::Component;
 #[derive(Component)]
 pub struct IdleAnimation {
     pub progress : f32,
-    pub framecount : usize,
+    pub animation_frame_count: usize,
     pub atlas_row : usize,
-    pub gameframes_until_loop : i32
+    pub duration: f32
 }
 
 impl IdleAnimation {
 
-    pub fn new (progress :f32, framecount : usize, atlas_row: usize, gameframes :  i32) -> IdleAnimation{
-        IdleAnimation{progress: progress,framecount: framecount, atlas_row: atlas_row, gameframes_until_loop : gameframes }
+    pub fn new (progress :f32, animation_frame_count : usize, atlas_row: usize, duration:  f32) -> IdleAnimation{
+        IdleAnimation{progress, animation_frame_count, atlas_row, duration }
     }
 
 }
