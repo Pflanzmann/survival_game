@@ -1,6 +1,5 @@
-use bevy::prelude::{Commands, Entity, Name, Query, Res, ResMut, SpriteSheetBundle, TextureAtlasSprite, Transform, Vec2, With};
+use bevy::prelude::{Commands, Name, Query, Res, ResMut, SpriteSheetBundle, TextureAtlasSprite, Transform, Vec2, With};
 
-use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::models::animation::animation_state::CurrentAnimationState;
 use crate::models::animation::walking_animation_component::MoveAnimationSide;
 use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
@@ -13,7 +12,6 @@ use crate::models::collision::solid_body_collider::SolidBodyCollider;
 use crate::models::enemy::Enemy;
 use crate::models::layerable::Layerable;
 use crate::models::move_direction::MoveDirection;
-use crate::models::player::Player;
 use crate::models::resources::spawn_task_receiver::SpawnTaskReceiver;
 use crate::models::spawner::enemy_config_handle::EnemyConfigHandles;
 use crate::models::sprite_flip::SpriteFlip;
