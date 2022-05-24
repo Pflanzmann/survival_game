@@ -26,48 +26,45 @@ pub fn spawn_worker_system(
     mut commands: Commands,
     mut spawn_task_receiver: ResMut<SpawnTaskReceiver>,
     enemy_handles: Res<EnemyConfigHandles>,
-    player_query: Query<Entity, With<Player>>,
 ) {
-    for player_entity in player_query.iter() {
-        for _ in 0..50 {
-            let spawn_task = match spawn_task_receiver.consume_task() {
-                None => break,
-                Some(task) => task,
-            };
+    for _ in 0..50 {
+        let spawn_task = match spawn_task_receiver.consume_task() {
+            None => break,
+            Some(task) => task,
+        };
 
-            commands.spawn_bundle(
-                SpriteSheetBundle {
-                    sprite: TextureAtlasSprite {
-                        custom_size: Some(enemy_handles.enemy_configs[0].size),
-                        ..Default::default()
-                    },
-                    transform: Transform::from_translation(spawn_task.get_position()),
-                    texture_atlas: enemy_handles.enemy_configs[0].texture_atlas.clone(),
+        commands.spawn_bundle(
+            SpriteSheetBundle {
+                sprite: TextureAtlasSprite {
+                    custom_size: Some(enemy_handles.enemy_configs[spawn_task.enemy_config_index].size),
                     ..Default::default()
-                })
-                .insert(Name::new(enemy_handles.enemy_configs[0].entity_name.clone()))
-                .insert(Enemy)
+                },
+                transform: Transform::from_translation(spawn_task.position.extend(enemy_handles.enemy_configs[spawn_task.enemy_config_index].sprite_layer.get_layer_z())),
+                texture_atlas: enemy_handles.enemy_configs[spawn_task.enemy_config_index].texture_atlas.clone(),
+                ..Default::default()
+            })
+            .insert(Name::new(enemy_handles.enemy_configs[spawn_task.enemy_config_index].entity_name.clone()))
+            .insert(Enemy)
 
-                .insert(UnitSize::new_size(enemy_handles.enemy_configs[0].size))
-                .insert(SolidBodyCollider { offset: Vec2::new(0.0, 0.0), collider_type: ColliderType::Circle(0.0) })
-                .insert(HitBoxCollider { collider_type: ColliderType::Circle(0.0) })
-                .insert(ColliderWeight { weight: enemy_handles.enemy_configs[0].collider_weight })
+            .insert(UnitSize::new_size(enemy_handles.enemy_configs[spawn_task.enemy_config_index].size))
+            .insert(SolidBodyCollider { offset: Vec2::new(0.0, 0.0), collider_type: ColliderType::Circle(0.0) })
+            .insert(HitBoxCollider { collider_type: ColliderType::Circle(0.0) })
+            .insert(ColliderWeight { weight: enemy_handles.enemy_configs[spawn_task.enemy_config_index].collider_weight })
 
-                .insert_bundle(DamageBundle::new(enemy_handles.enemy_configs[0].base_damage, enemy_handles.enemy_configs[0].damage_interval))
+            .insert_bundle(DamageBundle::new(enemy_handles.enemy_configs[spawn_task.enemy_config_index].base_damage, enemy_handles.enemy_configs[spawn_task.enemy_config_index].damage_interval))
 
-                .insert(MoveSpeed::new(enemy_handles.enemy_configs[0].move_speed))
-                .insert(MoveDirection::default())
+            .insert(MoveSpeed::new(enemy_handles.enemy_configs[spawn_task.enemy_config_index].move_speed))
+            .insert(MoveDirection::default())
 
-                .insert(Layerable::new(enemy_handles.enemy_configs[0].sprite_layer.get_layer_z()))
-                .insert(SpriteFlip)
+            .insert(Layerable::new(enemy_handles.enemy_configs[spawn_task.enemy_config_index].sprite_layer.get_layer_z()))
+            .insert(SpriteFlip)
 
-                .insert(Health::new(enemy_handles.enemy_configs[0].health))
+            .insert(Health::new(enemy_handles.enemy_configs[spawn_task.enemy_config_index].health))
 
-                .insert(SteeringBehavior::default())
-                .insert(ChaseTargetBehavior { target: player_entity, proximity: 0.0 })
+            .insert(SteeringBehavior::default())
+            .insert(ChaseTargetBehavior { target: spawn_task.target_player, proximity: 0.0 })
 
-                .insert(MoveAnimationSide::new(0.0, 3, 2, 15))
-                .insert(CurrentAnimationState::new());
-        }
+            .insert(MoveAnimationSide::new(0.0, 3, 2, 15))
+            .insert(CurrentAnimationState::new());
     }
 }
