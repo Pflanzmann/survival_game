@@ -31,6 +31,6 @@ pub fn hot_dog_pickup_system(
 
         sound_manager.queue_sound(SoundHandleChannel::Pickup(sound_handles.coin_pickup_sound.clone()));
 
-        commands.entity(event.target_entity).despawn_recursive();
+        commands.entity(event.source_entity).despawn_recursive();
     }
 }
