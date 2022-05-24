@@ -2,7 +2,6 @@ use bevy::asset::Handle;
 use bevy::prelude::{AssetServer, Image, Res, ResMut};
 
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
-use crate::assets_handling::preload_enemy_system::EnemyConfigHandles;
 use crate::assets_handling::preload_item_system::ItemConfigHandles;
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 
@@ -28,7 +27,6 @@ pub struct TextureHandles {
 
 pub fn preload_texture_system(
     asset_server: Res<AssetServer>,
-    enemy_handle: Res<EnemyConfigHandles>,
     item_handles: Res<ItemConfigHandles>,
     player_handles: Res<PlayerConfigHandles>,
     bullet_handles: Res<BulletConfigHandles>,
@@ -49,7 +47,6 @@ pub fn preload_texture_system(
     texture_handles.sword = asset_server.load("sprites/sword.png");
 
     texture_handles.player_sprite = asset_server.load(&player_handles.player_one.sprite_path);
-    texture_handles.enemy_goblin = asset_server.load(&enemy_handle.goblin.sprite_path);
     texture_handles.bullet_fireball = asset_server.load(&bullet_handles.basic_bullet.sprite_path);
     texture_handles.background_tile = asset_server.load("sprites/full_grass.png");
 }

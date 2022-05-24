@@ -10,7 +10,7 @@ pub fn preload_mod_system(
 ) {
     let parent = commands.spawn().insert(Name::new("Mod Entities")).id();
 
-    let base_path = "configurations/mod_configurations/";
+    let base_path = "configurations/mods/";
     let paths = fs::read_dir(base_path).unwrap();
 
     for path in paths {
