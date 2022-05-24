@@ -1,6 +1,11 @@
 {
   "spawn_phases": [
     {
+      "duration": 0.0,
+      "spawn_interval": 100.0,
+      "enemies": []
+    },
+    {
       "duration": 10.0,
       "spawn_interval": 1.0,
       "enemies": [
@@ -10,6 +15,26 @@
         },
         {
           "enemy_index": 1,
+          "spawn_weight": 1.0
+        }
+      ]
+    },
+    {
+      "duration": 10.0,
+      "spawn_interval": 2.0,
+      "enemies": [
+        {
+          "enemy_index": 2,
+          "spawn_weight": 1.0
+        }
+      ]
+    },
+    {
+      "duration": 0.0,
+      "spawn_interval": 0.0,
+      "enemies": [
+        {
+          "enemy_index": 3,
           "spawn_weight": 1.0
         }
       ]
