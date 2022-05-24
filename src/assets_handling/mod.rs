@@ -4,11 +4,12 @@ use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::assets_handling::preload_animation_system::preload_animation_system;
 use crate::assets_handling::preload_audio_system::{preload_audio_system, SoundHandles};
 use crate::assets_handling::preload_bullet_system::{BulletConfigHandles, preload_bullet_system};
-use crate::assets_handling::preload_enemy_system::{EnemyConfigHandles, preload_enemy_system};
+use crate::assets_handling::preload_enemy_system::preload_enemy_system;
 use crate::assets_handling::preload_item_system::{ItemConfigHandles, preload_item_system};
 use crate::assets_handling::preload_mod_system::preload_mod_system;
 use crate::assets_handling::preload_player_system::{PlayerConfigHandles, preload_player_system};
 use crate::assets_handling::preload_texture_system::{preload_texture_system, TextureHandles};
+use crate::models::spawner::enemy_config_handle::EnemyConfigHandles;
 use crate::SetupStages;
 use crate::util::entity_builder::EntityBuilderPlugin;
 
@@ -57,7 +58,7 @@ impl Plugin for AssetHandlingPlugin {
                     .with_system(preload_bullet_system)
                     .with_system(preload_mod_system)
                     .with_system(preload_audio_system)
-                    .with_system(preload_animation_system)
+                    .with_system(preload_animation_system),
             );
     }
 }
