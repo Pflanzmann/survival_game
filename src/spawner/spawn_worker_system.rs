@@ -40,7 +40,7 @@ pub fn spawn_worker_system(
             commands.spawn_bundle(
                 SpriteSheetBundle {
                     sprite: TextureAtlasSprite {
-                        custom_size: Some(Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y)),
+                        custom_size: Some(enemy_handles.goblin.size),
                         ..Default::default()
                     },
                     transform: Transform::from_translation(spawn_task.get_position()),
@@ -50,12 +50,12 @@ pub fn spawn_worker_system(
                 .insert(Name::new("Goblin"))
                 .insert(Enemy)
 
-                .insert(UnitSize::new_size(Vec2::new(enemy_handles.goblin.sprite_custom_size_x, enemy_handles.goblin.sprite_custom_size_y)))
-                .insert(SolidBodyCollider { offset: Vec2::new(0.0, -80.0), collider_type: ColliderType::Circle(enemy_handles.goblin.sprite_custom_size_x / 4.0) })
-                .insert(HitBoxCollider { collider_type: ColliderType::Circle(enemy_handles.goblin.sprite_custom_size_x / 2.0) })
-                .insert(ColliderWeight { weight: 0.2 })
+                .insert(UnitSize::new_size(enemy_handles.goblin.size))
+                .insert(SolidBodyCollider { offset: Vec2::new(0.0, 0.0), collider_type: ColliderType::Circle(0.0) })
+                .insert(HitBoxCollider { collider_type: ColliderType::Circle(0.0) })
+                .insert(ColliderWeight { weight: enemy_handles.goblin.collider_weight })
 
-                .insert_bundle(DamageBundle::new(enemy_handles.goblin.damage, 60.0))
+                .insert_bundle(DamageBundle::new(enemy_handles.goblin.base_damage, enemy_handles.goblin.damage_interval))
 
                 .insert(MoveSpeed::new(enemy_handles.goblin.move_speed))
                 .insert(MoveDirection::default())

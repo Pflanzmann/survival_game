@@ -1,8 +1,15 @@
 {
-  "sprite_custom_size_x": 256.0,
-  "sprite_custom_size_y": 256.0,
+  "config_id": 0,
+  "entity_name": "Goblin",
+  "size": [
+    256.0,
+    256.0
+  ],
   "sprite_path": "sprites/Goblin.png",
+  "sprite_layer": "GroundLevel",
+  "collider_weight": 0.2,
+  "base_damage": 5.0,
+  "damage_interval": 60.0,
   "move_speed": 6.0,
-  "damage": 5.0,
   "health": 10.0
 }
