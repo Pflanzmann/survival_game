@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, Name, Query, Res, ResMut, SpriteSheetBundle, TextureAtlasSprite, Transform, Vec2, With};
+use bevy::prelude::{Commands, Name, Res, ResMut, SpriteSheetBundle, TextureAtlasSprite, Transform, Vec2};
 
 use crate::models::animation::animation_state::CurrentAnimationState;
 use crate::models::animation::walking_animation_component::MoveAnimationSide;
