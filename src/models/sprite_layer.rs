@@ -1,3 +1,6 @@
+use serde::Deserialize;
+
+#[derive(Deserialize)]
 pub enum SpriteLayer {
     BackGround,
     FloorLevel,
@@ -17,5 +20,11 @@ impl SpriteLayer {
             SpriteLayer::AirLevel => -500000000.0,
             SpriteLayer::UILevel => -400000000.0,
         }
+    }
+}
+
+impl Default for SpriteLayer {
+    fn default() -> Self {
+        SpriteLayer::GroundLevel
     }
 }

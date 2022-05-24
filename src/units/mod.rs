@@ -11,6 +11,7 @@ use crate::units::health_bar_update_system::healthbar_update_system;
 use crate::units::knock_back_system::knock_back_system;
 use crate::units::layerable_system::layerable_system;
 use crate::units::mirror_aim_to_move_direction_system::mirror_aim_to_move_direction_system;
+use crate::units::modifications::UnitModificationsPlugin;
 use crate::units::move_unit_system::move_unit_system;
 use crate::units::player::PlayerPlugin;
 use crate::units::rotate_unit_system::rotate_unit_system;
@@ -18,9 +19,8 @@ use crate::units::sprite_aim_rotate_system::sprite_aim_rotate_system;
 use crate::units::sprite_flip_system::{sprite_atlas_flip_system, sprite_flip_system};
 use crate::units::sprite_move_rotate_system::sprite_move_rotate_system;
 use crate::units::time_alive_system::time_alive_system;
-use crate::units::modifications::UnitModificationsPlugin;
 use crate::units::unit_push_system::unit_push_system;
-use crate::units::unit_size_change_system::unit_size_change_system;
+use crate::units::unit_size_change_system::{unit_size_sprite_change_system, unit_size_texture_atlas_sprite_change_system};
 use crate::util::stage_label_helper::{in_last, in_update};
 
 mod sprite_flip_system;
@@ -72,7 +72,8 @@ impl Plugin for UnitPlugin {
                         .with_system(sprite_move_rotate_system)
                         .with_system(sprite_aim_rotate_system)
                         .with_system(healthbar_update_system)
-                        .with_system(unit_size_change_system)
+                        .with_system(unit_size_sprite_change_system)
+                        .with_system(unit_size_texture_atlas_sprite_change_system)
                         .with_system(apply_damage_component_system)
                         .with_system(apply_hit_effect_sprite_system)
                         .with_system(apply_hit_effect_sprite_atlas_system)
