@@ -5,8 +5,9 @@ use crate::models::resources::console_history::{ConsoleHistory, read_history_fro
 use crate::models::resources::hit_box_quad_tree::HitBoxQuadTree;
 use crate::models::resources::item_collision_quad_tree::ItemCollisionQuadTree;
 use crate::models::resources::solid_body_quad_tree::SolidBodyQuadTree;
+use crate::models::resources::spawn_phase_timer::SpawnPhaseTimer;
 use crate::models::resources::spawn_task_receiver::SpawnTaskReceiver;
-use crate::models::resources::spawn_timer::SpawnTimer;
+use crate::models::resources::spawn_timer::SpawnIntervalTimer;
 use crate::models::resources::state_resources::AppStateTrigger;
 
 pub mod background_tiles_resource;
@@ -17,6 +18,7 @@ pub mod console_history;
 pub mod solid_body_quad_tree;
 pub mod item_collision_quad_tree;
 pub mod hit_box_quad_tree;
+pub mod spawn_phase_timer;
 
 pub struct ResourcePlugin;
 
@@ -24,7 +26,8 @@ impl Plugin for ResourcePlugin {
     fn build(&self, app: &mut App) {
         app
             .init_resource::<AppStateTrigger>()
-            .init_resource::<SpawnTimer>()
+            .init_resource::<SpawnIntervalTimer>()
+            .init_resource::<SpawnPhaseTimer>()
             .init_resource::<SpawnTaskReceiver>()
 
             .insert_resource::<ConsoleHistory>(read_history_from_file())

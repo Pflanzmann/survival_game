@@ -1,11 +1,11 @@
 {
-  "config_id": 0,
-  "entity_name": "Goblin",
+  "config_id": 1,
+  "entity_name": "Bee",
   "size": [
     256.0,
     256.0
   ],
-  "sprite_path": "sprite_sheets/goblin.png",
+  "sprite_path": "sprite_sheets/bee.png",
   "texture_atlas_grid_size": [
     64.0,
     80.0

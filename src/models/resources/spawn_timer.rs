@@ -1,4 +1,4 @@
 #[derive(Default)]
-pub struct SpawnTimer {
+pub struct SpawnIntervalTimer {
     pub timer: f32,
 }

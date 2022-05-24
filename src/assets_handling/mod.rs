@@ -8,6 +8,7 @@ use crate::assets_handling::preload_enemy_system::preload_enemy_system;
 use crate::assets_handling::preload_item_system::{ItemConfigHandles, preload_item_system};
 use crate::assets_handling::preload_mod_system::preload_mod_system;
 use crate::assets_handling::preload_player_system::{PlayerConfigHandles, preload_player_system};
+use crate::assets_handling::preload_stage_spawn_system::{preload_stage_spawn_behvaior_system, StageSpawnBehaviorHandle};
 use crate::assets_handling::preload_texture_system::{preload_texture_system, TextureHandles};
 use crate::models::spawner::enemy_config_handle::EnemyConfigHandles;
 use crate::SetupStages;
@@ -21,6 +22,7 @@ pub mod preload_bullet_system;
 pub mod preload_mod_system;
 pub mod preload_audio_system;
 pub mod preload_animation_system;
+pub mod preload_stage_spawn_system;
 
 /// This plugin serves as a Preloader for all [ Assets ].
 ///
@@ -30,8 +32,6 @@ pub mod preload_animation_system;
 ///
 /// The systems are run in the custom Startupstage [ AssetSetup ] in
 /// order to have them ready when the game starts
-
-
 pub struct AssetHandlingPlugin;
 
 impl Plugin for AssetHandlingPlugin {
@@ -46,6 +46,7 @@ impl Plugin for AssetHandlingPlugin {
             .init_resource::<BulletConfigHandles>()
             .init_resource::<SoundHandles>()
             .init_resource::<AtlasHandles>()
+            .init_resource::<StageSpawnBehaviorHandle>()
 
             .add_startup_system_to_stage(SetupStages::AssetSetup, preload_texture_system)
 
@@ -58,7 +59,8 @@ impl Plugin for AssetHandlingPlugin {
                     .with_system(preload_bullet_system)
                     .with_system(preload_mod_system)
                     .with_system(preload_audio_system)
-                    .with_system(preload_animation_system),
+                    .with_system(preload_animation_system)
+                    .with_system(preload_stage_spawn_behvaior_system),
             );
     }
 }
