@@ -21,14 +21,12 @@ use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::unit_size::UnitSize;
-use crate::SpriteLayer;
 
 pub fn spawn_worker_system(
     mut commands: Commands,
     mut spawn_task_receiver: ResMut<SpawnTaskReceiver>,
     enemy_handles: Res<EnemyConfigHandles>,
     player_query: Query<Entity, With<Player>>,
-    atlas_handles: Res<AtlasHandles>,
 ) {
     for player_entity in player_query.iter() {
         for _ in 0..50 {
@@ -44,7 +42,7 @@ pub fn spawn_worker_system(
                         ..Default::default()
                     },
                     transform: Transform::from_translation(spawn_task.get_position()),
-                    texture_atlas: atlas_handles.goblin_atlas.clone(),
+                    texture_atlas: enemy_handles.enemy_configs[0].texture_atlas.clone(),
                     ..Default::default()
                 })
                 .insert(Name::new(enemy_handles.enemy_configs[0].entity_name.clone()))
@@ -60,7 +58,7 @@ pub fn spawn_worker_system(
                 .insert(MoveSpeed::new(enemy_handles.enemy_configs[0].move_speed))
                 .insert(MoveDirection::default())
 
-                .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
+                .insert(Layerable::new(enemy_handles.enemy_configs[0].sprite_layer.get_layer_z()))
                 .insert(SpriteFlip)
 
                 .insert(Health::new(enemy_handles.enemy_configs[0].health))

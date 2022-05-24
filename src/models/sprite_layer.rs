@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Copy, Clone)]
 pub enum SpriteLayer {
     BackGround,
     FloorLevel,
