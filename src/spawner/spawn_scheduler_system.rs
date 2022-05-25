@@ -1,5 +1,5 @@
 use bevy::prelude::{Entity, Query, Res, ResMut, Time, Transform, Vec2, With};
-use rand::{random, Rng};
+use rand::random;
 
 use crate::assets_handling::preload_stage_spawn_system::StageSpawnBehaviorHandle;
 use crate::models::player::Player;
