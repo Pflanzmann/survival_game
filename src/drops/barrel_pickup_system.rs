@@ -6,10 +6,12 @@ use crate::audio::sound_manager::SoundManager;
 use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 use crate::models::events::item_collision_event::ItemCollisionEvent;
 use crate::models::items::shop::Shop;
+use crate::models::resources::shop_customer::ShopCustomer;
 
 pub fn barrel_pickup_system(
     mut commands: Commands,
     mut item_pickup_event: EventReader<ItemCollisionEvent>,
+    mut shop_customer: ResMut<ShopCustomer>,
     mut state_trigger: ResMut<AppStateTrigger>,
     sound_handles: Res<SoundHandles>,
     mut sound_manager: ResMut<SoundManager>,
@@ -22,6 +24,7 @@ pub fn barrel_pickup_system(
         };
 
         state_trigger.state_change_trigger = ToAppState::ToShop;
+        shop_customer.customer = Some(event.target_entity);
 
         sound_manager.queue_sound(SoundHandleChannel::Pickup(sound_handles.coin_pickup_sound.clone()));
 

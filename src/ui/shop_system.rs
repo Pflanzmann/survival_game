@@ -4,10 +4,11 @@ use bevy::prelude::{AlignContent, AlignItems, AssetServer, BuildChildren, Button
 use rand::Rng;
 
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
-use crate::models::modifications::descriptors::mod_name::ModName;
+use crate::models::mod_register::ModRegister;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::player::Player;
+use crate::models::resources::shop_customer::ShopCustomer;
 use crate::models::ui_components::game_over::NavigationButton;
 use crate::models::ui_components::shop::{ShopButton, ShopMenuComp, ShopSlot, ToolTipField};
 use crate::TextureHandles;
@@ -15,13 +16,52 @@ use crate::TextureHandles;
 pub fn spawn_shop_menu_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
-    mod_query: Query<(Entity, &ModName, &ModSpritePath, &ToolTip)>,
+    shop_customer: Res<ShopCustomer>,
+    customer_query: Query<&ModRegister>,
+    mod_query: Query<(Entity, &ModSpritePath)>,
 ) {
-    let mut shop_items_vec: Vec<(Entity, String, String, String)> = Vec::new();
-    fetch_shop_slots(3, &mut shop_items_vec, mod_query);
+    let customer_entity = match shop_customer.customer {
+        None => return,
+        Some(customer) => customer,
+    };
+
+    let customer_mod_register = match customer_query.get(customer_entity) {
+        Ok(mod_register) => mod_register,
+        Err(_) => return,
+    };
+
+    let requested_slot_count = 3;
+
+    let mut valid_mods: Vec<Entity> = Vec::new();
+    for (entity, _) in mod_query.iter() {
+        if !customer_mod_register.register.contains(&entity) {
+            valid_mods.push(entity);
+        }
+    }
+
+    let valid_mods_len = valid_mods.len() as i32;
+    let mut chosen_mods: Vec<i32> = Vec::new();
+    let mut chosen_mod_entities: Vec<Entity> = Vec::new();
+
+    for _ in 0..min(valid_mods.len(), requested_slot_count) {
+        let mut rnd_number: i32 = rand::thread_rng().gen_range(0..valid_mods_len);
+        while chosen_mods.contains(&rnd_number) {
+            rnd_number = rand::thread_rng().gen_range(0..valid_mods_len);
+        }
+        chosen_mods.push(rnd_number);
+        if let Some(mod_entity) = valid_mods.get(rnd_number as usize) {
+            chosen_mod_entities.push(*mod_entity);
+        }
+    }
 
     let mut shop_slot_vector: Vec<Entity> = Vec::new();
-    for (index, (mod_entity, _, sprite_handler, _)) in shop_items_vec.iter().enumerate() {
+
+    for (index, mod_entity) in chosen_mod_entities.iter().enumerate() {
+        let (mod_entity, mod_sprite_path) = match mod_query.get(*mod_entity) {
+            Ok(value) => value,
+            Err(_) => continue,
+        };
+
         let entity = commands.spawn_bundle(ButtonBundle {
             style: Style {
                 size: Size::new(Val::Percent(25.0), Val::Percent(70.0)),
@@ -34,7 +74,7 @@ pub fn spawn_shop_menu_system(
             ..Default::default()
         }).with_children(|parent| {
             parent.spawn_bundle(ImageBundle {
-                image: asset_loader.load(sprite_handler).into(),
+                image: asset_loader.load(mod_sprite_path.path.as_str()).into(),
                 style: Style {
                     size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
                     ..Default::default()
@@ -44,7 +84,7 @@ pub fn spawn_shop_menu_system(
                 .insert(ShopButton { index });
         }).id();
 
-        commands.entity(*mod_entity).insert(ShopSlot { index });
+        commands.entity(mod_entity).insert(ShopSlot { index });
         shop_slot_vector.push(entity);
     }
 
@@ -256,35 +296,6 @@ pub fn shop_button_system(
             }
         }
     }
-}
-
-pub fn fetch_shop_slots(
-    requested_slot_count: i32,
-    result_vector: &mut Vec<(Entity, String, String, String)>,
-    mod_query: Query<(Entity, &ModName, &ModSpritePath, &ToolTip)>,
-) {
-    let mut rng = rand::thread_rng();
-
-    let entity_length = mod_query.iter().len() as i32;
-    let mut rnd_vec: Vec<i32> = Vec::new();
-
-    for _ in 0..min(entity_length, requested_slot_count) {
-        let mut rnd_number = rng.gen_range(0..entity_length);
-        while rnd_vec.contains(&rnd_number) {
-            rnd_number = rng.gen_range(0..entity_length);
-        }
-        rnd_vec.push(rnd_number);
-    }
-
-    for (index, (entity, mod_name, mod_sprite_path, tool_tip)) in mod_query.iter().enumerate() {
-        let result_mod_name = mod_name.mod_name.clone();
-        let result_mod_sprite_path = mod_sprite_path.path.clone();
-        let result_mod_tool_tip = tool_tip.tooltip.clone();
-
-        if rnd_vec.contains(&(index as i32)) {
-            result_vector.push((entity, result_mod_name, result_mod_sprite_path, result_mod_tool_tip));
-        }
-    };
 }
 
 pub fn spawn_sold_image(
