@@ -4,7 +4,7 @@
     "mod_name": "Grow Shot"
   },
   "ModSpritePath": {
-    "path": "sprites/grow_shot_icon.png"
+    "path": "sprites/mod_icons/grow_shot_icon.png"
   },
   "ToolTip": {
     "tooltip": "bullet gets bigger and doller"

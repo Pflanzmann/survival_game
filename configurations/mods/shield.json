@@ -4,7 +4,7 @@
     "mod_name": "Shield"
   },
   "ModSpritePath": {
-    "path": "sprites/shield.png"
+    "path": "sprites/mod_icons/shield_icon.png"
   },
   "ToolTip": {
     "tooltip": "A Shield that knocks stuff away even better"

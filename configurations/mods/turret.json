@@ -4,7 +4,7 @@
     "mod_name": "Turret"
   },
   "ModSpritePath": {
-    "path": "sprites/turret.png"
+    "path": "sprites/mod_icons/turret_icon.png"
   },
   "ToolTip": {
     "tooltip": "a turret helping the player"

@@ -4,7 +4,7 @@
     "mod_name": "Slime"
   },
   "ModSpritePath": {
-    "path": "sprites/slime.png"
+    "path": "sprites/mod_icons/slime_icon.png"
   },
   "ToolTip": {
     "tooltip": "a slime helping the player"

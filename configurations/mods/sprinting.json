@@ -4,7 +4,7 @@
     "mod_name": "Sprinting"
   },
   "ModSpritePath": {
-    "path": "sprites/Ranger.png"
+    "path": "sprites/mod_icons/sprinting_icon.png"
   },
   "ToolTip": {
     "tooltip": "player can run faster"

@@ -4,7 +4,7 @@
     "mod_name": "Gravity Shot"
   },
   "ModSpritePath": {
-    "path": "sprites/gravity_shot.png"
+    "path": "sprites/mod_icons/gravity_shot_icons.png"
   },
   "ToolTip": {
     "tooltip": "Funny tooltip that has a joke with gravity"

@@ -4,7 +4,7 @@
     "mod_name": "Death Ball"
   },
   "ModSpritePath": {
-    "path": "sprites/death_ball.png"
+    "path": "sprites/mod_icons/death_ball_icon.png"
   },
   "ToolTip": {
     "tooltip": "a death ball that makes death"
