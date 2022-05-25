@@ -40,22 +40,21 @@ pub fn spawn_shop_menu_system(
     }
 
     let valid_mods_len = valid_mods.len() as i32;
-    let mut chosen_mods: Vec<i32> = Vec::new();
+    let mut chosen_mod_indexes: Vec<i32> = Vec::new();
     let mut chosen_mod_entities: Vec<Entity> = Vec::new();
 
     for _ in 0..min(valid_mods.len(), requested_slot_count) {
         let mut rnd_number: i32 = rand::thread_rng().gen_range(0..valid_mods_len);
-        while chosen_mods.contains(&rnd_number) {
+        while chosen_mod_indexes.contains(&rnd_number) {
             rnd_number = rand::thread_rng().gen_range(0..valid_mods_len);
         }
-        chosen_mods.push(rnd_number);
+        chosen_mod_indexes.push(rnd_number);
         if let Some(mod_entity) = valid_mods.get(rnd_number as usize) {
             chosen_mod_entities.push(*mod_entity);
         }
     }
 
-    let mut shop_slot_vector: Vec<Entity> = Vec::new();
-
+    let mut populated_shop_slots: Vec<Entity> = Vec::new();
     for (index, mod_entity) in chosen_mod_entities.iter().enumerate() {
         let (mod_entity, mod_sprite_path) = match mod_query.get(*mod_entity) {
             Ok(value) => value,
@@ -85,7 +84,7 @@ pub fn spawn_shop_menu_system(
         }).id();
 
         commands.entity(mod_entity).insert(ShopSlot { index });
-        shop_slot_vector.push(entity);
+        populated_shop_slots.push(entity);
     }
 
     commands
@@ -149,7 +148,7 @@ pub fn spawn_shop_menu_system(
                 },
                 color: Color::WHITE.into(),
                 ..Default::default()
-            }).push_children(shop_slot_vector.as_slice());
+            }).push_children(populated_shop_slots.as_slice());
 
             // Third UI Row (tooltip and close button)
             parent.spawn_bundle(NodeBundle {
