@@ -9,6 +9,7 @@
   "ToolTip": {
     "tooltip": "electro boom"
   },
+  "Price": 10,
   "Lightning": {
     "chance": 0.2,
     "radius": 512.0,

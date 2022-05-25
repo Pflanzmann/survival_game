@@ -9,6 +9,7 @@
   "ToolTip": {
     "tooltip": "Funny tooltip that has a joke with gravity"
   },
+  "Price": 2,
   "GravityShot": {
     "pulse_time": 0.5,
     "pulse_timer": 0.5,

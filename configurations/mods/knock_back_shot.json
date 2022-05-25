@@ -9,6 +9,7 @@
   "ToolTip": {
     "tooltip": "Knocks stuff away nicely"
   },
+  "Price": 5,
   "KnockBackShot": {
     "push_duration": 0.3,
     "push_force": 1000.0

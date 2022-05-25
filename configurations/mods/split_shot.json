@@ -9,5 +9,6 @@
   "ToolTip": {
     "tooltip": "bullet splits into 4 bullets"
   },
+  "Price": 5,
   "SplitShot": null
 }

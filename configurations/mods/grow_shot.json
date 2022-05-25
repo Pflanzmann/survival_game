@@ -9,6 +9,7 @@
   "ToolTip": {
     "tooltip": "bullet gets bigger and doller"
   },
+  "Price": 10,
   "GrowShot": {
     "damage_per_second": 3.0,
     "size_per_second": 2.0
