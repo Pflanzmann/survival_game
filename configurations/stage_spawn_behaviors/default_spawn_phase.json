@@ -20,7 +20,7 @@
       ]
     },
     {
-      "duration": 10.0,
+      "duration": 60.0,
       "spawn_interval": 2.0,
       "enemies": [
         {
