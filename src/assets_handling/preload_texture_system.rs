@@ -3,7 +3,6 @@ use bevy::prelude::{AssetServer, Image, Res, ResMut};
 
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
 use crate::assets_handling::preload_item_system::ItemConfigHandles;
-use crate::assets_handling::preload_player_system::PlayerConfigHandles;
 
 #[derive(Default)]
 pub struct TextureHandles {

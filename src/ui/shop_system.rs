@@ -1,11 +1,14 @@
 use std::cmp::min;
 
-use bevy::prelude::{AlignContent, AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, FlexWrap, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+use bevy::core::Name;
+use bevy::ecs::component::Component;
+use bevy::prelude::{AlignContent, AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, FlexWrap, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With, Without};
 use rand::Rng;
 
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::mod_register::ModRegister;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
+use crate::models::modifications::descriptors::price::Price;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::player::Player;
 use crate::models::resources::shop_customer::ShopCustomer;
@@ -13,12 +16,52 @@ use crate::models::ui_components::game_over::NavigationButton;
 use crate::models::ui_components::shop::{ShopButton, ShopMenuComp, ShopSlot, ToolTipField};
 use crate::TextureHandles;
 
+#[derive(Component)]
+pub struct OriginalStyle;
+
+#[derive(Component)]
+pub struct OriginalStyle2;
+
+#[derive(Component)]
+pub struct CopyStyle;
+
+#[derive(Component)]
+pub struct CopyStyle2;
+
+pub fn copy_style_system(
+    mut commands: Commands,
+    original: Query<(Entity, &Style), (With<OriginalStyle>, Changed<Style>)>,
+    copy: Query<Entity, With<CopyStyle>>,
+) {
+    for (o_entity, origin) in original.iter() {
+        for entity in copy.iter() {
+            if o_entity != entity {
+                commands.entity(entity).insert(origin.clone());
+            }
+        }
+    }
+}
+
+pub fn copy_style_system2(
+    mut commands: Commands,
+    original: Query<(Entity, &Style), (With<OriginalStyle2>, Changed<Style>)>,
+    copy: Query<Entity, With<CopyStyle2>>,
+) {
+    for (o_entity, origin) in original.iter() {
+        for entity in copy.iter() {
+            if o_entity != entity {
+                commands.entity(entity).insert(origin.clone());
+            }
+        }
+    }
+}
+
 pub fn spawn_shop_menu_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
     shop_customer: Res<ShopCustomer>,
     customer_query: Query<&ModRegister>,
-    mod_query: Query<(Entity, &ModSpritePath)>,
+    mod_query: Query<(Entity, &ModSpritePath, &Price)>,
 ) {
     let customer_entity = match shop_customer.customer {
         None => return,
@@ -30,10 +73,10 @@ pub fn spawn_shop_menu_system(
         Err(_) => return,
     };
 
-    let requested_slot_count = 3;
+    let requested_slot_count = 12;
 
     let mut valid_mods: Vec<Entity> = Vec::new();
-    for (entity, _) in mod_query.iter() {
+    for (entity, _, _) in mod_query.iter() {
         if !customer_mod_register.register.contains(&entity) {
             valid_mods.push(entity);
         }
@@ -54,34 +97,82 @@ pub fn spawn_shop_menu_system(
         }
     }
 
+    let mut origin: Option<Entity> = None;
+
     let mut populated_shop_slots: Vec<Entity> = Vec::new();
     for (index, mod_entity) in chosen_mod_entities.iter().enumerate() {
-        let (mod_entity, mod_sprite_path) = match mod_query.get(*mod_entity) {
+        let (mod_entity, mod_sprite_path, price) = match mod_query.get(*mod_entity) {
             Ok(value) => value,
             Err(_) => continue,
         };
 
         let entity = commands.spawn_bundle(ButtonBundle {
             style: Style {
-                size: Size::new(Val::Percent(25.0), Val::Percent(70.0)),
-                align_items: AlignItems::Center,
-                justify_content: JustifyContent::SpaceEvenly,
+                size: Size::new(Val::Auto, Val::Auto),
+                // min_size: Size::new(Val::Percent(18.0), Val::Auto),
+                // max_size: Size::new(Val::Percent(26.0), Val::Auto),
                 flex_direction: FlexDirection::ColumnReverse,
+                align_content: AlignContent::Center,
+                align_items: AlignItems::Center,
+                justify_content: JustifyContent::Center,
                 ..Default::default()
             },
             color: Color::GRAY.into(),
             ..Default::default()
-        }).with_children(|parent| {
-            parent.spawn_bundle(ImageBundle {
-                image: asset_loader.load(mod_sprite_path.path.as_str()).into(),
-                style: Style {
-                    size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
+        })
+            .with_children(|parent| {
+                parent.spawn_bundle(TextBundle {
+                    style: Style {
+                        ..Default::default()
+                    },
+                    text: Text::with_section(
+                        price.to_string(),
+                        TextStyle {
+                            font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
+                            font_size: 40.0,
+                            color: Color::RED,
+                            ..Default::default()
+                        },
+                        TextAlignment {
+                            vertical: VerticalAlign::Center,
+                            horizontal: HorizontalAlign::Center,
+                        },
+                    ),
                     ..Default::default()
-                },
-                ..Default::default()
-            }).insert(Interaction::default())
-                .insert(ShopButton { index });
-        }).id();
+                });
+
+                let temp = parent.spawn_bundle(ImageBundle {
+                    image: asset_loader.load(mod_sprite_path.path.as_str()).into(),
+                    style: Style {
+                        // size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
+                        position: Rect {
+                            left: Val::Percent(10.0),
+                            bottom: Val::Percent(20.0),
+                            ..Default::default()
+                        },
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                })
+                    .insert(Interaction::default())
+                    .insert(ShopButton { index }).id();
+
+                origin = Some(temp);
+            }).id();
+
+        if index == 0 {
+            commands.entity(entity).insert(OriginalStyle);
+            commands.entity(entity).insert(Name::new("Origin"));
+
+            commands.entity(origin.unwrap()).insert(OriginalStyle2);
+            commands.entity(origin.unwrap()).insert(Name::new("Origin"));
+        } else {
+            commands.entity(entity).insert(CopyStyle);
+            commands.entity(entity).insert(Name::new("copy"));
+
+            commands.entity(origin.unwrap()).insert(CopyStyle2);
+            commands.entity(origin.unwrap()).insert(Name::new("copy"));
+        }
 
         commands.entity(mod_entity).insert(ShopSlot { index });
         populated_shop_slots.push(entity);
@@ -143,7 +234,7 @@ pub fn spawn_shop_menu_system(
                     flex_wrap: FlexWrap::WrapReverse,
                     justify_content: JustifyContent::SpaceEvenly,
                     flex_direction: FlexDirection::Row,
-                    align_content: AlignContent::FlexStart,
+                    align_content: AlignContent::SpaceAround,
                     ..Default::default()
                 },
                 color: Color::WHITE.into(),

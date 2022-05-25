@@ -8,7 +8,7 @@ use crate::ui::game_over_screen::{button_click_system, spawn_menu_system};
 use crate::ui::hud_system::{spawn_text_system, update_bullet_hud_system, update_text_system};
 use crate::ui::main_menu_screen::{close_main_menu_system, spawn_main_menu_system};
 use crate::ui::pause_screen::{enter_pause_system, exit_pause_system};
-use crate::ui::shop_system::{close_shop_menu_system, shop_button_system, spawn_shop_menu_system};
+use crate::ui::shop_system::{close_shop_menu_system, copy_style_system, copy_style_system2, shop_button_system, spawn_shop_menu_system};
 use crate::util::stage_label_helper::{in_last, in_update};
 
 mod game_over_screen;
@@ -95,6 +95,8 @@ impl Plugin for UiPlugin {
             )
 
             .add_system(button_click_system)
-            .add_system(shop_button_system);
+            .add_system(shop_button_system)
+            .add_system(copy_style_system)
+            .add_system(copy_style_system2);
     }
 }
