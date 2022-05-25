@@ -4,7 +4,7 @@
     "mod_name": "Psy Rock"
   },
   "ModSpritePath": {
-    "path": "sprites/psy_rock.png"
+    "path": "sprites/mod_icons/psy_rock_icon.png"
   },
   "ToolTip": {
     "tooltip": "a psy rock that rocks"

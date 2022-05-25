@@ -4,7 +4,7 @@
     "mod_name": "Curve Shot"
   },
   "ModSpritePath": {
-    "path": "sprites/curve_shot_icon.png"
+    "path": "sprites/mod_icons/curve_shot_icon.png"
   },
   "ToolTip": {
     "tooltip": "bullet gets thicc"

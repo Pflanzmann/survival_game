@@ -4,7 +4,7 @@
     "mod_name": "Knock Back Shot"
   },
   "ModSpritePath": {
-    "path": "sprites/knock_back_shot.png"
+    "path": "sprites/mod_icons/knock_back_shot_icon.png"
   },
   "ToolTip": {
     "tooltip": "Knocks stuff away nicely"

@@ -4,7 +4,7 @@
     "mod_name": "Lightning"
   },
   "ModSpritePath": {
-    "path": "sprites/lightning.png"
+    "path": "sprites/mod_icons/lightning_icon.png"
   },
   "ToolTip": {
     "tooltip": "electro boom"
@@ -14,7 +14,7 @@
     "chance": 0.2,
     "radius": 512.0,
     "jump_count": 2,
-    "lightning_sprite_path": "sprites/lightning.png",
+    "lightning_sprite_path": "sprites/unit_sprites/lightning.png",
     "lightning_width": 64.0,
     "sprite_time_alive": 0.3
   }

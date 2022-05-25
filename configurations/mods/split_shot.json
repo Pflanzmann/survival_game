@@ -4,7 +4,7 @@
     "mod_name": "Split Shot"
   },
   "ModSpritePath": {
-    "path": "sprites/split_shot_icon.png"
+    "path": "sprites/mod_icons/split_shot_icon.png"
   },
   "ToolTip": {
     "tooltip": "bullet splits into 4 bullets"

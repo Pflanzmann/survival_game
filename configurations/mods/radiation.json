@@ -4,7 +4,7 @@
     "mod_name": "Radiation"
   },
   "ModSpritePath": {
-    "path": "sprites/radiation.png"
+    "path": "sprites/mod_icons/radiation_icon.png"
   },
   "ToolTip": {
     "tooltip": "kills the video star"

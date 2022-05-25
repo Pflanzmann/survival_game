@@ -4,7 +4,7 @@
     "mod_name": "Explosion Shot"
   },
   "ModSpritePath": {
-    "path": "sprites/explosion.png"
+    "path": "sprites/mod_icons/explosion_icon.png"
   },
   "ToolTip": {
     "tooltip": "Funny tooltip that has a joke with gravity"
