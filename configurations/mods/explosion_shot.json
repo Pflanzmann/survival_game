@@ -9,6 +9,7 @@
   "ToolTip": {
     "tooltip": "Funny tooltip that has a joke with gravity"
   },
+  "Price": 10,
   "ExplosionShot": {
     "explosion_sprite_path": "sprites/explosion.png",
     "explosion_chance": 0.5,

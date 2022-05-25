@@ -9,6 +9,7 @@
   "ToolTip": {
     "tooltip": "player can run faster"
   },
+  "Price": 5,
   "Sprinting": null,
   "AffectMoveSpeed": {
     "operator": "Add",

@@ -9,6 +9,7 @@
   "ToolTip": {
     "tooltip": "a psy rock that rocks"
   },
+  "Price": 15,
   "PsyRock": {
     "unit_size": [
       200.0,

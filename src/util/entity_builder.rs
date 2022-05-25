@@ -22,6 +22,7 @@ use crate::models::modifications::death_ball::DeathBall;
 use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
 use crate::models::modifications::descriptors::modification::Modification;
+use crate::models::modifications::descriptors::price::Price;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::modifications::explosion_shot::ExplosionShot;
 use crate::models::modifications::gravity_shot::GravityShot;
@@ -54,6 +55,7 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<ModName>();
         entity_builder.register_component::<ToolTip>();
         entity_builder.register_component::<ModSpritePath>();
+        entity_builder.register_component::<Price>();
 
         entity_builder.register_component::<AffectMoveSpeed>();
         entity_builder.register_component::<AffectDamage>();

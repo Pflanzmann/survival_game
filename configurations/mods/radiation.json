@@ -9,6 +9,7 @@
   "ToolTip": {
     "tooltip": "kills the video star"
   },
+  "Price": 15,
   "Radiation": {
     "unit_size": [
       1024.0,

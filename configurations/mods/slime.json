@@ -9,5 +9,6 @@
   "ToolTip": {
     "tooltip": "a slime helping the player"
   },
+  "Price": 2,
   "Slime": null
 }

@@ -9,6 +9,7 @@
   "ToolTip": {
     "tooltip": "a turret helping the player"
   },
+  "Price": 5,
   "Turret": {
     "unit_size": [
       128.0,

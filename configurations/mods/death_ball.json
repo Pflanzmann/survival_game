@@ -9,6 +9,7 @@
   "ToolTip": {
     "tooltip": "a death ball that makes death"
   },
+  "Price": 15,
   "DeathBall": {
     "unit_size": [
       128.0,
