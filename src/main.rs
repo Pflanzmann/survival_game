@@ -6,8 +6,8 @@ use bevy::ecs::schedule::StageLabel;
 use bevy::prelude::{Msaa, SystemStage};
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
-use crate::animation::AnimationPlugin;
 
+use crate::animation::AnimationPlugin;
 use crate::assets_handling::AssetHandlingPlugin;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::audio::CustomAudioPlugin;
@@ -20,7 +20,6 @@ use crate::input::InputPlugin;
 use crate::models::events::EventsPlugin;
 use crate::models::resources::ResourcePlugin;
 use crate::models::resources::state_resources::AppStateTrigger;
-use models::gold_storage::GoldStorage;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::navigation::NavigationPlugin;
 use crate::spawner::SpawnerPlugin;
@@ -91,7 +90,7 @@ fn main() {
     App::new()
         .add_startup_stage(SetupStages::ConfigSetup, SystemStage::parallel())
         .add_startup_stage(SetupStages::AssetSetup, SystemStage::parallel())
-        
+
         .insert_resource(Msaa { samples: 1 })
 
         .add_plugins(DefaultPlugins)
