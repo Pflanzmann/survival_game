@@ -11,7 +11,6 @@ use crate::models::modifications::utils::owner::Owner;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::unit_size::UnitSize;
-use crate::models::weapon_slot::WeaponSlot;
 use crate::TextureHandles;
 
 pub fn apply_death_ball_system(
@@ -19,7 +18,7 @@ pub fn apply_death_ball_system(
     texture_handler: Res<TextureHandles>,
     mut apply_events: EventReader<ApplyModToTargetEvent>,
     mod_query: Query<&DeathBall, With<Modification>>,
-    owner_query: Query<(Entity, &WeaponSlot)>,
+    owner_query: Query<Entity>,
     unit_query: Query<&Owner, With<DeathBallUnit>>,
 ) {
     for apply_event in apply_events.iter() {
@@ -28,7 +27,7 @@ pub fn apply_death_ball_system(
             Err(_) => continue,
         };
 
-        let (owner_entity, owner_weapon_slot) = match owner_query.get(apply_event.target_entity) {
+        let owner_entity = match owner_query.get(apply_event.target_entity) {
             Ok(owner) => owner,
             Err(_) => continue,
         };

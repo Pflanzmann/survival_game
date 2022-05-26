@@ -16,7 +16,6 @@ use crate::models::modifications::utils::owner::Owner;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::unit_size::UnitSize;
-use crate::models::weapon_slot::WeaponSlot;
 use crate::util::get_close_position_2d::get_close_position_2d;
 
 pub fn apply_turret_system(
@@ -24,7 +23,7 @@ pub fn apply_turret_system(
     texture_handler: Res<TextureHandles>,
     mut apply_events: EventReader<ApplyModToTargetEvent>,
     mod_query: Query<&Turret, With<Modification>>,
-    owner_query: Query<(Entity, &Transform, &WeaponSlot)>,
+    owner_query: Query<(Entity, &Transform)>,
     unit_query: Query<&Owner, With<TurretUnit>>,
 ) {
     for apply_event in apply_events.iter() {
@@ -33,7 +32,7 @@ pub fn apply_turret_system(
             Err(_) => continue,
         };
 
-        let (owner_entity, owner_transform, owner_weapon_slot) = match owner_query.get(apply_event.target_entity) {
+        let (owner_entity, owner_transform) = match owner_query.get(apply_event.target_entity) {
             Ok(owner) => owner,
             Err(_) => continue,
         };
@@ -73,6 +72,7 @@ pub fn apply_turret_system(
 
             .insert(AimDirection { direction: Vec2::new(1.0, 0.0) })
             .insert(Reload::new(modification.reload))
+
             .insert(SpinAimBehavior)
             .insert(TeleportToTargetBehavior::new(owner_entity, modification.teleport_distance, modification.teleport_proximity_min, modification.teleport_proximity_max, modification.teleport_cooldown, modification.teleport_duration))
         ;
