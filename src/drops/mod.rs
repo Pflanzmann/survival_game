@@ -2,14 +2,14 @@ use bevy::prelude::{App, Plugin, SystemSet};
 
 use crate::AppState;
 use crate::drops::enter_shop_system::enter_shop_system;
-use crate::drops::basic_drop_system::basic_drop_system;
+use crate::drops::drop_chance_system::drop_chance_system;
 use crate::drops::coin_pickup_system::coin_pickup_system;
 use crate::drops::hot_dog_pickup_system::hot_dog_pickup_system;
 use crate::drops::setup_shop_system::setup_shop_system;
 use crate::drops::visited_shop_system::visited_shop_system;
 use crate::util::stage_label_helper::{in_pre_update, in_update};
 
-mod basic_drop_system;
+mod drop_chance_system;
 mod coin_pickup_system;
 mod hot_dog_pickup_system;
 mod enter_shop_system;
@@ -23,7 +23,6 @@ mod visited_shop_system;
 ///
 /// [ hot_dog_pickup_system ], [ coin_pickup_system ] and [ barrel_pickup_system ]
 /// handle the event when an item is picked up and execute the responding action.
-
 pub struct DropsPlugin;
 
 impl Plugin for DropsPlugin {
@@ -37,7 +36,7 @@ impl Plugin for DropsPlugin {
             .add_system_set(
                 in_update(
                     SystemSet::on_update(AppState::InGame)
-                        .with_system(basic_drop_system)
+                        .with_system(drop_chance_system)
                         .with_system(visited_shop_system)
                 )
             )

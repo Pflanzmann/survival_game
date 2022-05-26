@@ -28,12 +28,12 @@ pub fn enter_shop_system(
         if visitor_query.get(event.target_entity).is_ok() {
             continue;
         }
-        
+
         state_trigger.state_change_trigger = ToAppState::ToShop;
         shop_customer.customer = Some(event.target_entity);
 
         sound_manager.queue_sound(SoundHandleChannel::Pickup(sound_handles.coin_pickup_sound.clone()));
 
-        commands.entity(event.target_entity).insert(VisitedShop::new(3.0));
+        commands.entity(event.target_entity).insert(VisitedShop::new(2.0));
     }
 }

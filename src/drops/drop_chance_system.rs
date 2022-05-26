@@ -11,11 +11,10 @@ use crate::models::items::coin::Coin;
 use crate::models::items::descriptor::gold_value::GoldValue;
 use crate::models::items::descriptor::heal::Heal;
 use crate::models::items::descriptor::item::Item;
-use crate::models::items::shop::Shop;
 use crate::models::layerable::Layerable;
 use crate::models::sprite_layer::SpriteLayer;
 
-pub fn basic_drop_system(
+pub fn drop_chance_system(
     mut commands: Commands,
     mut enemy_died_event: EventReader<TargetDiedEvent>,
     texture_handles: Res<TextureHandles>,
@@ -73,27 +72,6 @@ pub fn basic_drop_system(
                 .insert(Name::new("Item Heal"))
                 .insert(HitBoxCollider {
                     collider_type: ColliderType::Circle(item_handles.hot_dog.sprite_custom_size_x / 2.0)
-                });
-        }
-
-        if (40.0..100.0).contains(&random) {
-            commands.spawn_bundle(
-                SpriteBundle {
-                    transform: Transform::from_translation(drop_translation),
-                    texture: texture_handles.barrel_sprite.clone(),
-                    sprite: Sprite {
-                        custom_size: Some(Vec2::new(item_handles.barrel.sprite_custom_size_x, item_handles.barrel.sprite_custom_size_y)),
-                        ..Default::default()
-                    },
-                    ..Default::default()
-                }
-            )
-                .insert(Item)
-                .insert(Layerable::new(SpriteLayer::LowGroundLevel.get_layer_z()))
-                .insert(Shop)
-                .insert(Name::new("Item Barrel"))
-                .insert(HitBoxCollider {
-                    collider_type: ColliderType::Circle(item_handles.barrel.sprite_custom_size_x / 2.0)
                 });
         }
     }
