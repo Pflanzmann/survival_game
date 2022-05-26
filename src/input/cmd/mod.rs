@@ -1,6 +1,7 @@
 use bevy::prelude::{App, Plugin, SystemSet};
 
 use crate::ConsoleState;
+use crate::input::cmd::add_gold_command::add_gold_command;
 use crate::input::cmd::apply_mod_command::apply_mod_command;
 use crate::input::cmd::cmd_input_system::cmd_input_system;
 use crate::input::cmd::god_mode_command::god_mode_command;
@@ -14,6 +15,7 @@ mod cmd_input_system;
 mod god_mode_command;
 mod remove_mod_command;
 mod open_shop_command;
+mod add_gold_command;
 
 pub struct CmdLogicPlugin;
 
@@ -28,6 +30,7 @@ impl Plugin for CmdLogicPlugin {
                     .with_system(remove_mod_command)
                     .with_system(god_mode_command)
                     .with_system(open_shop_command)
+                    .with_system(add_gold_command)
             )
 
             .add_system_set(

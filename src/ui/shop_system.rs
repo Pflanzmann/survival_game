@@ -5,6 +5,7 @@ use bevy::ui::FocusPolicy;
 use rand::Rng;
 
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
+use crate::models::gold_storage::GoldStorage;
 use crate::models::mod_register::ModRegister;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
 use crate::models::modifications::descriptors::price::Price;
@@ -224,23 +225,33 @@ pub fn close_shop_menu_system(
 
 pub fn shop_button_system(
     mut commands: Commands,
+    shop_customer: Res<ShopCustomer>,
     mut event: EventWriter<ApplyModToTargetEvent>,
     mut text_query: Query<&mut Text, With<ToolTipField>>,
-    mut button_query: Query<(&mut Interaction, &ShopButton, Entity), Changed<Interaction>>,
-    mod_query: Query<(Entity, &ToolTip, &ShopSlot)>,
-    player_query: Query<Entity, With<Player>>,
+    mut button_query: Query<(Entity, &mut Interaction, &ShopButton), Changed<Interaction>>,
+    mod_query: Query<(Entity, &ToolTip, &ShopSlot, &Price)>,
+    player_query: Query<(Entity, &GoldStorage), With<Player>>,
 ) {
-    for (interaction, shop_button, parent) in button_query.iter_mut() {
+    for (button_entity, interaction, shop_button) in button_query.iter_mut() {
         match *interaction {
             Interaction::Clicked => {
-                for (modification_entity, _, shop_slot) in mod_query.iter() {
-                    if shop_button.index != shop_slot.index { continue; }
-
-                    for player_entity in player_query.iter() {
-                        event.send(ApplyModToTargetEvent { mod_entity: modification_entity, target_entity: player_entity });
+                for (modification_entity, _, shop_slot, price) in mod_query.iter() {
+                    if shop_button.index != shop_slot.index {
+                        continue;
                     }
 
-                    commands.entity(parent).despawn_recursive();
+                    let (player_entity, gold_storage) = match player_query.get(shop_customer.customer.unwrap()) {
+                        Ok(player) => player,
+                        Err(_) => continue,
+                    };
+
+                    if gold_storage.number < price.0 {
+                        continue;
+                    }
+
+                    event.send(ApplyModToTargetEvent { mod_entity: modification_entity, target_entity: player_entity });
+
+                    commands.entity(button_entity).despawn_recursive();
                     commands.entity(modification_entity).remove::<ShopSlot>();
                 }
             }
@@ -252,7 +263,7 @@ pub fn shop_button_system(
             }
 
             Interaction::Hovered => {
-                for (_, modification_tooltip, shop_slot) in mod_query.iter() {
+                for (_, modification_tooltip, shop_slot, _) in mod_query.iter() {
                     if shop_button.index != shop_slot.index { continue; }
                     for mut text in text_query.iter_mut() {
                         text.sections[0].value = String::from(&modification_tooltip.tooltip);
