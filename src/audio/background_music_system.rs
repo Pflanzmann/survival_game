@@ -12,5 +12,5 @@ pub fn play_background_music_system(
     mut sound_manager: ResMut<SoundManager>,
 ) {
     sound_manager.set_volume_for_channel(0.1, SoundChannel::Background, audio);
-    // sound_manager.queue_sound(SoundHandleChannel::Background(sound_handles.background_music.clone()));
+    sound_manager.queue_sound(SoundHandleChannel::Background(sound_handles.background_music.clone()));
 }
