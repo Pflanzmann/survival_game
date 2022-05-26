@@ -1,16 +1,20 @@
 use bevy::prelude::{App, Plugin, SystemSet};
 
 use crate::AppState;
-use crate::drops::barrel_pickup_system::barrel_pickup_system;
+use crate::drops::enter_shop_system::enter_shop_system;
 use crate::drops::basic_drop_system::basic_drop_system;
 use crate::drops::coin_pickup_system::coin_pickup_system;
 use crate::drops::hot_dog_pickup_system::hot_dog_pickup_system;
+use crate::drops::setup_shop_system::setup_shop_system;
+use crate::drops::visited_shop_system::visited_shop_system;
 use crate::util::stage_label_helper::{in_pre_update, in_update};
 
 mod basic_drop_system;
 mod coin_pickup_system;
 mod hot_dog_pickup_system;
-mod barrel_pickup_system;
+mod enter_shop_system;
+mod setup_shop_system;
+mod visited_shop_system;
 
 /// this plugin manages the spawning and collection of items during the game.
 ///
@@ -26,9 +30,15 @@ impl Plugin for DropsPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_system_set(
+                SystemSet::on_enter(AppState::MainMenu)
+                    .with_system(setup_shop_system)
+            )
+
+            .add_system_set(
                 in_update(
                     SystemSet::on_update(AppState::InGame)
                         .with_system(basic_drop_system)
+                        .with_system(visited_shop_system)
                 )
             )
             .add_system_set(
@@ -36,7 +46,7 @@ impl Plugin for DropsPlugin {
                     SystemSet::new()
                         .with_system(coin_pickup_system)
                         .with_system(hot_dog_pickup_system)
-                        .with_system(barrel_pickup_system),
+                        .with_system(enter_shop_system),
                 )
             );
     }

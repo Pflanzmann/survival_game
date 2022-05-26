@@ -26,9 +26,11 @@ pub fn unit_size_sprite_change_system(
                     solid_body_collider.offset.y = -unit_size.proportional_unit_size().y / 4.0;
                 }
                 ColliderType::Rectangle(ref mut size) => {
-                    *size = unit_size.proportional_unit_size() / 4.0;
+                    let mut new_size = unit_size.proportional_unit_size();
+                    new_size.y /= 2.0;
+                    *size = new_size;
 
-                    solid_body_collider.offset.y = -unit_size.proportional_unit_size().y;
+                    solid_body_collider.offset.y = -new_size.y / 2.0;
                 }
             }
         }

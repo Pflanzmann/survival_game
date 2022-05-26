@@ -5,5 +5,4 @@ pub mod solid_body_collider;
 pub mod hit_box_collider;
 pub mod enemy_hit_box_collider;
 pub mod enemy_solid_body_collider;
-pub mod collision_owner;
 pub mod item_collider;
