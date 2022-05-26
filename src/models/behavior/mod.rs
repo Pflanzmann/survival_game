@@ -6,3 +6,4 @@ pub mod aim_at_closest_target_behavior;
 pub mod rotate_behavior;
 pub mod steering_behavior;
 pub mod teleporting_script;
+pub mod turn_to_target_behavior;
