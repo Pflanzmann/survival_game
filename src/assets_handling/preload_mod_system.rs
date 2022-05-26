@@ -1,12 +1,12 @@
 use std::fs;
 
-use bevy::prelude::{BuildChildren, Commands, Name, NonSend};
+use bevy::prelude::{BuildChildren, Commands, Name, Res};
 
 use crate::util::entity_builder::EntityBuilder;
 
 pub fn preload_mod_system(
     mut commands: Commands,
-    entity_builder: NonSend<EntityBuilder>,
+    entity_builder: Res<EntityBuilder>,
 ) {
     let parent = commands.spawn().insert(Name::new("Mod Entities")).id();
 

@@ -92,7 +92,7 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<Radiation>();
         entity_builder.register_component::<Shield>();
 
-        app.insert_non_send_resource::<EntityBuilder>(entity_builder);
+        app.insert_resource::<EntityBuilder>(entity_builder);
     }
 }
 
@@ -124,7 +124,7 @@ impl Plugin for EntityBuilderPlugin {
 /// ```
 #[derive(Default)]
 pub struct EntityBuilder {
-    map: HashMap<String, Box<dyn Fn(&mut EntityCommands, &Value)>>,
+    map: HashMap<String, Box<dyn Fn(&mut EntityCommands, &Value) + Send + Sync>>,
 }
 
 impl EntityBuilder {
