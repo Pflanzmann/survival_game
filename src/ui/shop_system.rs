@@ -1,8 +1,7 @@
 use std::cmp::min;
 
-use bevy::core::Name;
-use bevy::ecs::component::Component;
-use bevy::prelude::{AlignContent, AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, FlexWrap, Handle, HorizontalAlign, Image, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With, Without};
+use bevy::prelude::{AlignContent, AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, FlexWrap, HorizontalAlign, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+use bevy::ui::FocusPolicy;
 use rand::Rng;
 
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
@@ -14,47 +13,6 @@ use crate::models::player::Player;
 use crate::models::resources::shop_customer::ShopCustomer;
 use crate::models::ui_components::game_over::NavigationButton;
 use crate::models::ui_components::shop::{ShopButton, ShopMenuComp, ShopSlot, ToolTipField};
-use crate::TextureHandles;
-
-#[derive(Component)]
-pub struct OriginalStyle;
-
-#[derive(Component)]
-pub struct OriginalStyle2;
-
-#[derive(Component)]
-pub struct CopyStyle;
-
-#[derive(Component)]
-pub struct CopyStyle2;
-
-pub fn copy_style_system(
-    mut commands: Commands,
-    original: Query<(Entity, &Style), (With<OriginalStyle>, Changed<Style>)>,
-    copy: Query<Entity, With<CopyStyle>>,
-) {
-    for (o_entity, origin) in original.iter() {
-        for entity in copy.iter() {
-            if o_entity != entity {
-                commands.entity(entity).insert(origin.clone());
-            }
-        }
-    }
-}
-
-pub fn copy_style_system2(
-    mut commands: Commands,
-    original: Query<(Entity, &Style), (With<OriginalStyle2>, Changed<Style>)>,
-    copy: Query<Entity, With<CopyStyle2>>,
-) {
-    for (o_entity, origin) in original.iter() {
-        for entity in copy.iter() {
-            if o_entity != entity {
-                commands.entity(entity).insert(origin.clone());
-            }
-        }
-    }
-}
 
 pub fn spawn_shop_menu_system(
     mut commands: Commands,
@@ -73,7 +31,7 @@ pub fn spawn_shop_menu_system(
         Err(_) => return,
     };
 
-    let requested_slot_count = 12;
+    let requested_slot_count = 5;
 
     let mut valid_mods: Vec<Entity> = Vec::new();
     for (entity, _, _) in mod_query.iter() {
@@ -97,8 +55,6 @@ pub fn spawn_shop_menu_system(
         }
     }
 
-    let mut origin: Option<Entity> = None;
-
     let mut populated_shop_slots: Vec<Entity> = Vec::new();
     for (index, mod_entity) in chosen_mod_entities.iter().enumerate() {
         let (mod_entity, mod_sprite_path, price) = match mod_query.get(*mod_entity) {
@@ -109,19 +65,29 @@ pub fn spawn_shop_menu_system(
         let entity = commands.spawn_bundle(ButtonBundle {
             style: Style {
                 size: Size::new(Val::Auto, Val::Auto),
-                // min_size: Size::new(Val::Percent(18.0), Val::Auto),
-                // max_size: Size::new(Val::Percent(26.0), Val::Auto),
-                flex_direction: FlexDirection::ColumnReverse,
+                min_size: Size::new(Val::Auto, Val::Percent(51.0)),
+                max_size: Size::new(Val::Auto, Val::Percent(75.0)),
+                padding: Rect {
+                    left: Val::Percent(1.0),
+                    bottom: Val::Percent(1.0),
+                    top: Val::Percent(1.0),
+                    right: Val::Percent(1.0),
+                },
+                flex_direction: FlexDirection::Column,
                 align_content: AlignContent::Center,
                 align_items: AlignItems::Center,
                 justify_content: JustifyContent::Center,
                 ..Default::default()
             },
+            image: asset_loader.load("sprites/ui/ítem_background.png").into(),
             color: Color::GRAY.into(),
             ..Default::default()
         })
+            .insert(Interaction::default())
+            .insert(ShopButton { index })
             .with_children(|parent| {
                 parent.spawn_bundle(TextBundle {
+                    focus_policy: FocusPolicy::Pass,
                     style: Style {
                         ..Default::default()
                     },
@@ -131,7 +97,6 @@ pub fn spawn_shop_menu_system(
                             font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                             font_size: 40.0,
                             color: Color::RED,
-                            ..Default::default()
                         },
                         TextAlignment {
                             vertical: VerticalAlign::Center,
@@ -141,38 +106,17 @@ pub fn spawn_shop_menu_system(
                     ..Default::default()
                 });
 
-                let temp = parent.spawn_bundle(ImageBundle {
+                parent.spawn_bundle(ImageBundle {
+                    focus_policy: FocusPolicy::Pass,
                     image: asset_loader.load(mod_sprite_path.path.as_str()).into(),
                     style: Style {
-                        // size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
-                        position: Rect {
-                            left: Val::Percent(10.0),
-                            bottom: Val::Percent(20.0),
-                            ..Default::default()
-                        },
+                        size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
                         ..Default::default()
                     },
                     ..Default::default()
-                })
-                    .insert(Interaction::default())
-                    .insert(ShopButton { index }).id();
-
-                origin = Some(temp);
-            }).id();
-
-        if index == 0 {
-            commands.entity(entity).insert(OriginalStyle);
-            commands.entity(entity).insert(Name::new("Origin"));
-
-            commands.entity(origin.unwrap()).insert(OriginalStyle2);
-            commands.entity(origin.unwrap()).insert(Name::new("Origin"));
-        } else {
-            commands.entity(entity).insert(CopyStyle);
-            commands.entity(entity).insert(Name::new("copy"));
-
-            commands.entity(origin.unwrap()).insert(CopyStyle2);
-            commands.entity(origin.unwrap()).insert(Name::new("copy"));
-        }
+                });
+            })
+            .id();
 
         commands.entity(mod_entity).insert(ShopSlot { index });
         populated_shop_slots.push(entity);
@@ -194,7 +138,7 @@ pub fn spawn_shop_menu_system(
                 flex_direction: FlexDirection::ColumnReverse,
                 ..Default::default()
             },
-            color: Color::BLACK.into(),
+            image: asset_loader.load("sprites/ui/ítem_background.png").into(),
             ..Default::default()
         })
         .with_children(|parent| {
@@ -209,7 +153,7 @@ pub fn spawn_shop_menu_system(
                     TextStyle {
                         font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                         font_size: 60.0,
-                        color: Color::RED,
+                        color: Color::BLACK,
                     },
                     TextAlignment {
                         vertical: VerticalAlign::Center,
@@ -225,108 +169,41 @@ pub fn spawn_shop_menu_system(
                     size: Size::new(Val::Percent(80.0), Val::Percent(40.0)),
                     position: Rect {
                         left: Val::Percent(10.0),
-                        bottom: Val::Percent(10.0),
+                        bottom: Val::Percent(15.0),
                         top: Val::Percent(10.0),
                         right: Val::Percent(10.0),
                     },
                     position_type: PositionType::Relative,
                     align_items: AlignItems::Center,
-                    flex_wrap: FlexWrap::WrapReverse,
+                    flex_wrap: FlexWrap::Wrap,
                     justify_content: JustifyContent::SpaceEvenly,
-                    flex_direction: FlexDirection::Row,
+                    flex_direction: FlexDirection::Column,
                     align_content: AlignContent::SpaceAround,
                     ..Default::default()
                 },
-                color: Color::WHITE.into(),
+                color: Color::rgba(0.0, 0.0, 0.0, 0.0).into(),
                 ..Default::default()
             }).push_children(populated_shop_slots.as_slice());
 
-            // Third UI Row (tooltip and close button)
-            parent.spawn_bundle(NodeBundle {
+            // Close button
+            parent.spawn_bundle(ButtonBundle {
                 style: Style {
-                    size: Size::new(Val::Percent(80.0), Val::Percent(40.0)),
+                    size: Size::new(Val::Percent(9.0), Val::Percent(16.0)),
                     position: Rect {
-                        left: Val::Percent(10.0),
-                        bottom: Val::Percent(10.0),
-                        top: Val::Percent(10.0),
-                        right: Val::Percent(10.0),
+                        left: Val::Percent(30.0),
+                        right: Val::Auto,
+                        top: Val::Auto,
+                        bottom: Val::Auto,
                     },
-                    position_type: PositionType::Relative,
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::SpaceEvenly,
-                    flex_direction: FlexDirection::Row,
+                    flex_direction: FlexDirection::ColumnReverse,
                     ..Default::default()
                 },
-                color: Color::WHITE.into(),
+                image: asset_loader.load("sprites/ui/shop_close.png").into(),
                 ..Default::default()
-            }).with_children(|parent| {
-
-                //tooltipbox
-                parent.spawn_bundle(NodeBundle {
-                    style: Style {
-                        size: Size::new(Val::Percent(50.0), Val::Percent(90.0)),
-                        position_type: PositionType::Relative,
-                        align_items: AlignItems::Center,
-                        justify_content: JustifyContent::SpaceEvenly,
-                        flex_direction: FlexDirection::Row,
-                        ..Default::default()
-                    },
-                    ..Default::default()
-                }).with_children(|parent| {
-                    parent.spawn_bundle(TextBundle {
-                        style: Style {
-                            ..Default::default()
-                        },
-                        text: Text::with_section(
-                            "".to_string(),
-                            TextStyle {
-                                font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
-                                font_size: 30.0,
-                                color: Color::RED,
-                            },
-                            TextAlignment {
-                                vertical: VerticalAlign::Center,
-                                horizontal: HorizontalAlign::Center,
-                            },
-                        ),
-                        ..Default::default()
-                    })
-                        .insert(ToolTipField);
-                });
-
-                //close Shop Button
-                parent.spawn_bundle(ButtonBundle {
-                    style: Style {
-                        size: Size::new(Val::Percent(25.0), Val::Percent(10.0)),
-                        align_items: AlignItems::Center,
-                        justify_content: JustifyContent::SpaceEvenly,
-                        flex_direction: FlexDirection::ColumnReverse,
-                        ..Default::default()
-                    },
-                    color: Color::BLACK.into(),
-                    ..Default::default()
-                }).with_children(|parent| {
-                    parent.spawn_bundle(TextBundle {
-                        style: Style {
-                            ..Default::default()
-                        },
-                        text: Text::with_section(
-                            "Leave Shop".to_string(),
-                            TextStyle {
-                                font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
-                                font_size: 20.0,
-                                color: Color::WHITE,
-                            },
-                            TextAlignment {
-                                vertical: VerticalAlign::Center,
-                                horizontal: HorizontalAlign::Center,
-                            },
-                        ),
-                        ..Default::default()
-                    });
-                })
-                    .insert(NavigationButton);
-            });
+            })
+                .insert(NavigationButton);
         })
         .insert(ShopMenuComp);
 }
@@ -349,12 +226,11 @@ pub fn shop_button_system(
     mut commands: Commands,
     mut event: EventWriter<ApplyModToTargetEvent>,
     mut text_query: Query<&mut Text, With<ToolTipField>>,
-    mut button_query: Query<(Entity, &mut Interaction, &ShopButton), Changed<Interaction>>,
+    mut button_query: Query<(&mut Interaction, &ShopButton, Entity), Changed<Interaction>>,
     mod_query: Query<(Entity, &ToolTip, &ShopSlot)>,
     player_query: Query<Entity, With<Player>>,
-    texture_handles: ResMut<TextureHandles>,
 ) {
-    for (entity, interaction, shop_button) in button_query.iter_mut() {
+    for (interaction, shop_button, parent) in button_query.iter_mut() {
         match *interaction {
             Interaction::Clicked => {
                 for (modification_entity, _, shop_slot) in mod_query.iter() {
@@ -364,8 +240,7 @@ pub fn shop_button_system(
                         event.send(ApplyModToTargetEvent { mod_entity: modification_entity, target_entity: player_entity });
                     }
 
-                    spawn_sold_image(&mut commands, entity, texture_handles.sold_button.clone());
-
+                    commands.entity(parent).despawn_recursive();
                     commands.entity(modification_entity).remove::<ShopSlot>();
                 }
             }
@@ -386,29 +261,4 @@ pub fn shop_button_system(
             }
         }
     }
-}
-
-pub fn spawn_sold_image(
-    commands: &mut Commands,
-    entity: Entity,
-    texture_handles: Handle<Image>,
-) {
-    let child = commands.spawn_bundle(ImageBundle {
-        image: texture_handles.into(),
-        style: Style {
-            size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
-            position: Rect {
-                left: Val::Percent(0.0),
-                bottom: Val::Percent(0.0),
-                top: Val::Percent(0.0),
-                right: Val::Percent(0.0),
-            },
-            position_type: PositionType::Absolute,
-            ..Default::default()
-        },
-        ..Default::default()
-    })
-        .id();
-
-    commands.entity(entity).add_child(child);
 }

@@ -2,9 +2,9 @@ use bevy::prelude::{Commands, DespawnRecursiveExt, EventReader, Query, Res, ResM
 
 use crate::assets_handling::preload_audio_system::SoundHandles;
 use crate::audio::sound_manager::SoundManager;
-use crate::GoldStorage;
 use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 use crate::models::events::item_collision_event::ItemCollisionEvent;
+use crate::models::gold_storage::GoldStorage;
 use crate::models::items::descriptor::gold_value::GoldValue;
 
 pub fn coin_pickup_system(
