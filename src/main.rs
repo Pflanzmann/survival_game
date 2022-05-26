@@ -3,7 +3,7 @@ extern crate core;
 use bevy::app::App;
 use bevy::DefaultPlugins;
 use bevy::ecs::schedule::StageLabel;
-use bevy::prelude::SystemStage;
+use bevy::prelude::{Msaa, SystemStage};
 use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
 use crate::animation::AnimationPlugin;
@@ -91,6 +91,8 @@ fn main() {
     App::new()
         .add_startup_stage(SetupStages::ConfigSetup, SystemStage::parallel())
         .add_startup_stage(SetupStages::AssetSetup, SystemStage::parallel())
+        
+        .insert_resource(Msaa { samples: 1 })
 
         .add_plugins(DefaultPlugins)
         .add_plugin(WorldInspectorPlugin::new())
