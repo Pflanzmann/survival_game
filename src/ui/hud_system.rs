@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::GoldStorage;
+use crate::models::gold_storage::GoldStorage;
 use crate::models::mod_register::ModRegister;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
 use crate::models::modifications::descriptors::modification::Modification;

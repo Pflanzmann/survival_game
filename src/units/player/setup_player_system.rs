@@ -2,7 +2,6 @@ use bevy::prelude::{Commands, Name, Res, ResMut, SpriteSheetBundle, TextureAtlas
 
 use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
-use crate::GoldStorage;
 use crate::models::aim_direction::AimDirection;
 use crate::models::animation::animation_state::CurrentAnimationState;
 use crate::models::animation::idle_animation_component::IdleAnimation;
@@ -12,6 +11,7 @@ use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::collider_weight::ColliderWeight;
 use crate::models::collision::item_collider::ItemCollider;
 use crate::models::collision::solid_body_collider::SolidBodyCollider;
+use crate::models::gold_storage::GoldStorage;
 use crate::models::gun::basic_sword::BasicSword;
 use crate::models::gun::straight_basic_shot::StraightBasicShot;
 use crate::models::input::player_aim_controlled::PlayerAimControlled;
