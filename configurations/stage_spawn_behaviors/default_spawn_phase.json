@@ -16,6 +16,10 @@
         {
           "enemy_index": 1,
           "spawn_weight": 1.0
+        },
+        {
+          "enemy_index": 4,
+          "spawn_weight": 1.0
         }
       ]
     },
