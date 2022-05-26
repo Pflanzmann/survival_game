@@ -8,6 +8,7 @@ use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::collider_weight::ColliderWeight;
 use crate::models::collision::solid_body_collider::SolidBodyCollider;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
+use crate::models::gun::straight_basic_shot::StraightBasicShot;
 use crate::models::layerable::Layerable;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::turret::{Turret, TurretUnit};
@@ -62,7 +63,7 @@ pub fn apply_turret_system(
             .insert(Name::new("Turret"))
             .insert(TurretUnit)
             .insert(Owner::new(owner_entity))
-            .insert(WeaponSlot { weapon_entity: owner_weapon_slot.weapon_entity })
+            .insert(StraightBasicShot)
 
             .insert(UnitSize::new_size(modification.unit_size))
             .insert(SolidBodyCollider { offset: Vec2::new(0.0, 80.0), collider_type: ColliderType::Circle(128.0 / 3.0) })

@@ -4,6 +4,7 @@ use crate::models::aim_direction::AimDirection;
 use crate::models::behavior::aim_at_closest_target_behavior::AimAtClosestTargetBehavior;
 use crate::models::behavior::rotate_behavior::UnitRotation;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
+use crate::models::gun::straight_basic_shot::StraightBasicShot;
 use crate::models::modifications::death_ball::{DeathBall, DeathBallUnit};
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::utils::owner::Owner;
@@ -63,11 +64,11 @@ pub fn apply_death_ball_system(
             .insert(Name::new("DeathBall"))
             .insert(DeathBallUnit)
             .insert(Owner::new(owner_entity))
+            .insert(StraightBasicShot)
 
             .insert(UnitSize::new_size(modification.unit_size))
             .insert(UnitRotation { revolutions_per_min: -modification.revolutions_per_min })
 
-            .insert(WeaponSlot { weapon_entity: owner_weapon_slot.weapon_entity })
             .insert(AimDirection::default())
             .insert(AimAtClosestTargetBehavior)
             .insert(Reload::new(modification.reload))
