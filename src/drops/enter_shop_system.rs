@@ -1,4 +1,4 @@
-use bevy::prelude::{Commands, DespawnRecursiveExt, Entity, EventReader, Query, Res, ResMut, With};
+use bevy::prelude::{Commands, Entity, EventReader, Query, Res, ResMut, With};
 
 use crate::{AppStateTrigger, ToAppState};
 use crate::assets_handling::preload_audio_system::SoundHandles;
@@ -7,8 +7,9 @@ use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 use crate::models::events::item_collision_event::ItemCollisionEvent;
 use crate::models::items::shop::Shop;
 use crate::models::resources::shop_customer::ShopCustomer;
+use crate::models::visited_shop::VisitedShop;
 
-pub fn barrel_pickup_system(
+pub fn enter_shop_system(
     mut commands: Commands,
     mut item_pickup_event: EventReader<ItemCollisionEvent>,
     mut shop_customer: ResMut<ShopCustomer>,
@@ -16,6 +17,7 @@ pub fn barrel_pickup_system(
     sound_handles: Res<SoundHandles>,
     mut sound_manager: ResMut<SoundManager>,
     item_query: Query<Entity, With<Shop>>,
+    visitor_query: Query<Entity, With<VisitedShop>>,
 ) {
     for event in item_pickup_event.iter() {
         let _item = match item_query.get(event.source_entity) {
@@ -23,11 +25,15 @@ pub fn barrel_pickup_system(
             Err(_) => continue
         };
 
+        if visitor_query.get(event.target_entity).is_ok() {
+            continue;
+        }
+        
         state_trigger.state_change_trigger = ToAppState::ToShop;
         shop_customer.customer = Some(event.target_entity);
 
         sound_manager.queue_sound(SoundHandleChannel::Pickup(sound_handles.coin_pickup_sound.clone()));
 
-        commands.entity(event.source_entity).despawn_recursive();
+        commands.entity(event.target_entity).insert(VisitedShop::new(3.0));
     }
 }
