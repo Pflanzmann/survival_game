@@ -22,8 +22,11 @@ pub fn god_mode_command(
         }
 
         let value = match debug_command_event.values.first() {
-            Some(value) => value.to_lowercase(),
-            None => continue,
+            Some(argument) => argument,
+            None => {
+                debug_command_info_event.send(DebugCommandInfoEvent { debug_command: "Invalid [god] value: no_value".to_string() });
+                continue;
+            }
         };
 
         let mut counter = 0;
@@ -44,7 +47,10 @@ pub fn god_mode_command(
 
                 debug_command_info_event.send(DebugCommandInfoEvent { debug_command: format!("Did insert a Health component for {} targets", counter) });
             }
-            _ => continue,
+            _ => {
+                debug_command_info_event.send(DebugCommandInfoEvent { debug_command: format!("Invalid [god] value: {}", value) });
+                continue;
+            }
         }
     }
 }

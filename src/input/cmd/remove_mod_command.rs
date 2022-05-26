@@ -26,7 +26,7 @@ pub fn remove_mod_command(
         for typed_mod_name in debug_command_event.values.iter() {
             let mut chosen_mod: Option<Entity> = Option::None;
             for (mod_entity, mod_name) in mod_entities.iter() {
-                if mod_name.mod_name.to_lowercase().replace(" ", "") == *typed_mod_name {
+                if mod_name.mod_name.to_lowercase().replace(' ', "") == *typed_mod_name {
                     chosen_mod = Some(mod_entity)
                 }
             }
@@ -42,14 +42,14 @@ pub fn remove_mod_command(
             for target in debug_command_event.arguments.iter() {
                 let mut counter = 0;
                 match target.as_str() {
-                    "-p" | "player" => {
+                    "-p" => {
                         for player_entity in player_query.iter() {
                             apply_event.send(RemoveModFromTargetEvent { mod_entity: chosen_mod, target_entity: player_entity });
                             counter += 1;
                         }
                     }
 
-                    "-e" | "enemies" => {
+                    "-e" => {
                         for entity_entity in enemy_query.iter() {
                             apply_event.send(RemoveModFromTargetEvent { mod_entity: chosen_mod, target_entity: entity_entity });
                             counter += 1;
