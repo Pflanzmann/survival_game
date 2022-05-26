@@ -19,7 +19,7 @@ mod shop_system;
 mod cmd;
 mod fps_counter_update_system;
 
-/// This plugin generates the [ UI ]  elements for game menus and
+/// This plugin generates the UI elements for game menus and
 /// the ingame hud. Furthermore it holds systems to control the
 /// spawning and despawning of UI elements as well as interactions
 /// like button clicks.
@@ -29,21 +29,6 @@ impl Plugin for UiPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugin(CmdUiPlugin)
-
-            .add_system_set(
-                in_update(
-                    SystemSet::on_update(AppState::InGame)
-                        .with_system(update_text_system)
-                        .with_system(update_bullet_hud_system)
-                )
-            )
-
-            .add_system_set(
-                in_last(
-                    SystemSet::on_update(AppState::Shop)
-                        .with_system(update_bullet_hud_system)
-                )
-            )
 
             .add_system_set(
                 in_update(
@@ -94,6 +79,8 @@ impl Plugin for UiPlugin {
             )
 
             .add_system(button_click_system)
-            .add_system(shop_button_system);
+            .add_system(shop_button_system)
+            .add_system(update_text_system)
+            .add_system(update_bullet_hud_system);
     }
 }
