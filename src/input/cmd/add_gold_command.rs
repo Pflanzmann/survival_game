@@ -20,7 +20,7 @@ pub fn add_gold_command(
         let amount_string = match debug_command_event.values.first() {
             Some(amount_string) => amount_string,
             None => {
-                debug_command_info_event.send(DebugCommandInfoEvent { debug_command: "No values passed.".to_string() });
+                debug_command_info_event.send(DebugCommandInfoEvent { debug_command: "Invalid [gold] value: no_value".to_string() });
                 continue;
             }
         };
@@ -28,7 +28,7 @@ pub fn add_gold_command(
         let amount: i32 = match amount_string.parse::<i32>() {
             Ok(amount) => amount,
             Err(_) => {
-                debug_command_info_event.send(DebugCommandInfoEvent { debug_command: "The passed value is not a i32.".to_string() });
+                debug_command_info_event.send(DebugCommandInfoEvent { debug_command: "Invalid [gold] value: not a i32".to_string() });
                 continue;
             }
         };

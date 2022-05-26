@@ -6,7 +6,7 @@ use crate::models::events::debug_command_info_event::DebugCommandInfoEvent;
 use crate::models::player::Player;
 use crate::models::resources::shop_customer::ShopCustomer;
 
-const KEY: &str = "open_shop";
+const KEY: &str = "shop";
 
 pub fn open_shop_command(
     mut debug_command_events: EventReader<DebugCommandEvent>,
@@ -19,6 +19,19 @@ pub fn open_shop_command(
         if debug_command_event.key != KEY {
             continue;
         }
+
+        match debug_command_event.values.first() {
+            Some(value) => {
+                if value != "open" {
+                    debug_command_info_event.send(DebugCommandInfoEvent { debug_command: format!("Invalid [shop] value: {}", value) });
+                    continue;
+                }
+            }
+            None => {
+                debug_command_info_event.send(DebugCommandInfoEvent { debug_command:"Invalid [shop] value: no_value".to_string() });
+                continue;
+            }
+        };
 
         let player_entity = match player_query.get_single() {
             Ok(player_entity) => player_entity,

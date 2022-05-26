@@ -2,9 +2,11 @@ use std::fs;
 use std::fs::File;
 use std::io::ErrorKind;
 
+use bevy::prelude::EventWriter;
 use serde::Deserialize;
 use serde::Serialize;
 
+use crate::models::events::debug_command_event::DebugCommandEvent;
 use crate::util::read_file_to_string::read_file_to_string;
 
 const HISTORY_PATH: &str = "console_history.json";
@@ -41,5 +43,58 @@ impl ConsoleHistory {
 
         let json: String = serde_json::to_string(&self).unwrap();
         fs::write(HISTORY_PATH, json).expect("Could store history to file.");
+    }
+
+    pub fn send_command(&mut self, event_writer: &mut EventWriter<DebugCommandEvent>, command: String) {
+        let debug_command = command.trim().to_lowercase().to_string();
+        let commands = debug_command.split('&');
+
+        for command in commands {
+            let debug_command = command.trim().to_string();
+            let mut cmd_split = debug_command.split_whitespace();
+
+            let key = match cmd_split.next() {
+                Some(value) => value.to_lowercase().trim().to_string(),
+                None => String::new(),
+            };
+
+            let mut arguments: Vec<String> = Vec::new();
+            let mut values: Vec<String> = Vec::new();
+
+            for input_string in cmd_split {
+                if input_string.contains('-') {
+                    arguments.push(input_string.to_lowercase().trim().to_string())
+                } else {
+                    values.push(input_string.to_lowercase().trim().to_string())
+                }
+            }
+
+            event_writer.send(DebugCommandEvent {
+                debug_command,
+
+                key,
+                values,
+                arguments,
+            });
+        }
+
+        let index = self.command_history.iter().position(|x| *x == debug_command);
+        if let Some(index) = index {
+            println!("found to remove");
+            self.command_history.remove(index);
+        }
+
+        self.command_history.insert(0, debug_command.clone());
+        self.log.insert(0, format!("{}\n", debug_command.clone()));
+
+        while self.command_history.len() > 30 {
+            self.command_history.pop();
+        }
+
+        while self.log.len() > 30 {
+            self.log.pop();
+        }
+
+        self.write_history_to_file();
     }
 }

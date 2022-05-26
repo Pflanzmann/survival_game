@@ -1,10 +1,17 @@
-use bevy::prelude::{EventReader, EventWriter, Input, KeyCode, Local, Query, ReceivedCharacter, Res, ResMut, Text, With};
+use bevy::prelude::{EventReader, EventWriter, Input, KeyCode, Local, Query, ReceivedCharacter, Res, ResMut, Text, Time, With};
 
 use crate::models::events::debug_command_event::DebugCommandEvent;
 use crate::models::resources::console_history::ConsoleHistory;
 use crate::models::ui_components::debug_console::DebugConsoleInput;
 
+#[derive(Default)]
+pub struct DeleteTimer {
+    timer: f32,
+}
+
 pub fn cmd_input_system(
+    time: Res<Time>,
+    mut delete_timer: Local<DeleteTimer>,
     mut char_evr: EventReader<ReceivedCharacter>,
     mut debug_event: EventWriter<DebugCommandEvent>,
     keys: Res<Input<KeyCode>>,
@@ -12,7 +19,13 @@ pub fn cmd_input_system(
     mut debug_history: ResMut<ConsoleHistory>,
     mut text_query: Query<&mut Text, With<DebugConsoleInput>>,
 ) {
-    if keys.just_pressed(KeyCode::Back) {
+    if keys.pressed(KeyCode::Back) {
+        delete_timer.timer -= time.delta_seconds();
+        if delete_timer.timer > 0.0 {
+            return;
+        }
+        delete_timer.timer = 0.1;
+
         string.pop();
         debug_history.scroll_index = 0;
 
@@ -28,7 +41,8 @@ pub fn cmd_input_system(
             return;
         }
 
-        debug_event.send(DebugCommandEvent::send_command(string.clone()));
+        debug_history.send_command(&mut debug_event, string.clone());
+
         string.clear();
         debug_history.scroll_index = 0;
         for mut text in text_query.iter_mut() {

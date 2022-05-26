@@ -42,14 +42,14 @@ pub fn apply_mod_command(
             for target in debug_command_event.arguments.iter() {
                 let mut counter = 0;
                 match target.as_str() {
-                    "-p" | "player" => {
+                    "-p" => {
                         for player_entity in player_query.iter() {
                             apply_event.send(ApplyModToTargetEvent { mod_entity: chosen_mod, target_entity: player_entity });
                             counter += 1;
                         }
                     }
 
-                    "-e" | "enemies" => {
+                    "-e" => {
                         for entity_entity in enemy_query.iter() {
                             apply_event.send(ApplyModToTargetEvent { mod_entity: chosen_mod, target_entity: entity_entity });
                             counter += 1;

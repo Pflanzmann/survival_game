@@ -12,7 +12,7 @@ pub fn setup_debug_window(
 ) {
     let mut history_string = String::new();
 
-    for text in console_history.log.iter() {
+    for text in console_history.log.iter().rev() {
         history_string.push_str(text);
     }
 
