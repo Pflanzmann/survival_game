@@ -230,7 +230,7 @@ pub fn shop_button_system(
     mut text_query: Query<&mut Text, With<ToolTipField>>,
     mut button_query: Query<(Entity, &mut Interaction, &ShopButton), Changed<Interaction>>,
     mod_query: Query<(Entity, &ToolTip, &ShopSlot, &Price)>,
-    player_query: Query<(Entity, &GoldStorage), With<Player>>,
+    mut player_query: Query<(Entity, &mut GoldStorage), With<Player>>,
 ) {
     for (button_entity, interaction, shop_button) in button_query.iter_mut() {
         match *interaction {
@@ -240,7 +240,7 @@ pub fn shop_button_system(
                         continue;
                     }
 
-                    let (player_entity, gold_storage) = match player_query.get(shop_customer.customer.unwrap()) {
+                    let (player_entity, mut gold_storage) = match player_query.get_mut(shop_customer.customer.unwrap()) {
                         Ok(player) => player,
                         Err(_) => continue,
                     };
@@ -249,6 +249,7 @@ pub fn shop_button_system(
                         continue;
                     }
 
+                    gold_storage.number -= price.0;
                     event.send(ApplyModToTargetEvent { mod_entity: modification_entity, target_entity: player_entity });
 
                     commands.entity(button_entity).despawn_recursive();
