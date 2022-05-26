@@ -13,7 +13,6 @@ use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::audio::CustomAudioPlugin;
 use crate::background::BackgroundPlugin;
 use crate::collision::CollisionPlugin;
-use crate::debug::DebugPlugin;
 use crate::drops::DropsPlugin;
 use crate::guns::GunPlugin;
 use crate::input::InputPlugin;
@@ -25,6 +24,7 @@ use crate::navigation::NavigationPlugin;
 use crate::spawner::SpawnerPlugin;
 use crate::ui::UiPlugin;
 use crate::units::UnitPlugin;
+use crate::util::debug::DebugPlugin;
 
 mod input;
 mod units;
@@ -39,7 +39,6 @@ mod background;
 mod navigation;
 mod spawner;
 mod audio;
-mod debug;
 mod animation;
 
 const SPRITE_ROW_LENGTH: usize = 4;

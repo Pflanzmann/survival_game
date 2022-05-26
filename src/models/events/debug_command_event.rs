@@ -12,7 +12,7 @@ impl DebugCommandEvent {
         let mut cmd_split = debug_command.split_whitespace();
 
         let key = match cmd_split.next() {
-            Some(value) => value.to_lowercase(),
+            Some(value) => value.to_lowercase().trim().to_string(),
             None => String::new(),
         };
 
@@ -20,10 +20,10 @@ impl DebugCommandEvent {
         let mut values: Vec<String> = Vec::new();
 
         for input_string in cmd_split {
-            if input_string.contains("-") {
-                arguments.push(input_string.to_lowercase())
+            if input_string.contains('-') {
+                arguments.push(input_string.to_lowercase().trim().to_string())
             } else {
-                values.push(input_string.to_lowercase())
+                values.push(input_string.to_lowercase().trim().to_string())
             }
         }
 
