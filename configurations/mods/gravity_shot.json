@@ -3,7 +3,7 @@
   "ModName": {
     "mod_name": "Gravity Shot"
   },
-  "ModSpritePath": {
+  "SpritePathWrapper": {
     "path": "sprites/mod_icons/gravity_shot_icon.png"
   },
   "ToolTip": {

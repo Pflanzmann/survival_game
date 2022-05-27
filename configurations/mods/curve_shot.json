@@ -3,7 +3,7 @@
   "ModName": {
     "mod_name": "Curve Shot"
   },
-  "ModSpritePath": {
+  "SpritePathWrapper": {
     "path": "sprites/mod_icons/curve_shot_icon.png"
   },
   "ToolTip": {

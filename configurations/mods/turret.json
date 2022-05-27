@@ -3,7 +3,7 @@
   "ModName": {
     "mod_name": "Turret"
   },
-  "ModSpritePath": {
+  "SpritePathWrapper": {
     "path": "sprites/mod_icons/turret_icon.png"
   },
   "ToolTip": {

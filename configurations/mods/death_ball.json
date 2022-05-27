@@ -3,7 +3,7 @@
   "ModName": {
     "mod_name": "Death Ball"
   },
-  "ModSpritePath": {
+  "SpritePathWrapper": {
     "path": "sprites/mod_icons/death_ball_icon.png"
   },
   "ToolTip": {

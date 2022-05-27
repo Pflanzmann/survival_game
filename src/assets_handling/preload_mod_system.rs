@@ -1,11 +1,12 @@
 use std::fs;
 
-use bevy::prelude::{BuildChildren, Commands, Name, Res};
+use bevy::prelude::{AssetServer, BuildChildren, Commands, Name, Res};
 
 use crate::util::entity_builder::EntityBuilder;
 
 pub fn preload_mod_system(
     mut commands: Commands,
+    asset_server: Res<AssetServer>,
     entity_builder: Res<EntityBuilder>,
 ) {
     let parent = commands.spawn().insert(Name::new("Mod Entities")).id();
@@ -17,7 +18,7 @@ pub fn preload_mod_system(
         let mut file_path = String::new();
         file_path.push_str(base_path);
 
-        let child = entity_builder.spawn_entity(&mut commands, path.unwrap().path().display().to_string().as_str());
+        let child = entity_builder.spawn_entity(&mut commands, &asset_server, path.unwrap().path().display().to_string().as_str());
         commands.entity(parent).add_child(child);
     }
 }

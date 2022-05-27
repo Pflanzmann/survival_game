@@ -2,11 +2,12 @@ use std::any::type_name;
 use std::collections::HashMap;
 
 use bevy::ecs::system::EntityCommands;
-use bevy::prelude::{AssetServer, Commands, Component, Entity, Plugin, Res, Sprite, SpriteBundle, Vec2};
+use bevy::prelude::{AssetServer, Commands, Component, Entity, Plugin, Res};
 use serde::de::DeserializeOwned;
 use serde_json::Value;
 
 use crate::App;
+use crate::models::modifications::descriptors::sprite_path_wrapper::SpritePathWrapper;
 use crate::models::modifications::affects::affect_damage::AffectDamage;
 use crate::models::modifications::affects::affect_health::AffectHealth;
 use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
@@ -20,7 +21,7 @@ use crate::models::modifications::affects::bullet_affects::affect_bullet_unit_si
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::death_ball::DeathBall;
 use crate::models::modifications::descriptors::mod_name::ModName;
-use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
+use crate::models::modifications::descriptors::mod_sprite_path::SpriteHandle;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::descriptors::price::Price;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
@@ -41,7 +42,6 @@ use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
-use crate::models::util::sprite_bundle_wrapper::SpriteBundleWrapper;
 use crate::util::read_file_to_string::read_file_to_string;
 
 pub struct EntityBuilderPlugin;
@@ -55,7 +55,6 @@ impl Plugin for EntityBuilderPlugin {
 
         entity_builder.register_component::<ModName>();
         entity_builder.register_component::<ToolTip>();
-        entity_builder.register_component::<ModSpritePath>();
         entity_builder.register_component::<Price>();
 
         entity_builder.register_component::<AffectMoveSpeed>();
@@ -144,18 +143,11 @@ impl EntityBuilder {
         let my_string = read_file_to_string(config_path);
         let mut component_data_map: HashMap<String, serde_json::Value> = serde_json::from_str(&my_string).unwrap();
 
-        match component_data_map.remove("SpriteBundleWrapper") {
+        match component_data_map.remove("SpritePathWrapper") {
             None => {}
             Some(object_data) => {
-                let handle: SpriteBundleWrapper = serde_json::from_value(object_data.clone()).expect("Not well formatted string: {:#?}");
-                entity.insert_bundle(SpriteBundle {
-                    sprite: Sprite {
-                        custom_size: Some(Vec2::new(handle.sprite_x, handle.sprite_y)),
-                        ..Default::default()
-                    },
-                    texture: asset_server.load(&handle.path),
-                    ..Default::default()
-                });
+                let wrapper: SpritePathWrapper = serde_json::from_value(object_data.clone()).expect("Not well formatted string: {:#?}");
+                entity.insert(SpriteHandle { handle: asset_server.load(&wrapper.path) });
             }
         };
 

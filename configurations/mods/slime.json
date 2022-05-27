@@ -3,7 +3,7 @@
   "ModName": {
     "mod_name": "Slime"
   },
-  "ModSpritePath": {
+  "SpritePathWrapper": {
     "path": "sprites/mod_icons/slime_icon.png"
   },
   "ToolTip": {

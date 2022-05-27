@@ -3,7 +3,7 @@
   "ModName": {
     "mod_name": "Lightning"
   },
-  "ModSpritePath": {
+  "SpritePathWrapper": {
     "path": "sprites/mod_icons/lightning_icon.png"
   },
   "ToolTip": {

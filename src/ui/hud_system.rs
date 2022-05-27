@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use crate::models::gold_storage::GoldStorage;
 use crate::models::mod_register::ModRegister;
-use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
+use crate::models::modifications::descriptors::mod_sprite_path::SpriteHandle;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::player::Player;
@@ -87,10 +87,9 @@ pub fn update_text_system(
 
 pub fn update_bullet_hud_system(
     mut commands: Commands,
-    asset_server: Res<AssetServer>,
     hud_query: Query<Entity, With<BulletHud>>,
     player_query: Query<&ModRegister, (With<Player>, Changed<ModRegister>)>,
-    mod_query: Query<(&ModSpritePath, &ToolTip), With<Modification>>,
+    mod_query: Query<(&SpriteHandle, &ToolTip), With<Modification>>,
 ) {
     for _ in player_query.iter() {
         for entity in hud_query.iter() {
@@ -107,7 +106,7 @@ pub fn update_bullet_hud_system(
 
                 commands.entity(hud_entity).with_children(|parent| {
                     parent.spawn_bundle(ImageBundle {
-                        image: asset_server.load(&sprite.path).into(),
+                        image: sprite.handle.clone().into(),
                         style: Style {
                             size: Size::new(Val::Percent(20.0), Val::Percent(40.0)),
                             ..Default::default()
