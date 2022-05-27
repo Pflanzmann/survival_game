@@ -22,7 +22,7 @@ pub mod spawner;
 pub mod sprite_flip;
 pub mod sprite_move_rotation;
 pub mod damaged_effect;
-pub mod ui_components;
+pub mod ui;
 pub mod mod_register;
 pub mod audio;
 pub mod attribute_container;

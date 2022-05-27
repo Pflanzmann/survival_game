@@ -80,7 +80,6 @@ impl ConsoleHistory {
 
         let index = self.command_history.iter().position(|x| *x == debug_command);
         if let Some(index) = index {
-            println!("found to remove");
             self.command_history.remove(index);
         }
 

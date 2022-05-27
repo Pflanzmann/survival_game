@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 
-use crate::models::ui_components::game_over::NavigationButton;
-use crate::models::ui_components::main_menu::MainMenuComp;
+use crate::models::ui::game_over::NavigationButton;
+use crate::models::ui::main_menu::MainMenuComp;
 
 
 pub fn spawn_main_menu_system(

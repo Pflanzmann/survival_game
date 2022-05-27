@@ -2,7 +2,7 @@ use bevy::prelude::{DetectChanges, EventReader, Query, ResMut, Text, With};
 
 use crate::models::events::debug_command_info_event::DebugCommandInfoEvent;
 use crate::models::resources::console_history::ConsoleHistory;
-use crate::models::ui_components::debug_console::DebugConsoleHistory;
+use crate::models::ui::debug_console::DebugConsoleHistory;
 
 pub fn update_console_history(
     mut debug_command_info_events: EventReader<DebugCommandInfoEvent>,
