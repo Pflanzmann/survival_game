@@ -32,7 +32,7 @@ pub fn drop_chance_system(
 
         let random = random::<f32>() * 100.0;
 
-        if (0.0..20.0).contains(&random) {
+        if (0.0..60.0).contains(&random) {
             commands.spawn_bundle(
                 SpriteBundle {
                     transform: Transform::from_translation(drop_translation),
@@ -54,7 +54,7 @@ pub fn drop_chance_system(
                 });
         }
 
-        if (20.0..40.0).contains(&random) {
+        if (80.0..100.0).contains(&random) {
             commands.spawn_bundle(
                 SpriteBundle {
                     transform: Transform::from_translation(drop_translation),
