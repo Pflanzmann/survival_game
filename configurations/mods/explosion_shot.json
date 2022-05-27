@@ -3,7 +3,7 @@
   "ModName": {
     "mod_name": "Explosion Shot"
   },
-  "ModSpritePath": {
+  "SpritePathWrapper": {
     "path": "sprites/mod_icons/explosion_icon.png"
   },
   "ToolTip": {

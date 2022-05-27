@@ -3,7 +3,7 @@
   "ModName": {
     "mod_name": "Grow Shot"
   },
-  "ModSpritePath": {
+  "SpritePathWrapper": {
     "path": "sprites/mod_icons/grow_shot_icon.png"
   },
   "ToolTip": {

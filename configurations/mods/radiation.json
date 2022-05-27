@@ -3,7 +3,7 @@
   "ModName": {
     "mod_name": "Radiation"
   },
-  "ModSpritePath": {
+  "SpritePathWrapper": {
     "path": "sprites/mod_icons/radiation_icon.png"
   },
   "ToolTip": {

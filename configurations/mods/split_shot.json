@@ -3,7 +3,7 @@
   "ModName": {
     "mod_name": "Split Shot"
   },
-  "ModSpritePath": {
+  "SpritePathWrapper": {
     "path": "sprites/mod_icons/split_shot_icon.png"
   },
   "ToolTip": {

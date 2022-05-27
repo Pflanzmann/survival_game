@@ -3,7 +3,7 @@
   "ModName": {
     "mod_name": "Knock Back Shot"
   },
-  "ModSpritePath": {
+  "SpritePathWrapper": {
     "path": "sprites/mod_icons/knock_back_shot_icon.png"
   },
   "ToolTip": {

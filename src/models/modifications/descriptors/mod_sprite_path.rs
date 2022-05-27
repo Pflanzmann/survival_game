@@ -1,7 +1,7 @@
 use bevy::ecs::component::Component;
-use serde::Deserialize;
+use bevy::prelude::{Handle, Image};
 
-#[derive(Component, Deserialize)]
-pub struct ModSpritePath {
-    pub path: String,
+#[derive(Component)]
+pub struct SpriteHandle {
+    pub handle: Handle<Image>,
 }

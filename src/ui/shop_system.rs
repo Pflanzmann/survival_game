@@ -7,7 +7,7 @@ use rand::Rng;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::gold_storage::GoldStorage;
 use crate::models::mod_register::ModRegister;
-use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
+use crate::models::modifications::descriptors::mod_sprite_path::SpriteHandle;
 use crate::models::modifications::descriptors::price::Price;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::player::Player;
@@ -21,7 +21,7 @@ pub fn spawn_shop_menu_system(
     asset_loader: Res<AssetServer>,
     shop_customer: Res<ShopCustomer>,
     customer_query: Query<&ModRegister>,
-    mod_query: Query<(Entity, &ModSpritePath, &Price, &ToolTip)>,
+    mod_query: Query<(Entity, &SpriteHandle, &Price, &ToolTip)>,
 ) {
     let customer_entity = match shop_customer.customer {
         None => return,
@@ -111,7 +111,7 @@ pub fn spawn_shop_menu_system(
 
                 parent.spawn_bundle(ImageBundle {
                     focus_policy: FocusPolicy::Pass,
-                    image: asset_loader.load(mod_sprite_path.path.as_str()).into(),
+                    image: mod_sprite_path.handle.clone().into(),
                     style: Style {
                         size: Size::new(Val::Percent(100.0), Val::Percent(100.0)),
                         ..Default::default()
