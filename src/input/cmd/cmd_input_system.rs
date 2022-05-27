@@ -85,7 +85,7 @@ pub fn cmd_input_system(
     }
 
     for ev in char_evr.iter() {
-        if ev.char.is_ascii() {
+        if ev.char.is_ascii() && (ev.char.is_ascii_graphic() || ev.char.is_whitespace()) {
             string.push(ev.char);
         }
 
