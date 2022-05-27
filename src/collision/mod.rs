@@ -1,6 +1,6 @@
 use bevy::prelude::{Plugin, SystemSet};
 
-use crate::App;
+use crate::{App, AppState};
 use crate::collision::calculate_quad_tree_system::calculate_quad_tree_system;
 use crate::collision::enemy_hit_box_collision_system::enemy_hit_box_collision_system;
 use crate::collision::enemy_player_collision_system::enemy_player_collision_system;
@@ -29,7 +29,7 @@ impl Plugin for CollisionPlugin {
         app
             .add_system_set(
                 in_collision(
-                    SystemSet::new()
+                    SystemSet::on_update(AppState::InGame)
                         .with_system(enemy_player_collision_system)
                         .with_system(enemy_hit_box_collision_system)
                         .with_system(enemy_solid_body_collision_system)
