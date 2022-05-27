@@ -4,8 +4,10 @@ use crate::models::gold_storage::GoldStorage;
 use crate::models::mod_register::ModRegister;
 use crate::models::modifications::descriptors::mod_sprite_path::ModSpritePath;
 use crate::models::modifications::descriptors::modification::Modification;
+use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::player::Player;
-use crate::models::ui_components::hud::{BulletHud, CoinText};
+use crate::models::ui::hud::{BulletHud, CoinText};
+use crate::models::ui::tooltip_window::HoverTooltip;
 
 pub fn spawn_text_system(
     mut commands: Commands,
@@ -88,7 +90,7 @@ pub fn update_bullet_hud_system(
     asset_server: Res<AssetServer>,
     hud_query: Query<Entity, With<BulletHud>>,
     player_query: Query<&ModRegister, (With<Player>, Changed<ModRegister>)>,
-    mod_query: Query<&ModSpritePath, With<Modification>>,
+    mod_query: Query<(&ModSpritePath, &ToolTip), With<Modification>>,
 ) {
     for _ in player_query.iter() {
         for entity in hud_query.iter() {
@@ -98,7 +100,7 @@ pub fn update_bullet_hud_system(
     for mod_reg in player_query.iter() {
         for hud_entity in hud_query.iter() {
             for mod_entity in mod_reg.register.iter() {
-                let sprite = match mod_query.get(*mod_entity) {
+                let (sprite, tooltip) = match mod_query.get(*mod_entity) {
                     Ok(value) => value,
                     Err(_) => continue
                 };
@@ -111,7 +113,11 @@ pub fn update_bullet_hud_system(
                             ..Default::default()
                         },
                         ..Default::default()
-                    });
+                    })
+                        .insert(tooltip.clone())
+                        .insert(HoverTooltip)
+                        .insert(Interaction::default())
+                    ;
                 });
             }
         }

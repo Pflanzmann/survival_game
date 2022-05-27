@@ -1,6 +1,6 @@
 use std::cmp::min;
 
-use bevy::prelude::{AlignContent, AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, FlexWrap, HorizontalAlign, ImageBundle, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+use bevy::prelude::{AlignContent, AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, FlexWrap, HorizontalAlign, ImageBundle, Interaction, JustifyContent, Name, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
 use bevy::ui::FocusPolicy;
 use rand::Rng;
 
@@ -12,15 +12,16 @@ use crate::models::modifications::descriptors::price::Price;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::player::Player;
 use crate::models::resources::shop_customer::ShopCustomer;
-use crate::models::ui_components::game_over::NavigationButton;
-use crate::models::ui_components::shop::{ShopButton, ShopMenuComp, ShopSlot, ToolTipField};
+use crate::models::ui::game_over::NavigationButton;
+use crate::models::ui::shop::{ShopButton, ShopMenuComp, ShopSlot, ToolTipField};
+use crate::models::ui::tooltip_window::{TooltipText, TooltipWindow};
 
 pub fn spawn_shop_menu_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
     shop_customer: Res<ShopCustomer>,
     customer_query: Query<&ModRegister>,
-    mod_query: Query<(Entity, &ModSpritePath, &Price)>,
+    mod_query: Query<(Entity, &ModSpritePath, &Price, &ToolTip)>,
 ) {
     let customer_entity = match shop_customer.customer {
         None => return,
@@ -35,7 +36,7 @@ pub fn spawn_shop_menu_system(
     let requested_slot_count = 5;
 
     let mut valid_mods: Vec<Entity> = Vec::new();
-    for (entity, _, _) in mod_query.iter() {
+    for (entity, _, _, _) in mod_query.iter() {
         if !customer_mod_register.register.contains(&entity) {
             valid_mods.push(entity);
         }
@@ -58,7 +59,7 @@ pub fn spawn_shop_menu_system(
 
     let mut populated_shop_slots: Vec<Entity> = Vec::new();
     for (index, mod_entity) in chosen_mod_entities.iter().enumerate() {
-        let (mod_entity, mod_sprite_path, price) = match mod_query.get(*mod_entity) {
+        let (mod_entity, mod_sprite_path, price, tooltip) = match mod_query.get(*mod_entity) {
             Ok(value) => value,
             Err(_) => continue,
         };
@@ -86,6 +87,7 @@ pub fn spawn_shop_menu_system(
         })
             .insert(Interaction::default())
             .insert(ShopButton { index })
+            .insert(tooltip.clone())
             .with_children(|parent| {
                 parent.spawn_bundle(TextBundle {
                     focus_policy: FocusPolicy::Pass,
@@ -170,7 +172,7 @@ pub fn spawn_shop_menu_system(
                     size: Size::new(Val::Percent(80.0), Val::Percent(40.0)),
                     position: Rect {
                         left: Val::Percent(10.0),
-                        bottom: Val::Percent(15.0),
+                        bottom: Val::Percent(10.0),
                         top: Val::Percent(10.0),
                         right: Val::Percent(10.0),
                     },
@@ -186,27 +188,84 @@ pub fn spawn_shop_menu_system(
                 ..Default::default()
             }).push_children(populated_shop_slots.as_slice());
 
-            // Close button
-            parent.spawn_bundle(ButtonBundle {
+            parent.spawn_bundle(NodeBundle {
                 style: Style {
-                    size: Size::new(Val::Percent(9.0), Val::Percent(16.0)),
-                    position: Rect {
-                        left: Val::Percent(30.0),
-                        right: Val::Auto,
-                        top: Val::Auto,
-                        bottom: Val::Auto,
-                    },
+                    size: Size::new(Val::Percent(100.0), Val::Percent(40.0)),
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::SpaceEvenly,
                     flex_direction: FlexDirection::ColumnReverse,
                     ..Default::default()
                 },
-                image: asset_loader.load("sprites/ui/shop_close.png").into(),
+                color: Color::rgba(0.0, 0.0, 0.0, 0.0).into(),
                 ..Default::default()
             })
-                .insert(NavigationButton);
-        })
-        .insert(ShopMenuComp);
+
+                //Tooltip
+                .with_children(|parent| {
+                    parent.spawn_bundle(NodeBundle {
+                        style: Style {
+                            size: Size::new(Val::Percent(25.0), Val::Percent(50.0)),
+                            position: Rect {
+                                left: Val::Percent(10.0),
+                                ..Default::default()
+                            },
+                            position_type: PositionType::Absolute,
+                            align_items: AlignItems::Center,
+                            justify_content: JustifyContent::Center,
+                            flex_direction: FlexDirection::Row,
+                            flex_wrap: FlexWrap::NoWrap,
+                            align_content: AlignContent::Center,
+                            ..Default::default()
+                        },
+                        image: asset_loader.load("sprites/ui/ítem_background.png").into(),
+                        ..Default::default()
+                    })
+                        .insert(Name::new("Tooltip Window"))
+                        .with_children(|parent| {
+                            parent.spawn_bundle(TextBundle {
+                                focus_policy: FocusPolicy::Pass,
+                                style: Style {
+                                    size: Size { width: Val::Auto, height: Val::Auto },
+                                    flex_direction: FlexDirection::Row,
+                                    flex_wrap: FlexWrap::Wrap,
+                                    ..Default::default()
+                                },
+                                text: Text::with_section(
+                                    "".to_string(),
+                                    TextStyle {
+                                        font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
+                                        font_size: 25.0,
+                                        color: Color::BLACK,
+                                    },
+                                    TextAlignment {
+                                        vertical: VerticalAlign::Center,
+                                        horizontal: HorizontalAlign::Center,
+                                    },
+                                ),
+                                ..Default::default()
+                            }
+                            ).insert(TooltipText);
+                        });
+
+                    // Close button
+                    parent.spawn_bundle(ButtonBundle {
+                        style: Style {
+                            size: Size::new(Val::Percent(7.0), Val::Percent(30.0)),
+                            position: Rect {
+                                left: Val::Percent(33.0),
+                                ..Default::default()
+                            },
+                            align_items: AlignItems::Center,
+                            justify_content: JustifyContent::SpaceEvenly,
+                            flex_direction: FlexDirection::ColumnReverse,
+                            ..Default::default()
+                        },
+                        image: asset_loader.load("sprites/ui/shop_close.png").into(),
+                        ..Default::default()
+                    })
+                        .insert(NavigationButton);
+                });
+        }).insert(ShopMenuComp);
 }
 
 pub fn close_shop_menu_system(

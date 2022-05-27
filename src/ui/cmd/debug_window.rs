@@ -3,7 +3,7 @@ use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, Des
 use bevy::ui::AlignContent;
 
 use crate::models::resources::console_history::ConsoleHistory;
-use crate::models::ui_components::debug_console::{DebugConsoleHistory, DebugConsoleInput, DebugConsoleWindow, DebugFpsCounter};
+use crate::models::ui::debug_console::{DebugConsoleHistory, DebugConsoleInput, DebugConsoleWindow, DebugFpsCounter};
 
 pub fn setup_debug_window(
     mut commands: Commands,

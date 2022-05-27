@@ -2,7 +2,7 @@ use bevy::prelude::{EventReader, EventWriter, Input, KeyCode, Local, Query, Rece
 
 use crate::models::events::debug_command_event::DebugCommandEvent;
 use crate::models::resources::console_history::ConsoleHistory;
-use crate::models::ui_components::debug_console::DebugConsoleInput;
+use crate::models::ui::debug_console::DebugConsoleInput;
 
 #[derive(Default)]
 pub struct DeleteTimer {
