@@ -14,7 +14,7 @@ use crate::models::player::Player;
 use crate::models::resources::shop_customer::ShopCustomer;
 use crate::models::ui::game_over::NavigationButton;
 use crate::models::ui::shop::{ShopButton, ShopMenuComp, ShopSlot, ToolTipField};
-use crate::models::ui::tooltip_window::{TooltipText, TooltipWindow};
+use crate::models::ui::tooltip_window::TooltipText;
 
 pub fn spawn_shop_menu_system(
     mut commands: Commands,
@@ -86,7 +86,7 @@ pub fn spawn_shop_menu_system(
             ..Default::default()
         })
             .insert(Interaction::default())
-            .insert(ShopButton { index })
+            .insert(ShopButton { index, modification_entity: mod_entity, price: price.0 })
             .insert(tooltip.clone())
             .with_children(|parent| {
                 parent.spawn_bundle(TextBundle {
@@ -121,7 +121,6 @@ pub fn spawn_shop_menu_system(
             })
             .id();
 
-        commands.entity(mod_entity).insert(ShopSlot { index });
         populated_shop_slots.push(entity);
     }
 
@@ -288,32 +287,24 @@ pub fn shop_button_system(
     mut event: EventWriter<ApplyModToTargetEvent>,
     mut text_query: Query<&mut Text, With<ToolTipField>>,
     mut button_query: Query<(Entity, &mut Interaction, &ShopButton), Changed<Interaction>>,
-    mod_query: Query<(Entity, &ToolTip, &ShopSlot, &Price)>,
     mut player_query: Query<(Entity, &mut GoldStorage), With<Player>>,
 ) {
     for (button_entity, interaction, shop_button) in button_query.iter_mut() {
         match *interaction {
             Interaction::Clicked => {
-                for (modification_entity, _, shop_slot, price) in mod_query.iter() {
-                    if shop_button.index != shop_slot.index {
-                        continue;
-                    }
+                let (player_entity, mut gold_storage) = match player_query.get_mut(shop_customer.customer.unwrap()) {
+                    Ok(player) => player,
+                    Err(_) => continue,
+                };
 
-                    let (player_entity, mut gold_storage) = match player_query.get_mut(shop_customer.customer.unwrap()) {
-                        Ok(player) => player,
-                        Err(_) => continue,
-                    };
-
-                    if gold_storage.number < price.0 {
-                        continue;
-                    }
-
-                    gold_storage.number -= price.0;
-                    event.send(ApplyModToTargetEvent { mod_entity: modification_entity, target_entity: player_entity });
-
-                    commands.entity(button_entity).despawn_recursive();
-                    commands.entity(modification_entity).remove::<ShopSlot>();
+                if gold_storage.number < shop_button.price {
+                    continue;
                 }
+
+                commands.entity(button_entity).despawn_recursive();
+
+                gold_storage.number -= shop_button.price;
+                event.send(ApplyModToTargetEvent { mod_entity: shop_button.modification_entity, target_entity: player_entity });
             }
 
             Interaction::None => {
@@ -322,14 +313,7 @@ pub fn shop_button_system(
                 }
             }
 
-            Interaction::Hovered => {
-                for (_, modification_tooltip, shop_slot, _) in mod_query.iter() {
-                    if shop_button.index != shop_slot.index { continue; }
-                    for mut text in text_query.iter_mut() {
-                        text.sections[0].value = String::from(&modification_tooltip.tooltip);
-                    }
-                }
-            }
+            Interaction::Hovered => {}
         }
     }
 }
