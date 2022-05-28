@@ -14,10 +14,12 @@ use crate::models::modifications::affects::affect_damage::AffectDamage;
 use crate::models::modifications::affects::affect_health::AffectHealth;
 use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
 use crate::models::modifications::affects::affect_reload::AffectReload;
+use crate::models::modifications::affects::affect_unit_size::AffectUnitSize;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_damage::AffectBulletDamage;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_hit_limit::AffectBulletHitLimit;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_move_speed::AffectBulletMoveSpeed;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_travel_range::AffectBulletTravelRange;
+use crate::models::modifications::affects::bullet_affects::affect_bullet_unit_size::AffectBulletUnitSize;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::death_ball::{DeathBall, DeathBallUnit};
 use crate::models::modifications::explosion_shot::ExplosionShot;
@@ -38,6 +40,7 @@ use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::travel_range::TravelRange;
+use crate::models::unit_attributes::unit_size::UnitSize;
 use crate::units::modifications::apply_death_ball_system::apply_death_ball_system;
 use crate::units::modifications::apply_psy_rock_system::{apply_psy_rock_system, renew_mods_for_psy_rock_system};
 use crate::units::modifications::apply_radiation_system::apply_radiation_system;
@@ -86,11 +89,13 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(apply_affect_system::<Damage, AffectDamage>)
                         .with_system(apply_affect_system::<Health, AffectHealth>)
                         .with_system(apply_affect_system::<Reload, AffectReload>)
+                        .with_system(apply_affect_system::<UnitSize, AffectUnitSize>)
 
                         .with_system(apply_bullet_affect_system::<MoveSpeed, AffectBulletMoveSpeed>)
                         .with_system(apply_bullet_affect_system::<Damage, AffectBulletDamage>)
                         .with_system(apply_bullet_affect_system::<TravelRange, AffectBulletTravelRange>)
                         .with_system(apply_bullet_affect_system::<HitLimit, AffectBulletHitLimit>)
+                        .with_system(apply_bullet_affect_system::<UnitSize, AffectBulletUnitSize>)
 
                         .with_system(apply_bullet_mod_to_targets_gun_system::<CurveShot>)
                         .with_system(apply_bullet_mod_to_targets_gun_system::<GrowShot>)
@@ -134,11 +139,13 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(remove_affect_system::<Damage, AffectDamage>)
                         .with_system(remove_affect_system::<Health, AffectHealth>)
                         .with_system(remove_affect_system::<Reload, AffectReload>)
+                        .with_system(remove_affect_system::<UnitSize, AffectUnitSize>)
 
                         .with_system(remove_bullet_affect_system::<MoveSpeed, AffectBulletMoveSpeed>)
                         .with_system(remove_bullet_affect_system::<Damage, AffectBulletDamage>)
                         .with_system(remove_bullet_affect_system::<TravelRange, AffectBulletTravelRange>)
                         .with_system(remove_bullet_affect_system::<HitLimit, AffectBulletHitLimit>)
+                        .with_system(remove_bullet_affect_system::<UnitSize, AffectBulletUnitSize>)
 
                         .with_system(remove_bullet_mod_from_targets_gun_system::<CurveShot>)
                         .with_system(remove_bullet_mod_from_targets_gun_system::<GrowShot>)
