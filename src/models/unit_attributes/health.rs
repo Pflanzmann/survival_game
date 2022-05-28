@@ -8,15 +8,16 @@ pub struct Health {
     base_amount: f32,
     bonus_amount: f32,
     current_health: f32,
+    multiplier: f32,
 }
 
 impl Attribute for Health {
     fn new(base_amount: f32) -> Self {
-        Health { base_amount, bonus_amount: 0.0, current_health: base_amount }
+        Self { base_amount, bonus_amount: 0.0, current_health: base_amount, multiplier: 1.0 }
     }
 
     fn get_total_amount(&self) -> f32 {
-        self.base_amount + self.bonus_amount
+        (self.base_amount + self.bonus_amount) * self.multiplier
     }
 
     fn get_base_amount(&self) -> f32 {
@@ -27,8 +28,16 @@ impl Attribute for Health {
         self.bonus_amount
     }
 
+    fn get_multiplier(&self) -> f32 {
+        self.multiplier
+    }
+
     fn add_bonus_amount(&mut self, added_amount: f32) {
         self.bonus_amount += added_amount;
+    }
+
+    fn add_multiplier(&mut self, multiplier: f32) {
+        self.multiplier *= multiplier;
     }
 }
 

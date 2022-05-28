@@ -3,7 +3,6 @@ use serde::Deserialize;
 use serde::Serialize;
 use crate::models::modifications::affects::affect_operator::AffectOperator;
 
-use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::modifications::affects::attribute_affect::AttributeAffect;
 
@@ -14,15 +13,11 @@ pub struct AffectMoveSpeed {
 }
 
 impl AttributeAffect<MoveSpeed> for AffectMoveSpeed {
-    fn add_affect(&self, attribute: &mut MoveSpeed) {
-        attribute.add_bonus_amount(
-            self.operator.calculate_amount(attribute.get_base_amount(), self.amount)
-        );
+    fn get_operator(&self) -> &AffectOperator {
+        &self.operator
     }
 
-    fn remove_affect(&self, attribute: &mut MoveSpeed) {
-        attribute.add_bonus_amount(
-            -self.operator.calculate_amount(attribute.get_base_amount(), self.amount)
-        );
+    fn get_amount(&self) -> f32 {
+        self.amount
     }
 }
