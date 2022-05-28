@@ -15,3 +15,4 @@ pub mod knock_back_shot;
 pub mod explosion_shot;
 pub mod shield;
 pub mod lightning;
+pub mod effects;

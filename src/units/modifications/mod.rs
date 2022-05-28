@@ -47,6 +47,8 @@ use crate::units::modifications::apply_radiation_system::apply_radiation_system;
 use crate::units::modifications::apply_shield_system::apply_shield_system;
 use crate::units::modifications::apply_slime_system::apply_slime_system;
 use crate::units::modifications::apply_turret_system::apply_turret_system;
+use crate::units::modifications::effect::apply_effect_add_health_system::apply_effect_add_health_system;
+use crate::units::modifications::effect::apply_effect_damage_health_system::apply_effect_damage_health_system;
 use crate::units::modifications::helper::apply_bullet_affect_system::apply_bullet_affect_system;
 use crate::units::modifications::helper::despawn_companion_from_mod_system::despawn_companion_from_mod_system;
 use crate::units::modifications::helper::mod_list_deregister_system::mod_list_deregister_system;
@@ -62,6 +64,7 @@ mod apply_death_ball_system;
 mod apply_psy_rock_system;
 mod apply_radiation_system;
 mod apply_shield_system;
+mod effect;
 pub mod bullet_modifications;
 
 /// All the apply systems have to get registered here.
@@ -96,6 +99,9 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(apply_bullet_affect_system::<TravelRange, AffectBulletTravelRange>)
                         .with_system(apply_bullet_affect_system::<HitLimit, AffectBulletHitLimit>)
                         .with_system(apply_bullet_affect_system::<UnitSize, AffectBulletUnitSize>)
+
+                        .with_system(apply_effect_add_health_system)
+                        .with_system(apply_effect_damage_health_system)
 
                         .with_system(apply_bullet_mod_to_targets_gun_system::<CurveShot>)
                         .with_system(apply_bullet_mod_to_targets_gun_system::<GrowShot>)
