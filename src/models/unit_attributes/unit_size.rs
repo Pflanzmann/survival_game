@@ -10,11 +10,12 @@ pub struct UnitSize {
 
     base_amount: f32,
     bonus_amount: f32,
+    multiplier: f32,
 }
 
 impl Attribute for UnitSize {
     fn new(base_amount: f32) -> Self {
-        Self { base_amount: 1.0, bonus_amount: 0.0, base_size: Vec2::new(base_amount, base_amount) }
+        Self { base_amount: 1.0, bonus_amount: 0.0, multiplier: 1.0, base_size: Vec2::new(base_amount, base_amount) }
     }
 
     fn get_total_amount(&self) -> f32 {
@@ -29,14 +30,22 @@ impl Attribute for UnitSize {
         self.bonus_amount
     }
 
+    fn get_multiplier(&self) -> f32 {
+        self.multiplier
+    }
+
     fn add_bonus_amount(&mut self, added_amount: f32) {
         self.bonus_amount += added_amount;
+    }
+
+    fn add_multiplier(&mut self, multiplier: f32) {
+        self.multiplier *= multiplier;
     }
 }
 
 impl UnitSize {
     pub fn new_size(base_size: Vec2) -> Self {
-        Self { base_amount: 1.0, bonus_amount: 0.0, base_size }
+        Self { base_amount: 1.0, bonus_amount: 0.0, multiplier: 1.0, base_size }
     }
 
     pub fn proportional_unit_size(&self) -> Vec2 {

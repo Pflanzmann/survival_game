@@ -7,17 +7,18 @@ use crate::models::unit_attributes::attribute::Attribute;
 pub struct Reload {
     base_amount: f32,
     bonus_amount: f32,
+    multiplier: f32,
 
     pub reload_timer: f32,
 }
 
 impl Attribute for Reload {
     fn new(base_amount: f32) -> Self {
-        Reload { base_amount, bonus_amount: 0.0, reload_timer: 0.0 }
+        Self { base_amount, bonus_amount: 0.0, multiplier: 1.0, reload_timer: 0.0 }
     }
 
     fn get_total_amount(&self) -> f32 {
-        60.0 / (self.base_amount + self.bonus_amount)
+        (60.0 / (self.base_amount + self.bonus_amount)) * self.multiplier
     }
 
     fn get_base_amount(&self) -> f32 {
@@ -28,7 +29,15 @@ impl Attribute for Reload {
         self.bonus_amount
     }
 
+    fn get_multiplier(&self) -> f32 {
+        self.multiplier
+    }
+
     fn add_bonus_amount(&mut self, added_amount: f32) {
         self.bonus_amount += added_amount;
+    }
+
+    fn add_multiplier(&mut self, multiplier: f32) {
+        self.multiplier *= multiplier;
     }
 }

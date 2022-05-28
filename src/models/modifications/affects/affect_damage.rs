@@ -3,7 +3,6 @@ use serde::Deserialize;
 use crate::models::modifications::affects::affect_operator::AffectOperator;
 
 use crate::models::modifications::affects::attribute_affect::AttributeAffect;
-use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
 
 #[derive(Component, Copy, Clone, Deserialize)]
@@ -13,15 +12,11 @@ pub struct AffectDamage {
 }
 
 impl AttributeAffect<Damage> for AffectDamage {
-    fn add_affect(&self, attribute: &mut Damage) {
-        attribute.add_bonus_amount(
-            self.operator.calculate_amount(attribute.get_base_amount(), self.amount)
-        );
+    fn get_operator(&self) -> &AffectOperator {
+        &self.operator
     }
 
-    fn remove_affect(&self, attribute: &mut Damage) {
-        attribute.add_bonus_amount(
-            -self.operator.calculate_amount(attribute.get_base_amount(), self.amount)
-        );
+    fn get_amount(&self) -> f32 {
+        self.amount
     }
 }
