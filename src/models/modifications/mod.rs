@@ -16,3 +16,4 @@ pub mod explosion_shot;
 pub mod shield;
 pub mod lightning;
 pub mod effects;
+pub mod blue_pill;

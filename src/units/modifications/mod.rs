@@ -12,8 +12,10 @@ use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
 use crate::models::modifications::affects::affect_damage::AffectDamage;
 use crate::models::modifications::affects::affect_health::AffectHealth;
+use crate::models::modifications::affects::affect_hit_limit::AffectHitLimit;
 use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
 use crate::models::modifications::affects::affect_reload::AffectReload;
+use crate::models::modifications::affects::affect_travel_range::AffectTravelRange;
 use crate::models::modifications::affects::affect_unit_size::AffectUnitSize;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_damage::AffectBulletDamage;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_hit_limit::AffectBulletHitLimit;
@@ -93,6 +95,8 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(apply_affect_system::<Health, AffectHealth>)
                         .with_system(apply_affect_system::<Reload, AffectReload>)
                         .with_system(apply_affect_system::<UnitSize, AffectUnitSize>)
+                        .with_system(apply_affect_system::<TravelRange, AffectTravelRange>)
+                        .with_system(apply_affect_system::<HitLimit, AffectHitLimit>)
 
                         .with_system(apply_bullet_affect_system::<MoveSpeed, AffectBulletMoveSpeed>)
                         .with_system(apply_bullet_affect_system::<Damage, AffectBulletDamage>)
@@ -146,6 +150,8 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(remove_affect_system::<Health, AffectHealth>)
                         .with_system(remove_affect_system::<Reload, AffectReload>)
                         .with_system(remove_affect_system::<UnitSize, AffectUnitSize>)
+                        .with_system(remove_affect_system::<TravelRange, AffectTravelRange>)
+                        .with_system(remove_affect_system::<HitLimit, AffectHitLimit>)
 
                         .with_system(remove_bullet_affect_system::<MoveSpeed, AffectBulletMoveSpeed>)
                         .with_system(remove_bullet_affect_system::<Damage, AffectBulletDamage>)
