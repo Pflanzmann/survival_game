@@ -49,6 +49,7 @@ use crate::units::modifications::apply_radiation_system::apply_radiation_system;
 use crate::units::modifications::apply_shield_system::apply_shield_system;
 use crate::units::modifications::apply_slime_system::apply_slime_system;
 use crate::units::modifications::apply_turret_system::apply_turret_system;
+use crate::units::modifications::bullet_modifications::BulletModificationsPlugin;
 use crate::units::modifications::effect::apply_effect_add_health_system::apply_effect_add_health_system;
 use crate::units::modifications::effect::apply_effect_damage_health_system::apply_effect_damage_health_system;
 use crate::units::modifications::helper::apply_bullet_affect_system::apply_bullet_affect_system;
@@ -67,7 +68,7 @@ mod apply_psy_rock_system;
 mod apply_radiation_system;
 mod apply_shield_system;
 mod effect;
-pub mod bullet_modifications;
+mod bullet_modifications;
 
 /// All the apply systems have to get registered here.
 ///
@@ -83,6 +84,8 @@ pub struct UnitModificationsPlugin;
 impl Plugin for UnitModificationsPlugin {
     fn build(&self, app: &mut App) {
         app
+            .add_plugin(BulletModificationsPlugin)
+
             .add_system_set(
                 in_post_update(
                     SystemSet::new()

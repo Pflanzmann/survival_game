@@ -1,5 +1,6 @@
 use bevy::prelude::{Component, EventReader, Query, With};
 
+use crate::models::attribute_container::AttributeContainer;
 use crate::models::attribute_container_slot::AttributeContainerSlot;
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
 use crate::models::modifications::affects::attribute_affect::AttributeAffect;
@@ -26,7 +27,7 @@ pub fn remove_bullet_affect_system<
     affect_query: Query<&U>,
     gun_holder_query: Query<&WeaponSlot>,
     gun_query: Query<&AttributeContainerSlot>,
-    mut target_query: Query<&mut T, With<AttributeContainerSlot>>,
+    mut target_query: Query<&mut T, With<AttributeContainer>>,
 ) {
     for remove_event in remove_events.iter() {
         let affect = match affect_query.get(remove_event.mod_entity) {
@@ -34,17 +35,17 @@ pub fn remove_bullet_affect_system<
             Err(_) => continue,
         };
 
-        let gun_holder_weapon_slot = match gun_holder_query.get(remove_event.target_entity) {
+        let weapon_slot = match gun_holder_query.get(remove_event.target_entity) {
             Ok(attribute) => attribute,
             Err(_) => continue,
         };
 
-        let gun_holder_weapon_slot = match gun_query.get(gun_holder_weapon_slot.weapon_entity) {
+        let attribute_container_slot = match gun_query.get(weapon_slot.weapon_entity) {
             Ok(attribute) => attribute,
             Err(_) => continue,
         };
 
-        let mut target = match target_query.get_mut(gun_holder_weapon_slot.container_entity) {
+        let mut target = match target_query.get_mut(attribute_container_slot.container_entity) {
             Ok(affect) => affect,
             Err(_) => continue,
         };
