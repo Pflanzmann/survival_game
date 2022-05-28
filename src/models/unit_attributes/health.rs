@@ -33,11 +33,21 @@ impl Attribute for Health {
     }
 
     fn add_bonus_amount(&mut self, added_amount: f32) {
+        let total_health = self.get_total_amount();
+        let health_ratio = total_health / self.current_health;
+
         self.bonus_amount += added_amount;
+        
+        self.current_health = self.get_total_amount() / health_ratio;
     }
 
     fn add_multiplier(&mut self, multiplier: f32) {
+        let total_health = self.get_total_amount();
+        let health_ratio = total_health / self.current_health;
+
         self.multiplier *= multiplier;
+
+        self.current_health = self.get_total_amount() / health_ratio;
     }
 }
 
