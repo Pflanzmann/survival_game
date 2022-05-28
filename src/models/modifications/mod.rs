@@ -17,3 +17,5 @@ pub mod shield;
 pub mod lightning;
 pub mod effects;
 pub mod blue_pill;
+pub mod low_cal;
+pub mod glass_cannon;

@@ -31,10 +31,12 @@ use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::modifications::effects::effect_add_health::EffectAddHealth;
 use crate::models::modifications::effects::effect_damage_health::EffectDamageHealth;
 use crate::models::modifications::explosion_shot::ExplosionShot;
+use crate::models::modifications::glass_cannon::GlassCannon;
 use crate::models::modifications::gravity_shot::GravityShot;
 use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::modifications::knock_back_shot::KnockBackShot;
 use crate::models::modifications::lightning::Lightning;
+use crate::models::modifications::low_cal::LowCal;
 use crate::models::modifications::psy_rock::PsyRock;
 use crate::models::modifications::radiation::Radiation;
 use crate::models::modifications::shield::Shield;
@@ -94,6 +96,8 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<ExplosionShot>();
         entity_builder.register_component::<Lightning>();
 
+        entity_builder.register_component::<GlassCannon>();
+        entity_builder.register_component::<LowCal>();
         entity_builder.register_component::<BluePill>();
         entity_builder.register_component::<Sprinting>();
         entity_builder.register_component::<Turret>();

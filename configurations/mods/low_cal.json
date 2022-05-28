@@ -1,0 +1,34 @@
+{
+  "Modification": null,
+  "ModName": {
+    "mod_name": "Low cal"
+  },
+  "SpritePathWrapper": {
+    "path": "sprites/mod_icons/low_cal_icon.png"
+  },
+  "ToolTip": {
+    "tooltip": "Say hello to my little little friend!"
+  },
+  "Price": 5,
+  "LowCal": null,
+  "AffectReload": {
+    "operator": "Multiply",
+    "amount": 12.0
+  },
+  "AffectBulletDamage": {
+    "operator": "Multiply",
+    "amount": 0.1
+  },
+  "AffectBulletMoveSpeed": {
+    "operator": "Multiply",
+    "amount": 1.5
+  },
+  "AffectBulletTravelRange": {
+    "operator": "Multiply",
+    "amount": 0.6
+  },
+  "AffectBulletUnitSize": {
+    "operator": "Multiply",
+    "amount": 0.5
+  }
+}
