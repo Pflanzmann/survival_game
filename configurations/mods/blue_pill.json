@@ -1,0 +1,62 @@
+{
+  "Modification": null,
+  "ModName": {
+    "mod_name": "Blue pill"
+  },
+  "SpritePathWrapper": {
+    "path": "sprites/mod_icons/blue_pill_icon.png"
+  },
+  "ToolTip": {
+    "tooltip": "Like Neo go brrrrrrrrrrr"
+  },
+  "Price": 5,
+  "BluePill": null,
+  "AffectDamage": {
+    "operator": "Multiply",
+    "amount": 1.5
+  },
+  "AffectHealth": {
+    "operator": "Multiply",
+    "amount": 1.5
+  },
+  "AffectHitLimit": {
+    "operator": "Multiply",
+    "amount": 1.5
+  },
+  "AffectMoveSpeed": {
+    "operator": "Multiply",
+    "amount": 1.5
+  },
+  "AffectReload": {
+    "operator": "Multiply",
+    "amount": 1.5
+  },
+  "AffectTravelRange": {
+    "operator": "Multiply",
+    "amount": 1.5
+  },
+  "AffectUnitSize": {
+    "operator": "Multiply",
+    "amount": 1.5
+  },
+  "AffectBulletDamage": {
+    "operator": "Multiply",
+    "amount": 1.5
+  },
+  "AffectBulletHitLimit": {
+    "operator": "Multiply",
+    "amount": 1.5
+  },
+  "AffectBulletMoveSpeed": {
+    "operator": "Multiply",
+    "amount": 1.5
+  },
+  "AffectBulletTravelRange": {
+    "operator": "Multiply",
+    "amount": 1.5
+  },
+  "AffectBulletUnitSize": {
+    "operator": "Multiply",
+    "amount": 1.5
+  }
+}

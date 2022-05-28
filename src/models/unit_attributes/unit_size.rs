@@ -19,7 +19,7 @@ impl Attribute for UnitSize {
     }
 
     fn get_total_amount(&self) -> f32 {
-        self.base_amount + self.bonus_amount
+        (self.base_amount + self.bonus_amount) * self.multiplier
     }
 
     fn get_base_amount(&self) -> f32 {

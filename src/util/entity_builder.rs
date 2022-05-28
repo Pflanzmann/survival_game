@@ -10,14 +10,17 @@ use crate::App;
 use crate::models::modifications::descriptors::sprite_path_wrapper::SpritePathWrapper;
 use crate::models::modifications::affects::affect_damage::AffectDamage;
 use crate::models::modifications::affects::affect_health::AffectHealth;
+use crate::models::modifications::affects::affect_hit_limit::AffectHitLimit;
 use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
 use crate::models::modifications::affects::affect_reload::AffectReload;
+use crate::models::modifications::affects::affect_travel_range::AffectTravelRange;
 use crate::models::modifications::affects::affect_unit_size::AffectUnitSize;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_damage::AffectBulletDamage;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_hit_limit::AffectBulletHitLimit;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_move_speed::AffectBulletMoveSpeed;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_travel_range::AffectBulletTravelRange;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_unit_size::AffectBulletUnitSize;
+use crate::models::modifications::blue_pill::BluePill;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::death_ball::DeathBall;
 use crate::models::modifications::descriptors::mod_name::ModName;
@@ -64,6 +67,8 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<AffectHealth>();
         entity_builder.register_component::<AffectReload>();
         entity_builder.register_component::<AffectUnitSize>();
+        entity_builder.register_component::<AffectTravelRange>();
+        entity_builder.register_component::<AffectHitLimit>();
 
         entity_builder.register_component::<AffectBulletDamage>();
         entity_builder.register_component::<AffectBulletHitLimit>();
@@ -89,6 +94,7 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<ExplosionShot>();
         entity_builder.register_component::<Lightning>();
 
+        entity_builder.register_component::<BluePill>();
         entity_builder.register_component::<Sprinting>();
         entity_builder.register_component::<Turret>();
         entity_builder.register_component::<Slime>();
