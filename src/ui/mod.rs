@@ -1,16 +1,13 @@
-use bevy::core::FixedTimestep;
 use bevy::prelude::{App, Plugin, SystemSet};
 
 use crate::AppState;
 use crate::ui::cmd::CmdUiPlugin;
-use crate::ui::fps_counter_update_system::fps_counter_update_system;
 use crate::ui::game_over_screen::{button_click_system, spawn_menu_system};
 use crate::ui::hud_system::{spawn_text_system, update_bullet_hud_system, update_text_system};
 use crate::ui::main_menu_screen::{close_main_menu_system, spawn_main_menu_system};
 use crate::ui::pause_screen::{enter_pause_system, exit_pause_system};
 use crate::ui::setup_tool_tip_window::{move_tool_tip_window, populate_tooltip_window, setup_tool_tip_window};
 use crate::ui::shop_system::{close_shop_menu_system, shop_button_system, spawn_shop_menu_system};
-use crate::util::stage_label_helper::in_update;
 
 mod game_over_screen;
 mod hud_system;
@@ -18,8 +15,8 @@ mod pause_screen;
 mod main_menu_screen;
 mod shop_system;
 mod cmd;
-mod fps_counter_update_system;
 mod setup_tool_tip_window;
+mod despawn_ui_system;
 
 /// This plugin generates the UI elements for game menus and
 /// the ingame hud. Furthermore it holds systems to control the
@@ -31,14 +28,6 @@ impl Plugin for UiPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugin(CmdUiPlugin)
-
-            .add_system_set(
-                in_update(
-                    SystemSet::on_update(AppState::InGame)
-                        .with_run_criteria(FixedTimestep::step(0.1))
-                        .with_system(fps_counter_update_system)
-                )
-            )
 
             .add_system_set(
                 SystemSet::on_exit(AppState::MainMenu)
@@ -87,5 +76,6 @@ impl Plugin for UiPlugin {
             .add_system(move_tool_tip_window)
             .add_system(populate_tooltip_window)
             .add_system(update_bullet_hud_system);
+
     }
 }

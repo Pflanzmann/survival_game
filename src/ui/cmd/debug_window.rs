@@ -108,13 +108,15 @@ pub fn setup_debug_info_window(
     commands
         .spawn_bundle(NodeBundle {
             style: Style {
-                size: Size::new(Val::Percent(15.0), Val::Percent(40.0)),
+                size: Size::new(Val::Percent(20.0), Val::Percent(40.0)),
                 position: Rect {
-                    left: Val::Percent(80.0),
-                    bottom: Val::Percent(10.0),
+                    left: Val::Percent(78.0),
+                    bottom: Val::Percent(8.0),
                     ..Default::default()
                 },
+                flex_direction: FlexDirection::ColumnReverse,
                 position_type: PositionType::Absolute,
+                align_items: AlignItems::FlexStart,
                 align_content: AlignContent::FlexStart,
                 ..Default::default()
             },
@@ -126,11 +128,11 @@ pub fn setup_debug_info_window(
         .with_children(|parent| {
             parent.spawn_bundle(TextBundle {
                 style: Style {
-                    position_type: PositionType::Absolute,
+                    position_type: PositionType::Relative,
                     flex_direction: FlexDirection::RowReverse,
                     position: Rect {
                         left: Val::Percent(5.0),
-                        bottom: Val::Percent(90.0),
+                        top: Val::Percent(0.0),
                         ..Default::default()
                     },
                     ..Default::default()
@@ -140,6 +142,41 @@ pub fn setup_debug_info_window(
                     sections: vec![
                         TextSection {
                             value: "Fps: ".to_string(),
+                            style: TextStyle {
+                                font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
+                                font_size: 20.0,
+                                color: Color::WHITE,
+                            },
+                        },
+                        TextSection {
+                            value: "".to_string(),
+                            style: TextStyle {
+                                font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
+                                font_size: 20.0,
+                                color: Color::WHITE,
+                            },
+                        },
+                    ],
+                },
+                ..Default::default()
+            }).insert(DebugFpsCounter);
+
+            parent.spawn_bundle(TextBundle {
+                style: Style {
+                    position_type: PositionType::Relative,
+                    flex_direction: FlexDirection::RowReverse,
+                    position: Rect {
+                        left: Val::Percent(5.0),
+                        top: Val::Percent(5.0),
+                        ..Default::default()
+                    },
+                    ..Default::default()
+                },
+                text: Text {
+                    alignment: TextAlignment { vertical: VerticalAlign::Top, ..Default::default() },
+                    sections: vec![
+                        TextSection {
+                            value: "Health: ".to_string(),
                             style: TextStyle {
                                 font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                                 font_size: 20.0,
