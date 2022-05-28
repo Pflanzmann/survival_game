@@ -25,6 +25,8 @@ use crate::models::modifications::descriptors::mod_sprite_path::SpriteHandle;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::descriptors::price::Price;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
+use crate::models::modifications::effects::effect_add_health::EffectAddHealth;
+use crate::models::modifications::effects::effect_damage_health::EffectDamageHealth;
 use crate::models::modifications::explosion_shot::ExplosionShot;
 use crate::models::modifications::gravity_shot::GravityShot;
 use crate::models::modifications::grow_shot::GrowShot;
@@ -68,6 +70,9 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<AffectBulletMoveSpeed>();
         entity_builder.register_component::<AffectBulletTravelRange>();
         entity_builder.register_component::<AffectBulletUnitSize>();
+
+        entity_builder.register_component::<EffectAddHealth>();
+        entity_builder.register_component::<EffectDamageHealth>();
 
         entity_builder.register_component::<TravelRange>();
         entity_builder.register_component::<HitLimit>();
