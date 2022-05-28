@@ -8,6 +8,7 @@ use crate::units::bullets::BulletPlugin;
 use crate::units::clear_damaged_entities_system::clear_damaged_entities_system;
 use crate::units::enemies::EnemiesPlugin;
 use crate::units::health_bar_update_system::healthbar_update_system;
+use crate::units::hit_system::hit_system;
 use crate::units::knock_back_system::knock_back_system;
 use crate::units::layerable_system::layerable_system;
 use crate::units::mirror_aim_to_move_direction_system::mirror_aim_to_move_direction_system;
@@ -21,7 +22,7 @@ use crate::units::sprite_move_rotate_system::sprite_move_rotate_system;
 use crate::units::time_alive_system::time_alive_system;
 use crate::units::unit_push_system::unit_push_system;
 use crate::units::unit_size_change_system::{unit_size_sprite_change_system, unit_size_texture_atlas_sprite_change_system};
-use crate::util::stage_label_helper::{in_last, in_update};
+use crate::util::stage_label_helper::{in_last, in_pre_update, in_update};
 
 mod sprite_flip_system;
 mod health_bar_update_system;
@@ -62,6 +63,13 @@ impl Plugin for UnitPlugin {
             .add_plugin(BulletPlugin)
             .add_plugin(EnemiesPlugin)
             .add_plugin(BehaviorPlugin)
+
+            .add_system_set(
+                in_pre_update(
+                    SystemSet::on_update(AppState::InGame)
+                        .with_system(hit_system)
+                )
+            )
 
             .add_system_set(
                 in_update(
