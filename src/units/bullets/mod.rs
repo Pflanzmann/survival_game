@@ -1,10 +1,10 @@
 use bevy::prelude::{Plugin, SystemSet};
 
 use crate::{App, AppState};
-use crate::units::modifications::bullet_modifications::BulletModificationsPlugin;
 use crate::units::bullets::bullet_check_stop_system::bullet_check_stop_system;
 use crate::units::bullets::bullet_despawn_system::bullet_despawn_system;
 use crate::units::hit_system::hit_system;
+use crate::units::modifications::bullet_modifications::BulletModificationsPlugin;
 use crate::util::stage_label_helper::{in_last, in_pre_update, in_update};
 
 mod bullet_check_stop_system;
@@ -29,20 +29,16 @@ impl Plugin for BulletPlugin {
             .add_plugin(BulletModificationsPlugin)
 
             .add_system_set(
-                in_pre_update(SystemSet::on_update(AppState::InGame)
-                    .with_system(hit_system)
+                in_update(
+                    SystemSet::on_update(AppState::InGame)
+                        .with_system(bullet_check_stop_system)
                 )
             )
 
             .add_system_set(
-                in_update(SystemSet::on_update(AppState::InGame)
-                    .with_system(bullet_check_stop_system)
-                )
-            )
-
-            .add_system_set(
-                in_last(SystemSet::on_update(AppState::InGame)
-                    .with_system(bullet_despawn_system)
+                in_last(
+                    SystemSet::on_update(AppState::InGame)
+                        .with_system(bullet_despawn_system)
                 )
             );
     }
