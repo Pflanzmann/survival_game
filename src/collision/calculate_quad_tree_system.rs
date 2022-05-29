@@ -7,9 +7,9 @@ use crate::models::collision::solid_body_collider::SolidBodyCollider;
 use crate::models::enemy::Enemy;
 use crate::models::items::descriptor::item::Item;
 use crate::models::player::Player;
-use crate::models::resources::hit_box_quad_tree::{HitBoxData, HitBoxQuadTree};
-use crate::models::resources::item_collision_quad_tree::{ItemCollisionQuadTree, ItemData};
-use crate::models::resources::solid_body_quad_tree::{SolidBodyData, SolidBodyQuadTree};
+use crate::models::resources::collision::hit_box_quad_tree::{HitBoxData, HitBoxQuadTree};
+use crate::models::resources::collision::item_collision_quad_tree::{ItemCollisionQuadTree, ItemData};
+use crate::models::resources::collision::solid_body_quad_tree::{SolidBodyData, SolidBodyQuadTree};
 use crate::util::quad_tree::{QuadData, Quadtree};
 
 pub fn calculate_quad_tree_system(

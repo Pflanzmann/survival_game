@@ -3,9 +3,9 @@ use rand::random;
 
 use crate::assets_handling::preload_stage_spawn_system::StageSpawnBehaviorHandle;
 use crate::models::player::Player;
-use crate::models::resources::spawn_phase_timer::SpawnPhaseTimer;
-use crate::models::resources::spawn_task_receiver::SpawnTaskReceiver;
-use crate::models::resources::spawn_timer::SpawnIntervalTimer;
+use crate::models::resources::world::spawn_phase_timer::SpawnPhaseTimer;
+use crate::models::resources::world::spawn_task_receiver::SpawnTaskReceiver;
+use crate::models::resources::world::spawn_timer::SpawnIntervalTimer;
 use crate::models::spawner::spawn_task::SpawnTask;
 
 pub fn spawn_scheduler_system(

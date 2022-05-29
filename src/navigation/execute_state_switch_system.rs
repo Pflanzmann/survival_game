@@ -1,4 +1,5 @@
 use bevy::prelude::{ResMut, State};
+
 use crate::{AppState, AppStateTrigger, ToAppState};
 
 pub fn execute_state_switch_system(

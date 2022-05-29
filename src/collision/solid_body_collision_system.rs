@@ -3,7 +3,7 @@ use bevy::prelude::{Entity, Query, Res, Transform, Vec2};
 use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
 use crate::models::collision::collider_weight::ColliderWeight;
 use crate::models::collision::solid_body_collider::SolidBodyCollider;
-use crate::models::resources::solid_body_quad_tree::{SolidBodyData, SolidBodyQuadTree};
+use crate::models::resources::collision::solid_body_quad_tree::{SolidBodyData, SolidBodyQuadTree};
 use crate::util::quad_tree::QuadData;
 
 pub fn solid_body_collision_system(

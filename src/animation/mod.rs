@@ -1,14 +1,15 @@
 use bevy::app::Plugin;
 use bevy::prelude::{App, SystemSet};
-use crate::AppState;
-use crate::util::stage_label_helper::in_update;
-use crate::animation::movement_animation_side_system::movement_animation_side_system;
-use crate::animation::movement_animation_up_system::movement_animation_up_system;
-use crate::animation::movement_animation_down_system::movement_animation_down_system;
-use crate::animation::teleport_animation_system::teleport_animation_system;
-use crate::animation::idle_animation_system::idle_animation_system;
+
 use crate::animation::animation_state_handle_system::animation_state_handle_system;
 use crate::animation::fade_animation_system::fade_animation_system;
+use crate::animation::idle_animation_system::idle_animation_system;
+use crate::animation::movement_animation_down_system::movement_animation_down_system;
+use crate::animation::movement_animation_side_system::movement_animation_side_system;
+use crate::animation::movement_animation_up_system::movement_animation_up_system;
+use crate::animation::teleport_animation_system::teleport_animation_system;
+use crate::AppState;
+use crate::util::stage_label_helper::in_update;
 
 mod movement_animation_side_system;
 mod idle_animation_system;

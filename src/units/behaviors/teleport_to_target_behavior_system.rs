@@ -1,13 +1,12 @@
 use bevy::prelude::{Commands, Entity, Query, Transform, With, Without};
-use crate::models::behavior::teleporting_script::TeleportingScript;
 
 use crate::models::behavior::teleport_to_target_behavior::TeleportToTargetBehavior;
+use crate::models::behavior::teleporting_script::TeleportingScript;
 use crate::models::player::Player;
 use crate::util::get_close_position_2d::get_close_position_2d;
 
 pub fn teleport_to_target_behavior_system(
     mut commands: Commands,
-
     mut unit_query: Query<(Entity, &TeleportToTargetBehavior, &mut Transform), (Without<Player>, Without<TeleportingScript>)>,
     target_query: Query<(Entity, &Transform), With<Player>>,
 ) {

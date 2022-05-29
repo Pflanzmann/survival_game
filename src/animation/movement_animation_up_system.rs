@@ -18,7 +18,6 @@ pub fn movement_animation_up_system(
 
         animation_data.progress += time.delta_seconds() * speed.get_total_amount();
         sprite.index = (animation_data.progress as usize % animation_data.framecount) + (SPRITE_ROW_LENGTH * animation_data.atlas_row);
-
     }
 }
 

@@ -4,7 +4,7 @@ use crate::models::behavior::steering_behavior::SteeringBehavior;
 use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
 use crate::models::collision::solid_body_collider::SolidBodyCollider;
 use crate::models::move_direction::MoveDirection;
-use crate::models::resources::solid_body_quad_tree::{SolidBodyData, SolidBodyQuadTree};
+use crate::models::resources::collision::solid_body_quad_tree::{SolidBodyData, SolidBodyQuadTree};
 use crate::util::quad_tree::QuadData;
 
 pub fn steering_behavior_system(

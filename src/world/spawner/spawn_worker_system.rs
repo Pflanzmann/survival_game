@@ -12,7 +12,7 @@ use crate::models::collision::solid_body_collider::SolidBodyCollider;
 use crate::models::enemy::Enemy;
 use crate::models::layerable::Layerable;
 use crate::models::move_direction::MoveDirection;
-use crate::models::resources::spawn_task_receiver::SpawnTaskReceiver;
+use crate::models::resources::world::spawn_task_receiver::SpawnTaskReceiver;
 use crate::models::spawner::enemy_config_handle::EnemyConfigHandles;
 use crate::models::sprite_flip::SpriteFlip;
 use crate::models::unit_attributes::attribute::Attribute;

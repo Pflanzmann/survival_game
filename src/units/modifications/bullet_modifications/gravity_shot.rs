@@ -2,7 +2,7 @@ use bevy::prelude::{Commands, GlobalTransform, Query, Res, Time, Vec2};
 
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::modifications::gravity_shot::GravityShot;
-use crate::models::resources::solid_body_quad_tree::{SolidBodyData, SolidBodyQuadTree};
+use crate::models::resources::collision::solid_body_quad_tree::{SolidBodyData, SolidBodyQuadTree};
 use crate::models::unit_push::UnitPush;
 use crate::util::quad_tree::QuadData;
 

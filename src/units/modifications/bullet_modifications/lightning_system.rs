@@ -9,7 +9,7 @@ use crate::models::damaged_entities::DamagedEntities;
 use crate::models::events::damaged_event::DamagedEvent;
 use crate::models::events::enemy_collision_event::EnemyCollisionEvent;
 use crate::models::modifications::lightning::Lightning;
-use crate::models::resources::hit_box_quad_tree::{HitBoxData, HitBoxQuadTree};
+use crate::models::resources::collision::hit_box_quad_tree::{HitBoxData, HitBoxQuadTree};
 use crate::models::time_alive::TimeAlive;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;

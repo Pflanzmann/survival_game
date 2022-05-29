@@ -8,5 +8,5 @@ pub struct BulletConfig {
     pub speed: f32,
     pub damage: f32,
     pub range: f32,
-    pub hit_limit: f32
+    pub hit_limit: f32,
 }

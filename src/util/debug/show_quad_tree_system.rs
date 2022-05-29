@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 
-use crate::models::resources::solid_body_quad_tree::SolidBodyQuadTree;
+use crate::models::resources::collision::solid_body_quad_tree::SolidBodyQuadTree;
 use crate::SpriteLayer;
 
 #[derive(Component)]

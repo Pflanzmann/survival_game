@@ -1,9 +1,8 @@
 use bevy::prelude::ResMut;
-use crate::models::configurations::barrel_config::BarrelConfig;
 
+use crate::models::configurations::barrel_config::BarrelConfig;
 use crate::models::configurations::coin_config::CoinConfig;
 use crate::models::configurations::hot_dog_config::HotDogConfig;
-
 use crate::util::read_file_to_string::read_file_to_string;
 
 #[derive(Default)]
