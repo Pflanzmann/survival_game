@@ -1,0 +1,18 @@
+{
+  "Modification": null,
+  "ModName": {
+    "mod_name": "Acid Puddle"
+  },
+  "SpritePathWrapper": {
+    "path": "sprites/mod_icons/acid_puddle_icon.png"
+  },
+  "ToolTip": {
+    "tooltip": "The vat of fake acid. Are you dying of dementia?"
+  },
+  "Price": 5,
+  "AcidPuddle": {
+    "time_alive": 1.5,
+    "damage": 2.0,
+    "damage_ticks_per_second": 0.8
+  }
+}

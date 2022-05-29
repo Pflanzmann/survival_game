@@ -10,6 +10,7 @@ use helper::remove_player_mod_from_target_system::remove_player_mod_from_target_
 
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
+use crate::models::modifications::acid_puddle::{AcidPuddle, AcidPuddleOwner};
 use crate::models::modifications::affects::affect_damage::AffectDamage;
 use crate::models::modifications::affects::affect_health::AffectHealth;
 use crate::models::modifications::affects::affect_hit_limit::AffectHitLimit;
@@ -57,6 +58,7 @@ use crate::units::modifications::helper::despawn_companion_from_mod_system::desp
 use crate::units::modifications::helper::mod_list_deregister_system::mod_list_deregister_system;
 use crate::units::modifications::helper::mod_list_register_system::mod_list_register_system;
 use crate::units::modifications::helper::remove_bullet_affect_system::remove_bullet_affect_system;
+use crate::units::modifications::setup_acid_puddle_system::setup_acid_puddle_system;
 use crate::util::run_criteria::on_event::on_event;
 use crate::util::stage_label_helper::in_post_update;
 
@@ -69,6 +71,8 @@ mod apply_radiation_system;
 mod apply_shield_system;
 mod effect;
 mod bullet_modifications;
+mod acid_puddle_system;
+mod setup_acid_puddle_system;
 
 /// All the apply systems have to get registered here.
 ///
@@ -117,6 +121,7 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(apply_bullet_mod_to_targets_gun_system::<KnockBackShot>)
                         .with_system(apply_bullet_mod_to_targets_gun_system::<ExplosionShot>)
                         .with_system(apply_bullet_mod_to_targets_gun_system::<Lightning>)
+                        .with_system(apply_bullet_mod_to_targets_gun_system::<AcidPuddle>)
 
                         .with_system(apply_player_mod_to_target_system::<Sprinting>)
 
@@ -138,6 +143,8 @@ impl Plugin for UnitModificationsPlugin {
 
                         .with_system(apply_player_mod_to_target_system::<Shield>)
                         .with_system(apply_shield_system)
+
+                        .with_system(setup_acid_puddle_system)
                 )
             )
 
@@ -169,6 +176,7 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(remove_bullet_mod_from_targets_gun_system::<KnockBackShot>)
                         .with_system(remove_bullet_mod_from_targets_gun_system::<ExplosionShot>)
                         .with_system(remove_bullet_mod_from_targets_gun_system::<Lightning>)
+                        .with_system(remove_bullet_mod_from_targets_gun_system::<AcidPuddle>)
 
                         .with_system(remove_player_mod_from_target_system::<Sprinting>)
 
@@ -189,6 +197,8 @@ impl Plugin for UnitModificationsPlugin {
 
                         .with_system(remove_player_mod_from_target_system::<Shield>)
                         .with_system(despawn_companion_from_mod_system::<Shield, ShieldUnit>)
+
+                        .with_system(despawn_companion_from_mod_system::<AcidPuddle, AcidPuddleOwner>)
                 )
             )
         ;

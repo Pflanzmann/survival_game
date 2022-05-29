@@ -7,6 +7,7 @@ use helper::assign_with_associate_component_to_bullet_system::assign_with_associ
 use crate::{App, AppState};
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::knock_back::KnockBack;
+use crate::models::modifications::acid_puddle::{AcidPuddle, AcidPuddleOwner};
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::explosion_shot::ExplosionShot;
 use crate::models::modifications::gravity_shot::GravityShot;
@@ -19,6 +20,7 @@ use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_attributes::unit_size::UnitSize;
+use crate::units::modifications::acid_puddle_system::acid_puddle_system;
 use crate::units::modifications::bullet_modifications::curve_shot_system::curve_shot_system;
 use crate::units::modifications::bullet_modifications::explosion_shot_system::explosion_shot_system;
 use crate::units::modifications::bullet_modifications::gravity_shot::gravity_shot_system;
@@ -64,6 +66,8 @@ impl Plugin for BulletModificationsPlugin {
                         .with_system(assign_with_associate_component_to_bullet_system::<KnockBackShot, KnockBack>)
                         .with_system(assign_modification_to_bullet_system::<ExplosionShot>)
                         .with_system(assign_modification_to_bullet_system::<Lightning>)
+                        .with_system(assign_modification_to_bullet_system::<AcidPuddle>)
+                        .with_system(assign_modification_to_bullet_system::<AcidPuddleOwner>)
                 )
             )
 
@@ -77,6 +81,7 @@ impl Plugin for BulletModificationsPlugin {
                         .with_system(gravity_shot_system)
                         .with_system(explosion_shot_system)
                         .with_system(lightning_system)
+                        .with_system(acid_puddle_system)
                 )
             );
     }
