@@ -160,41 +160,6 @@ pub fn setup_debug_info_window(
                 },
                 ..Default::default()
             }).insert(DebugFpsCounter);
-
-            parent.spawn_bundle(TextBundle {
-                style: Style {
-                    position_type: PositionType::Relative,
-                    flex_direction: FlexDirection::RowReverse,
-                    position: Rect {
-                        left: Val::Percent(5.0),
-                        top: Val::Percent(5.0),
-                        ..Default::default()
-                    },
-                    ..Default::default()
-                },
-                text: Text {
-                    alignment: TextAlignment { vertical: VerticalAlign::Top, ..Default::default() },
-                    sections: vec![
-                        TextSection {
-                            value: "Health: ".to_string(),
-                            style: TextStyle {
-                                font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
-                                font_size: 20.0,
-                                color: Color::WHITE,
-                            },
-                        },
-                        TextSection {
-                            value: "".to_string(),
-                            style: TextStyle {
-                                font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
-                                font_size: 20.0,
-                                color: Color::WHITE,
-                            },
-                        },
-                    ],
-                },
-                ..Default::default()
-            }).insert(DebugFpsCounter);
         });
 }
 
