@@ -16,7 +16,7 @@ impl Attribute for DamageInterval {
     }
 
     fn get_total_amount(&self) -> f32 {
-        (60.0 / (self.base_amount + self.bonus_amount)) * self.multiplier
+        60.0 / ((self.base_amount + self.bonus_amount) * self.multiplier)
     }
 
     fn get_base_amount(&self) -> f32 {
@@ -34,6 +34,7 @@ impl Attribute for DamageInterval {
     fn add_bonus_amount(&mut self, added_amount: f32) {
         self.bonus_amount += added_amount;
     }
+
     fn add_multiplier(&mut self, multiplier: f32) {
         self.multiplier *= multiplier;
     }
