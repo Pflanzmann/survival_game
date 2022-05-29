@@ -1,20 +1,24 @@
 use bevy::prelude::{Plugin, SystemSet};
 
 use crate::{App, AppState};
-use crate::collision::calculate_quad_tree_system::calculate_quad_tree_system;
+use crate::collision::calculate_hit_box_quad_tree_system::calculate_hit_box_quad_tree_system;
+use crate::collision::calculate_item_quad_tree_system::calculate_item_quad_tree_system;
+use crate::collision::calculate_solid_body_quad_tree_system::calculate_solid_body_quad_tree_system;
 use crate::collision::enemy_hit_box_collision_system::enemy_hit_box_collision_system;
 use crate::collision::enemy_player_collision_system::enemy_player_collision_system;
 use crate::collision::enemy_solid_body_collision_system::enemy_solid_body_collision_system;
 use crate::collision::item_player_collision_system::item_player_collision_system;
 use crate::collision::solid_body_collision_system::solid_body_collision_system;
-use crate::util::stage_label_helper::{in_collision, in_update};
+use crate::util::stage_label_helper::{in_collision, in_first};
 
 mod enemy_player_collision_system;
 mod enemy_hit_box_collision_system;
 mod solid_body_collision_system;
 mod item_player_collision_system;
-mod calculate_quad_tree_system;
 mod enemy_solid_body_collision_system;
+mod calculate_solid_body_quad_tree_system;
+mod calculate_item_quad_tree_system;
+mod calculate_hit_box_quad_tree_system;
 
 /// this has system running to check for collision between different game objects
 ///
@@ -39,9 +43,11 @@ impl Plugin for CollisionPlugin {
             )
 
             .add_system_set(
-                in_update(
+                in_first(
                     SystemSet::new()
-                        .with_system(calculate_quad_tree_system)
+                        .with_system(calculate_solid_body_quad_tree_system)
+                        .with_system(calculate_hit_box_quad_tree_system)
+                        .with_system(calculate_item_quad_tree_system)
                 )
             )
         ;

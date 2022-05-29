@@ -9,7 +9,7 @@ use crate::units::behaviors::spin_aim_behavior_system::spin_aim_behavior_system;
 use crate::units::behaviors::steering_behavior_system::steering_behavior_system;
 use crate::units::behaviors::teleport_to_target_behavior_system::teleport_to_target_behavior_system;
 use crate::units::behaviors::turn_to_target_behavior_system::turn_to_target_behavior_system;
-use crate::util::stage_label_helper::{in_collision, in_update};
+use crate::util::stage_label_helper::{in_update};
 
 mod spin_aim_behavior_system;
 mod teleport_to_target_behavior_system;
