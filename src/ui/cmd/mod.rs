@@ -55,7 +55,7 @@ impl Plugin for CmdUiPlugin {
             .add_system_set(
                 in_update(
                     SystemSet::on_enter(ConsoleState::Shown)
-                        .with_system(init_collision_boxes)
+                        // .with_system(init_collision_boxes)
                         .with_system(spawn_attribute_window_system)
                 )
             )
@@ -63,14 +63,14 @@ impl Plugin for CmdUiPlugin {
             .add_system_set(
                 in_update(
                     SystemSet::on_update(ConsoleState::Shown)
-                        .with_system(spawn_collision_boxes)
+                        // .with_system(spawn_collision_boxes)
                 )
             )
 
             .add_system_set(
-                in_collision(
+                in_update(
                     SystemSet::on_exit(ConsoleState::Shown)
-                        .with_system(despawn_collision_boxes)
+                        // .with_system(despawn_collision_boxes)
                         .with_system(despawn_ui_system::<AttributeWindow>)
                 )
             )
