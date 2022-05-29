@@ -7,6 +7,7 @@ use crate::units::behaviors::BehaviorPlugin;
 use crate::units::bullets::BulletPlugin;
 use crate::units::clear_damaged_entities_system::clear_damaged_entities_system;
 use crate::units::enemies::EnemiesPlugin;
+use crate::units::guns::GunPlugin;
 use crate::units::health_bar_update_system::healthbar_update_system;
 use crate::units::hit_system::hit_system;
 use crate::units::knock_back_system::knock_back_system;
@@ -45,6 +46,7 @@ mod layerable_system;
 mod unit_push_system;
 mod time_alive_system;
 mod knock_back_system;
+pub mod guns;
 
 
 /// This plugin manages the everything related to [Unit] systems and how they get applied.
@@ -63,6 +65,7 @@ impl Plugin for UnitPlugin {
             .add_plugin(BulletPlugin)
             .add_plugin(EnemiesPlugin)
             .add_plugin(BehaviorPlugin)
+            .add_plugin(GunPlugin)
 
             .add_system_set(
                 in_pre_update(
