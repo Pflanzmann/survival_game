@@ -20,7 +20,7 @@ use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_attributes::unit_size::UnitSize;
-use crate::units::modifications::acid_puddle_system::acid_puddle_system;
+use acid_puddle_system::acid_puddle_system;
 use crate::units::modifications::bullet_modifications::curve_shot_system::curve_shot_system;
 use crate::units::modifications::bullet_modifications::explosion_shot_system::explosion_shot_system;
 use crate::units::modifications::bullet_modifications::gravity_shot::gravity_shot_system;
@@ -37,6 +37,7 @@ mod gravity_shot;
 mod explosion_shot_system;
 mod helper;
 mod lightning_system;
+mod acid_puddle_system;
 
 /// This plugin manages the [Bullet]-[Modification]s and how they get applied.
 /// All the systems get added in the [PreUpdate] so that they can react last to all
