@@ -1,4 +1,5 @@
 use bevy::prelude::{GlobalTransform, Query, Res, Time, Transform, Vec2};
+
 use crate::models::aim_direction::AimDirection;
 use crate::models::behavior::turn_to_target_behavior::TurnToTargetBehavior;
 

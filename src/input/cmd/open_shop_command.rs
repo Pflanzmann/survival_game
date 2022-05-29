@@ -28,7 +28,7 @@ pub fn open_shop_command(
                 }
             }
             None => {
-                debug_command_info_event.send(DebugCommandInfoEvent { debug_command:"Invalid [shop] value: no_value".to_string() });
+                debug_command_info_event.send(DebugCommandInfoEvent { debug_command: "Invalid [shop] value: no_value".to_string() });
                 continue;
             }
         };

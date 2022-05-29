@@ -1,4 +1,5 @@
 use bevy::prelude::ResMut;
+
 use crate::{AppStateTrigger, ToAppState};
 
 pub fn trigger_enter_main_system(

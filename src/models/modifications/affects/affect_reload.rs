@@ -1,7 +1,7 @@
 use bevy::ecs::component::Component;
 use serde::Deserialize;
-use crate::models::modifications::affects::affect_operator::AffectOperator;
 
+use crate::models::modifications::affects::affect_operator::AffectOperator;
 use crate::models::modifications::affects::attribute_affect::AttributeAffect;
 use crate::models::unit_attributes::reload::Reload;
 

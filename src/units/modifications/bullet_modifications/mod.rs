@@ -1,5 +1,6 @@
 use bevy::prelude::{Plugin, SystemSet};
 
+use acid_puddle_system::acid_puddle_system;
 use helper::assign_attribute_to_bullet_system::assign_attribute_to_bullet_system;
 use helper::assign_modification_to_bullet_system::assign_modification_to_bullet_system;
 use helper::assign_with_associate_component_to_bullet_system::assign_with_associate_component_to_bullet_system;
@@ -20,7 +21,6 @@ use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_attributes::unit_size::UnitSize;
-use acid_puddle_system::acid_puddle_system;
 use crate::units::modifications::bullet_modifications::curve_shot_system::curve_shot_system;
 use crate::units::modifications::bullet_modifications::explosion_shot_system::explosion_shot_system;
 use crate::units::modifications::bullet_modifications::gravity_shot::gravity_shot_system;

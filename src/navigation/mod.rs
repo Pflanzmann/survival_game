@@ -32,7 +32,7 @@ pub enum ScheduleLabel {
     PreUpdate,
     Update,
     PostUpdate,
-    Last
+    Last,
 }
 
 impl Plugin for NavigationPlugin {

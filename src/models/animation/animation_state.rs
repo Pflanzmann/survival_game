@@ -13,7 +13,7 @@ pub struct CurrentAnimationState {
 }
 
 impl CurrentAnimationState {
-    pub fn new () -> CurrentAnimationState{
-        CurrentAnimationState{ state : AnimationState::Idle }
+    pub fn new() -> CurrentAnimationState {
+        CurrentAnimationState { state: AnimationState::Idle }
     }
 }

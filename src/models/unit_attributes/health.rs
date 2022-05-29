@@ -37,7 +37,7 @@ impl Attribute for Health {
         let health_ratio = total_health / self.current_health;
 
         self.bonus_amount += added_amount;
-        
+
         self.current_health = self.get_total_amount() / health_ratio;
     }
 

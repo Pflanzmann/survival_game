@@ -1,17 +1,18 @@
-use bevy::prelude::{Entity, EventReader, EventWriter, Query, Res, Time, With, Without};
+use bevy::prelude::{Entity, EventReader, EventWriter, Query, Res, With, Without};
 
 use crate::models::damaged_entities::{DamagedEntities, DamagedEntity};
 use crate::models::enemy::Enemy;
-use crate::models::events::target_died_event::TargetDiedEvent;
 use crate::models::events::player_died_event::PlayerDiedEvent;
 use crate::models::events::player_enemy_collision_event::PlayerEnemyCollisionEvent;
+use crate::models::events::target_died_event::TargetDiedEvent;
 use crate::models::player::Player;
+use crate::models::resources::world::game_time::GameTime;
 use crate::models::unit_attributes::attribute::*;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
 
 pub fn player_hit_system(
-    time: Res<Time>,
+    game_time: Res<GameTime>,
     mut player_enemy_collision_events: EventReader<PlayerEnemyCollisionEvent>,
     mut enemy_died_event: EventWriter<TargetDiedEvent>,
     mut player_died_event: EventWriter<PlayerDiedEvent>,
@@ -29,7 +30,7 @@ pub fn player_hit_system(
             Err(_) => continue,
         };
 
-        let damaged_entity = DamagedEntity::new(enemy_entity, time.seconds_since_startup());
+        let damaged_entity = DamagedEntity::new(enemy_entity, game_time.time_in_seconds);
         if !enemy_damaged_entities.contains(&damaged_entity) {
             enemy_damaged_entities.push(damaged_entity);
 
@@ -41,7 +42,7 @@ pub fn player_hit_system(
             }
         }
 
-        let damaged_entity = DamagedEntity::new(enemy_entity, time.seconds_since_startup());
+        let damaged_entity = DamagedEntity::new(enemy_entity, game_time.time_in_seconds);
         if !player_damaged_entities.contains(&damaged_entity) {
             player_damaged_entities.push(damaged_entity);
 

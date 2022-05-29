@@ -1,4 +1,5 @@
 use bevy::prelude::{Query, Res, Text, Time, With};
+
 use crate::models::ui::debug_console::DebugFpsCounter;
 
 pub fn fps_counter_update_system(

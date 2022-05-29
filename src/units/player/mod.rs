@@ -14,7 +14,6 @@ pub mod player_hit_system;
 pub mod player_died_system;
 
 
-
 /// This plugin manages the everything related to [Player] systems and how they get applied.
 ///
 /// The setup of the player happens in the main menu, because other setup-systems depend on having

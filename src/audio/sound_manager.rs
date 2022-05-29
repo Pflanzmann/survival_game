@@ -1,7 +1,7 @@
 use bevy::prelude::{Res, ResMut};
 use bevy_kira_audio::{Audio, AudioChannel};
-use crate::models::audio::sound_channel::SoundChannel;
 
+use crate::models::audio::sound_channel::SoundChannel;
 use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 
 #[derive(Default)]
@@ -15,26 +15,25 @@ pub struct SoundManager {
 }
 
 impl SoundManager {
-
-    pub fn set_volume_for_channel(&self, volume : f32, channel : SoundChannel, audio : Res<Audio>){
+    pub fn set_volume_for_channel(&self, volume: f32, channel: SoundChannel, audio: Res<Audio>) {
         match channel {
             SoundChannel::Pickup => {
-                for channel in self.channel_vector_pickup.iter(){
+                for channel in self.channel_vector_pickup.iter() {
                     audio.set_volume_in_channel(volume, channel)
                 }
             }
             SoundChannel::Bullet => {
-                for channel in self.channel_vector_bullet.iter(){
+                for channel in self.channel_vector_bullet.iter() {
                     audio.set_volume_in_channel(volume, channel)
                 }
             }
             SoundChannel::Misc => {
-                for channel in self.channel_vector_misc.iter(){
+                for channel in self.channel_vector_misc.iter() {
                     audio.set_volume_in_channel(volume, channel)
                 }
             }
             SoundChannel::Background => {
-                for channel in self.channel_vector_background.iter(){
+                for channel in self.channel_vector_background.iter() {
                     audio.set_volume_in_channel(volume, channel)
                 }
             }

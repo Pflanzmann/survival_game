@@ -13,6 +13,6 @@
   "AcidPuddle": {
     "time_alive": 1.5,
     "damage": 2.0,
-    "damage_ticks_per_second": 0.8
+    "damage_ticks_per_min": 60
   }
 }

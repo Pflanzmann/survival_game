@@ -5,7 +5,7 @@ use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
 use crate::models::collision::enemy_hit_box_collider::EnemyHitBoxCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::events::enemy_collision_event::EnemyCollisionEvent;
-use crate::models::resources::hit_box_quad_tree::{HitBoxData, HitBoxQuadTree};
+use crate::models::resources::collision::hit_box_quad_tree::{HitBoxData, HitBoxQuadTree};
 use crate::util::quad_tree::QuadData;
 
 pub fn enemy_hit_box_collision_system(

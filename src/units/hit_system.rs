@@ -1,4 +1,4 @@
-use bevy::prelude::{Entity, EventReader, EventWriter, Query, Res, Time, With, Without};
+use bevy::prelude::{Entity, EventReader, EventWriter, Query, Res, With, Without};
 
 use crate::models::damaged_entities::{DamagedEntities, DamagedEntity};
 use crate::models::enemy::Enemy;
@@ -6,6 +6,7 @@ use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
 use crate::models::events::damaged_event::DamagedEvent;
 use crate::models::events::enemy_collision_event::EnemyCollisionEvent;
 use crate::models::events::target_died_event::TargetDiedEvent;
+use crate::models::resources::world::game_time::GameTime;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
@@ -19,7 +20,7 @@ use crate::models::unit_attributes::hit_limit::HitLimit;
 ///
 /// If an [Enemy] dies from the bullet it will send out an [EnemyDiedEvent].
 pub fn hit_system(
-    time: Res<Time>,
+    game_time: Res<GameTime>,
     mut bullet_stopped_event: EventWriter<BulletStoppedEvent>,
     mut damaged_event: EventWriter<DamagedEvent>,
     mut enemy_collision_events: EventReader<EnemyCollisionEvent>,
@@ -44,7 +45,7 @@ pub fn hit_system(
             }
         }
 
-        let damaged_entity = DamagedEntity::new(target_entity, time.seconds_since_startup());
+        let damaged_entity = DamagedEntity::new(target_entity, game_time.time_in_seconds);
         if source_entities.contains(&damaged_entity) {
             continue;
         }

@@ -5,5 +5,5 @@ pub enum SoundHandleChannel {
     Pickup(Handle<AudioSource>),
     Bullet(Handle<AudioSource>),
     Misc(Handle<AudioSource>),
-    Background(Handle<AudioSource>)
+    Background(Handle<AudioSource>),
 }

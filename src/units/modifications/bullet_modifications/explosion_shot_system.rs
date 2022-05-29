@@ -3,8 +3,8 @@ use bevy::sprite::TextureAtlasSprite;
 use rand::random;
 
 use crate::assets_handling::preload_animation_system::AtlasHandles;
-use crate::models::animation::animation_state::CurrentAnimationState;
 use crate::models::animation::animation_state::AnimationState::Idle;
+use crate::models::animation::animation_state::CurrentAnimationState;
 use crate::models::animation::idle_animation_component::IdleAnimation;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_solid_body_collider::EnemySolidBodyCollider;

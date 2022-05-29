@@ -76,6 +76,5 @@ impl Plugin for UiPlugin {
             .add_system(move_tool_tip_window)
             .add_system(populate_tooltip_window)
             .add_system(update_bullet_hud_system);
-
     }
 }

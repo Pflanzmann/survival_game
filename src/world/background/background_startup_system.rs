@@ -1,7 +1,7 @@
 use bevy::prelude::{BuildChildren, Commands, GlobalTransform, Name, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2};
 
 use crate::{SpriteLayer, TextureHandles};
-use crate::models::resources::background_tiles_resource::{BackgroundTilesResource, TileData};
+use crate::models::resources::world::background_tiles_resource::{BackgroundTilesResource, TileData};
 use crate::models::tile::Tile;
 
 pub fn background_startup_system(

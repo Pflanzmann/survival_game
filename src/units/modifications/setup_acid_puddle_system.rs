@@ -33,7 +33,7 @@ pub fn setup_acid_puddle_system(
 
         let acid_puddle_owner_entity = commands.spawn()
             .insert(Name::new("AcidPuddleOwner"))
-            .insert_bundle(DamageBundle::new(bullet_mod.damage, bullet_mod.damage_ticks_per_second))
+            .insert_bundle(DamageBundle::new(bullet_mod.damage, bullet_mod.damage_ticks_per_min))
             .id();
 
         commands.entity(weapon_mod_container.container_entity).insert(AcidPuddleOwner { owner: acid_puddle_owner_entity });

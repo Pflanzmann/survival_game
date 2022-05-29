@@ -4,7 +4,7 @@ use crate::models::collision::collider_type::ColliderType::*;
 use crate::models::collision::solid_body_collider::SolidBodyCollider;
 use crate::models::events::player_enemy_collision_event::PlayerEnemyCollisionEvent;
 use crate::models::player::Player;
-use crate::models::resources::solid_body_quad_tree::{SolidBodyData, SolidBodyQuadTree};
+use crate::models::resources::collision::solid_body_quad_tree::{SolidBodyData, SolidBodyQuadTree};
 use crate::util::quad_tree::QuadData;
 
 pub fn enemy_player_collision_system(

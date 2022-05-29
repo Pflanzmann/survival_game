@@ -8,7 +8,6 @@ use serde_json::Value;
 
 use crate::App;
 use crate::models::modifications::acid_puddle::AcidPuddle;
-use crate::models::modifications::descriptors::sprite_path_wrapper::SpritePathWrapper;
 use crate::models::modifications::affects::affect_damage::AffectDamage;
 use crate::models::modifications::affects::affect_health::AffectHealth;
 use crate::models::modifications::affects::affect_hit_limit::AffectHitLimit;
@@ -28,6 +27,7 @@ use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::mod_sprite_path::SpriteHandle;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::descriptors::price::Price;
+use crate::models::modifications::descriptors::sprite_path_wrapper::SpritePathWrapper;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::modifications::effects::effect_add_health::EffectAddHealth;
 use crate::models::modifications::effects::effect_damage_health::EffectDamageHealth;

@@ -3,7 +3,6 @@ use bevy::prelude::*;
 use crate::models::ui::game_over::NavigationButton;
 use crate::models::ui::main_menu::MainMenuComp;
 
-
 pub fn spawn_main_menu_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
