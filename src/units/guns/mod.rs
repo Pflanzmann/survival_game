@@ -1,11 +1,11 @@
 use bevy::prelude::{Plugin, SystemSet};
 
 use crate::{App, AppState};
-use crate::guns::basic_sword_system::basic_sword_system;
-use crate::guns::gun_reloading_timer_system::gun_reloading_timer_system;
-use crate::guns::setup_basic_gun_system::setup_basic_gun_system;
-use crate::guns::setup_sword_system::setup_sword_system;
-use crate::guns::straight_basic_shot_system::straight_basic_shot_system;
+use crate::units::guns::basic_sword_system::basic_sword_system;
+use crate::units::guns::gun_reloading_timer_system::gun_reloading_timer_system;
+use crate::units::guns::setup_basic_gun_system::setup_basic_gun_system;
+use crate::units::guns::setup_sword_system::setup_sword_system;
+use crate::units::guns::straight_basic_shot_system::straight_basic_shot_system;
 use crate::util::stage_label_helper::in_update;
 
 mod straight_basic_shot_system;

@@ -9,6 +9,7 @@ use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_solid_body_collider::EnemySolidBodyCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
+use crate::models::layerable::Layerable;
 use crate::models::modifications::acid_puddle::{AcidPuddle, AcidPuddleOwner, AcidPuddleUnit};
 use crate::models::time_alive::TimeAlive;
 use crate::models::unit_attributes::unit_size::UnitSize;
@@ -40,12 +41,16 @@ pub fn acid_puddle_system(
         })
             .insert(Name::new("AcidPuddle"))
             .insert(AcidPuddleUnit)
+
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(0.0) })
             .insert(ColliderOwner(acid_puddle_owner.owner))
+            .insert(EnemySolidBodyCollider)
             .insert(*unit_size)
+
             .insert(TimeAlive { time_alive: acid_puddle.time_alive })
             .insert(FadeAnimation { fade_time: -acid_puddle.time_alive })
-            .insert(EnemySolidBodyCollider)
+
+            .insert(Layerable::new(SpriteLayer::LowGroundLevel.get_layer_z()))
         ;
     }
 }

@@ -11,35 +11,29 @@ use crate::animation::AnimationPlugin;
 use crate::assets_handling::AssetHandlingPlugin;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::audio::CustomAudioPlugin;
-use crate::background::BackgroundPlugin;
 use crate::collision::CollisionPlugin;
-use crate::drops::DropsPlugin;
-use crate::guns::GunPlugin;
 use crate::input::InputPlugin;
 use crate::models::events::EventsPlugin;
 use crate::models::resources::ResourcePlugin;
 use crate::models::resources::state_resources::AppStateTrigger;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::navigation::NavigationPlugin;
-use crate::spawner::SpawnerPlugin;
 use crate::ui::UiPlugin;
 use crate::units::UnitPlugin;
 use crate::util::debug::DebugPlugin;
+use crate::world::WorldPlugin;
 
 mod input;
 mod units;
 mod collision;
-mod guns;
 mod models;
-mod drops;
 mod assets_handling;
 mod util;
 mod ui;
-mod background;
 mod navigation;
-mod spawner;
 mod audio;
 mod animation;
+mod world;
 
 const SPRITE_ROW_LENGTH: usize = 4;
 
@@ -106,12 +100,9 @@ fn main() {
         .add_plugin(InputPlugin)
         .add_plugin(UnitPlugin)
         .add_plugin(CollisionPlugin)
-        .add_plugin(GunPlugin)
-        .add_plugin(DropsPlugin)
         .add_plugin(AssetHandlingPlugin)
         .add_plugin(ResourcePlugin)
-        .add_plugin(BackgroundPlugin)
-        .add_plugin(SpawnerPlugin)
+        .add_plugin(WorldPlugin)
         .add_plugin(DebugPlugin)
 
         .add_plugin(AudioPlugin)
