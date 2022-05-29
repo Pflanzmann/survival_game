@@ -7,6 +7,7 @@ use serde::de::DeserializeOwned;
 use serde_json::Value;
 
 use crate::App;
+use crate::models::modifications::acid_puddle::AcidPuddle;
 use crate::models::modifications::descriptors::sprite_path_wrapper::SpritePathWrapper;
 use crate::models::modifications::affects::affect_damage::AffectDamage;
 use crate::models::modifications::affects::affect_health::AffectHealth;
@@ -95,6 +96,7 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<KnockBackShot>();
         entity_builder.register_component::<ExplosionShot>();
         entity_builder.register_component::<Lightning>();
+        entity_builder.register_component::<AcidPuddle>();
 
         entity_builder.register_component::<GlassCannon>();
         entity_builder.register_component::<LowCal>();
