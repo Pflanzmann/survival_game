@@ -25,7 +25,7 @@ impl Plugin for BehaviorPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_system_set(
-                in_collision(
+                in_update(
                     SystemSet::new()
                         .with_system(steering_behavior_system)
                 )

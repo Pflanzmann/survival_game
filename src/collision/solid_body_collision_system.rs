@@ -1,4 +1,5 @@
 use bevy::prelude::{Entity, Query, Res, Transform, Vec2};
+use bevy::tasks::ComputeTaskPool;
 
 use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
 use crate::models::collision::collider_weight::ColliderWeight;
@@ -9,8 +10,9 @@ use crate::util::quad_tree::QuadData;
 pub fn solid_body_collision_system(
     quad_tree_holder: Res<SolidBodyQuadTree>,
     mut solid_body_unit_query: Query<(Entity, &mut Transform, &SolidBodyCollider, &ColliderWeight)>,
+    pool: Res<ComputeTaskPool>,
 ) {
-    for (entity, mut transform, solid_body_collider, collision_weight) in solid_body_unit_query.iter_mut() {
+    solid_body_unit_query.par_for_each_mut(&pool, 10, |(entity, mut transform, solid_body_collider, collision_weight)| {
         let size = match solid_body_collider.collider_type {
             Circle(radius) => Vec2::new(radius, radius),
             Rectangle(size) => size,
@@ -50,5 +52,5 @@ pub fn solid_body_collision_system(
         if collision_resolutions.length() > 0.0 {
             transform.translation = ((collision_resolutions / collision_resolutions_counter) - solid_body_collider.offset).extend(transform.translation.z);
         }
-    }
+    });
 }
