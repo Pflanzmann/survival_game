@@ -71,7 +71,6 @@ mod apply_radiation_system;
 mod apply_shield_system;
 mod effect;
 mod bullet_modifications;
-mod acid_puddle_system;
 mod setup_acid_puddle_system;
 
 /// All the apply systems have to get registered here.

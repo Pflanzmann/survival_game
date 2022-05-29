@@ -1,10 +1,9 @@
-use bevy::prelude::{Commands, EventReader, GlobalTransform, Name, Query, Res, Sprite, SpriteBundle, SpriteSheetBundle, Time, Transform, Vec2};
+use bevy::prelude::{Commands, EventReader, GlobalTransform, Name, Query, Res, SpriteSheetBundle, Transform};
 use bevy::sprite::TextureAtlasSprite;
 use rand::Rng;
 
 use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::models::animation::fade_animation::FadeAnimation;
-use crate::models::bullet::Bullet;
 use crate::models::collision::collider_owner::ColliderOwner;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_solid_body_collider::EnemySolidBodyCollider;
@@ -32,7 +31,7 @@ pub fn acid_puddle_system(
         commands.spawn_bundle(SpriteSheetBundle {
             sprite: TextureAtlasSprite {
                 index: random_sprite_index,
-                custom_size: Some(Vec2::new(256.0, 256.0)),
+                custom_size: Some(unit_size.proportional_unit_size()),
                 ..Default::default()
             },
             texture_atlas: atlas_handle.acid_puddle_atlas.clone(),
