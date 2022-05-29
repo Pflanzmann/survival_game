@@ -2,7 +2,7 @@ use bevy::app::Plugin;
 use bevy::prelude::{App, SystemSet};
 
 use crate::animation::animation_state_handle_system::animation_state_handle_system;
-use crate::animation::fade_animation_system::fade_animation_system;
+use crate::animation::fade_animation_system::{fade_animation_sprite_system, fade_animation_texture_atlas_system};
 use crate::animation::idle_animation_system::idle_animation_system;
 use crate::animation::movement_animation_down_system::movement_animation_down_system;
 use crate::animation::movement_animation_side_system::movement_animation_side_system;
@@ -33,7 +33,8 @@ impl Plugin for AnimationPlugin {
                         .with_system(idle_animation_system)
                         .with_system(animation_state_handle_system)
                         .with_system(teleport_animation_system)
-                        .with_system(fade_animation_system)
+                        .with_system(fade_animation_sprite_system)
+                        .with_system(fade_animation_texture_atlas_system)
                 )
             );
     }
