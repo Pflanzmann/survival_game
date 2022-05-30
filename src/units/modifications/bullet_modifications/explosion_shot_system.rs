@@ -42,13 +42,14 @@ pub fn explosion_shot_system(
             transform: Transform::from_translation(transform.translation),
             ..Default::default()
         })
-            .insert(IdleAnimation::new(0.0, 30, 0, explosion_shot.explosion_time_alive))
-            .insert(CurrentAnimationState { state: Idle })
             .insert(TimeAlive { time_alive: explosion_shot.explosion_time_alive })
             .insert(DamagedEntities::default())
             .insert(Damage::new(damage.get_total_amount()))
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(explosion_shot.radius) })
             .insert(EnemySolidBodyCollider)
+
+            .insert(CurrentAnimationState { state: Idle })
+            .insert(IdleAnimation::new(30, 0, explosion_shot.explosion_time_alive))
         ;
     }
 }

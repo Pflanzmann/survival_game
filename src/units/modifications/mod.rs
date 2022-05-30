@@ -23,6 +23,7 @@ use crate::models::modifications::affects::bullet_affects::affect_bullet_hit_lim
 use crate::models::modifications::affects::bullet_affects::affect_bullet_move_speed::AffectBulletMoveSpeed;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_travel_range::AffectBulletTravelRange;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_unit_size::AffectBulletUnitSize;
+use crate::models::modifications::burning_shot::{BurningShot, BurningShotUnit};
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::death_ball::{DeathBall, DeathBallUnit};
 use crate::models::modifications::explosion_shot::ExplosionShot;
@@ -121,6 +122,7 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(apply_bullet_mod_to_targets_gun_system::<ExplosionShot>)
                         .with_system(apply_bullet_mod_to_targets_gun_system::<Lightning>)
                         .with_system(apply_bullet_mod_to_targets_gun_system::<AcidPuddle>)
+                        .with_system(apply_bullet_mod_to_targets_gun_system::<BurningShot>)
 
                         .with_system(apply_player_mod_to_target_system::<Sprinting>)
 
@@ -176,6 +178,7 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(remove_bullet_mod_from_targets_gun_system::<ExplosionShot>)
                         .with_system(remove_bullet_mod_from_targets_gun_system::<Lightning>)
                         .with_system(remove_bullet_mod_from_targets_gun_system::<AcidPuddle>)
+                        .with_system(remove_bullet_mod_from_targets_gun_system::<BurningShot>)
 
                         .with_system(remove_player_mod_from_target_system::<Sprinting>)
 

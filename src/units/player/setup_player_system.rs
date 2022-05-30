@@ -71,7 +71,7 @@ pub fn setup_player_system(
 
         .insert(GoldStorage::default())
 
-        .insert(IdleAnimation::new(0.0, 3, 0, 0.5))
+        .insert(IdleAnimation::new(3, 0, 0.5))
         .insert(MoveAnimationSide::new(0.0, 4, 4, 15))
         .insert(MoveAnimationUp::new(0.0, 4, 5, 15))
         .insert(MoveAnimationDown::new(0.0, 4, 3, 15))

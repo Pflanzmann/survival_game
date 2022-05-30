@@ -1,0 +1,14 @@
+{
+  "Modification": null,
+  "ModName": {
+    "mod_name": "Burning Shot"
+  },
+  "SpritePathWrapper": {
+    "path": "sprites/mod_icons/burning_shot_icon.png"
+  },
+  "ToolTip": {
+    "tooltip": "That's gotta burn!"
+  },
+  "Price": 10,
+  "BurningShot": null
+}

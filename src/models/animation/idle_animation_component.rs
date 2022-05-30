@@ -9,7 +9,7 @@ pub struct IdleAnimation {
 }
 
 impl IdleAnimation {
-    pub fn new(progress: f32, animation_frame_count: usize, atlas_row: usize, duration: f32) -> IdleAnimation {
-        IdleAnimation { progress, animation_frame_count, atlas_row, duration }
+    pub fn new(animation_frame_count: usize, atlas_row: usize, duration: f32) -> IdleAnimation {
+        IdleAnimation { progress: 0.0, animation_frame_count, atlas_row, duration }
     }
 }
