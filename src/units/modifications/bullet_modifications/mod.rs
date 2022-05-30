@@ -9,6 +9,7 @@ use crate::{App, AppState};
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::knock_back::KnockBack;
 use crate::models::modifications::acid_puddle::{AcidPuddle, AcidPuddleOwner};
+use crate::models::modifications::burning_shot::BurningShot;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::explosion_shot::ExplosionShot;
 use crate::models::modifications::gravity_shot::GravityShot;
@@ -21,6 +22,7 @@ use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_attributes::unit_size::UnitSize;
+use crate::units::modifications::bullet_modifications::burning_shot_system::burning_shot_system;
 use crate::units::modifications::bullet_modifications::curve_shot_system::curve_shot_system;
 use crate::units::modifications::bullet_modifications::explosion_shot_system::explosion_shot_system;
 use crate::units::modifications::bullet_modifications::gravity_shot::gravity_shot_system;
@@ -38,6 +40,7 @@ mod explosion_shot_system;
 mod helper;
 mod lightning_system;
 mod acid_puddle_system;
+mod burning_shot_system;
 
 /// This plugin manages the [Bullet]-[Modification]s and how they get applied.
 /// All the systems get added in the [PreUpdate] so that they can react last to all
@@ -69,6 +72,7 @@ impl Plugin for BulletModificationsPlugin {
                         .with_system(assign_modification_to_bullet_system::<Lightning>)
                         .with_system(assign_modification_to_bullet_system::<AcidPuddle>)
                         .with_system(assign_modification_to_bullet_system::<AcidPuddleOwner>)
+                        .with_system(assign_modification_to_bullet_system::<BurningShot>)
                 )
             )
 
@@ -83,6 +87,7 @@ impl Plugin for BulletModificationsPlugin {
                         .with_system(explosion_shot_system)
                         .with_system(lightning_system)
                         .with_system(acid_puddle_system)
+                        .with_system(burning_shot_system)
                 )
             );
     }

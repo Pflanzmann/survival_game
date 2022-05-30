@@ -20,3 +20,5 @@ pub mod blue_pill;
 pub mod low_cal;
 pub mod glass_cannon;
 pub mod acid_puddle;
+pub mod burning_shot;
+pub mod statuses;

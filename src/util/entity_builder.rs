@@ -21,6 +21,7 @@ use crate::models::modifications::affects::bullet_affects::affect_bullet_move_sp
 use crate::models::modifications::affects::bullet_affects::affect_bullet_travel_range::AffectBulletTravelRange;
 use crate::models::modifications::affects::bullet_affects::affect_bullet_unit_size::AffectBulletUnitSize;
 use crate::models::modifications::blue_pill::BluePill;
+use crate::models::modifications::burning_shot::BurningShot;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::death_ball::DeathBall;
 use crate::models::modifications::descriptors::mod_name::ModName;
@@ -97,6 +98,7 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<ExplosionShot>();
         entity_builder.register_component::<Lightning>();
         entity_builder.register_component::<AcidPuddle>();
+        entity_builder.register_component::<BurningShot>();
 
         entity_builder.register_component::<GlassCannon>();
         entity_builder.register_component::<LowCal>();

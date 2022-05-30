@@ -46,7 +46,7 @@ pub fn setup_shop_system(
             collider_type: ColliderType::Circle(256.0 / 2.0)
         })
 
-        .insert(IdleAnimation::new(0.0, 3, 0, 0.5))
+        .insert(IdleAnimation::new(3, 0, 0.5))
         .insert(CurrentAnimationState::new())
     ;
 
