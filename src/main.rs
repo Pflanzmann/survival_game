@@ -55,6 +55,7 @@ pub enum AppState {
     GameOver,
     Paused,
     Shop,
+    GameWon,
 }
 
 #[derive(Debug)]
@@ -66,6 +67,7 @@ pub enum ToAppState {
     ToGameOver,
     ToPaused,
     ToShop,
+    ToGameWon,
     None,
 }
 

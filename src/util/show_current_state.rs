@@ -13,5 +13,6 @@ pub fn show_current_state(
         AppState::GameOver => { println!("GameOver") }
         AppState::Paused => { println!("Paused") }
         AppState::Shop => { println!("Shop") }
+        AppState::GameWon => { println!("GameWon") }
     }
 }

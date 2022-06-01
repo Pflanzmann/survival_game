@@ -51,6 +51,13 @@ pub fn execute_state_switch_system(
             }
         }
 
+        ToAppState::ToGameWon => {
+            if app_state.current() != &AppState::GameWon {
+                state_trigger.state_change_trigger = ToAppState::None;
+                app_state.set(AppState::GameWon).unwrap();
+            }
+        }
+
         ToAppState::None => {}
     }
 }

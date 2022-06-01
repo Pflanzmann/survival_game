@@ -27,7 +27,7 @@ pub fn goal_activation_system(
 
                 if goal_activation_progress.progress > 15.0 {
                     level_finished_event.send(LevelFinishedEvent);
-                    state_trigger.state_change_trigger = ToAppState::ToGameOver;
+                    state_trigger.state_change_trigger = ToAppState::ToGameWon;
                 }
             }
         }

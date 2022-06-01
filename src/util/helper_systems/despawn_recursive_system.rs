@@ -1,6 +1,6 @@
 use bevy::prelude::{Commands, Component, DespawnRecursiveExt, Entity, Query, With};
 
-pub fn despawn_ui_system<T: Component>(
+pub fn despawn_recursive_system<T: Component>(
     mut commands: Commands,
     despawn_query: Query<Entity, With<T>>,
 ) {
