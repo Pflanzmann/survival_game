@@ -1,4 +1,6 @@
-use bevy::prelude::{Commands, EventWriter, GlobalTransform, Name, Query, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2, With};
+use bevy::math::EulerRot;
+use bevy::prelude::{Commands, EventWriter, GlobalTransform, Name, Quat, Query, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2, With};
+use rand::random;
 
 use crate::assets_handling::preload_audio_system::SoundHandles;
 use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
@@ -44,8 +46,13 @@ pub fn straight_basic_shot_system(
         }
         holder_reloadable.reload_timer = holder_reloadable.get_total_amount();
 
+        let random_rotation: f32 = random::<f32>() * 100.0 - 50.0;
+
+        let mut bullet_transform = Transform::from_xyz(holder_transform.translation.x, holder_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z());
+        bullet_transform.rotation = Quat::from_euler(EulerRot::XYZ, 0.0, 0.0, random_rotation);
+
         let bullet = command.spawn_bundle(SpriteBundle {
-            transform: Transform::from_xyz(holder_transform.translation.x, holder_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z()),
+            transform: bullet_transform,
             sprite: Sprite {
                 custom_size: Some(Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y)),
                 ..Default::default()
@@ -68,7 +75,7 @@ pub fn straight_basic_shot_system(
             .insert(HitLimit::new(1.0))
             .insert(TravelRange::new(2048.0))
 
-            .insert(UnitRotation { revolutions_per_min: 30.0 })
+            .insert(UnitRotation { revolutions_per_min: if random_rotation > 0.0 { 40.0 } else { -40.0 } })
             .id();
 
         bullet_shot_event_writer.send(BulletShotEvent { entity: bullet });
