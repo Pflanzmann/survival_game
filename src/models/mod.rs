@@ -40,3 +40,4 @@ pub mod knock_back;
 pub mod gun;
 pub mod gold_storage;
 pub mod visited_shop;
+pub mod world;

@@ -5,12 +5,14 @@ use crate::util::stage_label_helper::in_update;
 use crate::world::background::BackgroundPlugin;
 use crate::world::drops::DropsPlugin;
 use crate::world::game_time_system::game_time_system;
+use crate::world::goal::GoalPlugin;
 use crate::world::spawner::SpawnerPlugin;
 
 pub mod background;
 pub mod drops;
 pub mod spawner;
 mod game_time_system;
+mod goal;
 
 pub struct WorldPlugin;
 
@@ -20,6 +22,7 @@ impl Plugin for WorldPlugin {
             .add_plugin(DropsPlugin)
             .add_plugin(BackgroundPlugin)
             .add_plugin(SpawnerPlugin)
+            .add_plugin(GoalPlugin)
 
             .add_system_set(
                 in_update(

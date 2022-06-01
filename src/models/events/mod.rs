@@ -8,6 +8,7 @@ use crate::models::events::debug_command_event::DebugCommandEvent;
 use crate::models::events::debug_command_info_event::DebugCommandInfoEvent;
 use crate::models::events::enemy_collision_event::EnemyCollisionEvent;
 use crate::models::events::item_collision_event::ItemCollisionEvent;
+use crate::models::events::level_finished_event::LevelFinishedEvent;
 use crate::models::events::player_died_event::PlayerDiedEvent;
 use crate::models::events::player_enemy_collision_event::PlayerEnemyCollisionEvent;
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
@@ -25,6 +26,7 @@ pub mod damaged_event;
 pub mod remove_mod_from_target_event;
 pub mod debug_command_event;
 pub mod debug_command_info_event;
+pub mod level_finished_event;
 
 /// This plugin defines events and their contents for several occasions
 ///
@@ -62,6 +64,7 @@ impl Plugin for EventsPlugin {
             .add_event::<DamagedEvent>()
             .add_event::<DebugCommandEvent>()
             .add_event::<DebugCommandInfoEvent>()
+            .add_event::<LevelFinishedEvent>()
         ;
     }
 }
