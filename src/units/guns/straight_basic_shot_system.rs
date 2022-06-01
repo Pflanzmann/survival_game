@@ -5,6 +5,7 @@ use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
 use crate::audio::sound_manager::SoundManager;
 use crate::models::aim_direction::AimDirection;
 use crate::models::audio::sound_handle_channel::SoundHandleChannel;
+use crate::models::behavior::rotate_behavior::UnitRotation;
 use crate::models::bullet::Bullet;
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::collision::collider_type::ColliderType;
@@ -52,7 +53,7 @@ pub fn straight_basic_shot_system(
             texture: texture_handle.bullet_fireball.clone(),
             ..Default::default()
         })
-            .insert(Name::new("Bullet"))
+            .insert(Name::new("Projectile"))
             .insert(Bullet { source_entity: weapon_holder_slot.weapon_entity })
 
             .insert(UnitSize::new_size(Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y)))
@@ -67,7 +68,7 @@ pub fn straight_basic_shot_system(
             .insert(HitLimit::new(1.0))
             .insert(TravelRange::new(2048.0))
 
-            .insert(SpriteMoveRotation)
+            .insert(UnitRotation { revolutions_per_min: 30.0 })
             .id();
 
         bullet_shot_event_writer.send(BulletShotEvent { entity: bullet });

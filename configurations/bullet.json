@@ -1,7 +1,7 @@
 {
-  "sprite_custom_size_x": 128.0,
+  "sprite_custom_size_x": 95.0,
   "sprite_custom_size_y": 128.0,
-  "sprite_path": "sprites/Bullet.png",
+  "sprite_path": "sprites/paper_projectile.png",
   "speed": 15.0,
   "damage": 5.0,
   "range": 2048.0,
