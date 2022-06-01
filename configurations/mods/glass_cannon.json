@@ -26,8 +26,5 @@
   "AffectBulletUnitSize": {
     "operator": "Multiply",
     "amount": 5.0
-  },
-  "EffectDamageHealth": {
-    "amount": 20.0
   }
 }
