@@ -6,3 +6,4 @@ pub mod game_over;
 pub mod debug_console;
 pub mod tooltip_window;
 pub mod attribute_text;
+pub mod game_won_screen;

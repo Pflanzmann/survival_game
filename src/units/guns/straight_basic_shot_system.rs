@@ -46,7 +46,7 @@ pub fn straight_basic_shot_system(
         }
         holder_reloadable.reload_timer = holder_reloadable.get_total_amount();
 
-        let random_rotation: f32 = random::<f32>() * 100.0 - 50.0;
+        let random_rotation: f32 = random::<f32>() * 100.0;
 
         let mut bullet_transform = Transform::from_xyz(holder_transform.translation.x, holder_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z());
         bullet_transform.rotation = Quat::from_euler(EulerRot::XYZ, 0.0, 0.0, random_rotation);
@@ -75,7 +75,7 @@ pub fn straight_basic_shot_system(
             .insert(HitLimit::new(1.0))
             .insert(TravelRange::new(2048.0))
 
-            .insert(UnitRotation { revolutions_per_min: if random_rotation > 0.0 { 40.0 } else { -40.0 } })
+            .insert(UnitRotation { revolutions_per_min: if random_rotation > 50.0 { 40.0 } else { -40.0 } })
             .id();
 
         bullet_shot_event_writer.send(BulletShotEvent { entity: bullet });

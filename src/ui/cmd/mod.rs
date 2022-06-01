@@ -14,7 +14,7 @@ use crate::ui::cmd::attribute_window::{assign_attribute_value_system, assign_bul
 use crate::ui::cmd::debug_window::{exit_debug_console_system, setup_debug_info_window, setup_debug_window};
 use crate::ui::cmd::fps_counter_update_system::fps_counter_update_system;
 use crate::ui::cmd::update_console_history::update_console_history;
-use crate::ui::despawn_ui_system::despawn_ui_system;
+use crate::util::helper_systems::despawn_recursive_system::despawn_recursive_system;
 use crate::util::stage_label_helper::in_update;
 
 mod debug_window;
@@ -70,7 +70,7 @@ impl Plugin for CmdUiPlugin {
                 in_update(
                     SystemSet::on_exit(ConsoleState::Shown)
                         // .with_system(despawn_collision_boxes)
-                        .with_system(despawn_ui_system::<AttributeWindow>)
+                        .with_system(despawn_recursive_system::<AttributeWindow>)
                 )
             )
 

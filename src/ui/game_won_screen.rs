@@ -2,10 +2,10 @@ use bevy::ecs::event::Events;
 use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, FlexDirection, HorizontalAlign, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, State, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
 
 use crate::{AppState, AppStateTrigger, ToAppState};
-use crate::AppState::GameWon;
 use crate::models::ui::game_over::NavigationButton;
+use crate::models::ui::game_won_screen::GameWonScreen;
 
-pub fn spawn_menu_system(
+pub fn spawn_game_won_screen_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
 ) {
@@ -25,16 +25,17 @@ pub fn spawn_menu_system(
                 flex_direction: FlexDirection::ColumnReverse,
                 ..Default::default()
             },
-            color: Color::BLACK.into(),
+            color: Color::from([0.0, 0.4, 0.0, 0.6]).into(),
             ..Default::default()
         })
+        .insert(GameWonScreen)
         .with_children(|parent| {
             parent.spawn_bundle(TextBundle {
                 style: Style {
                     ..Default::default()
                 },
                 text: Text::with_section(
-                    "You Dieded".to_string(),
+                    "You wonned the game!!".to_string(),
                     TextStyle {
                         font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                         font_size: 60.0,
@@ -63,7 +64,7 @@ pub fn spawn_menu_system(
                         ..Default::default()
                     },
                     text: Text::with_section(
-                        "Ragequit".to_string(),
+                        "Successfully leave the ".to_string(),
                         TextStyle {
                             font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                             font_size: 20.0,
@@ -88,7 +89,7 @@ pub fn button_click_system(
     mut state_trigger: ResMut<AppStateTrigger>,
 ) {
     match app_state.current() {
-        AppState::GameOver | AppState::GameWon => {
+        AppState::GameOver => {
             for interaction in button_query.iter_mut() {
                 match *interaction {
                     Interaction::Clicked => {
