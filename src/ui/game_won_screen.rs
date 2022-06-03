@@ -1,14 +1,33 @@
-use bevy::ecs::event::Events;
 use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, FlexDirection, HorizontalAlign, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, State, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
 
-use crate::{AppState, AppStateTrigger, ToAppState};
+use crate::{AppStateTrigger, ToAppState};
+use crate::models::mod_register::ModRegister;
+use crate::models::modifications::descriptors::mod_name::ModName;
+use crate::models::modifications::descriptors::modification::Modification;
+use crate::models::modifications::descriptors::tool_tip::ToolTip;
+use crate::models::player::Player;
 use crate::models::ui::game_over::NavigationButton;
 use crate::models::ui::game_won_screen::GameWonScreen;
 
 pub fn spawn_game_won_screen_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
+    player_query: Query<(&ModRegister), With<Player>>,
+    mod_query: Query<(&ToolTip, &ModName), With<Modification>>,
 ) {
+    let mut text_to_show = String::new();
+
+    for mod_register in player_query.iter() {
+        for mod_entity in mod_register.register.iter() {
+            if let Ok((tooltip, mod_name)) = mod_query.get(*mod_entity) {
+                text_to_show.push_str(mod_name.mod_name.as_str());
+                text_to_show.push_str(" - ");
+                text_to_show.push_str(tooltip.tooltip.as_str());
+                text_to_show.push('\n');
+            }
+        }
+    }
+
     commands
         .spawn_bundle(NodeBundle {
             style: Style {
@@ -25,7 +44,7 @@ pub fn spawn_game_won_screen_system(
                 flex_direction: FlexDirection::ColumnReverse,
                 ..Default::default()
             },
-            color: Color::from([0.0, 0.4, 0.0, 0.6]).into(),
+            image: asset_loader.load("sprites/ui/ítem_background.png").into(),
             ..Default::default()
         })
         .insert(GameWonScreen)
@@ -39,7 +58,7 @@ pub fn spawn_game_won_screen_system(
                     TextStyle {
                         font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                         font_size: 60.0,
-                        color: Color::RED,
+                        color: Color::BLACK,
                     },
                     TextAlignment {
                         vertical: VerticalAlign::Center,
@@ -48,6 +67,26 @@ pub fn spawn_game_won_screen_system(
                 ),
                 ..Default::default()
             });
+
+            parent.spawn_bundle(TextBundle {
+                style: Style {
+                    ..Default::default()
+                },
+                text: Text::with_section(
+                    text_to_show,
+                    TextStyle {
+                        font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
+                        font_size: 30.0,
+                        color: Color::BLACK,
+                    },
+                    TextAlignment {
+                        vertical: VerticalAlign::Center,
+                        horizontal: HorizontalAlign::Left,
+                    },
+                ),
+                ..Default::default()
+            });
+
             parent.spawn_bundle(ButtonBundle {
                 style: Style {
                     size: Size::new(Val::Percent(25.0), Val::Percent(10.0)),
@@ -80,49 +119,4 @@ pub fn spawn_game_won_screen_system(
             })
                 .insert(NavigationButton);
         });
-}
-
-pub fn button_click_system(
-    mut app_exit_events: ResMut<Events<bevy::app::AppExit>>,
-    mut button_query: Query<&mut Interaction, (Changed<Interaction>, With<NavigationButton>)>,
-    app_state: ResMut<State<AppState>>,
-    mut state_trigger: ResMut<AppStateTrigger>,
-) {
-    match app_state.current() {
-        AppState::GameOver => {
-            for interaction in button_query.iter_mut() {
-                match *interaction {
-                    Interaction::Clicked => {
-                        app_exit_events.send(bevy::app::AppExit);
-                    }
-                    Interaction::Hovered => {}
-                    Interaction::None => {}
-                }
-            }
-        }
-        AppState::MainMenu => {
-            for interaction in button_query.iter_mut() {
-                match *interaction {
-                    Interaction::Clicked => {
-                        state_trigger.state_change_trigger = ToAppState::ToInGame;
-                    }
-                    Interaction::Hovered => {}
-                    Interaction::None => {}
-                }
-            }
-        }
-        AppState::Paused => {}
-        AppState::Shop => {
-            for interaction in button_query.iter_mut() {
-                match *interaction {
-                    Interaction::Clicked => {
-                        state_trigger.state_change_trigger = ToAppState::ToInGame;
-                    }
-                    Interaction::Hovered => {}
-                    Interaction::None => {}
-                }
-            }
-        }
-        _ => {}
-    }
 }

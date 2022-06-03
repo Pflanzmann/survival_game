@@ -13,8 +13,12 @@ impl Plugin for GoalPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_system_set(
-                SystemSet::on_update(AppState::InGame)
+                SystemSet::on_enter(AppState::Pre)
                     .with_system(setup_goal_system)
+            )
+
+            .add_system_set(
+                SystemSet::on_update(AppState::InGame)
                     .with_system(goal_activation_system)
             )
         ;
