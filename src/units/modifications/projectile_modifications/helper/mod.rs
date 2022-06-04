@@ -1,3 +1,4 @@
 pub mod assign_with_associate_component_to_projectile_system;
 pub mod assign_attribute_to_projectile_system;
 pub mod assign_modification_to_projectile_system;
+pub mod enable_projectile_collision;

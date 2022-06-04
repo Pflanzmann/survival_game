@@ -3,7 +3,6 @@ use rand::random;
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::behavior::rotate_behavior::UnitRotation;
-use crate::models::projectile::Projectile;
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::child_projectile::ChildProjectile;
 use crate::models::collision::collider_type::ColliderType;
@@ -14,6 +13,7 @@ use crate::models::events::projectile_shot_event::ProjectileShotEvent;
 use crate::models::events::projectile_stopped_event::ProjectileStoppedEvent;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::move_direction::MoveDirection;
+use crate::models::projectile::Projectile;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
@@ -65,7 +65,6 @@ pub fn split_shot_system(
 
                 .insert(UnitSize::new_size(Vec2::new(128.0, 128.0)))
                 .insert(HitBoxCollider { collider_type: ColliderType::Circle(128.0 / 2.0) }).insert(EnemyHitBoxCollider)
-                .insert(EnemyHitBoxCollider)
 
                 .insert_bundle(DamageBundle::new(0.0, 60.0))
                 .insert(collided_entities.clone())

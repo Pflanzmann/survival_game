@@ -8,7 +8,6 @@ use crate::audio::sound_manager::SoundManager;
 use crate::models::aim_direction::AimDirection;
 use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 use crate::models::behavior::rotate_behavior::UnitRotation;
-use crate::models::projectile::Projectile;
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collider::EnemyHitBoxCollider;
@@ -16,6 +15,7 @@ use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::events::projectile_shot_event::ProjectileShotEvent;
 use crate::models::gun::straight_basic_shot::StraightBasicShot;
 use crate::models::move_direction::MoveDirection;
+use crate::models::projectile::Projectile;
 use crate::models::sprite_layer::SpriteLayer;
 use crate::models::unit_attributes::attribute::*;
 use crate::models::unit_attributes::hit_limit::HitLimit;
@@ -64,7 +64,6 @@ pub fn straight_basic_shot_system(
 
             .insert(UnitSize::new_size(Vec2::new(projectile_handle.basic_projectile.sprite_custom_size_x, projectile_handle.basic_projectile.sprite_custom_size_y)))
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(projectile_handle.basic_projectile.sprite_custom_size_x / 2.0) })
-            .insert(EnemyHitBoxCollider)
 
             .insert_bundle(DamageBundle::new(0.0, 60.0))
 
