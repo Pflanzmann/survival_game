@@ -21,7 +21,7 @@ pub fn cmd_input_system(
 ) {
     if keys.pressed(KeyCode::Back) {
         delete_timer.timer -= time.delta_seconds();
-        if delete_timer.timer > 0.0 {
+        if delete_timer.timer >= 0.0 {
             return;
         }
         delete_timer.timer = 0.1;
@@ -34,6 +34,10 @@ pub fn cmd_input_system(
         }
 
         return;
+    }
+
+    if keys.just_released(KeyCode::Back) {
+        delete_timer.timer = 0.0;
     }
 
     if keys.just_pressed(KeyCode::Return) {
