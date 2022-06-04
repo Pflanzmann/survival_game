@@ -7,6 +7,3 @@ pub struct BurningShot {
     pub damage_interval: f32,
     pub damage_per_tick: f32,
 }
-
-#[derive(Component)]
-pub struct BurningShotUnit;
