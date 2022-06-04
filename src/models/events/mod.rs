@@ -1,8 +1,8 @@
 use bevy::prelude::{App, Plugin};
 
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
-use crate::models::events::bullet_shot_event::BulletShotEvent;
-use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
+use crate::models::events::projectile_shot_event::ProjectileShotEvent;
+use crate::models::events::projectile_stopped_event::ProjectileStoppedEvent;
 use crate::models::events::damaged_event::DamagedEvent;
 use crate::models::events::debug_command_event::DebugCommandEvent;
 use crate::models::events::debug_command_info_event::DebugCommandInfoEvent;
@@ -14,10 +14,10 @@ use crate::models::events::player_enemy_collision_event::PlayerEnemyCollisionEve
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
 use crate::models::events::target_died_event::TargetDiedEvent;
 
-pub mod bullet_shot_event;
+pub mod projectile_shot_event;
 pub mod target_died_event;
 pub mod enemy_collision_event;
-pub mod bullet_stopped_event;
+pub mod projectile_stopped_event;
 pub mod item_collision_event;
 pub mod player_enemy_collision_event;
 pub mod player_died_event;
@@ -32,12 +32,12 @@ pub mod level_finished_event;
 ///
 /// [ apply_mod_to_target ] is used to connect a unit and a mod entity in order to apply changes to the unit
 ///
-/// [ bullet_enemy_collision_event ] reacts when an enemy is hit by a projectile. Applies damage to the enemy and
+/// [ projectile_enemy_collision_event ] reacts when an enemy is hit by a projectile. Applies damage to the enemy and
 /// possible changes to the projectile.
 ///
-/// [ bullet_shot_event ] triggers adding modifications to newly spawned projectiles
+/// [ projectile_shot_event ] triggers adding modifications to newly spawned projectiles
 ///
-/// [ bullet_stopped_event ] reaction to despawning projectiles to trigger effects on that
+/// [ projectile_stopped_event ] reaction to despawning projectiles to trigger effects on that
 ///
 /// [ enemy_died_event ] reaction to enemies dying to calculate item drops or other things
 ///
@@ -54,9 +54,9 @@ impl Plugin for EventsPlugin {
         app
             .add_event::<TargetDiedEvent>()
             .add_event::<ItemCollisionEvent>()
-            .add_event::<BulletShotEvent>()
+            .add_event::<ProjectileShotEvent>()
             .add_event::<EnemyCollisionEvent>()
-            .add_event::<BulletStoppedEvent>()
+            .add_event::<ProjectileStoppedEvent>()
             .add_event::<PlayerEnemyCollisionEvent>()
             .add_event::<PlayerDiedEvent>()
             .add_event::<ApplyModToTargetEvent>()

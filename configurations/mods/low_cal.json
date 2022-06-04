@@ -15,19 +15,19 @@
     "operator": "Multiply",
     "amount": 12.0
   },
-  "AffectBulletDamage": {
+  "AffectProjectileDamage": {
     "operator": "Multiply",
     "amount": 0.1
   },
-  "AffectBulletMoveSpeed": {
+  "AffectProjectileMoveSpeed": {
     "operator": "Multiply",
     "amount": 1.5
   },
-  "AffectBulletTravelRange": {
+  "AffectProjectileTravelRange": {
     "operator": "Multiply",
     "amount": 0.6
   },
-  "AffectBulletUnitSize": {
+  "AffectProjectileUnitSize": {
     "operator": "Multiply",
     "amount": 0.5
   }

@@ -1,6 +1,6 @@
 use bevy::prelude::{Added, BuildChildren, Commands, Entity, Name, Query, Res, Vec2};
 
-use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
+use crate::assets_handling::preload_projectile_system::ProjectileConfigHandles;
 use crate::models::attribute_container::AttributeContainer;
 use crate::models::attribute_container_slot::AttributeContainerSlot;
 use crate::models::gun::straight_basic_shot::StraightBasicShot;
@@ -17,7 +17,7 @@ use crate::models::weapon_slot::WeaponSlot;
 pub fn setup_basic_gun_system(
     mut commands: Commands,
     target_query: Query<Entity, Added<StraightBasicShot>>,
-    bullet_handle: Res<BulletConfigHandles>,
+    projectile_handle: Res<ProjectileConfigHandles>,
 ) {
     for target_entity in target_query.iter() {
         let mod_container = commands.spawn()
@@ -28,11 +28,11 @@ pub fn setup_basic_gun_system(
         let attribute_container = commands.spawn()
             .insert(Name::new("BasicGun AttributeContainer"))
             .insert(AttributeContainer)
-            .insert(Damage::new(bullet_handle.basic_bullet.damage))
-            .insert(HitLimit::new(bullet_handle.basic_bullet.hit_limit))
-            .insert(MoveSpeed::new(bullet_handle.basic_bullet.speed))
-            .insert(TravelRange::new(bullet_handle.basic_bullet.range))
-            .insert(UnitSize::new_size(Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y)))
+            .insert(Damage::new(projectile_handle.basic_projectile.damage))
+            .insert(HitLimit::new(projectile_handle.basic_projectile.hit_limit))
+            .insert(MoveSpeed::new(projectile_handle.basic_projectile.speed))
+            .insert(TravelRange::new(projectile_handle.basic_projectile.range))
+            .insert(UnitSize::new_size(Vec2::new(projectile_handle.basic_projectile.sprite_custom_size_x, projectile_handle.basic_projectile.sprite_custom_size_y)))
             .id();
 
         let gun_entity = commands.spawn()

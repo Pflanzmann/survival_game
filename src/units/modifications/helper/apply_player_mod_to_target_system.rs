@@ -3,7 +3,7 @@ use bevy::prelude::{Commands, Component, EventReader, Query, With};
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::modifications::descriptors::modification::Modification;
 
-/// A generic system to apply a [Bullet][Modification] from the source
+/// A generic system to apply a [Projectile][Modification] from the source
 /// to the target of the [ApplyModToTargetSystem].
 ///
 /// The mod gets applied from the source [Entity] with a [Modification]-Tag.

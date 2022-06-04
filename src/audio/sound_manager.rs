@@ -7,7 +7,7 @@ use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 #[derive(Default)]
 pub struct SoundManager {
     channel_vector_pickup: Vec<AudioChannel>,
-    channel_vector_bullet: Vec<AudioChannel>,
+    channel_vector_projectile: Vec<AudioChannel>,
     channel_vector_background: Vec<AudioChannel>,
     channel_vector_misc: Vec<AudioChannel>,
 
@@ -22,8 +22,8 @@ impl SoundManager {
                     audio.set_volume_in_channel(volume, channel)
                 }
             }
-            SoundChannel::Bullet => {
-                for channel in self.channel_vector_bullet.iter() {
+            SoundChannel::Projectile => {
+                for channel in self.channel_vector_projectile.iter() {
                     audio.set_volume_in_channel(volume, channel)
                 }
             }
@@ -55,11 +55,11 @@ impl SoundManager {
                     sound_manager.channel_vector_pickup.push(current_channel);
                 }
 
-                SoundHandleChannel::Bullet(handle) => {
-                    let current_channel = sound_manager.channel_vector_bullet.remove(0);
+                SoundHandleChannel::Projectile(handle) => {
+                    let current_channel = sound_manager.channel_vector_projectile.remove(0);
                     audio.stop_channel(&current_channel);
                     audio.play_in_channel(handle.clone(), &current_channel);
-                    sound_manager.channel_vector_bullet.push(current_channel);
+                    sound_manager.channel_vector_projectile.push(current_channel);
                 }
 
                 SoundHandleChannel::Misc(handle) => {
@@ -86,7 +86,7 @@ impl SoundManager {
         }
 
         for index in 1..6 {
-            channel_vector.channel_vector_bullet.push(AudioChannel::new(format!("bullet_channel_{}", index).to_owned()));
+            channel_vector.channel_vector_projectile.push(AudioChannel::new(format!("projectile_channel_{}", index).to_owned()));
         }
 
         for index in 1..2 {

@@ -3,15 +3,15 @@ use rand::random;
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::behavior::rotate_behavior::UnitRotation;
-use crate::models::bullet::Bullet;
+use crate::models::projectile::Projectile;
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::child_projectile::ChildProjectile;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collider::EnemyHitBoxCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::damaged_entities::DamagedEntities;
-use crate::models::events::bullet_shot_event::BulletShotEvent;
-use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
+use crate::models::events::projectile_shot_event::ProjectileShotEvent;
+use crate::models::events::projectile_stopped_event::ProjectileStoppedEvent;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::move_direction::MoveDirection;
 use crate::models::sprite_move_rotation::SpriteMoveRotation;
@@ -21,17 +21,17 @@ use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_attributes::unit_size::UnitSize;
 
-/// A system to split the [Bullet] that has [SplitShot] applied to it.
-/// The shot gets split when the bullet stops.
+/// A system to split the [Projectile] that has [SplitShot] applied to it.
+/// The shot gets split when the projectile stops.
 pub fn split_shot_system(
     mut command: Commands,
     texture_handle: Res<TextureHandles>,
-    mut bullet_shot_event_writer: EventWriter<BulletShotEvent>,
-    mut bullet_stopped_events: EventReader<BulletStoppedEvent>,
-    bullet_query: Query<(&GlobalTransform, &Bullet, &DamagedEntities), With<SplitShot>>,
+    mut projectile_shot_event_writer: EventWriter<ProjectileShotEvent>,
+    mut projectile_stopped_events: EventReader<ProjectileStoppedEvent>,
+    projectile_query: Query<(&GlobalTransform, &Projectile, &DamagedEntities), With<SplitShot>>,
 ) {
-    for event in bullet_stopped_events.iter() {
-        let (bullet_transform, bullet, collided_entities) = match bullet_query.get(event.bullet_entity) {
+    for event in projectile_stopped_events.iter() {
+        let (projectile_transform, projectile, collided_entities) = match projectile_query.get(event.projectile_entity) {
             Ok(transform) => transform,
             Err(_) => continue,
         };
@@ -48,20 +48,20 @@ pub fn split_shot_system(
 
         for direction in directions {
             let random_rotation: f32 = random::<f32>() * 100.0;
-            let mut bullet_transform = Transform::from_xyz(bullet_transform.translation.x, bullet_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z());
-            bullet_transform.rotation = Quat::from_euler(EulerRot::XYZ, 0.0, 0.0, random_rotation);
+            let mut projectile_transform = Transform::from_xyz(projectile_transform.translation.x, projectile_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z());
+            projectile_transform.rotation = Quat::from_euler(EulerRot::XYZ, 0.0, 0.0, random_rotation);
 
-            let bullet = command.spawn_bundle(SpriteBundle {
-                transform: bullet_transform,
+            let projectile = command.spawn_bundle(SpriteBundle {
+                transform: projectile_transform,
                 sprite: Sprite {
                     custom_size: Some(Vec2::new(128.0, 128.0)),
                     ..Default::default()
                 },
-                texture: texture_handle.bullet_fireball.clone(),
+                texture: texture_handle.projectile_fireball.clone(),
                 ..Default::default()
             })
                 .insert(Name::new("SplitShot Projectile"))
-                .insert(*bullet)
+                .insert(*projectile)
                 .insert(ChildProjectile)
 
                 .insert(UnitSize::new_size(Vec2::new(128.0, 128.0)))
@@ -80,7 +80,7 @@ pub fn split_shot_system(
                 .insert(UnitRotation { revolutions_per_min: if random_rotation > 50.0 { 40.0 } else { -40.0 } })
                 .id();
 
-            bullet_shot_event_writer.send(BulletShotEvent { entity: bullet });
+            projectile_shot_event_writer.send(ProjectileShotEvent { entity: projectile });
         }
     }
 }

@@ -3,7 +3,7 @@ use bevy::prelude::{BuildChildren, Commands, EventReader, Name, Query, Res, Spri
 use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::models::animation::animation_state::{AnimationState, CurrentAnimationState};
 use crate::models::animation::idle_animation_component::IdleAnimation;
-use crate::models::bullet::Bullet;
+use crate::models::projectile::Projectile;
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collider::EnemyHitBoxCollider;
@@ -12,17 +12,17 @@ use crate::models::events::damaged_event::DamagedEvent;
 use crate::models::modifications::burning_shot::BurningShot;
 use crate::models::time_alive::TimeAlive;
 
-/// A system to split the [Bullet] that has [SplitShot] applied to it.
-/// The shot gets split when the bullet stops.
+/// A system to split the [Projectile] that has [SplitShot] applied to it.
+/// The shot gets split when the projectile stops.
 pub fn burning_shot_system(
     mut command: Commands,
     atlas_handle: Res<AtlasHandles>,
     mut damaged_events: EventReader<DamagedEvent>,
-    bullet_query: Query<(&Bullet, &BurningShot)>,
+    projectile_query: Query<(&Projectile, &BurningShot)>,
     already_burned_targets_query: Query<With<BurningShot>>
 ) {
     for event in damaged_events.iter() {
-        let (bullet, burning_shot) = match bullet_query.get(event.source_entity) {
+        let (projectile, burning_shot) = match projectile_query.get(event.source_entity) {
             Ok(transform) => transform,
             Err(_) => continue,
         };

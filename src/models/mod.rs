@@ -1,5 +1,5 @@
 pub mod move_direction;
-pub mod bullet;
+pub mod projectile;
 pub mod aim_direction;
 pub mod mod_container_slot;
 pub mod events;

@@ -7,7 +7,7 @@ pub struct HealthBar {
 }
 
 #[derive(Component)]
-pub struct BulletHud;
+pub struct ProjectileHud;
 
 #[derive(Component)]
 pub struct CoinText;

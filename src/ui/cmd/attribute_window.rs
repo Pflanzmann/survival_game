@@ -4,7 +4,7 @@ use bevy_inspector_egui::egui::TextBuffer;
 use crate::models::attribute_container::AttributeContainer;
 use crate::models::attribute_container_slot::AttributeContainerSlot;
 use crate::models::player::Player;
-use crate::models::ui::attribute_text::{AttributeWindow, BulletDamageText, BulletHitLimitText, BulletMoveSpeedText, BulletTravelRangeText, BulletUnitSizeText, DamageText, HealthText, MoveSpeedText, ReloadText, UnitSizeText};
+use crate::models::ui::attribute_text::{AttributeWindow, ProjectileDamageText, ProjectileHitLimitText, ProjectileMoveSpeedText, ProjectileTravelRangeText, ProjectileUnitSizeText, DamageText, HealthText, MoveSpeedText, ReloadText, UnitSizeText};
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::weapon_slot::WeaponSlot;
 
@@ -37,11 +37,11 @@ pub fn spawn_attribute_window_system(
         info_window_tex(parent, &asset_loader, "MoveSpeed: ".as_str(), MoveSpeedText);
         info_window_tex(parent, &asset_loader, "Reload: ".as_str(), ReloadText);
         info_window_tex(parent, &asset_loader, "UnitSize: ".as_str(), UnitSizeText);
-        info_window_tex(parent, &asset_loader, "BulletDamage: ".as_str(), BulletDamageText);
-        info_window_tex(parent, &asset_loader, "BulletMoveSpeed: ".as_str(), BulletMoveSpeedText);
-        info_window_tex(parent, &asset_loader, "BulletHitLimit: ".as_str(), BulletHitLimitText);
-        info_window_tex(parent, &asset_loader, "BulletTravelRange: ".as_str(), BulletTravelRangeText);
-        info_window_tex(parent, &asset_loader, "BulletUnitSize: ".as_str(), BulletUnitSizeText);
+        info_window_tex(parent, &asset_loader, "ProjectileDamage: ".as_str(), ProjectileDamageText);
+        info_window_tex(parent, &asset_loader, "ProjectileMoveSpeed: ".as_str(), ProjectileMoveSpeedText);
+        info_window_tex(parent, &asset_loader, "ProjectileHitLimit: ".as_str(), ProjectileHitLimitText);
+        info_window_tex(parent, &asset_loader, "ProjectileTravelRange: ".as_str(), ProjectileTravelRangeText);
+        info_window_tex(parent, &asset_loader, "ProjectileUnitSize: ".as_str(), ProjectileUnitSizeText);
     }).insert(Name::new("Attribute Window")).insert(AttributeWindow);
 }
 
@@ -62,7 +62,7 @@ pub fn assign_attribute_value_system<
     }
 }
 
-pub fn assign_bullet_attribute_value_system<
+pub fn assign_projectile_attribute_value_system<
     T: Component + Attribute,
     U: Component,
 >(

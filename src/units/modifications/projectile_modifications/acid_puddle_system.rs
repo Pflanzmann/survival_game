@@ -8,7 +8,7 @@ use crate::models::collision::collider_owner::ColliderOwner;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_solid_body_collider::EnemySolidBodyCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
-use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
+use crate::models::events::projectile_stopped_event::ProjectileStoppedEvent;
 use crate::models::layerable::Layerable;
 use crate::models::modifications::acid_puddle::{AcidPuddle, AcidPuddleOwner, AcidPuddleUnit};
 use crate::models::time_alive::TimeAlive;
@@ -18,11 +18,11 @@ use crate::SpriteLayer;
 pub fn acid_puddle_system(
     mut commands: Commands,
     atlas_handle: Res<AtlasHandles>,
-    mut bullet_stopped_event: EventReader<BulletStoppedEvent>,
+    mut projectile_stopped_event: EventReader<ProjectileStoppedEvent>,
     owner_query: Query<(&GlobalTransform, &AcidPuddle, &AcidPuddleOwner, &UnitSize)>,
 ) {
-    for event in bullet_stopped_event.iter() {
-        let (transform, acid_puddle, acid_puddle_owner, unit_size) = match owner_query.get(event.bullet_entity) {
+    for event in projectile_stopped_event.iter() {
+        let (transform, acid_puddle, acid_puddle_owner, unit_size) = match owner_query.get(event.projectile_entity) {
             Ok(transform) => transform,
             Err(_) => continue,
         };

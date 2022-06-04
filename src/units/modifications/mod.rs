@@ -18,11 +18,11 @@ use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
 use crate::models::modifications::affects::affect_reload::AffectReload;
 use crate::models::modifications::affects::affect_travel_range::AffectTravelRange;
 use crate::models::modifications::affects::affect_unit_size::AffectUnitSize;
-use crate::models::modifications::affects::bullet_affects::affect_bullet_damage::AffectBulletDamage;
-use crate::models::modifications::affects::bullet_affects::affect_bullet_hit_limit::AffectBulletHitLimit;
-use crate::models::modifications::affects::bullet_affects::affect_bullet_move_speed::AffectBulletMoveSpeed;
-use crate::models::modifications::affects::bullet_affects::affect_bullet_travel_range::AffectBulletTravelRange;
-use crate::models::modifications::affects::bullet_affects::affect_bullet_unit_size::AffectBulletUnitSize;
+use crate::models::modifications::affects::projectile_affects::affect_projectile_damage::AffectProjectileDamage;
+use crate::models::modifications::affects::projectile_affects::affect_projectile_hit_limit::AffectProjectileHitLimit;
+use crate::models::modifications::affects::projectile_affects::affect_projectile_move_speed::AffectProjectileMoveSpeed;
+use crate::models::modifications::affects::projectile_affects::affect_projectile_travel_range::AffectProjectileTravelRange;
+use crate::models::modifications::affects::projectile_affects::affect_projectile_unit_size::AffectProjectileUnitSize;
 use crate::models::modifications::burning_shot::{BurningShot, BurningShotUnit};
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::death_ball::{DeathBall, DeathBallUnit};
@@ -51,7 +51,7 @@ use crate::units::modifications::apply_radiation_system::apply_radiation_system;
 use crate::units::modifications::apply_shield_system::apply_shield_system;
 use crate::units::modifications::apply_slime_system::apply_slime_system;
 use crate::units::modifications::apply_turret_system::apply_turret_system;
-use crate::units::modifications::projectile_modifications::BulletModificationsPlugin;
+use crate::units::modifications::projectile_modifications::ProjectileModificationsPlugin;
 use crate::units::modifications::effect::apply_effect_add_health_system::apply_effect_add_health_system;
 use crate::units::modifications::effect::apply_effect_damage_health_system::apply_effect_damage_health_system;
 use crate::units::modifications::helper::apply_projectile_affect_system::apply_projectile_affect_system;
@@ -88,7 +88,7 @@ pub struct UnitModificationsPlugin;
 impl Plugin for UnitModificationsPlugin {
     fn build(&self, app: &mut App) {
         app
-            .add_plugin(BulletModificationsPlugin)
+            .add_plugin(ProjectileModificationsPlugin)
 
             .add_system_set(
                 in_post_update(
@@ -105,11 +105,11 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(apply_affect_system::<TravelRange, AffectTravelRange>)
                         .with_system(apply_affect_system::<HitLimit, AffectHitLimit>)
 
-                        .with_system(apply_projectile_affect_system::<MoveSpeed, AffectBulletMoveSpeed>)
-                        .with_system(apply_projectile_affect_system::<Damage, AffectBulletDamage>)
-                        .with_system(apply_projectile_affect_system::<TravelRange, AffectBulletTravelRange>)
-                        .with_system(apply_projectile_affect_system::<HitLimit, AffectBulletHitLimit>)
-                        .with_system(apply_projectile_affect_system::<UnitSize, AffectBulletUnitSize>)
+                        .with_system(apply_projectile_affect_system::<MoveSpeed, AffectProjectileMoveSpeed>)
+                        .with_system(apply_projectile_affect_system::<Damage, AffectProjectileDamage>)
+                        .with_system(apply_projectile_affect_system::<TravelRange, AffectProjectileTravelRange>)
+                        .with_system(apply_projectile_affect_system::<HitLimit, AffectProjectileHitLimit>)
+                        .with_system(apply_projectile_affect_system::<UnitSize, AffectProjectileUnitSize>)
 
                         .with_system(apply_effect_add_health_system)
                         .with_system(apply_effect_damage_health_system)
@@ -164,11 +164,11 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(remove_affect_system::<TravelRange, AffectTravelRange>)
                         .with_system(remove_affect_system::<HitLimit, AffectHitLimit>)
 
-                        .with_system(remove_projectile_affect_system::<MoveSpeed, AffectBulletMoveSpeed>)
-                        .with_system(remove_projectile_affect_system::<Damage, AffectBulletDamage>)
-                        .with_system(remove_projectile_affect_system::<TravelRange, AffectBulletTravelRange>)
-                        .with_system(remove_projectile_affect_system::<HitLimit, AffectBulletHitLimit>)
-                        .with_system(remove_projectile_affect_system::<UnitSize, AffectBulletUnitSize>)
+                        .with_system(remove_projectile_affect_system::<MoveSpeed, AffectProjectileMoveSpeed>)
+                        .with_system(remove_projectile_affect_system::<Damage, AffectProjectileDamage>)
+                        .with_system(remove_projectile_affect_system::<TravelRange, AffectProjectileTravelRange>)
+                        .with_system(remove_projectile_affect_system::<HitLimit, AffectProjectileHitLimit>)
+                        .with_system(remove_projectile_affect_system::<UnitSize, AffectProjectileUnitSize>)
 
                         .with_system(remove_projectile_mod_from_targets_gun_system::<CurveShot>)
                         .with_system(remove_projectile_mod_from_targets_gun_system::<GrowShot>)

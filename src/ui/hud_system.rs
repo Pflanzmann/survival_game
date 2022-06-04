@@ -6,7 +6,7 @@ use crate::models::modifications::descriptors::mod_sprite_path::SpriteHandle;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::player::Player;
-use crate::models::ui::hud::{BulletHud, CoinText};
+use crate::models::ui::hud::{ProjectileHud, CoinText};
 use crate::models::ui::tooltip_window::HoverTooltip;
 
 pub fn spawn_text_system(
@@ -70,8 +70,8 @@ pub fn spawn_text_system(
         color: Color::from([0.2, 0.2, 0.2, 0.2]).into(),
         ..Default::default()
     })
-        .insert(BulletHud)
-        .insert(Name::new("BulletHud"));
+        .insert(ProjectileHud)
+        .insert(Name::new("ProjectileHud"));
 }
 
 pub fn update_text_system(
@@ -85,9 +85,9 @@ pub fn update_text_system(
     }
 }
 
-pub fn update_bullet_hud_system(
+pub fn update_projectile_hud_system(
     mut commands: Commands,
-    hud_query: Query<Entity, With<BulletHud>>,
+    hud_query: Query<Entity, With<ProjectileHud>>,
     player_query: Query<&ModRegister, (With<Player>, Changed<ModRegister>)>,
     mod_query: Query<(&SpriteHandle, &ToolTip), With<Modification>>,
 ) {

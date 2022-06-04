@@ -1,12 +1,12 @@
 use bevy::prelude::{Plugin, SystemSet};
 
 use acid_puddle_system::acid_puddle_system;
-use helper::assign_attribute_to_bullet_system::assign_attribute_to_bullet_system;
-use helper::assign_modification_to_projectile_system::assign_modification_to_bullet_system;
-use helper::assign_with_associate_component_to_bullet_system::assign_with_associate_component_to_bullet_system;
+use helper::assign_attribute_to_projectile_system::assign_attribute_to_projectile_system;
+use helper::assign_modification_to_projectile_system::assign_modification_to_projectile_system;
+use helper::assign_with_associate_component_to_projectile_system::assign_with_associate_component_to_projectile_system;
 
 use crate::{App, AppState};
-use crate::models::events::bullet_shot_event::BulletShotEvent;
+use crate::models::events::projectile_shot_event::ProjectileShotEvent;
 use crate::models::knock_back::KnockBack;
 use crate::models::modifications::acid_puddle::{AcidPuddle, AcidPuddleOwner};
 use crate::models::modifications::burning_shot::BurningShot;
@@ -42,37 +42,37 @@ mod lightning_system;
 mod acid_puddle_system;
 mod burning_shot_system;
 
-/// This plugin manages the [Bullet]-[Modification]s and how they get applied.
+/// This plugin manages the [Projectile]-[Modification]s and how they get applied.
 /// All the systems get added in the [PreUpdate] so that they can react last to all
-/// other accesses of the bullet.
+/// other accesses of the projectile.
 ///
 /// All system get only used in the [AppState::Ingame].
-pub struct BulletModificationsPlugin;
+pub struct ProjectileModificationsPlugin;
 
-impl Plugin for BulletModificationsPlugin {
+impl Plugin for ProjectileModificationsPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_system_set(
                 in_post_update(
                     SystemSet::new()
-                        .with_run_criteria(on_event::<BulletShotEvent>)
+                        .with_run_criteria(on_event::<ProjectileShotEvent>)
 
-                        .with_system(assign_attribute_to_bullet_system::<Damage>)
-                        .with_system(assign_attribute_to_bullet_system::<HitLimit>)
-                        .with_system(assign_attribute_to_bullet_system::<MoveSpeed>)
-                        .with_system(assign_attribute_to_bullet_system::<TravelRange>)
-                        .with_system(assign_attribute_to_bullet_system::<UnitSize>)
+                        .with_system(assign_attribute_to_projectile_system::<Damage>)
+                        .with_system(assign_attribute_to_projectile_system::<HitLimit>)
+                        .with_system(assign_attribute_to_projectile_system::<MoveSpeed>)
+                        .with_system(assign_attribute_to_projectile_system::<TravelRange>)
+                        .with_system(assign_attribute_to_projectile_system::<UnitSize>)
 
-                        .with_system(assign_modification_to_bullet_system::<CurveShot>)
-                        .with_system(assign_modification_to_bullet_system::<GrowShot>)
-                        .with_system(assign_modification_to_bullet_system::<SplitShot>)
-                        .with_system(assign_modification_to_bullet_system::<GravityShot>)
-                        .with_system(assign_with_associate_component_to_bullet_system::<KnockBackShot, KnockBack>)
-                        .with_system(assign_modification_to_bullet_system::<ExplosionShot>)
-                        .with_system(assign_modification_to_bullet_system::<Lightning>)
-                        .with_system(assign_modification_to_bullet_system::<AcidPuddle>)
-                        .with_system(assign_modification_to_bullet_system::<AcidPuddleOwner>)
-                        .with_system(assign_modification_to_bullet_system::<BurningShot>)
+                        .with_system(assign_modification_to_projectile_system::<CurveShot>)
+                        .with_system(assign_modification_to_projectile_system::<GrowShot>)
+                        .with_system(assign_modification_to_projectile_system::<SplitShot>)
+                        .with_system(assign_modification_to_projectile_system::<GravityShot>)
+                        .with_system(assign_with_associate_component_to_projectile_system::<KnockBackShot, KnockBack>)
+                        .with_system(assign_modification_to_projectile_system::<ExplosionShot>)
+                        .with_system(assign_modification_to_projectile_system::<Lightning>)
+                        .with_system(assign_modification_to_projectile_system::<AcidPuddle>)
+                        .with_system(assign_modification_to_projectile_system::<AcidPuddleOwner>)
+                        .with_system(assign_modification_to_projectile_system::<BurningShot>)
                 )
             )
 

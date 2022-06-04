@@ -2,7 +2,7 @@ use bevy::prelude::{Commands, Component, EventReader, Query};
 
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
 
-/// A generic system to remove a [Bullet][Modification] from the target.
+/// A generic system to remove a [Projectile][Modification] from the target.
 ///
 /// ```
 /// # use bevy_ecs::prelude::;

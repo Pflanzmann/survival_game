@@ -2,7 +2,7 @@ use bevy::prelude::{Entity, EventReader, EventWriter, Query, Res, With, Without}
 
 use crate::models::damaged_entities::{DamagedEntities, DamagedEntity};
 use crate::models::enemy::Enemy;
-use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
+use crate::models::events::projectile_stopped_event::ProjectileStoppedEvent;
 use crate::models::events::damaged_event::DamagedEvent;
 use crate::models::events::enemy_collision_event::EnemyCollisionEvent;
 use crate::models::events::target_died_event::TargetDiedEvent;
@@ -12,16 +12,16 @@ use crate::models::unit_attributes::damage::Damage;
 use crate::models::unit_attributes::health::Health;
 use crate::models::unit_attributes::hit_limit::HitLimit;
 
-/// This system handles the collision between a [Bullet] and an [Enemy].
-/// The damage of the bullet gets applied to the health of the enemy.
+/// This system handles the collision between a [Projectile] and an [Enemy].
+/// The damage of the projectile gets applied to the health of the enemy.
 ///
-/// The bullet gets checked if the [HitLimit] is not reached and if it is it sends
-/// a [BulletEnemyCollisionEvent].
+/// The projectile gets checked if the [HitLimit] is not reached and if it is it sends
+/// a [ProjectileEnemyCollisionEvent].
 ///
-/// If an [Enemy] dies from the bullet it will send out an [EnemyDiedEvent].
+/// If an [Enemy] dies from the projectile it will send out an [EnemyDiedEvent].
 pub fn hit_system(
     game_time: Res<GameTime>,
-    mut bullet_stopped_event: EventWriter<BulletStoppedEvent>,
+    mut projectile_stopped_event: EventWriter<ProjectileStoppedEvent>,
     mut damaged_event: EventWriter<DamagedEvent>,
     mut enemy_collision_events: EventReader<EnemyCollisionEvent>,
     mut target_died_event: EventWriter<TargetDiedEvent>,
@@ -63,7 +63,7 @@ pub fn hit_system(
             hit_limit.hit_counter += 1;
 
             if hit_limit.hit_counter >= hit_limit.get_total_amount() as i32 {
-                bullet_stopped_event.send(BulletStoppedEvent { bullet_entity: event.source_entity });
+                projectile_stopped_event.send(ProjectileStoppedEvent { projectile_entity: event.source_entity });
                 continue;
             }
         }

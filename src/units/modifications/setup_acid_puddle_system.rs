@@ -16,7 +16,7 @@ pub fn setup_acid_puddle_system(
     gun_query: Query<&ModContainerSlot>,
 ) {
     for apply_event in apply_events.iter() {
-        let bullet_mod = match mod_query.get(apply_event.mod_entity) {
+        let projectile_mod = match mod_query.get(apply_event.mod_entity) {
             Ok(modification) => modification,
             Err(_) => continue,
         };
@@ -33,7 +33,7 @@ pub fn setup_acid_puddle_system(
 
         let acid_puddle_owner_entity = commands.spawn()
             .insert(Name::new("AcidPuddleOwner"))
-            .insert_bundle(DamageBundle::new(bullet_mod.damage, bullet_mod.damage_ticks_per_min))
+            .insert_bundle(DamageBundle::new(projectile_mod.damage, projectile_mod.damage_ticks_per_min))
             .id();
 
         commands.entity(weapon_mod_container.container_entity).insert(AcidPuddleOwner { owner: acid_puddle_owner_entity });

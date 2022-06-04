@@ -3,13 +3,13 @@ use bevy::prelude::{Commands, Entity, EventReader, EventWriter, Name, Query, Res
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::aim_direction::AimDirection;
 use crate::models::behavior::teleport_to_target_behavior::TeleportToTargetBehavior;
-use crate::models::bullet::Bullet;
+use crate::models::projectile::Projectile;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collider::EnemyHitBoxCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::damaged_entities::DamagedEntities;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
-use crate::models::events::bullet_shot_event::BulletShotEvent;
+use crate::models::events::projectile_shot_event::ProjectileShotEvent;
 use crate::models::input::player_aim_controlled::PlayerAimControlled;
 use crate::models::layerable::Layerable;
 use crate::models::mirror_aim_to_move_direction::MirrorAimToMoveDirection;
@@ -30,7 +30,7 @@ pub fn apply_psy_rock_system(
     mut commands: Commands,
     texture_handler: Res<TextureHandles>,
     mut apply_events: EventReader<ApplyModToTargetEvent>,
-    mut bullet_shot_event: EventWriter<BulletShotEvent>,
+    mut projectile_shot_event: EventWriter<ProjectileShotEvent>,
     mod_query: Query<&PsyRock, With<Modification>>,
     owner_query: Query<(Entity, &Transform, &WeaponSlot)>,
     unit_query: Query<&Owner, With<PsyRockUnit>>,
@@ -57,7 +57,7 @@ pub fn apply_psy_rock_system(
             continue;
         }
 
-        let bullet = commands.spawn_bundle(SpriteBundle {
+        let projectile = commands.spawn_bundle(SpriteBundle {
             sprite: Sprite {
                 custom_size: Some(Vec2::new(160.0, 160.0)),
                 ..Default::default()
@@ -69,7 +69,7 @@ pub fn apply_psy_rock_system(
             .insert(Name::new("Psy Rock"))
             .insert(PsyRockUnit)
             .insert(Owner::new(owner_entity))
-            .insert(Bullet { source_entity: owner_weapon_slot.weapon_entity })
+            .insert(Projectile { source_entity: owner_weapon_slot.weapon_entity })
 
             .insert(AimDirection::default())
             .insert(PlayerAimControlled)
@@ -93,19 +93,19 @@ pub fn apply_psy_rock_system(
 
         commands.entity(owner_entity).remove::<Reload>();
 
-        bullet_shot_event.send(BulletShotEvent { entity: bullet });
+        projectile_shot_event.send(ProjectileShotEvent { entity: projectile });
     }
 }
 
 pub fn renew_mods_for_psy_rock_system(
-    mut bullet_shot_event: EventWriter<BulletShotEvent>,
+    mut projectile_shot_event: EventWriter<ProjectileShotEvent>,
     mut apply_mod_events: EventReader<ApplyModToTargetEvent>,
     unit_query: Query<(Entity, &Owner), With<PsyRockUnit>>,
 ) {
     for (entity, owner) in unit_query.iter() {
         for event in apply_mod_events.iter() {
             if owner.entity == event.target_entity {
-                bullet_shot_event.send(BulletShotEvent { entity });
+                projectile_shot_event.send(ProjectileShotEvent { entity });
             }
         }
     }

@@ -15,7 +15,7 @@ use crate::models::weapon_slot::WeaponSlot;
 /// #
 /// impl Plugin for ExamplePlugin {
 ///     fn build(&self, app: &mut App) {
-///         app.add_system(apply_bullet_affect_system::<MoveSpeed, AffectBulletMoveSpeed>)
+///         app.add_system(apply_projectile_affect_system::<MoveSpeed, AffectProjectileMoveSpeed>)
 ///     }
 /// }
 /// ```
