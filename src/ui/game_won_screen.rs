@@ -1,6 +1,5 @@
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, FlexDirection, HorizontalAlign, Interaction, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, ResMut, Size, State, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Color, Commands, FlexDirection, HorizontalAlign, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
 
-use crate::{AppStateTrigger, ToAppState};
 use crate::models::mod_register::ModRegister;
 use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::modification::Modification;
@@ -12,7 +11,7 @@ use crate::models::ui::game_won_screen::GameWonScreen;
 pub fn spawn_game_won_screen_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
-    player_query: Query<(&ModRegister), With<Player>>,
+    player_query: Query<&ModRegister, With<Player>>,
     mod_query: Query<(&ToolTip, &ModName), With<Modification>>,
 ) {
     let mut text_to_show = String::new();

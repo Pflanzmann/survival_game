@@ -10,5 +10,9 @@
     "tooltip": "That's gotta burn!"
   },
   "Price": 10,
-  "BurningShot": null
+  "BurningShot": {
+    "debuff_duration": 3.0,
+    "damage_interval": 0.5,
+    "damage_per_tick": 2.0
+  }
 }

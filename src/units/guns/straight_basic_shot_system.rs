@@ -17,7 +17,6 @@ use crate::models::events::projectile_shot_event::ProjectileShotEvent;
 use crate::models::gun::straight_basic_shot::StraightBasicShot;
 use crate::models::move_direction::MoveDirection;
 use crate::models::sprite_layer::SpriteLayer;
-use crate::models::sprite_move_rotation::SpriteMoveRotation;
 use crate::models::unit_attributes::attribute::*;
 use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
