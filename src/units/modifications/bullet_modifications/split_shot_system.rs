@@ -1,7 +1,8 @@
-use bevy::prelude::{Commands, EventReader, EventWriter, GlobalTransform, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
+use bevy::prelude::{Commands, EulerRot, EventReader, EventWriter, GlobalTransform, Name, Quat, Query, Res, Sprite, SpriteBundle, Transform, Vec2, With};
 use rand::random;
 
 use crate::{SpriteLayer, TextureHandles};
+use crate::models::behavior::rotate_behavior::UnitRotation;
 use crate::models::bullet::Bullet;
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::child_bullet::ChildBullet;
@@ -44,9 +45,14 @@ pub fn split_shot_system(
             Vec2::new(random_rotation, -1.0 + random_rotation).normalize(),
         ];
 
+
         for direction in directions {
+            let random_rotation: f32 = random::<f32>() * 100.0;
+            let mut bullet_transform = Transform::from_xyz(bullet_transform.translation.x, bullet_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z());
+            bullet_transform.rotation = Quat::from_euler(EulerRot::XYZ, 0.0, 0.0, random_rotation);
+
             let bullet = command.spawn_bundle(SpriteBundle {
-                transform: Transform::from_xyz(bullet_transform.translation.x, bullet_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z()),
+                transform: bullet_transform,
                 sprite: Sprite {
                     custom_size: Some(Vec2::new(128.0, 128.0)),
                     ..Default::default()
@@ -71,7 +77,7 @@ pub fn split_shot_system(
                 .insert(HitLimit::new(1.0))
                 .insert(TravelRange::new(2048.0))
 
-                .insert(SpriteMoveRotation)
+                .insert(UnitRotation { revolutions_per_min: if random_rotation > 50.0 { 40.0 } else { -40.0 } })
                 .id();
 
             bullet_shot_event_writer.send(BulletShotEvent { entity: bullet });
