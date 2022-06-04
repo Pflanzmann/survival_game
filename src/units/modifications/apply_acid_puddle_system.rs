@@ -8,7 +8,7 @@ use crate::models::modifications::acid_puddle::{AcidPuddle, AcidPuddleOwner};
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::weapon_slot::WeaponSlot;
 
-pub fn setup_acid_puddle_system(
+pub fn apply_acid_puddle_system(
     mut commands: Commands,
     mut apply_events: EventReader<ApplyModToTargetEvent>,
     mod_query: Query<&AcidPuddle, With<Modification>>,

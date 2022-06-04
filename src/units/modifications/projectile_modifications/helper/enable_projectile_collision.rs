@@ -10,9 +10,8 @@ pub fn enable_projectile_collision(
     projectile_query: Query<&Projectile>,
 ) {
     for event in projectile_shot_event.iter() {
-        let projectile = match projectile_query.get(event.entity) {
-            Ok(projectile) => projectile,
-            Err(_) => continue,
+        if projectile_query.get(event.entity).is_err() {
+            continue;
         };
 
         commands.entity(event.entity).insert(EnemyHitBoxCollider);

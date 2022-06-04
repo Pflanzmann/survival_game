@@ -22,3 +22,4 @@ pub mod glass_cannon;
 pub mod acid_puddle;
 pub mod burning_shot;
 pub mod statuses;
+pub mod magnet;

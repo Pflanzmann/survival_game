@@ -4,6 +4,7 @@ use rand::random;
 use crate::assets_handling::preload_item_system::ItemConfigHandles;
 use crate::assets_handling::preload_texture_system::TextureHandles;
 use crate::models::collision::collider_type::ColliderType;
+use crate::models::collision::collider_weight::ColliderWeight;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::enemy::Enemy;
 use crate::models::events::target_died_event::TargetDiedEvent;
@@ -49,9 +50,8 @@ pub fn drop_chance_system(
                 .insert(Coin)
                 .insert(Name::new("Item Coin"))
                 .insert(GoldValue { gold_value: 1 })
-                .insert(HitBoxCollider {
-                    collider_type: ColliderType::Circle(item_handles.coin.sprite_custom_size_x / 2.0)
-                });
+                .insert(HitBoxCollider { collider_type: ColliderType::Circle(item_handles.coin.sprite_custom_size_x / 2.0) })
+                .insert(ColliderWeight { weight: 0.0 });
         }
 
         if (80.0..100.0).contains(&random) {
@@ -70,9 +70,8 @@ pub fn drop_chance_system(
                 .insert(Layerable::new(SpriteLayer::LowGroundLevel.get_layer_z()))
                 .insert(Heal { amount: item_handles.hot_dog.heal_amount })
                 .insert(Name::new("Item Heal"))
-                .insert(HitBoxCollider {
-                    collider_type: ColliderType::Circle(item_handles.hot_dog.sprite_custom_size_x / 2.0)
-                });
+                .insert(HitBoxCollider { collider_type: ColliderType::Circle(item_handles.hot_dog.sprite_custom_size_x / 2.0) })
+                .insert(ColliderWeight { weight: 0.0 });
         }
     }
 }
