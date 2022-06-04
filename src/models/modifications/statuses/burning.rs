@@ -15,3 +15,6 @@ impl Burning {
         Burning { source_entity, debuff_duration, damage_interval, damage_interval_timer: 0.0, damage_per_tick }
     }
 }
+
+#[derive(Component)]
+pub struct BurningEffect;
