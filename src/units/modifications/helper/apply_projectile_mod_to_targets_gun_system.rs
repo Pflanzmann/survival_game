@@ -6,7 +6,7 @@ use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::player::Player;
 use crate::models::weapon_slot::WeaponSlot;
 
-/// A generic system to apply a [Bullet][Modification] from the source
+/// A generic system to apply a [Projectile][Modification] from the source
 /// to the target of the [ApplyModToTargetSystem].
 ///
 /// The modification gets applied (cloned) from the source [Entity] with a [Modification]-Tag to
@@ -17,7 +17,7 @@ use crate::models::weapon_slot::WeaponSlot;
 /// #
 /// impl Plugin for ExamplePlugin {
 ///     fn build(&self, app: &mut App) {
-///         app.add_system(apply_bullet_mod_to_targets_gun_system::<CurveShot>)
+///         app.add_system(apply_projectile_mod_to_targets_gun_system::<CurveShot>)
 ///     }
 /// }
 /// ```
@@ -29,7 +29,7 @@ pub fn apply_projectile_mod_to_targets_gun_system<T: Component + Clone>(
     gun_query: Query<&ModContainerSlot, Without<Player>>,
 ) {
     for apply_event in apply_events.iter() {
-        let bullet_mod = match mod_query.get(apply_event.mod_entity) {
+        let projectile_mod = match mod_query.get(apply_event.mod_entity) {
             Ok(modification) => modification,
             Err(_) => continue,
         };
@@ -44,6 +44,6 @@ pub fn apply_projectile_mod_to_targets_gun_system<T: Component + Clone>(
             Err(_) => continue,
         };
 
-        commands.entity(weapon_mod_container.container_entity).insert(bullet_mod.clone());
+        commands.entity(weapon_mod_container.container_entity).insert(projectile_mod.clone());
     }
 }

@@ -7,7 +7,7 @@
     "path": "sprites/mod_icons/split_shot_icon.png"
   },
   "ToolTip": {
-    "tooltip": "bullet splits into 4 bullets"
+    "tooltip": "projectile splits into 4 projectiles"
   },
   "Price": 5,
   "SplitShot": null

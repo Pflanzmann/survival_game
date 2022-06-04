@@ -1,6 +1,6 @@
 pub enum SoundChannel {
     Pickup,
-    Bullet,
+    Projectile,
     Misc,
     Background,
 }

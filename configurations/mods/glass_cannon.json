@@ -19,11 +19,11 @@
     "operator": "Multiply",
     "amount": 1.5
   },
-  "AffectBulletDamage": {
+  "AffectProjectileDamage": {
     "operator": "Multiply",
     "amount": 5.0
   },
-  "AffectBulletUnitSize": {
+  "AffectProjectileUnitSize": {
     "operator": "Multiply",
     "amount": 5.0
   }

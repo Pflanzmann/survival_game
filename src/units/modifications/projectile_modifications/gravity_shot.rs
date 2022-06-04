@@ -10,9 +10,9 @@ pub fn gravity_shot_system(
     mut commands: Commands,
     time: Res<Time>,
     solid_body_tree: Res<SolidBodyQuadTree>,
-    mut bullet_query: Query<(&GlobalTransform, &mut GravityShot)>,
+    mut projectile_query: Query<(&GlobalTransform, &mut GravityShot)>,
 ) {
-    for (transform, mut gravity_shot) in bullet_query.iter_mut() {
+    for (transform, mut gravity_shot) in projectile_query.iter_mut() {
         gravity_shot.pulse_timer -= time.delta_seconds();
         if gravity_shot.pulse_timer > 0.0 {
             continue;

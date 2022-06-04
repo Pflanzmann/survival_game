@@ -5,7 +5,7 @@ use crate::models::mod_container_slot::ModContainerSlot;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::weapon_slot::WeaponSlot;
 
-/// A generic system to remove a [Bullet][Modification] from a source
+/// A generic system to remove a [Projectile][Modification] from a source
 /// to the target´s gun of the [ApplyModToTargetSystem].
 ///
 /// The modification gets removed from the [ModContainer] of the gun that gets held by
@@ -16,7 +16,7 @@ use crate::models::weapon_slot::WeaponSlot;
 /// #
 /// impl Plugin for ExamplePlugin {
 ///     fn build(&self, app: &mut App) {
-///         app.add_system(remove_bullet_mod_from_targets_gun_system::<CurveShot>)
+///         app.add_system(remove_projectile_mod_from_targets_gun_system::<CurveShot>)
 ///     }
 /// }
 /// ```

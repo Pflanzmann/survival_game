@@ -2,11 +2,11 @@ use bevy::prelude::{Commands, Component, EventReader, Query, With};
 
 use crate::models::attribute_container::AttributeContainer;
 use crate::models::attribute_container_slot::AttributeContainerSlot;
-use crate::models::bullet::Bullet;
-use crate::models::events::bullet_shot_event::BulletShotEvent;
+use crate::models::projectile::Projectile;
+use crate::models::events::projectile_shot_event::ProjectileShotEvent;
 
-/// A generic system to apply [Attriubutes] like [TravelTime] to the new shot bullet from the
-/// [BulletShotEvent].
+/// A generic system to apply [Attriubutes] like [TravelTime] to the new shot projectile from the
+/// [ProjectileShotEvent].
 ///
 /// The attribute gets applied from the [AttributeContainer] associated to the weapon.
 ///
@@ -15,25 +15,25 @@ use crate::models::events::bullet_shot_event::BulletShotEvent;
 /// #
 /// impl Plugin for ExamplePlugin {
 ///     fn build(&self, app: &mut App) {
-///         app.add_system(assign_attribute_to_bullet_system::<SplitShot>)
+///         app.add_system(assign_attribute_to_projectile_system::<SplitShot>)
 ///     }
 /// }
 /// ```
 ///
-pub fn assign_attribute_to_bullet_system<T: Component + Copy>(
+pub fn assign_attribute_to_projectile_system<T: Component + Copy>(
     mut commands: Commands,
-    mut bullet_shot_event: EventReader<BulletShotEvent>,
-    bullet_query: Query<&Bullet, With<T>>,
+    mut projectile_shot_event: EventReader<ProjectileShotEvent>,
+    projectile_query: Query<&Projectile, With<T>>,
     source_query: Query<&AttributeContainerSlot>,
     attribute_container_query: Query<&T, With<AttributeContainer>>,
 ) {
-    for event in bullet_shot_event.iter() {
-        let bullet = match bullet_query.get(event.entity) {
-            Ok(bullet) => bullet,
+    for event in projectile_shot_event.iter() {
+        let projectile = match projectile_query.get(event.entity) {
+            Ok(projectile) => projectile,
             Err(_) => continue,
         };
 
-        let source_mod_container_slot = match source_query.get(bullet.source_entity) {
+        let source_mod_container_slot = match source_query.get(projectile.source_entity) {
             Ok(source) => source,
             Err(_) => continue,
         };

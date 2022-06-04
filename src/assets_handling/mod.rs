@@ -3,7 +3,7 @@ use bevy::prelude::{App, Plugin, SystemSet};
 use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::assets_handling::preload_animation_system::preload_animation_system;
 use crate::assets_handling::preload_audio_system::{preload_audio_system, SoundHandles};
-use crate::assets_handling::preload_bullet_system::{BulletConfigHandles, preload_bullet_system};
+use crate::assets_handling::preload_projectile_system::{ProjectileConfigHandles, preload_projectile_system};
 use crate::assets_handling::preload_enemy_system::preload_enemy_system;
 use crate::assets_handling::preload_item_system::{ItemConfigHandles, preload_item_system};
 use crate::assets_handling::preload_mod_system::preload_mod_system;
@@ -18,7 +18,7 @@ pub mod preload_texture_system;
 pub mod preload_enemy_system;
 pub mod preload_item_system;
 pub mod preload_player_system;
-pub mod preload_bullet_system;
+pub mod preload_projectile_system;
 pub mod preload_mod_system;
 pub mod preload_audio_system;
 pub mod preload_animation_system;
@@ -43,7 +43,7 @@ impl Plugin for AssetHandlingPlugin {
             .init_resource::<EnemyConfigHandles>()
             .init_resource::<ItemConfigHandles>()
             .init_resource::<PlayerConfigHandles>()
-            .init_resource::<BulletConfigHandles>()
+            .init_resource::<ProjectileConfigHandles>()
             .init_resource::<SoundHandles>()
             .init_resource::<AtlasHandles>()
             .init_resource::<StageSpawnBehaviorHandle>()
@@ -56,7 +56,7 @@ impl Plugin for AssetHandlingPlugin {
                     .with_system(preload_enemy_system)
                     .with_system(preload_item_system)
                     .with_system(preload_player_system)
-                    .with_system(preload_bullet_system)
+                    .with_system(preload_projectile_system)
                     .with_system(preload_mod_system)
                     .with_system(preload_audio_system)
                     .with_system(preload_animation_system)

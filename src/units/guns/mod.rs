@@ -18,7 +18,7 @@ pub struct GunPlugin;
 
 /// Plugin to handle the gun and shooting systems.
 ///
-/// The [straight_basic_shot_system] is a shooting system to trigger the creation of [Bullet]s.
+/// The [straight_basic_shot_system] is a shooting system to trigger the creation of [Projectile]s.
 /// Other systems get called in the update of the [AppState::InGame].
 ///
 /// [setup_gun_system] is called in the exit of the [AppState::MainMenu] for now.

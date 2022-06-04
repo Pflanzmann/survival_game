@@ -1,6 +1,6 @@
 use bevy::prelude::{Added, BuildChildren, Commands, Entity, Name, Query, Res};
 
-use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
+use crate::assets_handling::preload_projectile_system::ProjectileConfigHandles;
 use crate::models::attribute_container::AttributeContainer;
 use crate::models::attribute_container_slot::AttributeContainerSlot;
 use crate::models::gun::basic_sword::BasicSword;
@@ -14,7 +14,7 @@ use crate::models::weapon_slot::WeaponSlot;
 pub fn setup_sword_system(
     mut commands: Commands,
     target_query: Query<Entity, Added<BasicSword>>,
-    bullet_handle: Res<BulletConfigHandles>,
+    projectile_handle: Res<ProjectileConfigHandles>,
 ) {
     for target_entity in target_query.iter() {
         let mod_container = commands.spawn()
@@ -25,8 +25,8 @@ pub fn setup_sword_system(
         let attribute_container = commands.spawn()
             .insert(Name::new("BasicSword AttributeContainer"))
             .insert(AttributeContainer)
-            .insert(Damage::new(bullet_handle.basic_bullet.damage))
-            .insert(TravelRange::new(bullet_handle.basic_bullet.range))
+            .insert(Damage::new(projectile_handle.basic_projectile.damage))
+            .insert(TravelRange::new(projectile_handle.basic_projectile.range))
             .id();
 
         let gun_entity = commands.spawn()

@@ -7,7 +7,7 @@
     "path": "sprites/mod_icons/curve_shot_icon.png"
   },
   "ToolTip": {
-    "tooltip": "bullet gets thicc"
+    "tooltip": "projectile gets thicc"
   },
   "Price": 2,
   "CurveShot": null

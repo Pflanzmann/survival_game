@@ -1,13 +1,13 @@
 use bevy::prelude::{Commands, DespawnRecursiveExt, EventReader};
 
-use crate::models::events::bullet_stopped_event::BulletStoppedEvent;
+use crate::models::events::projectile_stopped_event::ProjectileStoppedEvent;
 
-/// This system handles the despawn of [Bullet] as a reaction to the [BulletStoppedEvent].
+/// This system handles the despawn of [Projectile] as a reaction to the [ProjectileStoppedEvent].
 pub fn projectile_despawn_system(
     mut commands: Commands,
-    mut bullet_stopped_event: EventReader<BulletStoppedEvent>,
+    mut projectile_stopped_event: EventReader<ProjectileStoppedEvent>,
 ) {
-    for event in bullet_stopped_event.iter() {
-        commands.entity(event.bullet_entity).despawn_recursive();
+    for event in projectile_stopped_event.iter() {
+        commands.entity(event.projectile_entity).despawn_recursive();
     }
 }

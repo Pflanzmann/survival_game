@@ -17,7 +17,7 @@
     "push_duration": 0.2,
     "push_force": 600.0
   },
-  "AffectBulletHitLimit": {
+  "AffectProjectileHitLimit": {
     "operator": "Add",
     "amount": 3.0
   }

@@ -15,11 +15,11 @@ use crate::models::modifications::affects::affect_move_speed::AffectMoveSpeed;
 use crate::models::modifications::affects::affect_reload::AffectReload;
 use crate::models::modifications::affects::affect_travel_range::AffectTravelRange;
 use crate::models::modifications::affects::affect_unit_size::AffectUnitSize;
-use crate::models::modifications::affects::bullet_affects::affect_bullet_damage::AffectBulletDamage;
-use crate::models::modifications::affects::bullet_affects::affect_bullet_hit_limit::AffectBulletHitLimit;
-use crate::models::modifications::affects::bullet_affects::affect_bullet_move_speed::AffectBulletMoveSpeed;
-use crate::models::modifications::affects::bullet_affects::affect_bullet_travel_range::AffectBulletTravelRange;
-use crate::models::modifications::affects::bullet_affects::affect_bullet_unit_size::AffectBulletUnitSize;
+use crate::models::modifications::affects::projectile_affects::affect_projectile_damage::AffectProjectileDamage;
+use crate::models::modifications::affects::projectile_affects::affect_projectile_hit_limit::AffectProjectileHitLimit;
+use crate::models::modifications::affects::projectile_affects::affect_projectile_move_speed::AffectProjectileMoveSpeed;
+use crate::models::modifications::affects::projectile_affects::affect_projectile_travel_range::AffectProjectileTravelRange;
+use crate::models::modifications::affects::projectile_affects::affect_projectile_unit_size::AffectProjectileUnitSize;
 use crate::models::modifications::blue_pill::BluePill;
 use crate::models::modifications::burning_shot::BurningShot;
 use crate::models::modifications::curve_shot::CurveShot;
@@ -74,11 +74,11 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<AffectTravelRange>();
         entity_builder.register_component::<AffectHitLimit>();
 
-        entity_builder.register_component::<AffectBulletDamage>();
-        entity_builder.register_component::<AffectBulletHitLimit>();
-        entity_builder.register_component::<AffectBulletMoveSpeed>();
-        entity_builder.register_component::<AffectBulletTravelRange>();
-        entity_builder.register_component::<AffectBulletUnitSize>();
+        entity_builder.register_component::<AffectProjectileDamage>();
+        entity_builder.register_component::<AffectProjectileHitLimit>();
+        entity_builder.register_component::<AffectProjectileMoveSpeed>();
+        entity_builder.register_component::<AffectProjectileTravelRange>();
+        entity_builder.register_component::<AffectProjectileUnitSize>();
 
         entity_builder.register_component::<EffectAddHealth>();
         entity_builder.register_component::<EffectDamageHealth>();

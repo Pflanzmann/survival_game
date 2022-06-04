@@ -7,7 +7,7 @@
     "path": "sprites/mod_icons/grow_shot_icon.png"
   },
   "ToolTip": {
-    "tooltip": "bullet gets bigger and doller"
+    "tooltip": "projectile gets bigger and doller"
   },
   "Price": 10,
   "GrowShot": {

@@ -19,16 +19,16 @@ pub struct ReloadText;
 pub struct UnitSizeText;
 
 #[derive(Component)]
-pub struct BulletDamageText;
+pub struct ProjectileDamageText;
 
 #[derive(Component)]
-pub struct BulletMoveSpeedText;
+pub struct ProjectileMoveSpeedText;
 
 #[derive(Component)]
-pub struct BulletHitLimitText;
+pub struct ProjectileHitLimitText;
 
 #[derive(Component)]
-pub struct BulletTravelRangeText;
+pub struct ProjectileTravelRangeText;
 
 #[derive(Component)]
-pub struct BulletUnitSizeText;
+pub struct ProjectileUnitSizeText;

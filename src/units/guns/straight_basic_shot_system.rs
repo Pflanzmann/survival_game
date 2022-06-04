@@ -3,17 +3,17 @@ use bevy::prelude::{Commands, EventWriter, GlobalTransform, Name, Quat, Query, R
 use rand::random;
 
 use crate::assets_handling::preload_audio_system::SoundHandles;
-use crate::assets_handling::preload_bullet_system::BulletConfigHandles;
+use crate::assets_handling::preload_projectile_system::ProjectileConfigHandles;
 use crate::audio::sound_manager::SoundManager;
 use crate::models::aim_direction::AimDirection;
 use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 use crate::models::behavior::rotate_behavior::UnitRotation;
-use crate::models::bullet::Bullet;
+use crate::models::projectile::Projectile;
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collider::EnemyHitBoxCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
-use crate::models::events::bullet_shot_event::BulletShotEvent;
+use crate::models::events::projectile_shot_event::ProjectileShotEvent;
 use crate::models::gun::straight_basic_shot::StraightBasicShot;
 use crate::models::move_direction::MoveDirection;
 use crate::models::sprite_layer::SpriteLayer;
@@ -30,10 +30,10 @@ use crate::TextureHandles;
 pub fn straight_basic_shot_system(
     mut command: Commands,
     texture_handle: Res<TextureHandles>,
-    bullet_handle: Res<BulletConfigHandles>,
+    projectile_handle: Res<ProjectileConfigHandles>,
     mut sound_manager: ResMut<SoundManager>,
     sound_handles: Res<SoundHandles>,
-    mut bullet_shot_event_writer: EventWriter<BulletShotEvent>,
+    mut projectile_shot_event_writer: EventWriter<ProjectileShotEvent>,
     mut weapon_holder_query: Query<(&GlobalTransform, &AimDirection, &WeaponSlot, &mut Reload), With<StraightBasicShot>>,
 ) {
     for (holder_transform, holder_aim_direction, weapon_holder_slot, mut holder_reloadable) in weapon_holder_query.iter_mut() {
@@ -48,23 +48,23 @@ pub fn straight_basic_shot_system(
 
         let random_rotation: f32 = random::<f32>() * 100.0;
 
-        let mut bullet_transform = Transform::from_xyz(holder_transform.translation.x, holder_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z());
-        bullet_transform.rotation = Quat::from_euler(EulerRot::XYZ, 0.0, 0.0, random_rotation);
+        let mut projectile_transform = Transform::from_xyz(holder_transform.translation.x, holder_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z());
+        projectile_transform.rotation = Quat::from_euler(EulerRot::XYZ, 0.0, 0.0, random_rotation);
 
-        let bullet = command.spawn_bundle(SpriteBundle {
-            transform: bullet_transform,
+        let projectile = command.spawn_bundle(SpriteBundle {
+            transform: projectile_transform,
             sprite: Sprite {
-                custom_size: Some(Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y)),
+                custom_size: Some(Vec2::new(projectile_handle.basic_projectile.sprite_custom_size_x, projectile_handle.basic_projectile.sprite_custom_size_y)),
                 ..Default::default()
             },
-            texture: texture_handle.bullet_fireball.clone(),
+            texture: texture_handle.projectile_fireball.clone(),
             ..Default::default()
         })
             .insert(Name::new("Projectile"))
-            .insert(Bullet { source_entity: weapon_holder_slot.weapon_entity })
+            .insert(Projectile { source_entity: weapon_holder_slot.weapon_entity })
 
-            .insert(UnitSize::new_size(Vec2::new(bullet_handle.basic_bullet.sprite_custom_size_x, bullet_handle.basic_bullet.sprite_custom_size_y)))
-            .insert(HitBoxCollider { collider_type: ColliderType::Circle(bullet_handle.basic_bullet.sprite_custom_size_x / 2.0) })
+            .insert(UnitSize::new_size(Vec2::new(projectile_handle.basic_projectile.sprite_custom_size_x, projectile_handle.basic_projectile.sprite_custom_size_y)))
+            .insert(HitBoxCollider { collider_type: ColliderType::Circle(projectile_handle.basic_projectile.sprite_custom_size_x / 2.0) })
             .insert(EnemyHitBoxCollider)
 
             .insert_bundle(DamageBundle::new(0.0, 60.0))
@@ -78,9 +78,9 @@ pub fn straight_basic_shot_system(
             .insert(UnitRotation { revolutions_per_min: if random_rotation > 50.0 { 40.0 } else { -40.0 } })
             .id();
 
-        bullet_shot_event_writer.send(BulletShotEvent { entity: bullet });
+        projectile_shot_event_writer.send(ProjectileShotEvent { entity: projectile });
 
-        sound_manager.queue_sound(SoundHandleChannel::Bullet(sound_handles.shoot_sound.clone()));
+        sound_manager.queue_sound(SoundHandleChannel::Projectile(sound_handles.shoot_sound.clone()));
     }
 }
 

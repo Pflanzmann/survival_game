@@ -5,7 +5,7 @@ use crate::models::ui::game_won_screen::GameWonScreen;
 use crate::ui::cmd::CmdUiPlugin;
 use crate::ui::game_over_screen::{button_click_system, spawn_menu_system};
 use crate::ui::game_won_screen::spawn_game_won_screen_system;
-use crate::ui::hud_system::{spawn_text_system, update_bullet_hud_system, update_text_system};
+use crate::ui::hud_system::{spawn_text_system, update_projectile_hud_system, update_text_system};
 use crate::ui::main_menu_screen::{close_main_menu_system, spawn_main_menu_system};
 use crate::ui::pause_screen::{enter_pause_system, exit_pause_system};
 use crate::ui::setup_tool_tip_window::{move_tool_tip_window, populate_tooltip_window, setup_tool_tip_window};
@@ -88,6 +88,6 @@ impl Plugin for UiPlugin {
             .add_system(setup_tool_tip_window)
             .add_system(move_tool_tip_window)
             .add_system(populate_tooltip_window)
-            .add_system(update_bullet_hud_system);
+            .add_system(update_projectile_hud_system);
     }
 }
