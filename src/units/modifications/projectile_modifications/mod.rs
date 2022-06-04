@@ -27,6 +27,7 @@ use crate::units::modifications::projectile_modifications::curve_shot_system::cu
 use crate::units::modifications::projectile_modifications::explosion_shot_system::explosion_shot_system;
 use crate::units::modifications::projectile_modifications::gravity_shot::gravity_shot_system;
 use crate::units::modifications::projectile_modifications::grow_shot_system::grow_shot_system;
+use crate::units::modifications::projectile_modifications::helper::enable_projectile_collision::enable_projectile_collision;
 use crate::units::modifications::projectile_modifications::lightning_system::lightning_system;
 use crate::units::modifications::projectile_modifications::split_shot_system::split_shot_system;
 use crate::util::run_criteria::on_event::on_event;
@@ -56,6 +57,8 @@ impl Plugin for ProjectileModificationsPlugin {
                 in_post_update(
                     SystemSet::new()
                         .with_run_criteria(on_event::<ProjectileShotEvent>)
+
+                        .with_system(enable_projectile_collision)
 
                         .with_system(assign_attribute_to_projectile_system::<Damage>)
                         .with_system(assign_attribute_to_projectile_system::<HitLimit>)
