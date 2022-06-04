@@ -1,0 +1,20 @@
+{
+  "Modification": null,
+  "ModName": {
+    "mod_name": "magnet"
+  },
+  "SpritePathWrapper": {
+    "path": "sprites/mod_icons/magnet_icon.png"
+  },
+  "ToolTip": {
+    "tooltip": "I prefer the real Magneto. I said the real Magneto. Percektion"
+  },
+  "Price": 7,
+  "Magnet": {
+    "pulse_time": 0.2,
+    "pulse_timer": 0.2,
+    "radius": 1200.0,
+    "push_duration": 0.2,
+    "push_force": 900.0
+  }
+}

@@ -39,6 +39,7 @@ use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::modifications::knock_back_shot::KnockBackShot;
 use crate::models::modifications::lightning::Lightning;
 use crate::models::modifications::low_cal::LowCal;
+use crate::models::modifications::magnet::Magnet;
 use crate::models::modifications::psy_rock::PsyRock;
 use crate::models::modifications::radiation::Radiation;
 use crate::models::modifications::shield::Shield;
@@ -110,6 +111,7 @@ impl Plugin for EntityBuilderPlugin {
         entity_builder.register_component::<PsyRock>();
         entity_builder.register_component::<Radiation>();
         entity_builder.register_component::<Shield>();
+        entity_builder.register_component::<Magnet>();
 
         app.insert_resource::<EntityBuilder>(entity_builder);
     }

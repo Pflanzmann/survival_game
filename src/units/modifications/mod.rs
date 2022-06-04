@@ -8,6 +8,7 @@ use helper::remove_affect_system::remove_affect_system;
 use helper::remove_player_mod_from_target_system::remove_player_mod_from_target_system;
 use helper::remove_projectile_mod_from_targets_gun_system::remove_projectile_mod_from_targets_gun_system;
 
+use crate::AppState;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
 use crate::models::modifications::acid_puddle::{AcidPuddle, AcidPuddleOwner};
@@ -31,6 +32,7 @@ use crate::models::modifications::gravity_shot::GravityShot;
 use crate::models::modifications::grow_shot::GrowShot;
 use crate::models::modifications::knock_back_shot::KnockBackShot;
 use crate::models::modifications::lightning::Lightning;
+use crate::models::modifications::magnet::Magnet;
 use crate::models::modifications::psy_rock::{PsyRock, PsyRockUnit};
 use crate::models::modifications::radiation::{Radiation, RadiationUnit};
 use crate::models::modifications::shield::{Shield, ShieldUnit};
@@ -45,6 +47,7 @@ use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_attributes::unit_size::UnitSize;
+use crate::units::modifications::apply_acid_puddle_system::apply_acid_puddle_system;
 use crate::units::modifications::apply_death_ball_system::apply_death_ball_system;
 use crate::units::modifications::apply_psy_rock_system::{apply_psy_rock_system, renew_mods_for_psy_rock_system};
 use crate::units::modifications::apply_radiation_system::apply_radiation_system;
@@ -58,8 +61,8 @@ use crate::units::modifications::helper::despawn_companion_from_mod_system::desp
 use crate::units::modifications::helper::mod_list_deregister_system::mod_list_deregister_system;
 use crate::units::modifications::helper::mod_list_register_system::mod_list_register_system;
 use crate::units::modifications::helper::remove_projectile_affect_system::remove_projectile_affect_system;
+use crate::units::modifications::magnet_system::magnet_system;
 use crate::units::modifications::projectile_modifications::ProjectileModificationsPlugin;
-use crate::units::modifications::setup_acid_puddle_system::setup_acid_puddle_system;
 use crate::units::modifications::statuse::StatusPlugin;
 use crate::util::run_criteria::on_event::on_event;
 use crate::util::stage_label_helper::in_post_update;
@@ -73,8 +76,9 @@ mod apply_radiation_system;
 mod apply_shield_system;
 mod effect;
 mod projectile_modifications;
-mod setup_acid_puddle_system;
+mod apply_acid_puddle_system;
 mod statuse;
+mod magnet_system;
 
 /// All the apply systems have to get registered here.
 ///
@@ -92,6 +96,14 @@ impl Plugin for UnitModificationsPlugin {
         app
             .add_plugin(ProjectileModificationsPlugin)
             .add_plugin(StatusPlugin)
+
+            .add_system_set(
+                in_post_update(
+                    SystemSet::on_update(AppState::InGame)
+
+                        .with_system(magnet_system)
+                )
+            )
 
             .add_system_set(
                 in_post_update(
@@ -124,31 +136,26 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(apply_projectile_mod_to_targets_gun_system::<KnockBackShot>)
                         .with_system(apply_projectile_mod_to_targets_gun_system::<ExplosionShot>)
                         .with_system(apply_projectile_mod_to_targets_gun_system::<Lightning>)
-                        .with_system(apply_projectile_mod_to_targets_gun_system::<AcidPuddle>)
                         .with_system(apply_projectile_mod_to_targets_gun_system::<BurningShot>)
+                        .with_system(apply_projectile_mod_to_targets_gun_system::<AcidPuddle>)
+                        .with_system(apply_acid_puddle_system)
+
 
                         .with_system(apply_player_mod_to_target_system::<Sprinting>)
-
                         .with_system(apply_player_mod_to_target_system::<Turret>)
                         .with_system(apply_turret_system)
-
                         .with_system(apply_player_mod_to_target_system::<Slime>)
                         .with_system(apply_slime_system)
-
                         .with_system(apply_player_mod_to_target_system::<DeathBall>)
                         .with_system(apply_death_ball_system)
-
                         .with_system(apply_player_mod_to_target_system::<PsyRock>)
                         .with_system(apply_psy_rock_system)
                         .with_system(renew_mods_for_psy_rock_system)
-
                         .with_system(apply_player_mod_to_target_system::<Radiation>)
                         .with_system(apply_radiation_system)
-
                         .with_system(apply_player_mod_to_target_system::<Shield>)
                         .with_system(apply_shield_system)
-
-                        .with_system(setup_acid_puddle_system)
+                        .with_system(apply_player_mod_to_target_system::<Magnet>)
                 )
             )
 
@@ -204,6 +211,8 @@ impl Plugin for UnitModificationsPlugin {
                         .with_system(despawn_companion_from_mod_system::<Shield, ShieldUnit>)
 
                         .with_system(despawn_companion_from_mod_system::<AcidPuddle, AcidPuddleOwner>)
+
+                        .with_system(remove_player_mod_from_target_system::<Magnet>)
                 )
             )
         ;
