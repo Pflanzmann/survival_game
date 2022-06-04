@@ -2,11 +2,11 @@ use bevy::app::Plugin;
 use bevy::prelude::{App, SystemSet};
 
 use helper::apply_affect_system::apply_affect_system;
-use helper::apply_projectile_mod_to_targets_gun_system::apply_projectile_mod_to_targets_gun_system;
 use helper::apply_player_mod_to_target_system::apply_player_mod_to_target_system;
+use helper::apply_projectile_mod_to_targets_gun_system::apply_projectile_mod_to_targets_gun_system;
 use helper::remove_affect_system::remove_affect_system;
-use helper::remove_projectile_mod_from_targets_gun_system::remove_projectile_mod_from_targets_gun_system;
 use helper::remove_player_mod_from_target_system::remove_player_mod_from_target_system;
+use helper::remove_projectile_mod_from_targets_gun_system::remove_projectile_mod_from_targets_gun_system;
 
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
@@ -23,7 +23,7 @@ use crate::models::modifications::affects::projectile_affects::affect_projectile
 use crate::models::modifications::affects::projectile_affects::affect_projectile_move_speed::AffectProjectileMoveSpeed;
 use crate::models::modifications::affects::projectile_affects::affect_projectile_travel_range::AffectProjectileTravelRange;
 use crate::models::modifications::affects::projectile_affects::affect_projectile_unit_size::AffectProjectileUnitSize;
-use crate::models::modifications::burning_shot::{BurningShot, BurningShotUnit};
+use crate::models::modifications::burning_shot::BurningShot;
 use crate::models::modifications::curve_shot::CurveShot;
 use crate::models::modifications::death_ball::{DeathBall, DeathBallUnit};
 use crate::models::modifications::explosion_shot::ExplosionShot;
@@ -51,7 +51,6 @@ use crate::units::modifications::apply_radiation_system::apply_radiation_system;
 use crate::units::modifications::apply_shield_system::apply_shield_system;
 use crate::units::modifications::apply_slime_system::apply_slime_system;
 use crate::units::modifications::apply_turret_system::apply_turret_system;
-use crate::units::modifications::projectile_modifications::ProjectileModificationsPlugin;
 use crate::units::modifications::effect::apply_effect_add_health_system::apply_effect_add_health_system;
 use crate::units::modifications::effect::apply_effect_damage_health_system::apply_effect_damage_health_system;
 use crate::units::modifications::helper::apply_projectile_affect_system::apply_projectile_affect_system;
@@ -59,7 +58,9 @@ use crate::units::modifications::helper::despawn_companion_from_mod_system::desp
 use crate::units::modifications::helper::mod_list_deregister_system::mod_list_deregister_system;
 use crate::units::modifications::helper::mod_list_register_system::mod_list_register_system;
 use crate::units::modifications::helper::remove_projectile_affect_system::remove_projectile_affect_system;
+use crate::units::modifications::projectile_modifications::ProjectileModificationsPlugin;
 use crate::units::modifications::setup_acid_puddle_system::setup_acid_puddle_system;
+use crate::units::modifications::statuse::StatusPlugin;
 use crate::util::run_criteria::on_event::on_event;
 use crate::util::stage_label_helper::in_post_update;
 
@@ -73,6 +74,7 @@ mod apply_shield_system;
 mod effect;
 mod projectile_modifications;
 mod setup_acid_puddle_system;
+mod statuse;
 
 /// All the apply systems have to get registered here.
 ///
@@ -89,6 +91,7 @@ impl Plugin for UnitModificationsPlugin {
     fn build(&self, app: &mut App) {
         app
             .add_plugin(ProjectileModificationsPlugin)
+            .add_plugin(StatusPlugin)
 
             .add_system_set(
                 in_post_update(

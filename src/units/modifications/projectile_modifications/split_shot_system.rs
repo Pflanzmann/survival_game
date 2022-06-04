@@ -14,7 +14,6 @@ use crate::models::events::projectile_shot_event::ProjectileShotEvent;
 use crate::models::events::projectile_stopped_event::ProjectileStoppedEvent;
 use crate::models::modifications::split_shot::SplitShot;
 use crate::models::move_direction::MoveDirection;
-use crate::models::sprite_move_rotation::SpriteMoveRotation;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
