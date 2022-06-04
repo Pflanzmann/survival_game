@@ -20,7 +20,7 @@ use crate::models::weapon_slot::WeaponSlot;
 ///     }
 /// }
 /// ```
-pub fn remove_bullet_mod_from_targets_gun_system<T: Component>(
+pub fn remove_projectile_mod_from_targets_gun_system<T: Component>(
     mut commands: Commands,
     mut remove_events: EventReader<RemoveModFromTargetEvent>,
     mod_query: Query<&T, With<Modification>>,

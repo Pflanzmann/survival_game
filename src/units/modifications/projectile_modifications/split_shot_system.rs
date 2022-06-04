@@ -5,7 +5,7 @@ use crate::{SpriteLayer, TextureHandles};
 use crate::models::behavior::rotate_behavior::UnitRotation;
 use crate::models::bullet::Bullet;
 use crate::models::bundles::damage_bundle::DamageBundle;
-use crate::models::child_bullet::ChildBullet;
+use crate::models::child_projectile::ChildProjectile;
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::enemy_hit_box_collider::EnemyHitBoxCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
@@ -60,9 +60,9 @@ pub fn split_shot_system(
                 texture: texture_handle.bullet_fireball.clone(),
                 ..Default::default()
             })
-                .insert(Name::new("SplitShot Bullet"))
+                .insert(Name::new("SplitShot Projectile"))
                 .insert(*bullet)
-                .insert(ChildBullet)
+                .insert(ChildProjectile)
 
                 .insert(UnitSize::new_size(Vec2::new(128.0, 128.0)))
                 .insert(HitBoxCollider { collider_type: ColliderType::Circle(128.0 / 2.0) }).insert(EnemyHitBoxCollider)

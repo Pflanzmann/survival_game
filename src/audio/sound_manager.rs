@@ -104,6 +104,6 @@ impl SoundManager {
         &mut self,
         handle_enum: SoundHandleChannel,
     ) {
-        self.sound_handle_vector.push(handle_enum)
+        // self.sound_handle_vector.push(handle_enum)
     }
 }

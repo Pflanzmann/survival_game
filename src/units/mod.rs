@@ -4,7 +4,7 @@ use crate::{App, AppState};
 use crate::units::apply_damaged_component_system::apply_damage_component_system;
 use crate::units::apply_hit_effect_system::{apply_hit_effect_sprite_atlas_system, apply_hit_effect_sprite_system};
 use crate::units::behaviors::BehaviorPlugin;
-use crate::units::bullets::BulletPlugin;
+use crate::units::projectile::ProjectilePlugin;
 use crate::units::clear_damaged_entities_system::clear_damaged_entities_system;
 use crate::units::enemies::EnemiesPlugin;
 use crate::units::guns::GunPlugin;
@@ -37,7 +37,7 @@ mod sprite_move_rotate_system;
 mod sprite_aim_rotate_system;
 mod apply_damaged_component_system;
 mod apply_hit_effect_system;
-mod bullets;
+mod projectile;
 mod rotate_unit_system;
 mod clear_damaged_entities_system;
 mod mirror_aim_to_move_direction_system;
@@ -62,7 +62,7 @@ impl Plugin for UnitPlugin {
         app
             .add_plugin(UnitModificationsPlugin)
             .add_plugin(PlayerPlugin)
-            .add_plugin(BulletPlugin)
+            .add_plugin(ProjectilePlugin)
             .add_plugin(EnemiesPlugin)
             .add_plugin(BehaviorPlugin)
             .add_plugin(GunPlugin)
