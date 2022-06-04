@@ -19,7 +19,7 @@ use crate::models::weapon_slot::WeaponSlot;
 ///     }
 /// }
 /// ```
-pub fn remove_bullet_affect_system<
+pub fn remove_projectile_affect_system<
     T: Component + Attribute,
     U: Component + AttributeAffect<T>>
 (

@@ -6,7 +6,7 @@ use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::travel_range::TravelRange;
 
 /// This system checks the [TravelRange] of each [Bullet] and checks if the bullet should despawn.
-pub fn bullet_check_stop_system(
+pub fn projectile_check_stop_system(
     mut bullet_stopped_event: EventWriter<BulletStoppedEvent>,
     mut bullet_query: Query<(Entity, &TravelRange), With<Bullet>>,
 ) {

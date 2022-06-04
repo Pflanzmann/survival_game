@@ -1,1 +1,1 @@
-pbu mod burning;
+pub mod burning;

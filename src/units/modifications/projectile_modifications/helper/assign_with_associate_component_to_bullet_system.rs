@@ -1,7 +1,7 @@
 use bevy::prelude::{Commands, Component, EventReader, Query, With, Without};
 
 use crate::models::bullet::Bullet;
-use crate::models::child_bullet::ChildBullet;
+use crate::models::child_projectile::ChildProjectile;
 use crate::models::events::bullet_shot_event::BulletShotEvent;
 use crate::models::mod_container::ModContainer;
 use crate::models::mod_container_slot::ModContainerSlot;
@@ -28,7 +28,7 @@ pub fn assign_with_associate_component_to_bullet_system<
 >(
     mut commands: Commands,
     mut bullet_shot_event: EventReader<BulletShotEvent>,
-    bullet_query: Query<&Bullet, Without<ChildBullet>>,
+    bullet_query: Query<&Bullet, Without<ChildProjectile>>,
     source_query: Query<&ModContainerSlot>,
     mod_container_query: Query<&U, With<ModContainer>>,
 ) {

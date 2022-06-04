@@ -21,7 +21,7 @@ use crate::models::weapon_slot::WeaponSlot;
 ///     }
 /// }
 /// ```
-pub fn apply_bullet_mod_to_targets_gun_system<T: Component + Clone>(
+pub fn apply_projectile_mod_to_targets_gun_system<T: Component + Clone>(
     mut commands: Commands,
     mut apply_events: EventReader<ApplyModToTargetEvent>,
     mod_query: Query<&T, With<Modification>>,

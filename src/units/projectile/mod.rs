@@ -1,12 +1,12 @@
 use bevy::prelude::{Plugin, SystemSet};
 
 use crate::{App, AppState};
-use crate::units::bullets::bullet_check_stop_system::bullet_check_stop_system;
-use crate::units::bullets::bullet_despawn_system::bullet_despawn_system;
+use crate::units::projectile::projectile_check_stop_system::projectile_check_stop_system;
+use crate::units::projectile::projectile_despawn_system::projectile_despawn_system;
 use crate::util::stage_label_helper::{in_last, in_update};
 
-mod bullet_check_stop_system;
-mod bullet_despawn_system;
+mod projectile_check_stop_system;
+mod projectile_despawn_system;
 
 /// This plugin manages the [Bullet] systems and how they get applied.
 ///
@@ -19,22 +19,22 @@ mod bullet_despawn_system;
 /// you try access a despawned entity
 ///
 /// All system get only used in the [AppState::InGame].
-pub struct BulletPlugin;
+pub struct ProjectilePlugin;
 
-impl Plugin for BulletPlugin {
+impl Plugin for ProjectilePlugin {
     fn build(&self, app: &mut App) {
         app
             .add_system_set(
                 in_update(
                     SystemSet::on_update(AppState::InGame)
-                        .with_system(bullet_check_stop_system)
+                        .with_system(projectile_check_stop_system)
                 )
             )
 
             .add_system_set(
                 in_last(
                     SystemSet::on_update(AppState::InGame)
-                        .with_system(bullet_despawn_system)
+                        .with_system(projectile_despawn_system)
                 )
             );
     }
