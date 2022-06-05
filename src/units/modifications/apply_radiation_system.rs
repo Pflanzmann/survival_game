@@ -5,6 +5,7 @@ use crate::models::collision::enemy_hit_box_collider::EnemyHitBoxCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::damaged_entities::DamagedEntities;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
+use crate::models::inherit_unit_size::InheritUnitSize;
 use crate::models::modifications::descriptors::modification::Modification;
 use crate::models::modifications::radiation::{Radiation, RadiationUnit};
 use crate::models::modifications::utils::owner::Owner;
@@ -64,6 +65,7 @@ pub fn apply_radiation_system(
             .insert(Damage::new(modification.damage))
             .insert(DamageInterval::new(modification.damage_interval))
             .insert(DamagedEntities::default())
+            .insert(InheritUnitSize)
             .id();
 
         commands.entity(owner_entity).add_child(child);

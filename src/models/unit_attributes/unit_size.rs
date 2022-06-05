@@ -51,4 +51,10 @@ impl UnitSize {
     pub fn proportional_unit_size(&self) -> Vec2 {
         self.base_size * self.get_total_amount()
     }
+
+    pub fn inherit_from(&mut self, other: &Self) {
+        self.base_amount = other.base_amount;
+        self.bonus_amount = other.bonus_amount;
+        self.multiplier = other.multiplier;
+    }
 }
