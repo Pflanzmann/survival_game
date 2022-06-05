@@ -41,3 +41,4 @@ pub mod gun;
 pub mod gold_storage;
 pub mod visited_shop;
 pub mod world;
+pub mod inherit_unit_size;

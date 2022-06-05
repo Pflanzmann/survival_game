@@ -4,18 +4,19 @@ use crate::{App, AppState};
 use crate::units::apply_damaged_component_system::apply_damage_component_system;
 use crate::units::apply_hit_effect_system::{apply_hit_effect_sprite_atlas_system, apply_hit_effect_sprite_system};
 use crate::units::behaviors::BehaviorPlugin;
-use crate::units::projectile::ProjectilePlugin;
 use crate::units::clear_damaged_entities_system::clear_damaged_entities_system;
 use crate::units::enemies::EnemiesPlugin;
 use crate::units::guns::GunPlugin;
 use crate::units::health_bar_update_system::healthbar_update_system;
 use crate::units::hit_system::hit_system;
+use crate::units::inherit_unit_size_system::inherit_unit_size_system;
 use crate::units::knock_back_system::knock_back_system;
 use crate::units::layerable_system::layerable_system;
 use crate::units::mirror_aim_to_move_direction_system::mirror_aim_to_move_direction_system;
 use crate::units::modifications::UnitModificationsPlugin;
 use crate::units::move_unit_system::move_unit_system;
 use crate::units::player::PlayerPlugin;
+use crate::units::projectile::ProjectilePlugin;
 use crate::units::rotate_unit_system::rotate_unit_system;
 use crate::units::sprite_aim_rotate_system::sprite_aim_rotate_system;
 use crate::units::sprite_flip_system::{sprite_atlas_flip_system, sprite_flip_system};
@@ -46,6 +47,8 @@ mod layerable_system;
 mod unit_push_system;
 mod time_alive_system;
 mod knock_back_system;
+mod inherit_unit_size_system;
+
 pub mod guns;
 
 
@@ -93,6 +96,7 @@ impl Plugin for UnitPlugin {
                         .with_system(unit_push_system)
                         .with_system(time_alive_system)
                         .with_system(knock_back_system)
+                        .with_system(inherit_unit_size_system)
                 )
             )
 
