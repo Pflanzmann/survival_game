@@ -10,7 +10,7 @@ pub fn update_console_history(
     mut text_query: Query<&mut Text, With<DebugConsoleHistory>>,
 ) {
     for event in debug_command_info_events.iter() {
-        console_history.log.insert(0, format!("    --> {}\n", event.debug_command.clone()));
+        console_history.log.insert(0, format!("    --> {}", event.debug_command.clone()));
 
         console_history.write_history_to_file();
     }

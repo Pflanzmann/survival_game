@@ -4,7 +4,6 @@ use bevy::prelude::IntoSystemSetConfig;
 use crate::ConsoleState;
 use crate::input::cmd::add_gold_command::add_gold_command;
 use crate::input::cmd::apply_mod_command::apply_mod_command;
-use crate::input::cmd::cmd_input_system::cmd_input_system;
 use crate::input::cmd::god_mode_command::god_mode_command;
 use crate::input::cmd::open_shop_command::open_shop_command;
 use crate::input::cmd::remove_mod_command::remove_mod_command;
@@ -13,7 +12,6 @@ use crate::models::events::debug_command_event::DebugCommandEvent;
 use crate::scheduling::BaseSets;
 
 mod apply_mod_command;
-mod cmd_input_system;
 mod god_mode_command;
 mod remove_mod_command;
 mod open_shop_command;
@@ -50,6 +48,6 @@ impl Plugin for CmdCommandsPlugin {
             .add_system(add_gold_command.in_set(CmdCommandsSystemSet))
             .add_system(toggle_spawner_command.in_set(CmdCommandsSystemSet));
 
-        app.add_system(cmd_input_system.in_set(CmdInputSystemSet));
+        // app.add_system(cmd_input_system.in_set(CmdInputSystemSet));
     }
 }
