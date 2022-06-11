@@ -23,7 +23,10 @@ pub fn read_history_from_file() -> ConsoleHistory {
     let history = serde_json::from_str::<ConsoleHistory>(&history_string);
 
     match history {
-        Ok(history) => history,
+        Ok(mut history) => {
+            history.scroll_index = 0;
+            history
+        }
         Err(_) => ConsoleHistory::default()
     }
 }
@@ -46,6 +49,10 @@ impl ConsoleHistory {
     }
 
     pub fn send_command(&mut self, event_writer: &mut EventWriter<DebugCommandEvent>, command: String) {
+        if command.is_empty() {
+            return;
+        }
+
         let debug_command = command.trim().to_lowercase().to_string();
         let commands = debug_command.split('&');
 
@@ -84,7 +91,7 @@ impl ConsoleHistory {
         }
 
         self.command_history.insert(0, debug_command.clone());
-        self.log.insert(0, format!("{}\n", debug_command.clone()));
+        self.log.insert(0, debug_command.clone());
 
         while self.command_history.len() > 30 {
             self.command_history.pop();
@@ -94,6 +101,7 @@ impl ConsoleHistory {
             self.log.pop();
         }
 
+        self.scroll_index = 0;
         self.write_history_to_file();
     }
 }
