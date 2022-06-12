@@ -32,7 +32,7 @@ impl Plugin for BehaviorPlugin {
             BehaviorFixedSystemSet
                 .in_base_set(BaseSets::Update)
                 .run_if(in_state(AppState::InGame))
-                .run_if(on_fixed_timer(Duration::from_millis(10)))
+                .run_if(on_fixed_timer(Duration::from_millis(100)))
         );
 
         app

@@ -12,7 +12,7 @@ use crate::models::modifications::descriptors::price::Price;
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::player::Player;
 use crate::models::resources::shop_customer::ShopCustomer;
-use crate::models::ui::game_over::NavigationButton;
+use crate::models::ui::navigation_button::NavigationButton;
 use crate::models::ui::shop::{ShopButton, ShopMenuComp, ShopSlot, ToolTipField};
 use crate::models::ui::tooltip_window::TooltipText;
 
