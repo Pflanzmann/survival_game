@@ -1,7 +1,7 @@
 use bevy::prelude::{Changed, Query, Transform, With};
 
 use crate::models::player::Player;
-use crate::models::ui::hud::HealthBar;
+use crate::models::ui::health_bar::HealthBar;
 use crate::models::unit_attributes::attribute::Attribute;
 use crate::models::unit_attributes::health::Health;
 

@@ -1,9 +1,6 @@
 pub mod shop;
-pub mod hud;
-pub mod main_menu;
+pub mod health_bar;
 pub mod pause;
-pub mod game_over;
-pub mod debug_console;
+pub mod navigation_button;
+pub mod debug_console_history;
 pub mod tooltip_window;
-pub mod attribute_text;
-pub mod game_won_screen;

@@ -3,8 +3,7 @@ use bevy::prelude::*;
 
 use crate::AppState;
 use crate::scheduling::BaseSets;
-use crate::ui::cmd::CmdUiPlugin;
-use crate::ui::main_menu_screen::show_main_menu_system;
+use crate::ui::debug::CmdUiPlugin;
 use crate::ui::pause_screen::{close_pause_system, spawn_pause_system};
 use crate::ui::setup_tool_tip_window::{move_tool_tip_window, populate_tooltip_window, setup_tool_tip_window};
 use crate::ui::shop_system::{close_shop_menu_system, shop_button_system, spawn_shop_menu_system};
@@ -12,14 +11,14 @@ use crate::ui::update::update_hud_state::update_hud_state;
 use crate::ui::views::show_game_over_system::show_game_over_system;
 use crate::ui::views::show_game_won_system::show_game_won_system;
 use crate::ui::views::show_hud_system::show_hud_system;
+use crate::ui::views::show_main_menu_system::show_main_menu_system;
 
 mod pause_screen;
 mod shop_system;
-mod cmd;
 mod setup_tool_tip_window;
 mod views;
 mod update;
-mod main_menu_screen;
+mod debug;
 
 /// This plugin generates the UI elements for game menus and
 /// the ingame hud. Furthermore it holds systems to control the
