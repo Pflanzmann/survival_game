@@ -19,7 +19,6 @@ use crate::ui::cmd::debug_window::show_debug_window_system;
 use crate::ui::cmd::fps_counter_update_system::fps_counter_update_system;
 use crate::ui::cmd::spawn_collision_boxes::{CollisionBox, init_collision_boxes, init_new_collision_boxes};
 use crate::ui::cmd::update_console_history::update_console_history;
-use crate::util::debug::show_quad_tree_system::show_quad_tree_system;
 use crate::util::helper_systems::despawn_recursive_system::despawn_recursive_system;
 
 mod debug_window;
