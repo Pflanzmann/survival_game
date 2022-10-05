@@ -17,9 +17,9 @@ pub fn goal_activation_system(
     for (player_transform, player_collider) in player_query.iter() {
         for (goal_transform, goal_collider, mut goal_activation_progress) in goal_query.iter_mut() {
             if goal_collider.collider_type.is_colliding(
-                &goal_transform.translation.truncate(),
+                &goal_transform.translation().truncate(),
                 &player_collider.collider_type,
-                &player_transform.translation.truncate(),
+                &player_transform.translation().truncate(),
             ) {
                 goal_activation_progress.progress += time.delta_seconds();
 

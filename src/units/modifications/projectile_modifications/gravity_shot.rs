@@ -21,7 +21,7 @@ pub fn gravity_shot_system(
 
         let mut check_entity_list: Vec<QuadData<SolidBodyData>> = Vec::new();
         let size = Vec2::new(gravity_shot.radius * 2.0, gravity_shot.radius * 2.0);
-        let self_position = transform.translation.truncate();
+        let self_position = transform.translation().truncate();
         solid_body_tree.query_entities(
             &mut check_entity_list,
             &self_position,

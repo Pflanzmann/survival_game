@@ -1,5 +1,4 @@
 use bevy::prelude::*;
-use bevy_inspector_egui::egui::TextBuffer;
 
 use crate::models::attribute_container::AttributeContainer;
 use crate::models::attribute_container_slot::AttributeContainerSlot;
@@ -16,7 +15,7 @@ pub fn spawn_attribute_window_system(
     commands.spawn_bundle(NodeBundle {
         style: Style {
             size: Size::new(Val::Auto, Val::Auto),
-            position: Rect {
+            position: UiRect {
                 left: Val::Percent(1.0),
                 bottom: Val::Percent(15.0),
                 ..Default::default()
@@ -32,16 +31,16 @@ pub fn spawn_attribute_window_system(
         color: Color::from([0.2, 0.2, 0.2, 0.8]).into(),
         ..Default::default()
     }).with_children(|parent| {
-        info_window_tex(parent, &asset_loader, "Health: ".as_str(), HealthText);
-        info_window_tex(parent, &asset_loader, "Damage: ".as_str(), DamageText);
-        info_window_tex(parent, &asset_loader, "MoveSpeed: ".as_str(), MoveSpeedText);
-        info_window_tex(parent, &asset_loader, "Reload: ".as_str(), ReloadText);
-        info_window_tex(parent, &asset_loader, "UnitSize: ".as_str(), UnitSizeText);
-        info_window_tex(parent, &asset_loader, "ProjectileDamage: ".as_str(), ProjectileDamageText);
-        info_window_tex(parent, &asset_loader, "ProjectileMoveSpeed: ".as_str(), ProjectileMoveSpeedText);
-        info_window_tex(parent, &asset_loader, "ProjectileHitLimit: ".as_str(), ProjectileHitLimitText);
-        info_window_tex(parent, &asset_loader, "ProjectileTravelRange: ".as_str(), ProjectileTravelRangeText);
-        info_window_tex(parent, &asset_loader, "ProjectileUnitSize: ".as_str(), ProjectileUnitSizeText);
+        info_window_tex(parent, &asset_loader, "Health: ", HealthText);
+        info_window_tex(parent, &asset_loader, "Damage: ", DamageText);
+        info_window_tex(parent, &asset_loader, "MoveSpeed: ", MoveSpeedText);
+        info_window_tex(parent, &asset_loader, "Reload: ", ReloadText);
+        info_window_tex(parent, &asset_loader, "UnitSize: ", UnitSizeText);
+        info_window_tex(parent, &asset_loader, "ProjectileDamage: ", ProjectileDamageText);
+        info_window_tex(parent, &asset_loader, "ProjectileMoveSpeed: ", ProjectileMoveSpeedText);
+        info_window_tex(parent, &asset_loader, "ProjectileHitLimit: ", ProjectileHitLimitText);
+        info_window_tex(parent, &asset_loader, "ProjectileTravelRange: ", ProjectileTravelRangeText);
+        info_window_tex(parent, &asset_loader, "ProjectileUnitSize: ", ProjectileUnitSizeText);
     }).insert(Name::new("Attribute Window")).insert(AttributeWindow);
 }
 
@@ -101,7 +100,7 @@ fn info_window_tex<T: Component>(
     parent.spawn_bundle(TextBundle {
         style: Style {
             position_type: PositionType::Relative,
-            position: Rect {
+            position: UiRect {
                 left: Val::Percent(1.0),
                 bottom: Val::Percent(2.0),
                 ..Default::default()

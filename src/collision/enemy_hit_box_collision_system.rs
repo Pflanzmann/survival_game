@@ -28,13 +28,13 @@ pub fn enemy_hit_box_collision_system(
 
         quad_tree.query_entities(
             &mut check_entity_list,
-            &transform.translation.truncate(),
+            &transform.translation().truncate(),
             &size,
         );
 
         for quad_data in check_entity_list.iter() {
             if hit_box_collider.collider_type.is_colliding(
-                &transform.translation.truncate(),
+                &transform.translation().truncate(),
                 &quad_data.data.collider_type,
                 &quad_data.position,
             ) {

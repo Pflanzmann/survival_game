@@ -13,10 +13,10 @@ pub fn chase_target_behavior_system(
             Err(_) => continue
         };
 
-        if actor_transform.translation.truncate().distance(target_transform.translation.truncate()) < chase_target_behavior.proximity {
+        if actor_transform.translation().truncate().distance(target_transform.translation().truncate()) < chase_target_behavior.proximity {
             move_direction.direction = Vec2::default();
         } else {
-            move_direction.direction = (target_transform.translation.truncate() - actor_transform.translation.truncate()).normalize_or_zero();
+            move_direction.direction = (target_transform.translation().truncate() - actor_transform.translation().truncate()).normalize_or_zero();
         }
     }
 }

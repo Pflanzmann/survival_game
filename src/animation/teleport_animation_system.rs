@@ -1,5 +1,4 @@
-use bevy::core::Time;
-use bevy::prelude::{Commands, Entity, Query, Res, ResMut, Sprite, Transform};
+use bevy::prelude::{Commands, Entity, Query, Res, ResMut, Sprite, Time, Transform};
 
 use crate::assets_handling::preload_audio_system::SoundHandles;
 use crate::audio::sound_manager::SoundManager;

@@ -1,6 +1,6 @@
 use std::cmp::min;
 
-use bevy::prelude::{AlignContent, AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, FlexWrap, HorizontalAlign, ImageBundle, Interaction, JustifyContent, Name, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+use bevy::prelude::{AlignContent, AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, FlexWrap, HorizontalAlign, ImageBundle, Interaction, JustifyContent, Name, NodeBundle, PositionType, Query, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiRect, Val, VerticalAlign, With};
 use bevy::ui::FocusPolicy;
 use rand::Rng;
 
@@ -69,7 +69,7 @@ pub fn spawn_shop_menu_system(
                 size: Size::new(Val::Auto, Val::Auto),
                 min_size: Size::new(Val::Auto, Val::Percent(51.0)),
                 max_size: Size::new(Val::Auto, Val::Percent(75.0)),
-                padding: Rect {
+                padding: UiRect {
                     left: Val::Percent(1.0),
                     bottom: Val::Percent(1.0),
                     top: Val::Percent(1.0),
@@ -94,16 +94,12 @@ pub fn spawn_shop_menu_system(
                     style: Style {
                         ..Default::default()
                     },
-                    text: Text::with_section(
+                    text: Text::from_section(
                         price.to_string(),
                         TextStyle {
                             font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                             font_size: 40.0,
                             color: Color::RED,
-                        },
-                        TextAlignment {
-                            vertical: VerticalAlign::Center,
-                            horizontal: HorizontalAlign::Center,
                         },
                     ),
                     ..Default::default()
@@ -128,7 +124,7 @@ pub fn spawn_shop_menu_system(
         .spawn_bundle(NodeBundle {
             style: Style {
                 size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
-                position: Rect {
+                position: UiRect {
                     left: Val::Percent(10.0),
                     bottom: Val::Percent(10.0),
                     top: Val::Percent(10.0),
@@ -150,16 +146,12 @@ pub fn spawn_shop_menu_system(
                 style: Style {
                     ..Default::default()
                 },
-                text: Text::with_section(
+                text: Text::from_section(
                     "Shop".to_string(),
                     TextStyle {
                         font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                         font_size: 60.0,
                         color: Color::BLACK,
-                    },
-                    TextAlignment {
-                        vertical: VerticalAlign::Center,
-                        horizontal: HorizontalAlign::Center,
                     },
                 ),
                 ..Default::default()
@@ -169,7 +161,7 @@ pub fn spawn_shop_menu_system(
             parent.spawn_bundle(NodeBundle {
                 style: Style {
                     size: Size::new(Val::Percent(80.0), Val::Percent(40.0)),
-                    position: Rect {
+                    position: UiRect {
                         left: Val::Percent(10.0),
                         bottom: Val::Percent(10.0),
                         top: Val::Percent(10.0),
@@ -204,7 +196,7 @@ pub fn spawn_shop_menu_system(
                     parent.spawn_bundle(NodeBundle {
                         style: Style {
                             size: Size::new(Val::Percent(25.0), Val::Percent(50.0)),
-                            position: Rect {
+                            position: UiRect {
                                 left: Val::Percent(10.0),
                                 ..Default::default()
                             },
@@ -229,16 +221,12 @@ pub fn spawn_shop_menu_system(
                                     flex_wrap: FlexWrap::Wrap,
                                     ..Default::default()
                                 },
-                                text: Text::with_section(
+                                text: Text::from_section(
                                     "".to_string(),
                                     TextStyle {
                                         font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                                         font_size: 25.0,
                                         color: Color::BLACK,
-                                    },
-                                    TextAlignment {
-                                        vertical: VerticalAlign::Center,
-                                        horizontal: HorizontalAlign::Center,
                                     },
                                 ),
                                 ..Default::default()
@@ -250,7 +238,7 @@ pub fn spawn_shop_menu_system(
                     parent.spawn_bundle(ButtonBundle {
                         style: Style {
                             size: Size::new(Val::Percent(7.0), Val::Percent(30.0)),
-                            position: Rect {
+                            position: UiRect {
                                 left: Val::Percent(33.0),
                                 ..Default::default()
                             },

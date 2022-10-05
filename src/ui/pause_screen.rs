@@ -1,4 +1,4 @@
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, HorizontalAlign, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, HorizontalAlign, JustifyContent, NodeBundle, PositionType, Query, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiRect, Val, VerticalAlign, With};
 
 use crate::models::ui::pause::PauseMenuComp;
 
@@ -10,7 +10,7 @@ pub fn enter_pause_system(
         .spawn_bundle(NodeBundle {
             style: Style {
                 size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
-                position: Rect {
+                position: UiRect {
                     left: Val::Percent(10.0),
                     bottom: Val::Percent(10.0),
                     top: Val::Percent(10.0),
@@ -30,16 +30,12 @@ pub fn enter_pause_system(
                 style: Style {
                     ..Default::default()
                 },
-                text: Text::with_section(
+                text: Text::from_section(
                     "Paused".to_string(),
                     TextStyle {
                         font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                         font_size: 60.0,
                         color: Color::RED,
-                    },
-                    TextAlignment {
-                        vertical: VerticalAlign::Center,
-                        horizontal: HorizontalAlign::Center,
                     },
                 ),
                 ..Default::default()

@@ -10,7 +10,7 @@ pub fn turn_to_target_behavior_system(
 ) {
     for (actor_transform, mut aim_direction, turn_to_target_behavior) in units_query.iter_mut() {
         let target_position = match target_query.get(turn_to_target_behavior.target) {
-            Ok(value) => value.translation.truncate(),
+            Ok(value) => value.translation().truncate(),
             Err(_) => continue
         };
 

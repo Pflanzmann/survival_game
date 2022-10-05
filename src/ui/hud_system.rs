@@ -17,7 +17,7 @@ pub fn spawn_text_system(
     commands.spawn_bundle(TextBundle {
         style: Style {
             position_type: PositionType::Absolute,
-            position: Rect {
+            position: UiRect {
                 left: Val::Percent(5.0),
                 bottom: Val::Percent(2.0),
                 ..Default::default()
@@ -54,7 +54,7 @@ pub fn spawn_text_system(
     commands.spawn_bundle(NodeBundle {
         style: Style {
             size: Size::new(Val::Percent(18.0), Val::Percent(16.0)),
-            position: Rect {
+            position: UiRect {
                 left: Val::Percent(41.0),
                 top: Val::Percent(2.0),
                 ..Default::default()

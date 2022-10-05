@@ -9,7 +9,7 @@ pub fn aim_at_closest_target_behavior_system(
     target_query: Query<&Transform, With<Enemy>>,
 ) {
     for (behavior_transform, mut aim_direction) in behavior_query.iter_mut() {
-        let behavior_position = behavior_transform.translation.truncate();
+        let behavior_position = behavior_transform.translation().truncate();
         let mut closest_position = Vec2::new(f32::MAX, f32::MAX);
         let mut smallest_distance = f32::MAX;
 

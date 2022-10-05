@@ -1,5 +1,5 @@
 use bevy::core::Name;
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, HorizontalAlign, JustifyContent, NodeBundle, Overflow, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextSection, TextStyle, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, HorizontalAlign, JustifyContent, NodeBundle, Overflow, PositionType, Query, Res, Size, Style, Text, TextAlignment, TextBundle, TextSection, TextStyle, UiRect, Val, VerticalAlign, With};
 use bevy::ui::AlignContent;
 
 use crate::models::resources::console_history::ConsoleHistory;
@@ -20,7 +20,7 @@ pub fn setup_debug_window(
         .spawn_bundle(NodeBundle {
             style: Style {
                 size: Size::new(Val::Percent(40.0), Val::Percent(40.0)),
-                position: Rect {
+                position: UiRect {
                     left: Val::Percent(58.0),
                     bottom: Val::Percent(58.0),
                     top: Val::Percent(10.0),
@@ -38,7 +38,7 @@ pub fn setup_debug_window(
             parent.spawn_bundle(NodeBundle {
                 style: Style {
                     size: Size::new(Val::Percent(100.0), Val::Percent(8.0)),
-                    position: Rect {
+                    position: UiRect {
                         left: Val::Percent(0.0),
                         bottom: Val::Percent(0.00),
                         top: Val::Percent(90.0),
@@ -55,16 +55,12 @@ pub fn setup_debug_window(
             }).with_children(|parent| {
                 parent.spawn_bundle(TextBundle {
                     style: Style::default(),
-                    text: Text::with_section(
+                    text: Text::from_section(
                         "".to_string(),
                         TextStyle {
                             font_size: 18.0,
                             color: Color::WHITE,
                             font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
-                        },
-                        TextAlignment {
-                            vertical: VerticalAlign::Center,
-                            horizontal: HorizontalAlign::Left,
                         },
                     ),
                     ..Default::default()
@@ -75,7 +71,7 @@ pub fn setup_debug_window(
             parent.spawn_bundle(TextBundle {
                 style: Style {
                     size: Size::new(Val::Percent(100.0), Val::Percent(91.0)),
-                    position: Rect {
+                    position: UiRect {
                         left: Val::Percent(0.0),
                         bottom: Val::Percent(9.0),
                         top: Val::Percent(0.0),
@@ -84,16 +80,12 @@ pub fn setup_debug_window(
                     position_type: PositionType::Absolute,
                     ..Default::default()
                 },
-                text: Text::with_section(
+                text: Text::from_section(
                     history_string,
                     TextStyle {
                         font_size: 18.0,
                         color: Color::from([0.6, 0.6, 0.6, 1.0]),
                         font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
-                    },
-                    TextAlignment {
-                        vertical: VerticalAlign::Bottom,
-                        horizontal: HorizontalAlign::Left,
                     },
                 ),
                 ..Default::default()
@@ -109,7 +101,7 @@ pub fn setup_debug_info_window(
         .spawn_bundle(NodeBundle {
             style: Style {
                 size: Size::new(Val::Percent(20.0), Val::Percent(40.0)),
-                position: Rect {
+                position: UiRect {
                     left: Val::Percent(78.0),
                     bottom: Val::Percent(8.0),
                     ..Default::default()
@@ -130,7 +122,7 @@ pub fn setup_debug_info_window(
                 style: Style {
                     position_type: PositionType::Relative,
                     flex_direction: FlexDirection::RowReverse,
-                    position: Rect {
+                    position: UiRect {
                         left: Val::Percent(5.0),
                         top: Val::Percent(0.0),
                         ..Default::default()

@@ -13,7 +13,7 @@ pub fn calculate_solid_body_quad_tree_system(
     solid_body_query: Query<(Entity, &GlobalTransform, &SolidBodyCollider, &ColliderWeight)>,
 ) {
     for player_position in player_query.iter() {
-        let quad_position = player_position.translation.truncate();
+        let quad_position = player_position.translation().truncate();
 
         solid_body_tree.0 = Quadtree::new(10000.0, 10000.0, quad_position, 0);
         for (entity, transform, solid_body_collider, collision_weight) in solid_body_query.iter() {
@@ -24,7 +24,7 @@ pub fn calculate_solid_body_quad_tree_system(
 
             solid_body_tree.insert(
                 &QuadData {
-                    position: transform.translation.truncate() + solid_body_collider.offset,
+                    position: transform.translation().truncate() + solid_body_collider.offset,
                     size,
                     data: SolidBodyData {
                         entity,
