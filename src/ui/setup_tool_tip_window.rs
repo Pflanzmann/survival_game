@@ -33,7 +33,7 @@ pub fn setup_tool_tip_window(
     commands.spawn_bundle(NodeBundle {
         style: Style {
             size: Size::new(Val::Percent(18.0), Val::Percent(16.0)),
-            position: Rect {
+            position: UiRect {
                 left: Val::Percent(110.0),
                 top: Val::Percent(110.0),
                 ..Default::default()
@@ -60,16 +60,12 @@ pub fn setup_tool_tip_window(
                     flex_wrap: FlexWrap::Wrap,
                     ..Default::default()
                 },
-                text: Text::with_section(
+                text: Text::from_section(
                     "".to_string(),
                     TextStyle {
                         font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                         font_size: 25.0,
                         color: Color::BLACK,
-                    },
-                    TextAlignment {
-                        vertical: VerticalAlign::Center,
-                        horizontal: HorizontalAlign::Center,
                     },
                 ),
                 ..Default::default()
@@ -111,7 +107,7 @@ pub fn move_tool_tip_window(
             None => return,
         };
 
-        style.position = Rect::<Val> {
+        style.position = UiRect::<Val> {
             left: Val::Px(position.x),
             right: Val::Auto,
             top: Val::Auto,

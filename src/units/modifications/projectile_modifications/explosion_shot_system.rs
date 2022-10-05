@@ -39,7 +39,7 @@ pub fn explosion_shot_system(
                 ..Default::default()
             },
             texture_atlas: atlas_handles.explosion_atlas.clone(),
-            transform: Transform::from_translation(transform.translation),
+            transform: Transform::from_translation(transform.translation()),
             ..Default::default()
         })
             .insert(TimeAlive { time_alive: explosion_shot.explosion_time_alive })

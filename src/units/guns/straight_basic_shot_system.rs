@@ -47,7 +47,7 @@ pub fn straight_basic_shot_system(
 
         let random_rotation: f32 = random::<f32>() * 100.0;
 
-        let mut projectile_transform = Transform::from_xyz(holder_transform.translation.x, holder_transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z());
+        let mut projectile_transform = Transform::from_xyz(holder_transform.translation().x, holder_transform.translation().y, SpriteLayer::LowGroundLevel.get_layer_z());
         projectile_transform.rotation = Quat::from_euler(EulerRot::XYZ, 0.0, 0.0, random_rotation);
 
         let projectile = command.spawn_bundle(SpriteBundle {

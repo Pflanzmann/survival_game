@@ -1,5 +1,4 @@
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Color, Commands, FlexDirection, HorizontalAlign, JustifyContent, NodeBundle, PositionType, Query, Rect, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, Val, VerticalAlign, With};
-
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Color, Commands, FlexDirection, HorizontalAlign, JustifyContent, NodeBundle, PositionType, Query,  Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiRect, Val, VerticalAlign, With};
 use crate::models::mod_register::ModRegister;
 use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::modification::Modification;
@@ -31,7 +30,7 @@ pub fn spawn_game_won_screen_system(
         .spawn_bundle(NodeBundle {
             style: Style {
                 size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
-                position: Rect {
+                position: UiRect {
                     left: Val::Percent(10.0),
                     bottom: Val::Percent(10.0),
                     top: Val::Percent(10.0),
@@ -52,16 +51,12 @@ pub fn spawn_game_won_screen_system(
                 style: Style {
                     ..Default::default()
                 },
-                text: Text::with_section(
+                text: Text::from_section(
                     "You wonned the game!!".to_string(),
                     TextStyle {
                         font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                         font_size: 60.0,
                         color: Color::BLACK,
-                    },
-                    TextAlignment {
-                        vertical: VerticalAlign::Center,
-                        horizontal: HorizontalAlign::Center,
                     },
                 ),
                 ..Default::default()
@@ -71,16 +66,12 @@ pub fn spawn_game_won_screen_system(
                 style: Style {
                     ..Default::default()
                 },
-                text: Text::with_section(
+                text: Text::from_section(
                     text_to_show,
                     TextStyle {
                         font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                         font_size: 30.0,
                         color: Color::BLACK,
-                    },
-                    TextAlignment {
-                        vertical: VerticalAlign::Center,
-                        horizontal: HorizontalAlign::Left,
                     },
                 ),
                 ..Default::default()
@@ -101,16 +92,12 @@ pub fn spawn_game_won_screen_system(
                     style: Style {
                         ..Default::default()
                     },
-                    text: Text::with_section(
+                    text: Text::from_section(
                         "Successfully leave the ".to_string(),
                         TextStyle {
                             font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
                             font_size: 20.0,
                             color: Color::WHITE,
-                        },
-                        TextAlignment {
-                            vertical: VerticalAlign::Center,
-                            horizontal: HorizontalAlign::Center,
                         },
                     ),
                     ..Default::default()

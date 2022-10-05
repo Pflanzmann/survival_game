@@ -29,12 +29,14 @@ impl Plugin for InputPlugin {
 
             .init_resource::<StateTimer>()
 
-            .add_system_set(
-                in_update(
-                    SystemSet::on_exit(AppState::MainMenu)
-                        .with_system(setup_camera_system)
-                )
-            )
+            .add_startup_system(setup_camera_system)
+
+            // .add_system_set(
+            //     in_update(
+            //         SystemSet::on_exit(AppState::Pre)
+            //             .with_system(setup_camera_system)
+            //     )
+            // )
 
             .add_system_set(
                 in_update(

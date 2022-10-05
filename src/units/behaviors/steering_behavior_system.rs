@@ -11,9 +11,8 @@ use crate::util::quad_tree::QuadData;
 pub fn steering_behavior_system(
     mut units_query: Query<(Entity, &Transform, &SolidBodyCollider, &MoveDirection, &mut SteeringBehavior)>,
     quad_tree_holder: Res<SolidBodyQuadTree>,
-    pool: Res<ComputeTaskPool>,
 ) {
-    units_query.par_for_each_mut(&pool, 10, |(entity, transform, solid_body_collider, move_direction, mut steering_behavior)| {
+    units_query.par_for_each_mut( 10, |(entity, transform, solid_body_collider, move_direction, mut steering_behavior)| {
         let size = match solid_body_collider.collider_type {
             Circle(radius) => Vec2::new(radius, radius),
             Rectangle(size) => size,

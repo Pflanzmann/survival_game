@@ -1,5 +1,5 @@
-use bevy::core::FixedTimestep;
 use bevy::prelude::{App, Plugin, SystemSet};
+use bevy::time::FixedTimestep;
 
 use crate::AppState;
 use crate::units::behaviors::aim_at_closest_target_behavior_system::aim_at_closest_target_behavior_system;

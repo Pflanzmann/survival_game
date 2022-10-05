@@ -37,7 +37,7 @@ pub fn lightning_system(
 
         let size = ColliderType::Circle(lightning.radius);
 
-        let mut position = transform.translation.truncate();
+        let mut position = transform.translation().truncate();
 
         let mut already_hit_targets: Vec<Entity> = vec![event.target_entity];
 

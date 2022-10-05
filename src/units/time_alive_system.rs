@@ -1,5 +1,4 @@
-use bevy::core::Time;
-use bevy::prelude::{Commands, DespawnRecursiveExt, Entity, Query, Res};
+use bevy::prelude::{Commands, DespawnRecursiveExt, Entity, Query, Res, Time};
 
 use crate::models::time_alive::TimeAlive;
 

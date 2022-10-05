@@ -36,7 +36,7 @@ pub fn acid_puddle_system(
                 ..Default::default()
             },
             texture_atlas: atlas_handle.acid_puddle_atlas.clone(),
-            transform: Transform::from_xyz(transform.translation.x, transform.translation.y, SpriteLayer::LowGroundLevel.get_layer_z()),
+            transform: Transform::from_xyz(transform.translation().x, transform.translation().y, SpriteLayer::LowGroundLevel.get_layer_z()),
             ..Default::default()
         })
             .insert(Name::new("AcidPuddle"))

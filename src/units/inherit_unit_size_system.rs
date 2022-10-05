@@ -8,7 +8,7 @@ pub fn inherit_unit_size_system(
     mut child_query: Query<(&mut UnitSize, &Parent), (With<InheritUnitSize>, With<Parent>)>,
 ) {
     for (mut child_unit_size, parent) in child_query.iter_mut() {
-        if let Ok(parent_unit_size) = parent_query.get(parent.0) {
+        if let Ok(parent_unit_size) = parent_query.get(parent.get()) {
             child_unit_size.inherit_from(parent_unit_size);
         }
     }
