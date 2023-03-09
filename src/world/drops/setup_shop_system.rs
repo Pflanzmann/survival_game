@@ -29,13 +29,13 @@ pub fn setup_shop_system(
     ];
 
     //Shop Keeper
-    commands.spawn_bundle(SpriteSheetBundle {
+    commands.spawn(SpriteSheetBundle {
         sprite: TextureAtlasSprite {
             custom_size: Some(Vec2::new(256.0, 256.0)),
             ..Default::default()
         },
         transform: Transform::from_translation(spawn_position),
-        texture_atlas: texture_atlases.add(TextureAtlas::from_grid(asset_server.load("sprite_sheets/shop_keeper.png"), Vec2::new(16.0, 20.0), 4, 6)),
+        texture_atlas: texture_atlases.add(TextureAtlas::from_grid(asset_server.load("sprite_sheets/shop_keeper.png"), Vec2::new(16.0, 20.0), 4, 6, None, None)),
         ..Default::default()
     })
         .insert(Name::new("Shop"))
@@ -52,7 +52,7 @@ pub fn setup_shop_system(
 
 
     for position in positions.iter() {
-        commands.spawn_bundle(
+        commands.spawn(
             SpriteBundle {
                 transform: Transform::from_translation(position.extend(0.0) + spawn_position),
                 texture: asset_server.load("sprites/crate.png"),

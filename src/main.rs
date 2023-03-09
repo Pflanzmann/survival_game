@@ -4,7 +4,6 @@ use bevy::app::App;
 use bevy::DefaultPlugins;
 use bevy::ecs::schedule::StageLabel;
 use bevy::prelude::{Msaa, SystemStage};
-use bevy_inspector_egui::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
 
 use crate::animation::AnimationPlugin;
@@ -89,7 +88,6 @@ fn main() {
         .insert_resource(Msaa { samples: 1 })
 
         .add_plugins(DefaultPlugins)
-        .add_plugin(WorldInspectorPlugin::new())
 
         .add_state(AppState::Pre)
         .add_state(ConsoleState::Hidden)

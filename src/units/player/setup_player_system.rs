@@ -1,4 +1,5 @@
-use bevy::prelude::{Commands, Name, Res, ResMut, SpriteSheetBundle, TextureAtlasSprite, Vec2};
+use bevy::hierarchy::BuildChildren;
+use bevy::prelude::{Commands, Entity, Name, Query, Res, ResMut, SpriteSheetBundle, TextureAtlasSprite, Vec2, With};
 
 use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::assets_handling::preload_player_system::PlayerConfigHandles;
@@ -17,6 +18,7 @@ use crate::models::gun::straight_basic_shot::StraightBasicShot;
 use crate::models::input::player_aim_controlled::PlayerAimControlled;
 use crate::models::input::player_move_controlled::PlayerMoveControlled;
 use crate::models::layerable::Layerable;
+use crate::models::main_camera::MainCamera;
 use crate::models::mod_register::ModRegister;
 use crate::models::move_direction::MoveDirection;
 use crate::models::player::Player;
@@ -32,48 +34,53 @@ pub fn setup_player_system(
     mut commands: Commands,
     player_handles: Res<PlayerConfigHandles>,
     atlas_handles: ResMut<AtlasHandles>,
+    camera_query: Query<Entity, With<MainCamera>>,
 ) {
-    commands.spawn_bundle(
-        SpriteSheetBundle {
-            sprite: TextureAtlasSprite {
-                custom_size: Some(Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y)),
+    for camera_entity in camera_query.iter() {
+        commands.spawn(
+            SpriteSheetBundle {
+                sprite: TextureAtlasSprite {
+                    custom_size: Some(Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y)),
+                    ..Default::default()
+                },
+                texture_atlas: atlas_handles.player_atlas.clone(),
                 ..Default::default()
             },
-            texture_atlas: atlas_handles.player_atlas.clone(),
-            ..Default::default()
-        },
-    )
-        .insert(Name::new("Player"))
-        .insert(Player)
+        )
+            .insert(Name::new("Player"))
+            .insert(Player)
 
-        .insert(UnitSize::new_size(Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y)))
-        .insert(SolidBodyCollider { offset: Vec2::new(0.0, -player_handles.player_one.sprite_custom_size_y / 4.0), collider_type: ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 4.0) })
-        .insert(ColliderWeight { weight: 0.8 })
-        .insert(ItemCollider)
+            .insert(UnitSize::new_size(Vec2::new(player_handles.player_one.sprite_custom_size_x, player_handles.player_one.sprite_custom_size_y)))
+            .insert(SolidBodyCollider { offset: Vec2::new(0.0, -player_handles.player_one.sprite_custom_size_y / 4.0), collider_type: ColliderType::Circle(player_handles.player_one.sprite_custom_size_x / 4.0) })
+            .insert(ColliderWeight { weight: 0.8 })
+            .insert(ItemCollider)
 
-        .insert_bundle(DamageBundle::new(player_handles.player_one.damage, 60.0))
+            .insert(DamageBundle::new(player_handles.player_one.damage, 60.0))
 
-        .insert(MoveSpeed::new(player_handles.player_one.move_speed))
-        .insert(MoveDirection::default())
+            .insert(MoveSpeed::new(player_handles.player_one.move_speed))
+            .insert(MoveDirection::default())
 
-        .insert(AimDirection::default())
-        .insert(PlayerMoveControlled)
-        .insert(PlayerAimControlled)
+            .insert(AimDirection::default())
+            .insert(PlayerMoveControlled)
+            .insert(PlayerAimControlled)
 
-        .insert(Health::new(player_handles.player_one.health))
-        .insert(StraightBasicShot)
-        // .insert(BasicSword)
-        .insert(Reload::new(player_handles.player_one.reload))
-        .insert(ModRegister::default())
+            .insert(Health::new(player_handles.player_one.health))
+            .insert(StraightBasicShot)
+            // .insert(BasicSword)
+            .insert(Reload::new(player_handles.player_one.reload))
+            .insert(ModRegister::default())
 
-        .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
-        .insert(SpriteFlip)
+            .insert(Layerable::new(SpriteLayer::GroundLevel.get_layer_z()))
+            .insert(SpriteFlip)
 
-        .insert(GoldStorage::default())
+            .insert(GoldStorage::default())
 
-        .insert(IdleAnimation::new(3, 0, 0.5))
-        .insert(MoveAnimationSide::new(0.0, 4, 4, 15))
-        .insert(MoveAnimationUp::new(0.0, 4, 5, 15))
-        .insert(MoveAnimationDown::new(0.0, 4, 3, 15))
-        .insert(CurrentAnimationState::new());
+            .insert(IdleAnimation::new(3, 0, 0.5))
+            .insert(MoveAnimationSide::new(0.0, 4, 4, 15))
+            .insert(MoveAnimationUp::new(0.0, 4, 5, 15))
+            .insert(MoveAnimationDown::new(0.0, 4, 3, 15))
+            .insert(CurrentAnimationState::new())
+
+            .add_child(camera_entity);
+    }
 }

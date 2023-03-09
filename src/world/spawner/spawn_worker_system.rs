@@ -31,7 +31,7 @@ pub fn spawn_worker_system(
             Some(task) => task,
         };
 
-        commands.spawn_bundle(
+        commands.spawn(
             SpriteSheetBundle {
                 sprite: TextureAtlasSprite {
                     custom_size: Some(enemy_handles.enemy_configs[spawn_task.enemy_config_index].size),
@@ -49,7 +49,7 @@ pub fn spawn_worker_system(
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(0.0) })
             .insert(ColliderWeight { weight: enemy_handles.enemy_configs[spawn_task.enemy_config_index].collider_weight })
 
-            .insert_bundle(DamageBundle::new(enemy_handles.enemy_configs[spawn_task.enemy_config_index].base_damage, enemy_handles.enemy_configs[spawn_task.enemy_config_index].damage_interval))
+            .insert(DamageBundle::new(enemy_handles.enemy_configs[spawn_task.enemy_config_index].base_damage, enemy_handles.enemy_configs[spawn_task.enemy_config_index].damage_interval))
 
             .insert(MoveSpeed::new(enemy_handles.enemy_configs[spawn_task.enemy_config_index].move_speed))
             .insert(MoveDirection::default())

@@ -1,10 +1,10 @@
 use bevy::asset::Handle;
-use bevy::prelude::{AssetServer, Image, Res, ResMut};
+use bevy::prelude::{AssetServer, Image, Res, ResMut, Resource};
 
 use crate::assets_handling::preload_projectile_system::ProjectileConfigHandles;
 use crate::assets_handling::preload_item_system::ItemConfigHandles;
 
-#[derive(Default)]
+#[derive(Default, Resource)]
 pub struct TextureHandles {
     pub coin_sprite: Handle<Image>,
     pub hot_dog_sprite: Handle<Image>,

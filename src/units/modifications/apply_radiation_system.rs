@@ -45,7 +45,7 @@ pub fn apply_radiation_system(
             continue;
         }
 
-        let child = commands.spawn_bundle(SpriteBundle {
+        let child = commands.spawn(SpriteBundle {
             sprite: Sprite {
                 custom_size: Some(Vec2::new(128.0, 128.0)),
                 ..Default::default()

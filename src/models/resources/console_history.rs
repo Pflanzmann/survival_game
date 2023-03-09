@@ -2,7 +2,7 @@ use std::fs;
 use std::fs::File;
 use std::io::ErrorKind;
 
-use bevy::prelude::EventWriter;
+use bevy::prelude::{EventWriter, Resource};
 use serde::Deserialize;
 use serde::Serialize;
 
@@ -11,7 +11,7 @@ use crate::util::read_file_to_string::read_file_to_string;
 
 const HISTORY_PATH: &str = "console_history.json";
 
-#[derive(Default, Deserialize, Serialize, Clone)]
+#[derive(Default, Deserialize, Serialize, Clone, Resource)]
 pub struct ConsoleHistory {
     pub log: Vec<String>,
     pub command_history: Vec<String>,

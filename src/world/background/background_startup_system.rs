@@ -9,11 +9,11 @@ pub fn background_startup_system(
     mut background_tiles: ResMut<BackgroundTilesResource>,
     texture_handles: Res<TextureHandles>,
 ) {
-    let background = commands.spawn().insert(Name::new("Background Tiles")).id();
+    let background = commands.spawn_empty().insert(Name::new("Background Tiles")).id();
 
     for x in 0..50 {
         for y in 0..50 {
-            let child = commands.spawn_bundle(SpriteBundle {
+            let child = commands.spawn(SpriteBundle {
                 texture: texture_handles.background_tile.clone(),
                 global_transform: GlobalTransform::from(Transform::from_xyz((x * 256) as f32, (y * 256) as f32, SpriteLayer::FloorLevel.get_layer_z())),
                 sprite: Sprite {

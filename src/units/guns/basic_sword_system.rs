@@ -39,11 +39,11 @@ pub fn basic_sword_system(
         }
         holder_reloadable.reload_timer = holder_reloadable.get_total_amount();
 
-        let projectile = command.spawn().id();
+        let projectile = command.spawn_empty().id();
 
         let mut collider_entities: Vec<Entity> = Vec::new();
         for index in 0..(400 / 64) {
-            let collider = command.spawn()
+            let collider = command.spawn_empty()
                 .insert(Transform::from_translation(Vec3::new(0.0, index as f32 * 64.0, 0.0)))
                 .insert(GlobalTransform::default())
                 .insert(HitBoxCollider { collider_type: ColliderType::Circle(32.0) })
@@ -54,7 +54,7 @@ pub fn basic_sword_system(
             collider_entities.push(collider)
         }
 
-        command.entity(projectile).insert_bundle(SpriteBundle {
+        command.entity(projectile).insert(SpriteBundle {
             transform: Transform::from_rotation(Quat::from_rotation_arc_2d(Vec2::new(0.0, 1.0), holder_aim_direction.direction)),
             sprite: Sprite {
                 custom_size: Some(Vec2::new(64.0, 400.0)),
@@ -67,7 +67,7 @@ pub fn basic_sword_system(
             .insert(Name::new("SwordHit"))
             .insert(TimeAlive { time_alive: 0.4 })
             .insert(MoveDirection { direction: holder_aim_direction.direction })
-            .insert_bundle(DamageBundle::new(0.5, 60.0))
+            .insert(DamageBundle::new(0.5, 60.0))
             .insert(Projectile { source_entity: weapon_holder_slot.weapon_entity })
             .push_children(&*collider_entities);
 

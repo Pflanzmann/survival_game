@@ -2,7 +2,7 @@ use std::any::type_name;
 use std::collections::HashMap;
 
 use bevy::ecs::system::EntityCommands;
-use bevy::prelude::{AssetServer, Commands, Component, Entity, Plugin, Res};
+use bevy::prelude::{AssetServer, Commands, Component, Entity, Plugin, Res, Resource};
 use serde::de::DeserializeOwned;
 use serde_json::Value;
 
@@ -143,7 +143,7 @@ impl Plugin for EntityBuilderPlugin {
 ///     entity_builder.register_component::<ToolTip>();
 /// }
 /// ```
-#[derive(Default)]
+#[derive(Default, Resource)]
 pub struct EntityBuilder {
     map: HashMap<String, Box<dyn Fn(&mut EntityCommands, &Value) + Send + Sync>>,
 }
@@ -159,7 +159,7 @@ impl EntityBuilder {
         asset_server: &Res<AssetServer>,
         config_path: &str,
     ) -> Entity {
-        let mut entity = commands.spawn();
+        let mut entity = commands.spawn_empty();
 
         let my_string = read_file_to_string(config_path);
         let mut component_data_map: HashMap<String, serde_json::Value> = serde_json::from_str(&my_string).unwrap();

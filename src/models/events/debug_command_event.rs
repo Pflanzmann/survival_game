@@ -1,3 +1,6 @@
+use bevy::prelude::Resource;
+
+#[derive(Resource)]
 pub struct DebugCommandEvent {
     pub debug_command: String,
 

@@ -1,8 +1,9 @@
 use std::collections::VecDeque;
+use bevy::prelude::Resource;
 
 use crate::models::spawner::spawn_task::SpawnTask;
 
-#[derive(Default)]
+#[derive(Default, Resource)]
 pub struct SpawnTaskReceiver {
     task_queue: VecDeque<SpawnTask>,
 }

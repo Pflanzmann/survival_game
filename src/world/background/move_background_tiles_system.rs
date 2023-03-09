@@ -1,4 +1,4 @@
-use bevy::prelude::{Color, GlobalTransform, Query, ResMut, Sprite, Transform, Vec3, With, Without};
+use bevy::prelude::{Color, Query, ResMut, Sprite, Transform, Vec3, With, Without};
 
 use crate::models::player::Player;
 use crate::models::resources::world::background_tiles_resource::BackgroundTilesResource;

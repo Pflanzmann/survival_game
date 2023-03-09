@@ -35,7 +35,7 @@ impl RawEnemyConfig {
             config_id: self.config_id,
             entity_name: self.entity_name.clone(),
             size: self.size,
-            texture_atlas: texture_atlases.add(TextureAtlas::from_grid(asset_server.load(&self.sprite_path), self.texture_atlas_grid_size, self.texture_atlas_columns, self.texture_atlas_rows)),
+            texture_atlas: texture_atlases.add(TextureAtlas::from_grid(asset_server.load(&self.sprite_path), self.texture_atlas_grid_size, self.texture_atlas_columns, self.texture_atlas_rows, None, None)),
             sprite_layer: self.sprite_layer,
             collider_weight: self.collider_weight,
             base_damage: self.base_damage,

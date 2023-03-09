@@ -13,7 +13,7 @@ pub fn setup_goal_system(
 ) {
     let position = Vec3::new(-2000.0, 0.0, SpriteLayer::LowGroundLevel.get_layer_z());
 
-    commands.spawn_bundle(
+    commands.spawn(
         SpriteBundle {
             transform: Transform::from_translation(position),
             texture: asset_server.load("sprites/mailbox.png"),
@@ -30,7 +30,7 @@ pub fn setup_goal_system(
         .insert(GoalActivationProgress { progress: 0.0 })
         .insert(Goal)
         .with_children(|parent| {
-            parent.spawn_bundle(SpriteBundle {
+            parent.spawn(SpriteBundle {
                 transform: Transform::from_translation(Vec3::new(0.0, 0.0, -70.0)),
                 texture: asset_server.load("sprites/collider_circle.png"),
                 sprite: Sprite {

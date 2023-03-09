@@ -48,13 +48,13 @@ pub fn apply_shield_system(
 
         let desired_pos = Vec3::new(modification.rotation_distance, 0.0, 0.0);
 
-        let base = commands.spawn()
+        let base = commands.spawn_empty()
             .insert(Transform::default())
             .insert(UnitRotation { revolutions_per_min: modification.revolutions_per_min })
             .insert(GlobalTransform::default())
             .id();
 
-        let child = commands.spawn_bundle(SpriteBundle {
+        let child = commands.spawn(SpriteBundle {
             sprite: Sprite {
                 custom_size: Some(Vec2::new(128.0, 128.0)),
                 ..Default::default()
@@ -67,7 +67,7 @@ pub fn apply_shield_system(
             .insert(ShieldUnit)
             .insert(Owner::new(owner_entity))
 
-            .insert_bundle(DamageBundle::new(modification.damage, modification.damage_interval))
+            .insert(DamageBundle::new(modification.damage, modification.damage_interval))
 
             .insert(UnitSize::new_size(modification.unit_size))
             .insert(HitBoxCollider { collider_type: ColliderType::Rectangle(Vec2::new(0.0, 0.0)) })

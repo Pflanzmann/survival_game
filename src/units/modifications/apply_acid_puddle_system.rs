@@ -31,9 +31,9 @@ pub fn apply_acid_puddle_system(
             Err(_) => continue,
         };
 
-        let acid_puddle_owner_entity = commands.spawn()
+        let acid_puddle_owner_entity = commands.spawn_empty()
             .insert(Name::new("AcidPuddleOwner"))
-            .insert_bundle(DamageBundle::new(projectile_mod.damage, projectile_mod.damage_ticks_per_min))
+            .insert(DamageBundle::new(projectile_mod.damage, projectile_mod.damage_ticks_per_min))
             .id();
 
         commands.entity(weapon_mod_container.container_entity).insert(AcidPuddleOwner { owner: acid_puddle_owner_entity });

@@ -1,5 +1,4 @@
 use bevy::prelude::{Entity, Query, Res, Transform, Vec2};
-use bevy::tasks::ComputeTaskPool;
 
 use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
 use crate::models::collision::collider_weight::ColliderWeight;

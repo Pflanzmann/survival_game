@@ -50,7 +50,7 @@ pub fn straight_basic_shot_system(
         let mut projectile_transform = Transform::from_xyz(holder_transform.translation().x, holder_transform.translation().y, SpriteLayer::LowGroundLevel.get_layer_z());
         projectile_transform.rotation = Quat::from_euler(EulerRot::XYZ, 0.0, 0.0, random_rotation);
 
-        let projectile = command.spawn_bundle(SpriteBundle {
+        let projectile = command.spawn(SpriteBundle {
             transform: projectile_transform,
             sprite: Sprite {
                 custom_size: Some(Vec2::new(projectile_handle.basic_projectile.sprite_custom_size_x, projectile_handle.basic_projectile.sprite_custom_size_y)),
@@ -65,7 +65,7 @@ pub fn straight_basic_shot_system(
             .insert(UnitSize::new_size(Vec2::new(projectile_handle.basic_projectile.sprite_custom_size_x, projectile_handle.basic_projectile.sprite_custom_size_y)))
             .insert(HitBoxCollider { collider_type: ColliderType::Circle(projectile_handle.basic_projectile.sprite_custom_size_x / 2.0) })
 
-            .insert_bundle(DamageBundle::new(0.0, 60.0))
+            .insert(DamageBundle::new(0.0, 60.0))
 
             .insert(MoveSpeed::default())
             .insert(MoveDirection { direction: holder_aim_direction.direction })

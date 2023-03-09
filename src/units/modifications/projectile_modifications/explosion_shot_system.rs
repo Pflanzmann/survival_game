@@ -33,7 +33,7 @@ pub fn explosion_shot_system(
             continue;
         }
 
-        commands.spawn_bundle(SpriteSheetBundle {
+        commands.spawn(SpriteSheetBundle {
             sprite: TextureAtlasSprite {
                 custom_size: Some(Vec2::new(explosion_shot.radius * 2.0, explosion_shot.radius * 2.0)),
                 ..Default::default()

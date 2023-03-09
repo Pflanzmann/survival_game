@@ -57,7 +57,7 @@ pub fn apply_psy_rock_system(
             continue;
         }
 
-        let projectile = commands.spawn_bundle(SpriteBundle {
+        let projectile = commands.spawn(SpriteBundle {
             sprite: Sprite {
                 custom_size: Some(Vec2::new(160.0, 160.0)),
                 ..Default::default()

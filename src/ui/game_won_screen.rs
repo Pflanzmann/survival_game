@@ -1,4 +1,4 @@
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Color, Commands, FlexDirection, HorizontalAlign, JustifyContent, NodeBundle, PositionType, Query,  Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiRect, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Color, Commands, FlexDirection, JustifyContent, NodeBundle, PositionType, Query, Res, Size, Style, Text, TextBundle, TextStyle, UiRect, Val, With};
 use crate::models::mod_register::ModRegister;
 use crate::models::modifications::descriptors::mod_name::ModName;
 use crate::models::modifications::descriptors::modification::Modification;
@@ -27,7 +27,7 @@ pub fn spawn_game_won_screen_system(
     }
 
     commands
-        .spawn_bundle(NodeBundle {
+        .spawn(NodeBundle {
             style: Style {
                 size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
                 position: UiRect {
@@ -39,15 +39,15 @@ pub fn spawn_game_won_screen_system(
                 position_type: PositionType::Absolute,
                 align_items: AlignItems::Center,
                 justify_content: JustifyContent::SpaceEvenly,
-                flex_direction: FlexDirection::ColumnReverse,
+                flex_direction: FlexDirection::Column,
                 ..Default::default()
             },
-            image: asset_loader.load("sprites/ui/ítem_background.png").into(),
+            // background_color: asset_loader.load("sprites/ui/ítem_background.png").into(),
             ..Default::default()
         })
         .insert(GameWonScreen)
         .with_children(|parent| {
-            parent.spawn_bundle(TextBundle {
+            parent.spawn(TextBundle {
                 style: Style {
                     ..Default::default()
                 },
@@ -62,7 +62,7 @@ pub fn spawn_game_won_screen_system(
                 ..Default::default()
             });
 
-            parent.spawn_bundle(TextBundle {
+            parent.spawn(TextBundle {
                 style: Style {
                     ..Default::default()
                 },
@@ -77,18 +77,18 @@ pub fn spawn_game_won_screen_system(
                 ..Default::default()
             });
 
-            parent.spawn_bundle(ButtonBundle {
+            parent.spawn(ButtonBundle {
                 style: Style {
                     size: Size::new(Val::Percent(25.0), Val::Percent(10.0)),
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::SpaceEvenly,
-                    flex_direction: FlexDirection::ColumnReverse,
+                    flex_direction: FlexDirection::Column,
                     ..Default::default()
                 },
-                color: Color::BLACK.into(),
+                background_color: Color::BLACK.into(),
                 ..Default::default()
             }).with_children(|parent| {
-                parent.spawn_bundle(TextBundle {
+                parent.spawn(TextBundle {
                     style: Style {
                         ..Default::default()
                     },
