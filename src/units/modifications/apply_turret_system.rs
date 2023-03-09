@@ -50,7 +50,7 @@ pub fn apply_turret_system(
 
         let pos_vec = get_close_position_2d(owner_transform.translation.x, owner_transform.translation.y, 300.0, 1000.0);
 
-        commands.spawn_bundle(SpriteBundle {
+        commands.spawn(SpriteBundle {
             sprite: Sprite {
                 custom_size: Some(Vec2::new(128.0, 128.0)),
                 ..Default::default()

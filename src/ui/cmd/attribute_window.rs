@@ -12,7 +12,7 @@ pub fn spawn_attribute_window_system(
     asset_loader: Res<AssetServer>,
 ) {
     //modification hud
-    commands.spawn_bundle(NodeBundle {
+    commands.spawn(NodeBundle {
         style: Style {
             size: Size::new(Val::Auto, Val::Auto),
             position: UiRect {
@@ -21,14 +21,14 @@ pub fn spawn_attribute_window_system(
                 ..Default::default()
             },
             position_type: PositionType::Absolute,
-            align_items: AlignItems::FlexStart,
-            justify_content: JustifyContent::FlexStart,
-            flex_direction: FlexDirection::ColumnReverse,
+            align_items: AlignItems::FlexEnd,
+            justify_content: JustifyContent::FlexEnd,
+            flex_direction: FlexDirection::Column,
             flex_wrap: FlexWrap::Wrap,
-            align_content: AlignContent::FlexStart,
+            align_content: AlignContent::FlexEnd,
             ..Default::default()
         },
-        color: Color::from([0.2, 0.2, 0.2, 0.8]).into(),
+        background_color: Color::from([0.2, 0.2, 0.2, 0.8]).into(),
         ..Default::default()
     }).with_children(|parent| {
         info_window_tex(parent, &asset_loader, "Health: ", HealthText);
@@ -97,7 +97,7 @@ fn info_window_tex<T: Component>(
 ) {
     let text_size = 25.0;
 
-    parent.spawn_bundle(TextBundle {
+    parent.spawn(TextBundle {
         style: Style {
             position_type: PositionType::Relative,
             position: UiRect {

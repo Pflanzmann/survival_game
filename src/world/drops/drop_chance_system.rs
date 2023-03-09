@@ -34,7 +34,7 @@ pub fn drop_chance_system(
         let random = random::<f32>() * 100.0;
 
         if (0.0..60.0).contains(&random) {
-            commands.spawn_bundle(
+            commands.spawn(
                 SpriteBundle {
                     transform: Transform::from_translation(drop_translation),
                     texture: texture_handles.coin_sprite.clone(),
@@ -55,7 +55,7 @@ pub fn drop_chance_system(
         }
 
         if (80.0..100.0).contains(&random) {
-            commands.spawn_bundle(
+            commands.spawn(
                 SpriteBundle {
                     transform: Transform::from_translation(drop_translation),
                     texture: texture_handles.hot_dog_sprite.clone(),

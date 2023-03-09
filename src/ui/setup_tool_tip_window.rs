@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 use bevy::prelude::{AssetServer, Commands, Res};
 use bevy::ui::FocusPolicy;
+use bevy::ui::Node;
 
 use crate::models::modifications::descriptors::tool_tip::ToolTip;
 use crate::models::ui::tooltip_window::{HoverTooltip, TooltipText, TooltipWindow};
@@ -30,7 +31,7 @@ pub fn setup_tool_tip_window(
         return;
     }
 
-    commands.spawn_bundle(NodeBundle {
+    commands.spawn(NodeBundle {
         style: Style {
             size: Size::new(Val::Percent(18.0), Val::Percent(16.0)),
             position: UiRect {
@@ -46,13 +47,13 @@ pub fn setup_tool_tip_window(
             align_content: AlignContent::Center,
             ..Default::default()
         },
-        image: asset_loader.load("sprites/ui/ítem_background.png").into(),
+       // background_color: asset_loader.load("sprites/ui/ítem_background.png").into(),
         ..Default::default()
     })
         .insert(Name::new("Tooltip Window"))
         .insert(TooltipWindow)
         .with_children(|parent| {
-            parent.spawn_bundle(TextBundle {
+            parent.spawn(TextBundle {
                 focus_policy: FocusPolicy::Pass,
                 style: Style {
                     size: Size { width: Val::Auto, height: Val::Auto },
@@ -107,11 +108,11 @@ pub fn move_tool_tip_window(
             None => return,
         };
 
-        style.position = UiRect::<Val> {
+        style.position = UiRect {
             left: Val::Px(position.x),
             right: Val::Auto,
             top: Val::Auto,
-            bottom: Val::Px(position.y - node.size.y),
+            bottom: Val::Px(position.y - node.size().y),
         }
     }
 }

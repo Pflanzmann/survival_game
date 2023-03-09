@@ -9,7 +9,7 @@ pub fn preload_mod_system(
     asset_server: Res<AssetServer>,
     entity_builder: Res<EntityBuilder>,
 ) {
-    let parent = commands.spawn().insert(Name::new("Mod Entities")).id();
+    let parent = commands.spawn_empty().insert(Name::new("Mod Entities")).id();
 
     let base_path = "configurations/mods/";
     let paths = fs::read_dir(base_path).unwrap();

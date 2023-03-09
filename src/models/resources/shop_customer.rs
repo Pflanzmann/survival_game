@@ -1,6 +1,6 @@
-use bevy::prelude::Entity;
+use bevy::prelude::{Entity, Resource};
 
-#[derive(Default)]
+#[derive(Default, Resource)]
 pub struct ShopCustomer {
     pub customer: Option<Entity>,
 }

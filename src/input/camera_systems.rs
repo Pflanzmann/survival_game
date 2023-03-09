@@ -2,7 +2,6 @@ use bevy::prelude::*;
 use bevy::render::camera::ScalingMode;
 
 use crate::models::main_camera::MainCamera;
-use crate::models::player::Player;
 
 pub fn setup_camera_system(
     mut commands: Commands,
@@ -22,7 +21,7 @@ pub fn setup_camera_system(
     camera_bundle.projection.scaling_mode = ScalingMode::None;
     camera_bundle.projection.scale = 3.0;
 
-    commands.spawn_bundle(camera_bundle)
+    commands.spawn(camera_bundle)
         .insert(MainCamera)
         .insert(Name::new("MainCamera"));
 }

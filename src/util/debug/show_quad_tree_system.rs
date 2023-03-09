@@ -21,7 +21,7 @@ pub fn show_quad_tree_system(
 
         for (pos, width, height, layer) in output {
             let color = 0.1 * layer as f32;
-            commands.spawn_bundle(
+            commands.spawn(
                 SpriteBundle {
                     sprite: Sprite {
                         color: Color::from([color, color, color, color]),

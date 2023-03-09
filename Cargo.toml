@@ -6,7 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies.bevy]
-version = "0.8"
+version = "0.9.1"
 default-features = false
 # These are the remaining default features other than `bevy_audio` and `mp3`
 features = [
@@ -17,19 +17,35 @@ features = [
     "filesystem_watcher",
     "x11",
     "vorbis",
-    "mp3"
+    "mp3",
+
+    "bevy_asset",         # Assets management
+    "bevy_scene",         # Scenes management
+    "bevy_gilrs",         # Gamepad input support
+    "bevy_audio",         # Builtin audio
+    "bevy_winit",         # Window management
+    "animation",          # Animation support
+    "x11",                # Linux: Support X11 windowing system
+    "filesystem_watcher", # Asset hot-reloading
+    "render",             # Graphics Rendering
+
+    "bevy_render",        # Rendering framework core
+    "bevy_sprite",        # 2D (sprites) rendering
+    "bevy_text",          # Text/font rendering
+    "bevy_ui",            # UI toolkit
+
+    "dynamic",      # Dynamic linking for faster compile-times
 ]
 
 [dependencies]
 rand = "0.8.5"
 getrandom = { version = "0.2.5", features = ["js"] }
-bevy-inspector-egui = { version = "0.13.0" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 rustc-serialize = "0.3"
 
 [dependencies.bevy_kira_audio]
-version = "0.12.0"
+version = "0.14.0"
 # `ogg` format support is enabled by default, disable if you don't want it
 default-features = false
 # enable the features you care about

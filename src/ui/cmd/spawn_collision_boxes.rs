@@ -15,7 +15,7 @@ pub fn spawn_collision_boxes(
 ) {
     for (entity, solid_collider) in collision_unit_query.iter() {
         commands.entity(entity).with_children(|parent| {
-            parent.spawn_bundle(
+            parent.spawn(
                 match solid_collider.collider_type {
                     Circle(radius) => {
                         SpriteBundle {
@@ -48,7 +48,7 @@ pub fn spawn_collision_boxes(
 
     for (entity, hit_box_collider) in hit_box_collider_query.iter() {
         commands.entity(entity).with_children(|parent| {
-            parent.spawn_bundle(
+            parent.spawn(
                 match hit_box_collider.collider_type {
                     Circle(radius) => {
                         SpriteBundle {
@@ -88,7 +88,7 @@ pub fn init_collision_boxes(
 ) {
     for (entity, solid_body_collider) in solid_body_collider_query.iter() {
         commands.entity(entity).with_children(|parent| {
-            parent.spawn_bundle(
+            parent.spawn(
                 match solid_body_collider.collider_type {
                     Circle(radius) => {
                         SpriteBundle {
@@ -121,7 +121,7 @@ pub fn init_collision_boxes(
 
     for (entity, hit_box_collider) in hit_box_collider_query.iter() {
         commands.entity(entity).with_children(|parent| {
-            parent.spawn_bundle(
+            parent.spawn(
                 match hit_box_collider.collider_type {
                     Circle(radius) => {
                         SpriteBundle {

@@ -1,10 +1,10 @@
-use bevy::prelude::{Res, ResMut};
+use bevy::prelude::{Res, ResMut, Resource};
 use bevy_kira_audio::{Audio, AudioChannel, AudioControl, MainTrack};
 
 use crate::models::audio::sound_channel::SoundChannel;
 use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 
-#[derive(Default)]
+#[derive(Default, Resource)]
 pub struct SoundManager {
     channel_vector_pickup: Vec<AudioChannel<MainTrack>>,
     channel_vector_projectile: Vec<AudioChannel<MainTrack>>,

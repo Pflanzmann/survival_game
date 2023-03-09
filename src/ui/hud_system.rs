@@ -14,7 +14,7 @@ pub fn spawn_text_system(
     asset_loader: Res<AssetServer>,
 ) {
     // coin counter
-    commands.spawn_bundle(TextBundle {
+    commands.spawn(TextBundle {
         style: Style {
             position_type: PositionType::Absolute,
             position: UiRect {
@@ -51,7 +51,7 @@ pub fn spawn_text_system(
         .insert(Name::new("CoinText"));
 
     //modification hud
-    commands.spawn_bundle(NodeBundle {
+    commands.spawn(NodeBundle {
         style: Style {
             size: Size::new(Val::Percent(18.0), Val::Percent(16.0)),
             position: UiRect {
@@ -60,14 +60,14 @@ pub fn spawn_text_system(
                 ..Default::default()
             },
             position_type: PositionType::Absolute,
-            align_items: AlignItems::FlexStart,
-            justify_content: JustifyContent::FlexStart,
+            align_items: AlignItems::FlexEnd,
+            justify_content: JustifyContent::FlexEnd,
             flex_direction: FlexDirection::Row,
             flex_wrap: FlexWrap::WrapReverse,
-            align_content: AlignContent::FlexStart,
+            align_content: AlignContent::FlexEnd,
             ..Default::default()
         },
-        color: Color::from([0.2, 0.2, 0.2, 0.2]).into(),
+        background_color: Color::from([0.2, 0.2, 0.2, 0.2]).into(),
         ..Default::default()
     })
         .insert(ProjectileHud)
@@ -105,7 +105,7 @@ pub fn update_projectile_hud_system(
                 };
 
                 commands.entity(hud_entity).with_children(|parent| {
-                    parent.spawn_bundle(ImageBundle {
+                    parent.spawn(ImageBundle {
                         image: sprite.handle.clone().into(),
                         style: Style {
                             size: Size::new(Val::Percent(20.0), Val::Percent(40.0)),

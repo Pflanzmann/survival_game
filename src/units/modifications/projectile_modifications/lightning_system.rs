@@ -62,7 +62,7 @@ pub fn lightning_system(
 
                     let distance = position.distance(quad_data.position);
 
-                    let lightning_entity = commands.spawn_bundle(SpriteBundle {
+                    let lightning_entity = commands.spawn(SpriteBundle {
                         sprite: Sprite {
                             custom_size: Some(Vec2::new(lightning.lightning_width, distance)),
                             anchor: Anchor::BottomCenter,

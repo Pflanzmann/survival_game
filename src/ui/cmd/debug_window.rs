@@ -1,5 +1,5 @@
 use bevy::core::Name;
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, HorizontalAlign, JustifyContent, NodeBundle, Overflow, PositionType, Query, Res, Size, Style, Text, TextAlignment, TextBundle, TextSection, TextStyle, UiRect, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, JustifyContent, NodeBundle, Overflow, PositionType, Query, Res, Size, Style, Text, TextAlignment, TextBundle, TextSection, TextStyle, UiRect, Val, VerticalAlign, With};
 use bevy::ui::AlignContent;
 
 use crate::models::resources::console_history::ConsoleHistory;
@@ -17,7 +17,7 @@ pub fn setup_debug_window(
     }
 
     commands
-        .spawn_bundle(NodeBundle {
+        .spawn(NodeBundle {
             style: Style {
                 size: Size::new(Val::Percent(40.0), Val::Percent(40.0)),
                 position: UiRect {
@@ -29,13 +29,13 @@ pub fn setup_debug_window(
                 position_type: PositionType::Absolute,
                 ..Default::default()
             },
-            color: Color::from([0.2, 0.2, 0.2, 0.8]).into(),
+            background_color: Color::from([0.2, 0.2, 0.2, 0.8]).into(),
             ..Default::default()
         })
         .insert(Name::new("Debug console"))
         .insert(DebugConsoleWindow)
         .with_children(|parent| {
-            parent.spawn_bundle(NodeBundle {
+            parent.spawn(NodeBundle {
                 style: Style {
                     size: Size::new(Val::Percent(100.0), Val::Percent(8.0)),
                     position: UiRect {
@@ -45,15 +45,15 @@ pub fn setup_debug_window(
                         right: Val::Percent(0.0),
                     },
                     position_type: PositionType::Absolute,
-                    align_items: AlignItems::FlexStart,
+                    align_items: AlignItems::FlexEnd,
                     overflow: Overflow::Hidden,
                     justify_content: JustifyContent::SpaceEvenly,
                     ..Default::default()
                 },
-                color: Color::from([0.2, 0.2, 0.2, 0.8]).into(),
+                background_color: Color::from([0.2, 0.2, 0.2, 0.8]).into(),
                 ..Default::default()
             }).with_children(|parent| {
-                parent.spawn_bundle(TextBundle {
+                parent.spawn(TextBundle {
                     style: Style::default(),
                     text: Text::from_section(
                         "".to_string(),
@@ -68,7 +68,7 @@ pub fn setup_debug_window(
             });
         })
         .with_children(|parent| {
-            parent.spawn_bundle(TextBundle {
+            parent.spawn(TextBundle {
                 style: Style {
                     size: Size::new(Val::Percent(100.0), Val::Percent(91.0)),
                     position: UiRect {
@@ -98,7 +98,7 @@ pub fn setup_debug_info_window(
     asset_loader: Res<AssetServer>,
 ) {
     commands
-        .spawn_bundle(NodeBundle {
+        .spawn(NodeBundle {
             style: Style {
                 size: Size::new(Val::Percent(20.0), Val::Percent(40.0)),
                 position: UiRect {
@@ -106,19 +106,19 @@ pub fn setup_debug_info_window(
                     bottom: Val::Percent(8.0),
                     ..Default::default()
                 },
-                flex_direction: FlexDirection::ColumnReverse,
+                flex_direction: FlexDirection::Column,
                 position_type: PositionType::Absolute,
-                align_items: AlignItems::FlexStart,
-                align_content: AlignContent::FlexStart,
+                align_items: AlignItems::FlexEnd,
+                align_content: AlignContent::FlexEnd,
                 ..Default::default()
             },
-            color: Color::from([0.2, 0.2, 0.2, 0.8]).into(),
+            background_color: Color::from([0.2, 0.2, 0.2, 0.8]).into(),
             ..Default::default()
         })
         .insert(Name::new("Debug info"))
         .insert(DebugConsoleWindow)
         .with_children(|parent| {
-            parent.spawn_bundle(TextBundle {
+            parent.spawn(TextBundle {
                 style: Style {
                     position_type: PositionType::Relative,
                     flex_direction: FlexDirection::RowReverse,

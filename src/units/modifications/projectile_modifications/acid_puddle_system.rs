@@ -29,7 +29,7 @@ pub fn acid_puddle_system(
 
         let random_sprite_index: usize = rand::thread_rng().gen_range(0..6);
 
-        commands.spawn_bundle(SpriteSheetBundle {
+        commands.spawn(SpriteSheetBundle {
             sprite: TextureAtlasSprite {
                 index: random_sprite_index,
                 custom_size: Some(unit_size.proportional_unit_size()),

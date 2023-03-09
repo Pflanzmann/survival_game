@@ -1,9 +1,9 @@
-use bevy::prelude::ResMut;
+use bevy::prelude::{ResMut, Resource};
 
 use crate::models::configurations::projectile_config::ProjectileConfig;
 use crate::util::read_file_to_string::read_file_to_string;
 
-#[derive(Default)]
+#[derive(Default, Resource)]
 pub struct ProjectileConfigHandles {
     pub basic_projectile: ProjectileConfig,
 }

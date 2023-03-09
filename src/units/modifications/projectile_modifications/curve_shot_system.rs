@@ -9,7 +9,7 @@ pub fn curve_shot_system(
     mut projectile_query: Query<(Entity, &mut MoveDirection, &TravelRange), With<CurveShot>>,
 ) {
     for (entity, mut direction, range) in projectile_query.iter_mut() {
-        let angle_direction: f32 = if entity.id() as f32 % 2.0 == 0.0 { 1.0 } else { -1.0 };
+        let angle_direction: f32 = if entity.index() as f32 % 2.0 == 0.0 { 1.0 } else { -1.0 };
         let x = direction.direction.x;
         let y = direction.direction.y;
 

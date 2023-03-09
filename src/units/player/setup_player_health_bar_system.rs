@@ -12,7 +12,7 @@ pub fn setup_player_health_bar_system(
         Err(_) => return,
     };
 
-    let background = commands.spawn_bundle(
+    let background = commands.spawn(
         SpriteBundle {
             sprite: Sprite {
                 custom_size: Some(Vec2::new(256.0, 50.0)),
@@ -29,7 +29,7 @@ pub fn setup_player_health_bar_system(
     )
         .insert(Name::new("HealthBar")).id();
 
-    let health_bar = commands.spawn_bundle(
+    let health_bar = commands.spawn(
         SpriteBundle {
             sprite: Sprite {
                 custom_size: Some(Vec2::new(256.0, 50.0)),

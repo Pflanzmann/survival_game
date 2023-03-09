@@ -1,9 +1,9 @@
-use bevy::prelude::ResMut;
+use bevy::prelude::{ResMut, Resource};
 
 use crate::models::spawner::stage_spawn_behavior::StageSpawnBehavior;
 use crate::util::read_file_to_string::read_file_to_string;
 
-#[derive(Default)]
+#[derive(Default, Resource)]
 pub struct StageSpawnBehaviorHandle {
     pub default_spawn_phase: StageSpawnBehavior,
 }

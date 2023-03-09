@@ -50,7 +50,7 @@ pub fn split_shot_system(
             let mut projectile_transform = Transform::from_xyz(projectile_transform.translation().x, projectile_transform.translation().y, SpriteLayer::LowGroundLevel.get_layer_z());
             projectile_transform.rotation = Quat::from_euler(EulerRot::XYZ, 0.0, 0.0, random_rotation);
 
-            let projectile = command.spawn_bundle(SpriteBundle {
+            let projectile = command.spawn(SpriteBundle {
                 transform: projectile_transform,
                 sprite: Sprite {
                     custom_size: Some(Vec2::new(128.0, 128.0)),
@@ -66,7 +66,7 @@ pub fn split_shot_system(
                 .insert(UnitSize::new_size(Vec2::new(128.0, 128.0)))
                 .insert(HitBoxCollider { collider_type: ColliderType::Circle(128.0 / 2.0) }).insert(EnemyHitBoxCollider)
 
-                .insert_bundle(DamageBundle::new(0.0, 60.0))
+                .insert(DamageBundle::new(0.0, 60.0))
                 .insert(collided_entities.clone())
 
                 .insert(MoveSpeed::default())

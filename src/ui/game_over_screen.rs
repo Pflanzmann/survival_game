@@ -9,7 +9,7 @@ pub fn spawn_menu_system(
     asset_loader: Res<AssetServer>,
 ) {
     commands
-        .spawn_bundle(NodeBundle {
+        .spawn(NodeBundle {
             style: Style {
                 size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
                 position: UiRect {
@@ -21,14 +21,14 @@ pub fn spawn_menu_system(
                 position_type: PositionType::Absolute,
                 align_items: AlignItems::Center,
                 justify_content: JustifyContent::SpaceEvenly,
-                flex_direction: FlexDirection::ColumnReverse,
+                flex_direction: FlexDirection::Column,
                 ..Default::default()
             },
-            color: Color::BLACK.into(),
+            background_color: Color::BLACK.into(),
             ..Default::default()
         })
         .with_children(|parent| {
-            parent.spawn_bundle(TextBundle {
+            parent.spawn(TextBundle {
                 style: Style {
                     ..Default::default()
                 },
@@ -42,18 +42,18 @@ pub fn spawn_menu_system(
                 ),
                 ..Default::default()
             });
-            parent.spawn_bundle(ButtonBundle {
+            parent.spawn(ButtonBundle {
                 style: Style {
                     size: Size::new(Val::Percent(25.0), Val::Percent(10.0)),
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::SpaceEvenly,
-                    flex_direction: FlexDirection::ColumnReverse,
+                    flex_direction: FlexDirection::Column,
                     ..Default::default()
                 },
-                color: Color::BLACK.into(),
+                background_color: Color::BLACK.into(),
                 ..Default::default()
             }).with_children(|parent| {
-                parent.spawn_bundle(TextBundle {
+                parent.spawn(TextBundle {
                     style: Style {
                         ..Default::default()
                     },

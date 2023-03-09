@@ -1,5 +1,4 @@
 use bevy::prelude::*;
-use bevy::tasks::ComputeTaskPool;
 
 use crate::models::behavior::steering_behavior::SteeringBehavior;
 use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};

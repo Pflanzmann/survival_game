@@ -1,7 +1,7 @@
 use std::cmp::min;
 
 use bevy::prelude::{AlignContent, AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, FlexWrap, HorizontalAlign, ImageBundle, Interaction, JustifyContent, Name, NodeBundle, PositionType, Query, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiRect, Val, VerticalAlign, With};
-use bevy::ui::FocusPolicy;
+use bevy::ui::{BackgroundColor, FocusPolicy};
 use rand::Rng;
 
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
@@ -64,7 +64,7 @@ pub fn spawn_shop_menu_system(
             Err(_) => continue,
         };
 
-        let entity = commands.spawn_bundle(ButtonBundle {
+        let entity = commands.spawn(ButtonBundle {
             style: Style {
                 size: Size::new(Val::Auto, Val::Auto),
                 min_size: Size::new(Val::Auto, Val::Percent(51.0)),
@@ -82,14 +82,14 @@ pub fn spawn_shop_menu_system(
                 ..Default::default()
             },
             image: asset_loader.load("sprites/ui/ítem_background.png").into(),
-            color: Color::GRAY.into(),
+            background_color: Color::GRAY.into(),
             ..Default::default()
         })
             .insert(Interaction::default())
             .insert(ShopButton { index, modification_entity: mod_entity, price: price.0 })
             .insert(tooltip.clone())
             .with_children(|parent| {
-                parent.spawn_bundle(TextBundle {
+                parent.spawn(TextBundle {
                     focus_policy: FocusPolicy::Pass,
                     style: Style {
                         ..Default::default()
@@ -105,7 +105,7 @@ pub fn spawn_shop_menu_system(
                     ..Default::default()
                 });
 
-                parent.spawn_bundle(ImageBundle {
+                parent.spawn(ImageBundle {
                     focus_policy: FocusPolicy::Pass,
                     image: mod_sprite_path.handle.clone().into(),
                     style: Style {
@@ -121,7 +121,7 @@ pub fn spawn_shop_menu_system(
     }
 
     commands
-        .spawn_bundle(NodeBundle {
+        .spawn(NodeBundle {
             style: Style {
                 size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
                 position: UiRect {
@@ -133,16 +133,16 @@ pub fn spawn_shop_menu_system(
                 position_type: PositionType::Absolute,
                 align_items: AlignItems::Center,
                 justify_content: JustifyContent::SpaceEvenly,
-                flex_direction: FlexDirection::ColumnReverse,
+                flex_direction: FlexDirection::Column,
                 ..Default::default()
             },
-            image: asset_loader.load("sprites/ui/ítem_background.png").into(),
+         //   background_color: asset_loader.load("sprites/ui/ítem_background.png").into(),
             ..Default::default()
         })
         .with_children(|parent| {
 
             //Shop Headline
-            parent.spawn_bundle(TextBundle {
+            parent.spawn(TextBundle {
                 style: Style {
                     ..Default::default()
                 },
@@ -158,7 +158,7 @@ pub fn spawn_shop_menu_system(
             });
 
             //Shoppable items
-            parent.spawn_bundle(NodeBundle {
+            parent.spawn(NodeBundle {
                 style: Style {
                     size: Size::new(Val::Percent(80.0), Val::Percent(40.0)),
                     position: UiRect {
@@ -175,25 +175,25 @@ pub fn spawn_shop_menu_system(
                     align_content: AlignContent::SpaceAround,
                     ..Default::default()
                 },
-                color: Color::rgba(0.0, 0.0, 0.0, 0.0).into(),
+                background_color: Color::rgba(0.0, 0.0, 0.0, 0.0).into(),
                 ..Default::default()
             }).push_children(populated_shop_slots.as_slice());
 
-            parent.spawn_bundle(NodeBundle {
+            parent.spawn(NodeBundle {
                 style: Style {
                     size: Size::new(Val::Percent(100.0), Val::Percent(40.0)),
                     align_items: AlignItems::Center,
                     justify_content: JustifyContent::SpaceEvenly,
-                    flex_direction: FlexDirection::ColumnReverse,
+                    flex_direction: FlexDirection::Column,
                     ..Default::default()
                 },
-                color: Color::rgba(0.0, 0.0, 0.0, 0.0).into(),
+                background_color: Color::rgba(0.0, 0.0, 0.0, 0.0).into(),
                 ..Default::default()
             })
 
                 //Tooltip
                 .with_children(|parent| {
-                    parent.spawn_bundle(NodeBundle {
+                    parent.spawn(NodeBundle {
                         style: Style {
                             size: Size::new(Val::Percent(25.0), Val::Percent(50.0)),
                             position: UiRect {
@@ -208,12 +208,12 @@ pub fn spawn_shop_menu_system(
                             align_content: AlignContent::Center,
                             ..Default::default()
                         },
-                        image: asset_loader.load("sprites/ui/ítem_background.png").into(),
+                      //  background_color: asset_loader.load("sprites/ui/ítem_background.png").into(),
                         ..Default::default()
                     })
                         .insert(Name::new("Tooltip Window"))
                         .with_children(|parent| {
-                            parent.spawn_bundle(TextBundle {
+                            parent.spawn(TextBundle {
                                 focus_policy: FocusPolicy::Pass,
                                 style: Style {
                                     size: Size { width: Val::Auto, height: Val::Auto },
@@ -235,7 +235,7 @@ pub fn spawn_shop_menu_system(
                         });
 
                     // Close button
-                    parent.spawn_bundle(ButtonBundle {
+                    parent.spawn(ButtonBundle {
                         style: Style {
                             size: Size::new(Val::Percent(7.0), Val::Percent(30.0)),
                             position: UiRect {
@@ -244,7 +244,7 @@ pub fn spawn_shop_menu_system(
                             },
                             align_items: AlignItems::Center,
                             justify_content: JustifyContent::SpaceEvenly,
-                            flex_direction: FlexDirection::ColumnReverse,
+                            flex_direction: FlexDirection::Column,
                             ..Default::default()
                         },
                         image: asset_loader.load("sprites/ui/shop_close.png").into(),
