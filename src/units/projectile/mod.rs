@@ -1,9 +1,9 @@
-use bevy::prelude::{Plugin, SystemSet};
+use bevy::prelude::*;
 
 use crate::{App, AppState};
+use crate::scheduling::BaseSets;
 use crate::units::projectile::projectile_check_stop_system::projectile_check_stop_system;
 use crate::units::projectile::projectile_despawn_system::projectile_despawn_system;
-use crate::util::stage_label_helper::{in_last, in_update};
 
 mod projectile_check_stop_system;
 mod projectile_despawn_system;
@@ -21,21 +21,28 @@ mod projectile_despawn_system;
 /// All system get only used in the [AppState::InGame].
 pub struct ProjectilePlugin;
 
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct ProjectileUpdateSystemSet;
+
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct ProjectileCleanupSystemSet;
+
 impl Plugin for ProjectilePlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_system_set(
-                in_update(
-                    SystemSet::on_update(AppState::InGame)
-                        .with_system(projectile_check_stop_system)
-                )
-            )
+        app.configure_set(
+            ProjectileUpdateSystemSet
+                .in_base_set(BaseSets::Update)
+                .run_if(in_state(AppState::InGame))
+        );
 
-            .add_system_set(
-                in_last(
-                    SystemSet::on_update(AppState::InGame)
-                        .with_system(projectile_despawn_system)
-                )
-            );
+        app.configure_set(
+            ProjectileCleanupSystemSet
+                .in_base_set(BaseSets::Last)
+                .run_if(in_state(AppState::InGame))
+        );
+
+        app.add_system(projectile_check_stop_system.in_set(ProjectileUpdateSystemSet));
+
+        app.add_system(projectile_despawn_system.in_set(ProjectileCleanupSystemSet));
     }
 }

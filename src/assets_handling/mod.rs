@@ -3,11 +3,11 @@ use bevy::prelude::{App, Plugin, SystemSet};
 use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::assets_handling::preload_animation_system::preload_animation_system;
 use crate::assets_handling::preload_audio_system::{preload_audio_system, SoundHandles};
-use crate::assets_handling::preload_projectile_system::{ProjectileConfigHandles, preload_projectile_system};
 use crate::assets_handling::preload_enemy_system::preload_enemy_system;
 use crate::assets_handling::preload_item_system::{ItemConfigHandles, preload_item_system};
 use crate::assets_handling::preload_mod_system::preload_mod_system;
 use crate::assets_handling::preload_player_system::{PlayerConfigHandles, preload_player_system};
+use crate::assets_handling::preload_projectile_system::{preload_projectile_system, ProjectileConfigHandles};
 use crate::assets_handling::preload_stage_spawn_system::{preload_stage_spawn_behvaior_system, StageSpawnBehaviorHandle};
 use crate::assets_handling::preload_texture_system::{preload_texture_system, TextureHandles};
 use crate::models::spawner::enemy_config_handle::EnemyConfigHandles;
@@ -46,21 +46,21 @@ impl Plugin for AssetHandlingPlugin {
             .init_resource::<ProjectileConfigHandles>()
             .init_resource::<SoundHandles>()
             .init_resource::<AtlasHandles>()
-            .init_resource::<StageSpawnBehaviorHandle>()
+            .init_resource::<StageSpawnBehaviorHandle>();
 
-            .add_startup_system_to_stage(SetupStages::AssetSetup, preload_texture_system)
+        // .add_startup_system_to_stage(SetupStages::AssetSetup, preload_texture_system)
 
-            .add_startup_system_set_to_stage(
-                SetupStages::ConfigSetup,
-                SystemSet::new()
-                    .with_system(preload_enemy_system)
-                    .with_system(preload_item_system)
-                    .with_system(preload_player_system)
-                    .with_system(preload_projectile_system)
-                    .with_system(preload_mod_system)
-                    .with_system(preload_audio_system)
-                    .with_system(preload_animation_system)
-                    .with_system(preload_stage_spawn_behvaior_system),
-            );
+        // .add_startup_system_set_to_stage(
+        //     SetupStages::ConfigSetup,
+        //     SystemSet::new()
+        //         .with_system(preload_enemy_system)
+        //         .with_system(preload_item_system)
+        //         .with_system(preload_player_system)
+        //         .with_system(preload_projectile_system)
+        //         .with_system(preload_mod_system)
+        //         .with_system(preload_audio_system)
+        //         .with_system(preload_animation_system)
+        //         .with_system(preload_stage_spawn_behvaior_system),
+        // );
     }
 }

@@ -1,12 +1,13 @@
-use bevy::prelude::{App, Plugin, SystemSet};
+use bevy::prelude::{App, in_state, IntoSystemSetConfig, Plugin, SystemSet};
+use bevy::prelude::IntoSystemConfig;
 
 use crate::AppState;
 use crate::input::camera_systems::setup_camera_system;
-use crate::input::cmd::CmdLogicPlugin;
+use crate::input::cmd::CmdCommandsPlugin;
 use crate::input::player_control_aim_system::player_control_aim_system;
 use crate::input::player_control_movement_system::player_control_movement_system;
 use crate::input::toggle_pause_system::{StateTimer, toggle_pause_system};
-use crate::util::stage_label_helper::in_update;
+use crate::scheduling::BaseSets;
 
 mod player_control_movement_system;
 mod camera_systems;
@@ -22,30 +23,26 @@ mod cmd;
 /// Every input system is handled in the update of the [AppState::InGame]
 pub struct InputPlugin;
 
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct InputSystemSet;
+
 impl Plugin for InputPlugin {
     fn build(&self, app: &mut App) {
+        app.configure_set(
+            InputSystemSet
+                .in_base_set(BaseSets::Update)
+                .run_if(in_state(AppState::InGame))
+        );
+
+        app.add_plugin(CmdCommandsPlugin);
+
+        app.init_resource::<StateTimer>();
+
+        app.add_startup_system(setup_camera_system);
+
         app
-            .add_plugin(CmdLogicPlugin)
-
-            .init_resource::<StateTimer>()
-
-            .add_startup_system(setup_camera_system)
-
-            // .add_system_set(
-            //     in_update(
-            //         SystemSet::on_exit(AppState::Pre)
-            //             .with_system(setup_camera_system)
-            //     )
-            // )
-
-            .add_system_set(
-                in_update(
-                    SystemSet::on_update(AppState::InGame)
-                        .with_system(player_control_movement_system)
-                        .with_system(player_control_aim_system)
-                )
-            )
-
-            .add_system(toggle_pause_system);
+            .add_system(player_control_movement_system.in_set(InputSystemSet))
+            .add_system(player_control_aim_system.in_set(InputSystemSet))
+            .add_system(toggle_pause_system.in_set(InputSystemSet));
     }
 }

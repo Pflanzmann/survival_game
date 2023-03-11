@@ -1,6 +1,7 @@
 use bevy::core::Name;
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, JustifyContent, NodeBundle, Overflow, PositionType, Query, Res, Size, Style, Text, TextAlignment, TextBundle, TextSection, TextStyle, UiRect, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, JustifyContent, NodeBundle, Overflow, PositionType, Query, Res, Size, Style, Text, TextBundle, TextSection, TextStyle, UiRect, Val, With};
 use bevy::ui::AlignContent;
+use bevy::utils::default;
 
 use crate::models::resources::console_history::ConsoleHistory;
 use crate::models::ui::debug_console::{DebugConsoleHistory, DebugConsoleInput, DebugConsoleWindow, DebugFpsCounter};
@@ -130,7 +131,6 @@ pub fn setup_debug_info_window(
                     ..Default::default()
                 },
                 text: Text {
-                    alignment: TextAlignment { vertical: VerticalAlign::Top, ..Default::default() },
                     sections: vec![
                         TextSection {
                             value: "Fps: ".to_string(),
@@ -149,6 +149,7 @@ pub fn setup_debug_info_window(
                             },
                         },
                     ],
+                    ..default()
                 },
                 ..Default::default()
             }).insert(DebugFpsCounter);

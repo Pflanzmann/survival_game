@@ -1,6 +1,6 @@
-use bevy::prelude::{Commands, Entity, EventReader, Query, Res, ResMut, With};
+use bevy::prelude::{Commands, Entity, EventReader, NextState, Query, Res, ResMut, With};
 
-use crate::{AppStateTrigger, ToAppState};
+use crate::AppState;
 use crate::assets_handling::preload_audio_system::SoundHandles;
 use crate::audio::sound_manager::SoundManager;
 use crate::models::audio::sound_handle_channel::SoundHandleChannel;
@@ -13,7 +13,7 @@ pub fn enter_shop_system(
     mut commands: Commands,
     mut item_pickup_event: EventReader<ItemCollisionEvent>,
     mut shop_customer: ResMut<ShopCustomer>,
-    mut state_trigger: ResMut<AppStateTrigger>,
+    mut next_state: ResMut<NextState<AppState>>,
     sound_handles: Res<SoundHandles>,
     mut sound_manager: ResMut<SoundManager>,
     item_query: Query<Entity, With<Shop>>,
@@ -29,7 +29,7 @@ pub fn enter_shop_system(
             continue;
         }
 
-        state_trigger.state_change_trigger = ToAppState::ToShop;
+        next_state.set(AppState::Shop);
         shop_customer.customer = Some(event.target_entity);
 
         sound_manager.queue_sound(SoundHandleChannel::Pickup(sound_handles.coin_pickup_sound.clone()));

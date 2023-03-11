@@ -1,6 +1,6 @@
-use bevy::prelude::{Entity, EventReader, EventWriter, Query, ResMut, With};
+use bevy::prelude::{Entity, EventReader, EventWriter, NextState, Query, ResMut, With};
 
-use crate::{AppStateTrigger, ToAppState};
+use crate::AppState;
 use crate::models::events::debug_command_event::DebugCommandEvent;
 use crate::models::events::debug_command_info_event::DebugCommandInfoEvent;
 use crate::models::player::Player;
@@ -12,7 +12,7 @@ pub fn open_shop_command(
     mut debug_command_events: EventReader<DebugCommandEvent>,
     mut debug_command_info_event: EventWriter<DebugCommandInfoEvent>,
     mut shop_customer: ResMut<ShopCustomer>,
-    mut state_trigger: ResMut<AppStateTrigger>,
+    mut next_state: ResMut<NextState<AppState>>,
     player_query: Query<Entity, With<Player>>,
 ) {
     for debug_command_event in debug_command_events.iter() {
@@ -39,7 +39,7 @@ pub fn open_shop_command(
         };
 
         shop_customer.customer = Some(player_entity);
-        state_trigger.state_change_trigger = ToAppState::ToShop;
+        next_state.set(AppState::Shop);
 
         debug_command_info_event.send(DebugCommandInfoEvent { debug_command: "Successfully opened shop".to_string() });
     }

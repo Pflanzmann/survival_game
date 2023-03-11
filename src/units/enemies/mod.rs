@@ -1,9 +1,9 @@
-use bevy::prelude::{App, Plugin, SystemSet};
+use bevy::prelude::*;
 
 use crate::AppState;
+use crate::scheduling::BaseSets;
 use crate::units::enemies::despawn_dead_enemy_system::despawn_dead_enemy_system;
 use crate::units::enemies::despawn_far_enemy_system::despawn_far_enemy_system;
-use crate::util::stage_label_helper::in_last;
 
 pub mod despawn_dead_enemy_system;
 pub mod despawn_far_enemy_system;
@@ -19,15 +19,19 @@ pub mod despawn_far_enemy_system;
 /// still react to the [PlayerDiedEvent]
 pub struct EnemiesPlugin;
 
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct EnemiesSystemSet;
+
 impl Plugin for EnemiesPlugin {
     fn build(&self, app: &mut App) {
+        app.configure_set(
+            EnemiesSystemSet
+                .in_base_set(BaseSets::Last)
+                .run_if(in_state(AppState::InGame))
+        );
+
         app
-            .add_system_set(
-                in_last(
-                    SystemSet::on_update(AppState::InGame)
-                        .with_system(despawn_dead_enemy_system)
-                        .with_system(despawn_far_enemy_system)
-                )
-            );
+            .add_system(despawn_dead_enemy_system.in_set(EnemiesSystemSet))
+            .add_system(despawn_far_enemy_system.in_set(EnemiesSystemSet));
     }
 }

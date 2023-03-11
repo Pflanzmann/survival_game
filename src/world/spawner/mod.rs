@@ -1,7 +1,7 @@
-use bevy::prelude::{Plugin, SystemSet};
+use bevy::prelude::*;
 
 use crate::{App, AppState};
-use crate::util::stage_label_helper::in_update;
+use crate::scheduling::BaseSets;
 use crate::world::spawner::spawn_scheduler_system::spawn_scheduler_system;
 use crate::world::spawner::spawn_worker_system::spawn_worker_system;
 
@@ -10,15 +10,19 @@ mod spawn_worker_system;
 
 pub struct SpawnerPlugin;
 
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct SpawnerSystemSet;
+
 impl Plugin for SpawnerPlugin {
     fn build(&self, app: &mut App) {
+        app.configure_set(
+            SpawnerSystemSet
+                .in_base_set(BaseSets::Update)
+                .run_if(in_state(AppState::InGame))
+        );
+
         app
-            .add_system_set(
-                in_update(
-                    SystemSet::on_update(AppState::InGame)
-                        .with_system(spawn_scheduler_system)
-                        .with_system(spawn_worker_system)
-                )
-            );
+            .add_system(spawn_scheduler_system.in_set(SpawnerSystemSet))
+            .add_system(spawn_worker_system.in_set(SpawnerSystemSet));
     }
 }

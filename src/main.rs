@@ -2,8 +2,7 @@ extern crate core;
 
 use bevy::app::App;
 use bevy::DefaultPlugins;
-use bevy::ecs::schedule::StageLabel;
-use bevy::prelude::{Msaa, SystemStage};
+use bevy::prelude::{States, SystemSet};
 use bevy_kira_audio::AudioPlugin;
 
 use crate::animation::AnimationPlugin;
@@ -14,9 +13,8 @@ use crate::collision::CollisionPlugin;
 use crate::input::InputPlugin;
 use crate::models::events::EventsPlugin;
 use crate::models::resources::ResourcePlugin;
-use crate::models::resources::state_resources::AppStateTrigger;
 use crate::models::sprite_layer::SpriteLayer;
-use crate::navigation::NavigationPlugin;
+use crate::scheduling::SchedulingPlugin;
 use crate::ui::UiPlugin;
 use crate::units::UnitPlugin;
 use crate::util::debug::DebugPlugin;
@@ -29,14 +27,14 @@ mod models;
 mod assets_handling;
 mod util;
 mod ui;
-mod navigation;
+mod scheduling;
 mod audio;
 mod animation;
 mod world;
 
 const SPRITE_ROW_LENGTH: usize = 4;
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash, StageLabel)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, SystemSet)]
 pub enum SetupStages {
     ConfigSetup,
     AssetSetup,
@@ -45,8 +43,9 @@ pub enum SetupStages {
     StateStage,
 }
 
-#[derive(Debug, Clone, Eq, PartialEq, Hash)]
+#[derive(States, Debug, Clone, Eq, PartialEq, Hash, Default)]
 pub enum AppState {
+    #[default]
     Pre,
     MainMenu,
     Loading,
@@ -57,45 +56,26 @@ pub enum AppState {
     GameWon,
 }
 
-#[derive(Debug)]
-pub enum ToAppState {
-    ToPre,
-    ToMainMenu,
-    ToLoading,
-    ToInGame,
-    ToGameOver,
-    ToPaused,
-    ToShop,
-    ToGameWon,
-    None,
-}
-
-impl Default for ToAppState {
-    fn default() -> Self { ToAppState::None }
-}
-
-#[derive(Debug, Clone, Eq, PartialEq, Hash)]
+#[derive(States, Debug, Clone, Eq, PartialEq, Hash, Default)]
 pub enum ConsoleState {
-    Shown,
+    #[default]
     Hidden,
+    Shown,
 }
 
 fn main() {
     App::new()
-        .add_startup_stage(SetupStages::ConfigSetup, SystemStage::parallel())
-        .add_startup_stage(SetupStages::AssetSetup, SystemStage::parallel())
-
-        .insert_resource(Msaa { samples: 1 })
-
+        // .add_startup_stage(SetupStages::ConfigSetup, SystemSet::parallel())
+        // .add_startup_stage(SetupStages::AssetSetup, SystemSet::parallel())
         .add_plugins(DefaultPlugins)
 
-        .add_state(AppState::Pre)
-        .add_state(ConsoleState::Hidden)
+        .add_state::<AppState>()
+        .add_state::<ConsoleState>()
 
         .add_plugin(UiPlugin)
         .add_plugin(CustomAudioPlugin)
         .add_plugin(AnimationPlugin)
-        .add_plugin(NavigationPlugin)
+        .add_plugin(SchedulingPlugin)
         .add_plugin(EventsPlugin)
         .add_plugin(InputPlugin)
         .add_plugin(UnitPlugin)

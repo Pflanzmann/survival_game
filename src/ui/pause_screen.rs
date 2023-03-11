@@ -1,4 +1,4 @@
-use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, HorizontalAlign, JustifyContent, NodeBundle, PositionType, Query, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiRect, Val, VerticalAlign, With};
+use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, DespawnRecursiveExt, Entity, FlexDirection, JustifyContent, NodeBundle, PositionType, Query, Res, Size, Style, Text, TextBundle, TextStyle, UiRect, Val, With};
 
 use crate::models::ui::pause::PauseMenuComp;
 

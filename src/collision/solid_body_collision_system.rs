@@ -10,7 +10,7 @@ pub fn solid_body_collision_system(
     quad_tree_holder: Res<SolidBodyQuadTree>,
     mut solid_body_unit_query: Query<(Entity, &mut Transform, &SolidBodyCollider, &ColliderWeight)>,
 ) {
-    solid_body_unit_query.par_for_each_mut(10, |(entity, mut transform, solid_body_collider, collision_weight)| {
+    solid_body_unit_query.par_iter_mut().for_each_mut(|(entity, mut transform, solid_body_collider, collision_weight)| {
         let size = match solid_body_collider.collider_type {
             Circle(radius) => Vec2::new(radius, radius),
             Rectangle(size) => size,

@@ -1,7 +1,7 @@
-use bevy::prelude::{App, Plugin, SystemSet};
+use bevy::prelude::*;
 
 use crate::AppState;
-use crate::util::stage_label_helper::in_update;
+use crate::scheduling::BaseSets;
 use crate::world::background::BackgroundPlugin;
 use crate::world::drops::DropsPlugin;
 use crate::world::game_time_system::game_time_system;
@@ -16,19 +16,23 @@ mod goal;
 
 pub struct WorldPlugin;
 
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct WorldSystemSet;
+
 impl Plugin for WorldPlugin {
     fn build(&self, app: &mut App) {
+        app.configure_set(
+            WorldSystemSet
+                .in_base_set(BaseSets::Update)
+                .run_if(in_state(AppState::InGame))
+        );
+
         app
             .add_plugin(DropsPlugin)
             .add_plugin(BackgroundPlugin)
             .add_plugin(SpawnerPlugin)
-            .add_plugin(GoalPlugin)
+            .add_plugin(GoalPlugin);
 
-            .add_system_set(
-                in_update(
-                    SystemSet::on_update(AppState::InGame)
-                        .with_system(game_time_system)
-                )
-            );
+        app.add_system(game_time_system.in_set(WorldSystemSet));
     }
 }

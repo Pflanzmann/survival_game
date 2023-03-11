@@ -1,7 +1,7 @@
 use std::cmp::min;
 
-use bevy::prelude::{AlignContent, AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, FlexWrap, HorizontalAlign, ImageBundle, Interaction, JustifyContent, Name, NodeBundle, PositionType, Query, Res, Size, Style, Text, TextAlignment, TextBundle, TextStyle, UiRect, Val, VerticalAlign, With};
-use bevy::ui::{BackgroundColor, FocusPolicy};
+use bevy::prelude::{AlignContent, AlignItems, AssetServer, BuildChildren, ButtonBundle, Changed, Color, Commands, DespawnRecursiveExt, Entity, EventWriter, FlexDirection, FlexWrap, ImageBundle, Interaction, JustifyContent, Name, NodeBundle, PositionType, Query, Res, Size, Style, Text, TextBundle, TextStyle, UiRect, Val, With};
+use bevy::ui::FocusPolicy;
 use rand::Rng;
 
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
@@ -136,7 +136,7 @@ pub fn spawn_shop_menu_system(
                 flex_direction: FlexDirection::Column,
                 ..Default::default()
             },
-         //   background_color: asset_loader.load("sprites/ui/ítem_background.png").into(),
+            //   background_color: asset_loader.load("sprites/ui/ítem_background.png").into(),
             ..Default::default()
         })
         .with_children(|parent| {
@@ -208,7 +208,7 @@ pub fn spawn_shop_menu_system(
                             align_content: AlignContent::Center,
                             ..Default::default()
                         },
-                      //  background_color: asset_loader.load("sprites/ui/ítem_background.png").into(),
+                        //  background_color: asset_loader.load("sprites/ui/ítem_background.png").into(),
                         ..Default::default()
                     })
                         .insert(Name::new("Tooltip Window"))
