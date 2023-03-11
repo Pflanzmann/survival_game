@@ -1,5 +1,5 @@
 use bevy::app::Plugin;
-use bevy::prelude::{App, SystemSet};
+use bevy::prelude::*;
 
 use helper::apply_affect_system::apply_affect_system;
 use helper::apply_player_mod_to_target_system::apply_player_mod_to_target_system;
@@ -8,7 +8,6 @@ use helper::remove_affect_system::remove_affect_system;
 use helper::remove_player_mod_from_target_system::remove_player_mod_from_target_system;
 use helper::remove_projectile_mod_from_targets_gun_system::remove_projectile_mod_from_targets_gun_system;
 
-use crate::AppState;
 use crate::models::events::apply_mod_to_target_event::ApplyModToTargetEvent;
 use crate::models::events::remove_mod_from_target_event::RemoveModFromTargetEvent;
 use crate::models::modifications::acid_puddle::{AcidPuddle, AcidPuddleOwner};
@@ -47,6 +46,7 @@ use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_attributes::unit_size::UnitSize;
+use crate::scheduling::BaseSets;
 use crate::units::modifications::apply_acid_puddle_system::apply_acid_puddle_system;
 use crate::units::modifications::apply_death_ball_system::apply_death_ball_system;
 use crate::units::modifications::apply_psy_rock_system::{apply_psy_rock_system, renew_mods_for_psy_rock_system};
@@ -61,11 +61,8 @@ use crate::units::modifications::helper::despawn_companion_from_mod_system::desp
 use crate::units::modifications::helper::mod_list_deregister_system::mod_list_deregister_system;
 use crate::units::modifications::helper::mod_list_register_system::mod_list_register_system;
 use crate::units::modifications::helper::remove_projectile_affect_system::remove_projectile_affect_system;
-use crate::units::modifications::magnet_system::magnet_system;
 use crate::units::modifications::projectile_modifications::ProjectileModificationsPlugin;
 use crate::units::modifications::statuse::StatusPlugin;
-use crate::util::run_criteria::on_event::on_event;
-use crate::util::stage_label_helper::in_post_update;
 
 mod apply_turret_system;
 mod apply_slime_system;
@@ -78,7 +75,6 @@ mod effect;
 mod projectile_modifications;
 mod apply_acid_puddle_system;
 mod statuse;
-mod magnet_system;
 
 /// All the apply systems have to get registered here.
 ///
@@ -91,131 +87,118 @@ mod magnet_system;
 /// Everything run in this set is related to removing a mod from a target.
 pub struct UnitModificationsPlugin;
 
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct ApplyUnitModificationsSystemSet;
+
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct RemoveUnitModificationsSystemSet;
+
 impl Plugin for UnitModificationsPlugin {
     fn build(&self, app: &mut App) {
+        app.configure_set(
+            ApplyUnitModificationsSystemSet
+                .in_base_set(BaseSets::PostUpdate)
+                .run_if(on_event::<ApplyModToTargetEvent>())
+        );
+
+        app.configure_set(
+            RemoveUnitModificationsSystemSet
+                .in_base_set(BaseSets::PostUpdate)
+                .run_if(on_event::<RemoveModFromTargetEvent>())
+        );
+
         app
             .add_plugin(ProjectileModificationsPlugin)
             .add_plugin(StatusPlugin)
 
-            .add_system_set(
-                in_post_update(
-                    SystemSet::on_update(AppState::InGame)
+            .add_system(mod_list_register_system.in_set(ApplyUnitModificationsSystemSet))
 
-                        .with_system(magnet_system)
-                )
-            )
+            .add_system(apply_affect_system::<MoveSpeed, AffectMoveSpeed>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_affect_system::<Damage, AffectDamage>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_affect_system::<Health, AffectHealth>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_affect_system::<Reload, AffectReload>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_affect_system::<UnitSize, AffectUnitSize>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_affect_system::<TravelRange, AffectTravelRange>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_affect_system::<HitLimit, AffectHitLimit>.in_set(ApplyUnitModificationsSystemSet))
 
-            .add_system_set(
-                in_post_update(
-                    SystemSet::new()
-                        .with_run_criteria(on_event::<ApplyModToTargetEvent>)
+            .add_system(apply_projectile_affect_system::<MoveSpeed, AffectProjectileMoveSpeed>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_projectile_affect_system::<Damage, AffectProjectileDamage>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_projectile_affect_system::<TravelRange, AffectProjectileTravelRange>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_projectile_affect_system::<HitLimit, AffectProjectileHitLimit>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_projectile_affect_system::<UnitSize, AffectProjectileUnitSize>.in_set(ApplyUnitModificationsSystemSet))
 
-                        .with_system(mod_list_register_system)
+            .add_system(apply_effect_add_health_system.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_effect_damage_health_system.in_set(ApplyUnitModificationsSystemSet))
 
-                        .with_system(apply_affect_system::<MoveSpeed, AffectMoveSpeed>)
-                        .with_system(apply_affect_system::<Damage, AffectDamage>)
-                        .with_system(apply_affect_system::<Health, AffectHealth>)
-                        .with_system(apply_affect_system::<Reload, AffectReload>)
-                        .with_system(apply_affect_system::<UnitSize, AffectUnitSize>)
-                        .with_system(apply_affect_system::<TravelRange, AffectTravelRange>)
-                        .with_system(apply_affect_system::<HitLimit, AffectHitLimit>)
+            .add_system(apply_projectile_mod_to_targets_gun_system::<CurveShot>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_projectile_mod_to_targets_gun_system::<GrowShot>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_projectile_mod_to_targets_gun_system::<SplitShot>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_projectile_mod_to_targets_gun_system::<GravityShot>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_projectile_mod_to_targets_gun_system::<KnockBackShot>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_projectile_mod_to_targets_gun_system::<ExplosionShot>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_projectile_mod_to_targets_gun_system::<Lightning>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_projectile_mod_to_targets_gun_system::<BurningShot>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_projectile_mod_to_targets_gun_system::<AcidPuddle>.in_set(ApplyUnitModificationsSystemSet))
 
-                        .with_system(apply_projectile_affect_system::<MoveSpeed, AffectProjectileMoveSpeed>)
-                        .with_system(apply_projectile_affect_system::<Damage, AffectProjectileDamage>)
-                        .with_system(apply_projectile_affect_system::<TravelRange, AffectProjectileTravelRange>)
-                        .with_system(apply_projectile_affect_system::<HitLimit, AffectProjectileHitLimit>)
-                        .with_system(apply_projectile_affect_system::<UnitSize, AffectProjectileUnitSize>)
+            .add_system(apply_player_mod_to_target_system::<Sprinting>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_player_mod_to_target_system::<Turret>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_turret_system.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_player_mod_to_target_system::<Slime>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_slime_system.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_player_mod_to_target_system::<DeathBall>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_death_ball_system.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_player_mod_to_target_system::<PsyRock>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_psy_rock_system.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(renew_mods_for_psy_rock_system.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_player_mod_to_target_system::<Radiation>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_radiation_system.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_player_mod_to_target_system::<Shield>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_shield_system.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_player_mod_to_target_system::<Magnet>.in_set(ApplyUnitModificationsSystemSet))
+            .add_system(apply_acid_puddle_system.in_set(ApplyUnitModificationsSystemSet));
 
-                        .with_system(apply_effect_add_health_system)
-                        .with_system(apply_effect_damage_health_system)
+        app
+            .add_system(mod_list_deregister_system.in_set(RemoveUnitModificationsSystemSet))
 
-                        .with_system(apply_projectile_mod_to_targets_gun_system::<CurveShot>)
-                        .with_system(apply_projectile_mod_to_targets_gun_system::<GrowShot>)
-                        .with_system(apply_projectile_mod_to_targets_gun_system::<SplitShot>)
-                        .with_system(apply_projectile_mod_to_targets_gun_system::<GravityShot>)
-                        .with_system(apply_projectile_mod_to_targets_gun_system::<KnockBackShot>)
-                        .with_system(apply_projectile_mod_to_targets_gun_system::<ExplosionShot>)
-                        .with_system(apply_projectile_mod_to_targets_gun_system::<Lightning>)
-                        .with_system(apply_projectile_mod_to_targets_gun_system::<BurningShot>)
-                        .with_system(apply_projectile_mod_to_targets_gun_system::<AcidPuddle>)
-                        .with_system(apply_acid_puddle_system)
+            .add_system(remove_affect_system::<MoveSpeed, AffectMoveSpeed>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_affect_system::<Damage, AffectDamage>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_affect_system::<Health, AffectHealth>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_affect_system::<Reload, AffectReload>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_affect_system::<UnitSize, AffectUnitSize>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_affect_system::<TravelRange, AffectTravelRange>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_affect_system::<HitLimit, AffectHitLimit>.in_set(RemoveUnitModificationsSystemSet))
 
+            .add_system(remove_projectile_affect_system::<MoveSpeed, AffectProjectileMoveSpeed>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_projectile_affect_system::<Damage, AffectProjectileDamage>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_projectile_affect_system::<TravelRange, AffectProjectileTravelRange>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_projectile_affect_system::<HitLimit, AffectProjectileHitLimit>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_projectile_affect_system::<UnitSize, AffectProjectileUnitSize>.in_set(RemoveUnitModificationsSystemSet))
 
-                        .with_system(apply_player_mod_to_target_system::<Sprinting>)
-                        .with_system(apply_player_mod_to_target_system::<Turret>)
-                        .with_system(apply_turret_system)
-                        .with_system(apply_player_mod_to_target_system::<Slime>)
-                        .with_system(apply_slime_system)
-                        .with_system(apply_player_mod_to_target_system::<DeathBall>)
-                        .with_system(apply_death_ball_system)
-                        .with_system(apply_player_mod_to_target_system::<PsyRock>)
-                        .with_system(apply_psy_rock_system)
-                        .with_system(renew_mods_for_psy_rock_system)
-                        .with_system(apply_player_mod_to_target_system::<Radiation>)
-                        .with_system(apply_radiation_system)
-                        .with_system(apply_player_mod_to_target_system::<Shield>)
-                        .with_system(apply_shield_system)
-                        .with_system(apply_player_mod_to_target_system::<Magnet>)
-                )
-            )
+            .add_system(remove_projectile_mod_from_targets_gun_system::<CurveShot>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_projectile_mod_from_targets_gun_system::<GrowShot>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_projectile_mod_from_targets_gun_system::<SplitShot>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_projectile_mod_from_targets_gun_system::<GravityShot>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_projectile_mod_from_targets_gun_system::<KnockBackShot>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_projectile_mod_from_targets_gun_system::<ExplosionShot>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_projectile_mod_from_targets_gun_system::<Lightning>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_projectile_mod_from_targets_gun_system::<AcidPuddle>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_projectile_mod_from_targets_gun_system::<BurningShot>.in_set(RemoveUnitModificationsSystemSet))
 
-            .add_system_set(
-                in_post_update(
-                    SystemSet::new()
-                        .with_run_criteria(on_event::<RemoveModFromTargetEvent>)
-
-                        .with_system(mod_list_deregister_system)
-
-                        .with_system(remove_affect_system::<MoveSpeed, AffectMoveSpeed>)
-                        .with_system(remove_affect_system::<Damage, AffectDamage>)
-                        .with_system(remove_affect_system::<Health, AffectHealth>)
-                        .with_system(remove_affect_system::<Reload, AffectReload>)
-                        .with_system(remove_affect_system::<UnitSize, AffectUnitSize>)
-                        .with_system(remove_affect_system::<TravelRange, AffectTravelRange>)
-                        .with_system(remove_affect_system::<HitLimit, AffectHitLimit>)
-
-                        .with_system(remove_projectile_affect_system::<MoveSpeed, AffectProjectileMoveSpeed>)
-                        .with_system(remove_projectile_affect_system::<Damage, AffectProjectileDamage>)
-                        .with_system(remove_projectile_affect_system::<TravelRange, AffectProjectileTravelRange>)
-                        .with_system(remove_projectile_affect_system::<HitLimit, AffectProjectileHitLimit>)
-                        .with_system(remove_projectile_affect_system::<UnitSize, AffectProjectileUnitSize>)
-
-                        .with_system(remove_projectile_mod_from_targets_gun_system::<CurveShot>)
-                        .with_system(remove_projectile_mod_from_targets_gun_system::<GrowShot>)
-                        .with_system(remove_projectile_mod_from_targets_gun_system::<SplitShot>)
-                        .with_system(remove_projectile_mod_from_targets_gun_system::<GravityShot>)
-                        .with_system(remove_projectile_mod_from_targets_gun_system::<KnockBackShot>)
-                        .with_system(remove_projectile_mod_from_targets_gun_system::<ExplosionShot>)
-                        .with_system(remove_projectile_mod_from_targets_gun_system::<Lightning>)
-                        .with_system(remove_projectile_mod_from_targets_gun_system::<AcidPuddle>)
-                        .with_system(remove_projectile_mod_from_targets_gun_system::<BurningShot>)
-
-                        .with_system(remove_player_mod_from_target_system::<Sprinting>)
-
-                        .with_system(remove_player_mod_from_target_system::<Turret>)
-                        .with_system(despawn_companion_from_mod_system::<Turret, TurretUnit>)
-
-                        .with_system(remove_player_mod_from_target_system::<Slime>)
-                        .with_system(despawn_companion_from_mod_system::<Slime, SlimeUnit>)
-
-                        .with_system(remove_player_mod_from_target_system::<DeathBall>)
-                        .with_system(despawn_companion_from_mod_system::<DeathBall, DeathBallUnit>)
-
-                        .with_system(remove_player_mod_from_target_system::<PsyRock>)
-                        .with_system(despawn_companion_from_mod_system::<PsyRock, PsyRockUnit>)
-
-                        .with_system(remove_player_mod_from_target_system::<Radiation>)
-                        .with_system(despawn_companion_from_mod_system::<Radiation, RadiationUnit>)
-
-                        .with_system(remove_player_mod_from_target_system::<Shield>)
-                        .with_system(despawn_companion_from_mod_system::<Shield, ShieldUnit>)
-
-                        .with_system(despawn_companion_from_mod_system::<AcidPuddle, AcidPuddleOwner>)
-
-                        .with_system(remove_player_mod_from_target_system::<Magnet>)
-                )
-            )
-        ;
+            .add_system(remove_player_mod_from_target_system::<Sprinting>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_player_mod_from_target_system::<Turret>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(despawn_companion_from_mod_system::<Turret, TurretUnit>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_player_mod_from_target_system::<Slime>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(despawn_companion_from_mod_system::<Slime, SlimeUnit>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_player_mod_from_target_system::<DeathBall>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(despawn_companion_from_mod_system::<DeathBall, DeathBallUnit>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_player_mod_from_target_system::<PsyRock>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(despawn_companion_from_mod_system::<PsyRock, PsyRockUnit>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_player_mod_from_target_system::<Radiation>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(despawn_companion_from_mod_system::<Radiation, RadiationUnit>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_player_mod_from_target_system::<Shield>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(despawn_companion_from_mod_system::<Shield, ShieldUnit>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(despawn_companion_from_mod_system::<AcidPuddle, AcidPuddleOwner>.in_set(RemoveUnitModificationsSystemSet))
+            .add_system(remove_player_mod_from_target_system::<Magnet>.in_set(RemoveUnitModificationsSystemSet));
     }
 }
 

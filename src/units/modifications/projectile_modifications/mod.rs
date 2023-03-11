@@ -1,4 +1,4 @@
-use bevy::prelude::{Plugin, SystemSet};
+use bevy::prelude::{in_state, IntoSystemConfig, IntoSystemSetConfig, on_event, Plugin, SystemSet};
 
 use acid_puddle_system::acid_puddle_system;
 use helper::assign_attribute_to_projectile_system::assign_attribute_to_projectile_system;
@@ -22,6 +22,7 @@ use crate::models::unit_attributes::hit_limit::HitLimit;
 use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::travel_range::TravelRange;
 use crate::models::unit_attributes::unit_size::UnitSize;
+use crate::scheduling::BaseSets;
 use crate::units::modifications::projectile_modifications::burning_shot_system::burning_shot_system;
 use crate::units::modifications::projectile_modifications::curve_shot_system::curve_shot_system;
 use crate::units::modifications::projectile_modifications::explosion_shot_system::explosion_shot_system;
@@ -30,8 +31,6 @@ use crate::units::modifications::projectile_modifications::grow_shot_system::gro
 use crate::units::modifications::projectile_modifications::helper::enable_projectile_collision::enable_projectile_collision;
 use crate::units::modifications::projectile_modifications::lightning_system::lightning_system;
 use crate::units::modifications::projectile_modifications::split_shot_system::split_shot_system;
-use crate::util::run_criteria::on_event::on_event;
-use crate::util::stage_label_helper::in_post_update;
 
 mod curve_shot_system;
 mod grow_shot_system;
@@ -50,48 +49,54 @@ mod burning_shot_system;
 /// All system get only used in the [AppState::Ingame].
 pub struct ProjectileModificationsPlugin;
 
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct AssignProjectileModsToBulletSystemSet;
+
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct RunProjectileModsToBulletSystemSet;
+
 impl Plugin for ProjectileModificationsPlugin {
     fn build(&self, app: &mut App) {
+        app.configure_set(
+            AssignProjectileModsToBulletSystemSet
+                .in_base_set(BaseSets::PostUpdate)
+                .run_if(on_event::<ProjectileShotEvent>())
+        );
+
+        app.configure_set(
+            RunProjectileModsToBulletSystemSet
+                .in_base_set(BaseSets::PostUpdate)
+                .run_if(on_event::<ProjectileShotEvent>())
+                .run_if(in_state(AppState::InGame))
+        );
+
         app
-            .add_system_set(
-                in_post_update(
-                    SystemSet::new()
-                        .with_run_criteria(on_event::<ProjectileShotEvent>)
+            .add_system(enable_projectile_collision.in_set(AssignProjectileModsToBulletSystemSet))
+            .add_system(assign_attribute_to_projectile_system::<Damage>.in_set(AssignProjectileModsToBulletSystemSet))
+            .add_system(assign_attribute_to_projectile_system::<HitLimit>.in_set(AssignProjectileModsToBulletSystemSet))
+            .add_system(assign_attribute_to_projectile_system::<MoveSpeed>.in_set(AssignProjectileModsToBulletSystemSet))
+            .add_system(assign_attribute_to_projectile_system::<TravelRange>.in_set(AssignProjectileModsToBulletSystemSet))
+            .add_system(assign_attribute_to_projectile_system::<UnitSize>.in_set(AssignProjectileModsToBulletSystemSet))
 
-                        .with_system(enable_projectile_collision)
+            .add_system(assign_modification_to_projectile_system::<CurveShot>.in_set(AssignProjectileModsToBulletSystemSet))
+            .add_system(assign_modification_to_projectile_system::<GrowShot>.in_set(AssignProjectileModsToBulletSystemSet))
+            .add_system(assign_modification_to_projectile_system::<SplitShot>.in_set(AssignProjectileModsToBulletSystemSet))
+            .add_system(assign_modification_to_projectile_system::<GravityShot>.in_set(AssignProjectileModsToBulletSystemSet))
+            .add_system(assign_with_associate_component_to_projectile_system::<KnockBackShot, KnockBack>.in_set(AssignProjectileModsToBulletSystemSet))
+            .add_system(assign_modification_to_projectile_system::<ExplosionShot>.in_set(AssignProjectileModsToBulletSystemSet))
+            .add_system(assign_modification_to_projectile_system::<Lightning>.in_set(AssignProjectileModsToBulletSystemSet))
+            .add_system(assign_modification_to_projectile_system::<AcidPuddle>.in_set(AssignProjectileModsToBulletSystemSet))
+            .add_system(assign_modification_to_projectile_system::<AcidPuddleOwner>.in_set(AssignProjectileModsToBulletSystemSet))
+            .add_system(assign_modification_to_projectile_system::<BurningShot>.in_set(AssignProjectileModsToBulletSystemSet));
 
-                        .with_system(assign_attribute_to_projectile_system::<Damage>)
-                        .with_system(assign_attribute_to_projectile_system::<HitLimit>)
-                        .with_system(assign_attribute_to_projectile_system::<MoveSpeed>)
-                        .with_system(assign_attribute_to_projectile_system::<TravelRange>)
-                        .with_system(assign_attribute_to_projectile_system::<UnitSize>)
-
-                        .with_system(assign_modification_to_projectile_system::<CurveShot>)
-                        .with_system(assign_modification_to_projectile_system::<GrowShot>)
-                        .with_system(assign_modification_to_projectile_system::<SplitShot>)
-                        .with_system(assign_modification_to_projectile_system::<GravityShot>)
-                        .with_system(assign_with_associate_component_to_projectile_system::<KnockBackShot, KnockBack>)
-                        .with_system(assign_modification_to_projectile_system::<ExplosionShot>)
-                        .with_system(assign_modification_to_projectile_system::<Lightning>)
-                        .with_system(assign_modification_to_projectile_system::<AcidPuddle>)
-                        .with_system(assign_modification_to_projectile_system::<AcidPuddleOwner>)
-                        .with_system(assign_modification_to_projectile_system::<BurningShot>)
-                )
-            )
-
-            .add_system_set(
-                in_post_update(
-                    SystemSet::on_update(AppState::InGame)
-
-                        .with_system(curve_shot_system)
-                        .with_system(grow_shot_system)
-                        .with_system(split_shot_system)
-                        .with_system(gravity_shot_system)
-                        .with_system(explosion_shot_system)
-                        .with_system(lightning_system)
-                        .with_system(acid_puddle_system)
-                        .with_system(burning_shot_system)
-                )
-            );
+        app
+            .add_system(curve_shot_system.in_set(RunProjectileModsToBulletSystemSet))
+            .add_system(grow_shot_system.in_set(RunProjectileModsToBulletSystemSet))
+            .add_system(split_shot_system.in_set(RunProjectileModsToBulletSystemSet))
+            .add_system(gravity_shot_system.in_set(RunProjectileModsToBulletSystemSet))
+            .add_system(explosion_shot_system.in_set(RunProjectileModsToBulletSystemSet))
+            .add_system(lightning_system.in_set(RunProjectileModsToBulletSystemSet))
+            .add_system(acid_puddle_system.in_set(RunProjectileModsToBulletSystemSet))
+            .add_system(burning_shot_system.in_set(RunProjectileModsToBulletSystemSet));
     }
 }

@@ -1,7 +1,8 @@
-use bevy::prelude::{App, Plugin, SystemSet};
+use bevy::app::IntoSystemAppConfig;
+use bevy::prelude::*;
 
 use crate::AppState;
-use crate::util::stage_label_helper::in_update;
+use crate::scheduling::BaseSets;
 use crate::world::background::background_startup_system::background_startup_system;
 use crate::world::background::move_background_tiles_system::move_background_tiles_system;
 
@@ -14,21 +15,21 @@ mod move_background_tiles_system;
 ///
 /// [ move_background_tiles_system ] moves the background tiles when the player moves into
 /// a new "chunk"
-
 pub struct BackgroundPlugin;
+
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct BackgroundUpdateSystemSet;
 
 impl Plugin for BackgroundPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_system_set(
-                SystemSet::on_enter(AppState::MainMenu)
-                    .with_system(background_startup_system)
-            )
-            .add_system_set(
-                in_update(
-                    SystemSet::on_update(AppState::InGame)
-                        .with_system(move_background_tiles_system)
-                )
-            );
+        app.configure_set(
+            BackgroundUpdateSystemSet
+                .in_base_set(BaseSets::Update)
+                .run_if(in_state(AppState::InGame))
+        );
+
+        app.add_system(background_startup_system.in_schedule(OnEnter(AppState::MainMenu)));
+
+        app.add_system(move_background_tiles_system.in_set(BackgroundUpdateSystemSet));
     }
 }

@@ -1,7 +1,8 @@
-use bevy::prelude::{App, Plugin, SystemSet};
+use bevy::app::IntoSystemAppConfig;
+use bevy::prelude::*;
 
 use crate::AppState;
-use crate::util::stage_label_helper::{in_pre_update, in_update};
+use crate::scheduling::BaseSets;
 use crate::world::drops::coin_pickup_system::coin_pickup_system;
 use crate::world::drops::drop_chance_system::drop_chance_system;
 use crate::world::drops::enter_shop_system::enter_shop_system;
@@ -25,28 +26,45 @@ mod visited_shop_system;
 /// handle the event when an item is picked up and execute the responding action.
 pub struct DropsPlugin;
 
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct DropsEnterShopSystemSet;
+
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct DropsUpdateSystemSet;
+
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct DropsPreUpdateSystemSet;
+
 impl Plugin for DropsPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_system_set(
-                SystemSet::on_enter(AppState::MainMenu)
-                    .with_system(setup_shop_system)
-            )
+        app.configure_set(
+            DropsEnterShopSystemSet
+                .in_base_set(BaseSets::Update)
+                // .in_schedule(OnEnter(AppState::InGame))
+        );
 
-            .add_system_set(
-                in_update(
-                    SystemSet::on_update(AppState::InGame)
-                        .with_system(drop_chance_system)
-                        .with_system(visited_shop_system)
-                )
-            )
-            .add_system_set(
-                in_pre_update(
-                    SystemSet::new()
-                        .with_system(coin_pickup_system)
-                        .with_system(hot_dog_pickup_system)
-                        .with_system(enter_shop_system),
-                )
-            );
+        app.configure_set(
+            DropsUpdateSystemSet
+                .in_base_set(BaseSets::Update)
+                .run_if(in_state(AppState::Shop))
+        );
+
+        app.configure_set(
+            DropsPreUpdateSystemSet
+                .in_base_set(BaseSets::PreUpdate)
+                .run_if(in_state(AppState::InGame))
+        );
+
+        app.add_system(setup_shop_system.in_set(DropsEnterShopSystemSet).in_schedule(OnEnter(AppState::InGame)));
+
+        app
+            .add_system(drop_chance_system.in_set(DropsUpdateSystemSet))
+            .add_system(visited_shop_system.in_set(DropsUpdateSystemSet));
+
+
+        app
+            .add_system(coin_pickup_system.in_set(DropsPreUpdateSystemSet))
+            .add_system(hot_dog_pickup_system.in_set(DropsPreUpdateSystemSet))
+            .add_system(enter_shop_system.in_set(DropsPreUpdateSystemSet));
     }
 }

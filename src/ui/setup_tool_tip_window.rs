@@ -47,7 +47,7 @@ pub fn setup_tool_tip_window(
             align_content: AlignContent::Center,
             ..Default::default()
         },
-       // background_color: asset_loader.load("sprites/ui/ítem_background.png").into(),
+        // background_color: asset_loader.load("sprites/ui/ítem_background.png").into(),
         ..Default::default()
     })
         .insert(Name::new("Tooltip Window"))
@@ -98,21 +98,22 @@ pub fn populate_tooltip_window(
 }
 
 pub fn move_tool_tip_window(
-    window: Res<Windows>,
+    window_query: Query<&Window>,
     mut tooltip_window_query: Query<(&mut Style, &Node), With<TooltipWindow>>,
 ) {
-    for (mut style, node) in tooltip_window_query.iter_mut() {
-        let window = window.get_primary().unwrap();
-        let position = match window.cursor_position() {
-            Some(position) => position,
-            None => return,
-        };
+    for window in window_query.iter() {
+        for (mut style, node) in tooltip_window_query.iter_mut() {
+            let position = match window.cursor_position() {
+                Some(position) => position,
+                None => return,
+            };
 
-        style.position = UiRect {
-            left: Val::Px(position.x),
-            right: Val::Auto,
-            top: Val::Auto,
-            bottom: Val::Px(position.y - node.size().y),
+            style.position = UiRect {
+                left: Val::Px(position.x),
+                right: Val::Auto,
+                top: Val::Auto,
+                bottom: Val::Px(position.y - node.size().y),
+            }
         }
     }
 }

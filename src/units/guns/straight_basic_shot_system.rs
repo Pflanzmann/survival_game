@@ -10,7 +10,6 @@ use crate::models::audio::sound_handle_channel::SoundHandleChannel;
 use crate::models::behavior::rotate_behavior::UnitRotation;
 use crate::models::bundles::damage_bundle::DamageBundle;
 use crate::models::collision::collider_type::ColliderType;
-use crate::models::collision::enemy_hit_box_collider::EnemyHitBoxCollider;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
 use crate::models::events::projectile_shot_event::ProjectileShotEvent;
 use crate::models::gun::straight_basic_shot::StraightBasicShot;

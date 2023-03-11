@@ -10,10 +10,8 @@ use world::spawn_timer::SpawnIntervalTimer;
 
 use crate::models::resources::console_history::{ConsoleHistory, read_history_from_file};
 use crate::models::resources::shop_customer::ShopCustomer;
-use crate::models::resources::state_resources::AppStateTrigger;
 use crate::models::resources::world::game_time::GameTime;
 
-pub mod state_resources;
 pub mod console_history;
 pub mod shop_customer;
 pub mod world;
@@ -35,7 +33,6 @@ impl Plugin for ResourcePlugin {
             .init_resource::<GameTime>()
 
             .init_resource::<ShopCustomer>()
-            .init_resource::<AppStateTrigger>()
             .insert_resource::<ConsoleHistory>(read_history_from_file());
     }
 }

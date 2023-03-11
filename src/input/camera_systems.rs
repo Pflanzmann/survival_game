@@ -1,5 +1,4 @@
 use bevy::prelude::*;
-use bevy::render::camera::ScalingMode;
 
 use crate::models::main_camera::MainCamera;
 
@@ -12,13 +11,10 @@ pub fn setup_camera_system(
     camera_bundle.transform.translation.z = 400000000000000.0;
 
     camera_bundle.projection.scale = 5.0;
-    camera_bundle.projection.left = -1280.0;
-    camera_bundle.projection.right = 1280.0;
-    camera_bundle.projection.bottom = -688.5;
-    camera_bundle.projection.top = 688.5;
+    camera_bundle.projection.area = Rect::new(-1280.0, -688.5, 1280.0, 688.5);
     camera_bundle.projection.far = 10000000000000000000000000.0;
 
-    camera_bundle.projection.scaling_mode = ScalingMode::None;
+    // camera_bundle.projection.scaling_mode = ScalingMode::Fixed;
     camera_bundle.projection.scale = 3.0;
 
     commands.spawn(camera_bundle)
