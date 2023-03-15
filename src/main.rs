@@ -2,7 +2,7 @@ extern crate core;
 
 use bevy::app::App;
 use bevy::DefaultPlugins;
-use bevy::prelude::{States, SystemSet};
+use bevy::prelude::{States};
 use bevy_kira_audio::AudioPlugin;
 
 use crate::animation::AnimationPlugin;
@@ -34,15 +34,6 @@ mod world;
 
 const SPRITE_ROW_LENGTH: usize = 4;
 
-#[derive(Debug, Clone, PartialEq, Eq, Hash, SystemSet)]
-pub enum SetupStages {
-    ConfigSetup,
-    AssetSetup,
-    PlayerSetup,
-    AfterPlayerSetup,
-    StateStage,
-}
-
 #[derive(States, Debug, Clone, Eq, PartialEq, Hash, Default)]
 pub enum AppState {
     #[default]
@@ -65,8 +56,6 @@ pub enum ConsoleState {
 
 fn main() {
     App::new()
-        // .add_startup_stage(SetupStages::ConfigSetup, SystemSet::parallel())
-        // .add_startup_stage(SetupStages::AssetSetup, SystemSet::parallel())
         .add_plugins(DefaultPlugins)
 
         .add_state::<AppState>()
@@ -89,4 +78,3 @@ fn main() {
 
         .run()
 }
-

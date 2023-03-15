@@ -1,4 +1,4 @@
-use bevy::prelude::{App, Plugin, SystemSet};
+use bevy::prelude::*;
 
 use crate::assets_handling::preload_animation_system::AtlasHandles;
 use crate::assets_handling::preload_animation_system::preload_animation_system;
@@ -11,18 +11,17 @@ use crate::assets_handling::preload_projectile_system::{preload_projectile_syste
 use crate::assets_handling::preload_stage_spawn_system::{preload_stage_spawn_behvaior_system, StageSpawnBehaviorHandle};
 use crate::assets_handling::preload_texture_system::{preload_texture_system, TextureHandles};
 use crate::models::spawner::enemy_config_handle::EnemyConfigHandles;
-use crate::SetupStages;
 use crate::util::entity_builder::EntityBuilderPlugin;
 
-pub mod preload_texture_system;
+pub mod preload_animation_system;
+pub mod preload_audio_system;
 pub mod preload_enemy_system;
 pub mod preload_item_system;
+pub mod preload_mod_system;
 pub mod preload_player_system;
 pub mod preload_projectile_system;
-pub mod preload_mod_system;
-pub mod preload_audio_system;
-pub mod preload_animation_system;
 pub mod preload_stage_spawn_system;
+pub mod preload_texture_system;
 
 /// This plugin serves as a Preloader for all [ Assets ].
 ///
@@ -34,11 +33,21 @@ pub mod preload_stage_spawn_system;
 /// order to have them ready when the game starts
 pub struct AssetHandlingPlugin;
 
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct AssetStartupSystemSet;
+
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct AssetPreloadSystemSet;
+
 impl Plugin for AssetHandlingPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_plugin(EntityBuilderPlugin)
+        app.configure_set(
+            AssetStartupSystemSet
+                .in_base_set(StartupSet::PreStartup)
+            // .in_schedule(StartupSet::Startup)
+        );
 
+        app.add_plugin(EntityBuilderPlugin)
             .init_resource::<TextureHandles>()
             .init_resource::<EnemyConfigHandles>()
             .init_resource::<ItemConfigHandles>()
@@ -48,19 +57,17 @@ impl Plugin for AssetHandlingPlugin {
             .init_resource::<AtlasHandles>()
             .init_resource::<StageSpawnBehaviorHandle>();
 
-        // .add_startup_system_to_stage(SetupStages::AssetSetup, preload_texture_system)
+        app.add_system(preload_texture_system.in_set(AssetStartupSystemSet));
 
-        // .add_startup_system_set_to_stage(
-        //     SetupStages::ConfigSetup,
-        //     SystemSet::new()
-        //         .with_system(preload_enemy_system)
-        //         .with_system(preload_item_system)
-        //         .with_system(preload_player_system)
-        //         .with_system(preload_projectile_system)
-        //         .with_system(preload_mod_system)
-        //         .with_system(preload_audio_system)
-        //         .with_system(preload_animation_system)
-        //         .with_system(preload_stage_spawn_behvaior_system),
-        // );
+        // .add_startup_system_to_stage(SetupStages::AssetSetup, preload_texture_system)
+        app
+            .add_system(preload_enemy_system.in_set(AssetPreloadSystemSet))
+            .add_system(preload_item_system.in_set(AssetPreloadSystemSet))
+            .add_system(preload_player_system.in_set(AssetPreloadSystemSet))
+            .add_system(preload_projectile_system.in_set(AssetPreloadSystemSet))
+            .add_system(preload_mod_system.in_set(AssetPreloadSystemSet))
+            .add_system(preload_audio_system.in_set(AssetPreloadSystemSet))
+            .add_system(preload_animation_system.in_set(AssetPreloadSystemSet))
+            .add_system(preload_stage_spawn_behvaior_system.in_set(AssetPreloadSystemSet));
     }
 }
