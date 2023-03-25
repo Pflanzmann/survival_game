@@ -6,11 +6,6 @@
       "enemies": []
     },
     {
-      "duration": 1000.0,
-      "spawn_interval": 100.0,
-      "enemies": []
-    },
-    {
       "duration": 30.0,
       "spawn_interval": 1.0,
       "enemies": [
@@ -43,8 +38,8 @@
       ]
     },
     {
-      "duration": 0.0,
-      "spawn_interval": 0.0,
+      "duration": 5.0,
+      "spawn_interval": 4.0,
       "enemies": [
         {
           "enemy_index": 3,
