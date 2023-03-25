@@ -2,7 +2,7 @@ use serde::Deserialize;
 
 #[derive(Deserialize, Copy, Clone)]
 pub enum SpriteLayer {
-    BackGround,
+    Background,
     FloorLevel,
     LowGroundLevel,
     GroundLevel,
@@ -13,7 +13,7 @@ pub enum SpriteLayer {
 impl SpriteLayer {
     pub fn get_layer_z(&self) -> f32 {
         match *self {
-            SpriteLayer::BackGround => -900000000.0,
+            SpriteLayer::Background => -900000000.0,
             SpriteLayer::FloorLevel => -800000000.0,
             SpriteLayer::LowGroundLevel => -700000000.0,
             SpriteLayer::GroundLevel => -600000000.0,
