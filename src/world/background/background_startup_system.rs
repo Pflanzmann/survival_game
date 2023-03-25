@@ -25,7 +25,6 @@ pub fn background_startup_system(
 
     for x in -14..15 {
         for y in -14..15 {
-            // let sprite_color =
             let sprite_color = if x % 2 == 0 && y % 2 == 0 {
                 Color::rgb(0.9, 0.9, 0.9)
             } else {
