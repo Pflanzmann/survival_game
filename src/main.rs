@@ -2,7 +2,7 @@ extern crate core;
 
 use bevy::app::App;
 use bevy::DefaultPlugins;
-use bevy::prelude::{ResMut, State, States};
+use bevy::prelude::States;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
 
