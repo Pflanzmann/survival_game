@@ -5,7 +5,6 @@ use crate::models::main_camera::MainCamera;
 pub fn setup_camera_system(
     mut commands: Commands,
 ) {
-    println!("called");
     let mut camera_bundle = Camera2dBundle::default();
     camera_bundle.transform.translation.x = 0.0;
     camera_bundle.transform.translation.y = 0.0;

@@ -17,11 +17,12 @@ pub fn move_unit_system(
             direction.direction
         };
 
-        transform.translation.x += direction.x * move_speed.get_total_amount() * time.delta_seconds() * 60.0;
-        transform.translation.y += direction.y * move_speed.get_total_amount() * time.delta_seconds() * 60.0;
+        let distance = move_speed.get_total_amount() * time.delta_seconds() * 60.0;
+        transform.translation.x += direction.x * distance;
+        transform.translation.y += direction.y * distance;
 
         if let Some(mut travel_range) = travel_range {
-            travel_range.distance_traveled += move_speed.get_total_amount() * time.delta_seconds() * 60.0
+            travel_range.distance_traveled += distance
         };
     }
 }
