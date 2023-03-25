@@ -1,6 +1,4 @@
-use bevy::prelude::{*, App, Plugin, SystemSet};
-
-pub mod trigger_enter_main_system;
+use bevy::prelude::*;
 
 /// This plugin controls scheduling between different [ game stages ].
 /// These are used to control globally which systems are running at any given time.
@@ -43,22 +41,6 @@ impl Plugin for SchedulingPlugin {
             ).chain())
 
             .add_system(apply_system_buffers.in_base_set(BaseSets::Flush))
-
-            .insert_resource(FixedTime::new_from_secs(0.1))
-        //
-        // .add_system_set(
-        //     in_first(
-        //         SystemSet::new()
-        //             .with_system(execute_state_switch_system)
-        //     )
-        // )
-        //
-        // .add_system_set(
-        //     in_update(
-        //         SystemSet::on_update(AppState::Pre)
-        //             .with_system(trigger_enter_main_system)
-        //     )
-        // );
         ;
     }
 }

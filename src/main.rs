@@ -2,7 +2,8 @@ extern crate core;
 
 use bevy::app::App;
 use bevy::DefaultPlugins;
-use bevy::prelude::{States};
+use bevy::prelude::{ResMut, State, States};
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
 
 use crate::animation::AnimationPlugin;
@@ -37,7 +38,6 @@ const SPRITE_ROW_LENGTH: usize = 4;
 #[derive(States, Debug, Clone, Eq, PartialEq, Hash, Default)]
 pub enum AppState {
     #[default]
-    Pre,
     MainMenu,
     Loading,
     InGame,
@@ -60,6 +60,8 @@ fn main() {
 
         .add_state::<AppState>()
         .add_state::<ConsoleState>()
+
+        .add_plugin(WorldInspectorPlugin::new())
 
         .add_plugin(UiPlugin)
         .add_plugin(CustomAudioPlugin)

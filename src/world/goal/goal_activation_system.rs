@@ -1,4 +1,4 @@
-use bevy::prelude::{EventWriter, GlobalTransform, NextState, Query, Res, ResMut, Time, With};
+use bevy::prelude::{EventWriter, NextState, Query, Res, ResMut, Time, Transform, With};
 
 use crate::AppState;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
@@ -11,19 +11,17 @@ pub fn goal_activation_system(
     time: Res<Time>,
     mut level_finished_event: EventWriter<LevelFinishedEvent>,
     mut next_state: ResMut<NextState<AppState>>,
-    player_query: Query<(&GlobalTransform, &SolidBodyCollider), With<Player>>,
-    mut goal_query: Query<(&GlobalTransform, &HitBoxCollider, &mut GoalActivationProgress)>,
+    player_query: Query<(&Transform, &SolidBodyCollider), With<Player>>,
+    mut goal_query: Query<(&Transform, &HitBoxCollider, &mut GoalActivationProgress)>,
 ) {
     for (player_transform, player_collider) in player_query.iter() {
         for (goal_transform, goal_collider, mut goal_activation_progress) in goal_query.iter_mut() {
             if goal_collider.collider_type.is_colliding(
-                &goal_transform.translation().truncate(),
+                &goal_transform.translation.truncate(),
                 &player_collider.collider_type,
-                &player_transform.translation().truncate(),
+                &player_transform.translation.truncate(),
             ) {
                 goal_activation_progress.progress += time.delta_seconds();
-
-                println!("goal time: {}", goal_activation_progress.progress);
 
                 if goal_activation_progress.progress > 15.0 {
                     level_finished_event.send(LevelFinishedEvent);

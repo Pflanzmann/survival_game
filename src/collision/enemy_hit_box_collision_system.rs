@@ -1,4 +1,4 @@
-use bevy::prelude::{Entity, EventWriter, GlobalTransform, Query, Res, Vec2, With};
+use bevy::prelude::{Entity, EventWriter, Query, Res, Transform, Vec2, With};
 
 use crate::models::collision::collider_owner::ColliderOwner;
 use crate::models::collision::collider_type::ColliderType::{Circle, Rectangle};
@@ -11,7 +11,7 @@ use crate::util::quad_tree::QuadData;
 pub fn enemy_hit_box_collision_system(
     mut enemy_collision_event: EventWriter<EnemyCollisionEvent>,
     quad_tree: Res<HitBoxQuadTree>,
-    source_query: Query<(Entity, &GlobalTransform, &HitBoxCollider, Option<&ColliderOwner>), With<EnemyHitBoxCollider>>,
+    source_query: Query<(Entity, &Transform, &HitBoxCollider, Option<&ColliderOwner>), With<EnemyHitBoxCollider>>,
 ) {
     for (entity, transform, hit_box_collider, collision_owner) in source_query.iter() {
         let mut check_entity_list: Vec<QuadData<HitBoxData>> = Vec::new();
@@ -28,13 +28,13 @@ pub fn enemy_hit_box_collision_system(
 
         quad_tree.query_entities(
             &mut check_entity_list,
-            &transform.translation().truncate(),
+            &transform.translation.truncate(),
             &size,
         );
 
         for quad_data in check_entity_list.iter() {
             if hit_box_collider.collider_type.is_colliding(
-                &transform.translation().truncate(),
+                &transform.translation.truncate(),
                 &quad_data.data.collider_type,
                 &quad_data.position,
             ) {

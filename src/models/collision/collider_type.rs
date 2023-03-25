@@ -1,6 +1,6 @@
 use bevy::prelude::Vec2;
 
-#[derive(Copy, Clone)]
+#[derive(Copy, Clone, Debug)]
 pub enum ColliderType {
     Circle(f32),
     Rectangle(Vec2),

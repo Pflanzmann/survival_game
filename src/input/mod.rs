@@ -1,16 +1,17 @@
+use bevy::app::IntoSystemAppConfig;
 use bevy::prelude::{App, in_state, IntoSystemSetConfig, Plugin, SystemSet};
 use bevy::prelude::IntoSystemConfig;
 
 use crate::AppState;
-use crate::input::camera_systems::setup_camera_system;
 use crate::input::cmd::CmdCommandsPlugin;
 use crate::input::player_control_aim_system::player_control_aim_system;
 use crate::input::player_control_movement_system::player_control_movement_system;
+use crate::input::setup_camera_systems::setup_camera_system;
 use crate::input::toggle_pause_system::{StateTimer, toggle_pause_system};
 use crate::scheduling::BaseSets;
 
 mod player_control_movement_system;
-mod camera_systems;
+mod setup_camera_systems;
 mod player_control_aim_system;
 mod toggle_pause_system;
 mod cmd;
@@ -38,7 +39,7 @@ impl Plugin for InputPlugin {
 
         app.init_resource::<StateTimer>();
 
-        app.add_startup_system(setup_camera_system);
+        app.add_system(setup_camera_system.on_startup());
 
         app
             .add_system(player_control_movement_system.in_set(InputSystemSet))

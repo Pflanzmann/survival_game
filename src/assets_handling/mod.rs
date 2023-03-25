@@ -1,3 +1,4 @@
+use bevy::asset::AssetSet;
 use bevy::prelude::*;
 
 use crate::assets_handling::preload_animation_system::AtlasHandles;
@@ -33,20 +34,8 @@ pub mod preload_texture_system;
 /// order to have them ready when the game starts
 pub struct AssetHandlingPlugin;
 
-#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
-pub struct AssetStartupSystemSet;
-
-#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
-pub struct AssetPreloadSystemSet;
-
 impl Plugin for AssetHandlingPlugin {
     fn build(&self, app: &mut App) {
-        app.configure_set(
-            AssetStartupSystemSet
-                .in_base_set(StartupSet::PreStartup)
-            // .in_schedule(StartupSet::Startup)
-        );
-
         app.add_plugin(EntityBuilderPlugin)
             .init_resource::<TextureHandles>()
             .init_resource::<EnemyConfigHandles>()
@@ -57,17 +46,16 @@ impl Plugin for AssetHandlingPlugin {
             .init_resource::<AtlasHandles>()
             .init_resource::<StageSpawnBehaviorHandle>();
 
-        app.add_system(preload_texture_system.in_set(AssetStartupSystemSet));
+        app.add_system(preload_texture_system.on_startup());
 
-        // .add_startup_system_to_stage(SetupStages::AssetSetup, preload_texture_system)
         app
-            .add_system(preload_enemy_system.in_set(AssetPreloadSystemSet))
-            .add_system(preload_item_system.in_set(AssetPreloadSystemSet))
-            .add_system(preload_player_system.in_set(AssetPreloadSystemSet))
-            .add_system(preload_projectile_system.in_set(AssetPreloadSystemSet))
-            .add_system(preload_mod_system.in_set(AssetPreloadSystemSet))
-            .add_system(preload_audio_system.in_set(AssetPreloadSystemSet))
-            .add_system(preload_animation_system.in_set(AssetPreloadSystemSet))
-            .add_system(preload_stage_spawn_behvaior_system.in_set(AssetPreloadSystemSet));
+            .add_system(preload_enemy_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets))
+            .add_system(preload_item_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets))
+            .add_system(preload_player_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets))
+            .add_system(preload_projectile_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets))
+            .add_system(preload_mod_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets))
+            .add_system(preload_audio_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets))
+            .add_system(preload_animation_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets))
+            .add_system(preload_stage_spawn_behvaior_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets));
     }
 }

@@ -53,7 +53,7 @@ impl Plugin for PlayerPlugin {
                 setup_player_system,
                 apply_system_buffers,
                 setup_player_health_bar_system
-            ).chain().in_schedule(OnEnter(AppState::MainMenu)));
+            ).chain().in_schedule(OnExit(AppState::MainMenu)));
 
 
         app.add_system(player_hit_system.in_set(PlayerUpdateSystemSet));

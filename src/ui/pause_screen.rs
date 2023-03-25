@@ -2,7 +2,7 @@ use bevy::prelude::{AlignItems, AssetServer, BuildChildren, Color, Commands, Des
 
 use crate::models::ui::pause::PauseMenuComp;
 
-pub fn enter_pause_system(
+pub fn spawn_pause_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
 ) {
@@ -44,7 +44,7 @@ pub fn enter_pause_system(
         .insert(PauseMenuComp);
 }
 
-pub fn exit_pause_system(
+pub fn close_pause_system(
     mut commands: Commands,
     ui_query: Query<Entity, With<PauseMenuComp>>,
 ) {

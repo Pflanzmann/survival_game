@@ -1,4 +1,4 @@
-use bevy::prelude::{AssetServer, BuildChildren, Color, Commands, Name, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3};
+use bevy::prelude::{AssetServer, BuildChildren, Color, Commands, GlobalTransform, Name, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3};
 
 use crate::models::collision::collider_type::ColliderType;
 use crate::models::collision::hit_box_collider::HitBoxCollider;
@@ -12,10 +12,11 @@ pub fn setup_goal_system(
     asset_server: Res<AssetServer>,
 ) {
     let position = Vec3::new(-2000.0, 0.0, SpriteLayer::LowGroundLevel.get_layer_z());
-
+    let transform = Transform::from_translation(position);
     commands.spawn(
         SpriteBundle {
             transform: Transform::from_translation(position),
+            global_transform: GlobalTransform::from(transform),
             texture: asset_server.load("sprites/mailbox.png"),
             sprite: Sprite {
                 custom_size: Some(Vec2::new(128.0, 206.0)),
