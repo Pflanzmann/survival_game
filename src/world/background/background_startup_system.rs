@@ -1,4 +1,4 @@
-use bevy::prelude::{BuildChildren, Commands, GlobalTransform, Name, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2};
+use bevy::prelude::{BuildChildren, Commands, ComputedVisibility, GlobalTransform, Name, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2};
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::resources::world::background_tiles_resource::{BackgroundTilesResource, TileData};
@@ -9,7 +9,11 @@ pub fn background_startup_system(
     mut background_tiles: ResMut<BackgroundTilesResource>,
     texture_handles: Res<TextureHandles>,
 ) {
-    let background = commands.spawn_empty().insert(Name::new("Background Tiles")).id();
+    let background = commands.spawn_empty()
+        .insert(Name::new("Background Tiles"))
+        .insert(ComputedVisibility::default())
+        .insert(GlobalTransform::default())
+        .id();
 
     for x in 0..50 {
         for y in 0..50 {

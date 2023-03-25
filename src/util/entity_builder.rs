@@ -2,7 +2,7 @@ use std::any::type_name;
 use std::collections::HashMap;
 
 use bevy::ecs::system::EntityCommands;
-use bevy::prelude::{AssetServer, Commands, Component, Entity, Plugin, Res, Resource};
+use bevy::prelude::{AssetServer, Commands, Component, Entity, Name, Plugin, Res, Resource};
 use serde::de::DeserializeOwned;
 use serde_json::Value;
 
@@ -167,8 +167,17 @@ impl EntityBuilder {
         match component_data_map.remove("SpritePathWrapper") {
             None => {}
             Some(object_data) => {
-                let wrapper: SpritePathWrapper = serde_json::from_value(object_data.clone()).expect("Not well formatted string: {:#?}");
+                let wrapper: SpritePathWrapper = serde_json::from_value(object_data).expect("Not well formatted string: {:#?}");
                 entity.insert(SpriteHandle { handle: asset_server.load(&wrapper.path) });
+            }
+        };
+
+        match component_data_map.remove("ModName") {
+            None => {}
+            Some(object_data) => {
+                let mod_name: ModName = serde_json::from_value(object_data).expect("Not well formatted string: {:#?}");
+                entity.insert(Name::new(mod_name.mod_name.clone()));
+                entity.insert(mod_name);
             }
         };
 

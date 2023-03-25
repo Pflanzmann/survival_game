@@ -4,7 +4,7 @@ use bevy::prelude::{AlignItems, AssetServer, BuildChildren, ButtonBundle, Change
 use crate::AppState;
 use crate::models::ui::game_over::NavigationButton;
 
-pub fn spawn_menu_system(
+pub fn spawn_game_over_screen_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
 ) {

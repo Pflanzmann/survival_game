@@ -30,7 +30,7 @@ impl Plugin for GoalPlugin {
                 .run_if(in_state(AppState::InGame))
         );
 
-        app.add_system(setup_goal_system.in_set(GoalSetupSystemSet).in_schedule(OnEnter(AppState::InGame)));
+        app.add_system(setup_goal_system.in_set(GoalSetupSystemSet).in_schedule(OnEnter(AppState::MainMenu)));
 
         app.add_system(goal_activation_system.in_set(GoalUpdateSystemSet));
     }

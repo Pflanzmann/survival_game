@@ -5,16 +5,16 @@ use crate::models::behavior::turn_to_target_behavior::TurnToTargetBehavior;
 
 pub fn turn_to_target_behavior_system(
     time: Res<Time>,
-    mut units_query: Query<(&Transform, &mut AimDirection, &TurnToTargetBehavior)>,
-    target_query: Query<&GlobalTransform>,
+    mut units_query: Query<(&GlobalTransform, &mut AimDirection, &TurnToTargetBehavior)>,
+    target_query: Query<&Transform>,
 ) {
     for (actor_transform, mut aim_direction, turn_to_target_behavior) in units_query.iter_mut() {
         let target_position = match target_query.get(turn_to_target_behavior.target) {
-            Ok(value) => value.translation().truncate(),
+            Ok(value) => value.translation.truncate(),
             Err(_) => continue
         };
 
-        let direction = (target_position - actor_transform.translation.truncate()).normalize_or_zero();
+        let direction = (target_position - actor_transform.translation().truncate()).normalize_or_zero();
         let aim_angle = aim_direction.direction.y.atan2(aim_direction.direction.x);
         let angle_between = aim_direction.direction.angle_between(direction);
 

@@ -1,4 +1,4 @@
-use bevy::prelude::{App, Plugin, Vec2};
+use bevy::prelude::{App, FixedTime, Plugin, Vec2};
 
 use collision::hit_box_quad_tree::HitBoxQuadTree;
 use collision::item_collision_quad_tree::ItemCollisionQuadTree;
@@ -33,7 +33,10 @@ impl Plugin for ResourcePlugin {
             .init_resource::<GameTime>()
 
             .init_resource::<ShopCustomer>()
-            .insert_resource::<ConsoleHistory>(read_history_from_file());
+            .insert_resource::<ConsoleHistory>(read_history_from_file())
+
+            .insert_resource(FixedTime::new_from_secs(0.1))
+        ;
     }
 }
 

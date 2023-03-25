@@ -9,7 +9,7 @@ use crate::models::player::Player;
 use crate::models::ui::hud::{ProjectileHud, CoinText};
 use crate::models::ui::tooltip_window::HoverTooltip;
 
-pub fn spawn_text_system(
+pub fn spawn_hud_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
 ) {
@@ -74,7 +74,7 @@ pub fn spawn_text_system(
         .insert(Name::new("ProjectileHud"));
 }
 
-pub fn update_text_system(
+pub fn update_gold_text_system(
     mut text_query: Query<&mut Text, With<CoinText>>,
     gold_storage_query: Query<&GoldStorage, (Changed<GoldStorage>, With<Player>)>,
 ) {
@@ -85,7 +85,7 @@ pub fn update_text_system(
     }
 }
 
-pub fn update_projectile_hud_system(
+pub fn update_mods_hud_system(
     mut commands: Commands,
     hud_query: Query<Entity, With<ProjectileHud>>,
     player_query: Query<&ModRegister, (With<Player>, Changed<ModRegister>)>,

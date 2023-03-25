@@ -55,7 +55,7 @@ impl Plugin for DropsPlugin {
                 .run_if(in_state(AppState::InGame))
         );
 
-        app.add_system(setup_shop_system.in_set(DropsEnterShopSystemSet).in_schedule(OnEnter(AppState::InGame)));
+        app.add_system(setup_shop_system.in_set(DropsEnterShopSystemSet).in_schedule(OnEnter(AppState::MainMenu)));
 
         app
             .add_system(drop_chance_system.in_set(DropsUpdateSystemSet))

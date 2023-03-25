@@ -22,7 +22,6 @@ pub fn toggle_pause_system(
     if input.pressed(KeyCode::Escape) {
         state_timer.0 = 0.0;
         match app_state.0 {
-            AppState::Pre => {}
             AppState::MainMenu => {}
             AppState::Loading => {}
             AppState::InGame => { next_app_state.set(AppState::Paused); }

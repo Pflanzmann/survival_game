@@ -25,6 +25,7 @@ pub fn spawn_worker_system(
     mut spawn_task_receiver: ResMut<SpawnTaskReceiver>,
     enemy_handles: Res<EnemyConfigHandles>,
 ) {
+    println!("dasdsads");
     for _ in 0..50 {
         let spawn_task = match spawn_task_receiver.consume_task() {
             None => break,
