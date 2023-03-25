@@ -25,14 +25,22 @@ mod cmd;
 pub struct InputPlugin;
 
 #[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
+pub struct InGameInputSystemSet;
+
+#[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
 pub struct InputSystemSet;
 
 impl Plugin for InputPlugin {
     fn build(&self, app: &mut App) {
         app.configure_set(
-            InputSystemSet
+            InGameInputSystemSet
                 .in_base_set(BaseSets::Update)
                 .run_if(in_state(AppState::InGame))
+        );
+
+        app.configure_set(
+            InputSystemSet
+                .in_base_set(BaseSets::Update)
         );
 
         app.add_plugin(CmdCommandsPlugin);
@@ -42,8 +50,9 @@ impl Plugin for InputPlugin {
         app.add_system(setup_camera_system.on_startup());
 
         app
-            .add_system(player_control_movement_system.in_set(InputSystemSet))
-            .add_system(player_control_aim_system.in_set(InputSystemSet))
-            .add_system(toggle_pause_system.in_set(InputSystemSet));
+            .add_system(player_control_movement_system.in_set(InGameInputSystemSet))
+            .add_system(player_control_aim_system.in_set(InGameInputSystemSet));
+
+        app.add_system(toggle_pause_system.in_set(InputSystemSet));
     }
 }
