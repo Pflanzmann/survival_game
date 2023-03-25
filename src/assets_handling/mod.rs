@@ -9,7 +9,7 @@ use crate::assets_handling::preload_item_system::{ItemConfigHandles, preload_ite
 use crate::assets_handling::preload_mod_system::preload_mod_system;
 use crate::assets_handling::preload_player_system::{PlayerConfigHandles, preload_player_system};
 use crate::assets_handling::preload_projectile_system::{preload_projectile_system, ProjectileConfigHandles};
-use crate::assets_handling::preload_stage_spawn_system::{preload_stage_spawn_behvaior_system, StageSpawnBehaviorHandle};
+use crate::assets_handling::preload_stage_spawn_system::{preload_stage_spawn_behavior_system, StageSpawnBehaviorHandle};
 use crate::assets_handling::preload_texture_system::{preload_texture_system, TextureHandles};
 use crate::models::spawner::enemy_config_handle::EnemyConfigHandles;
 use crate::util::entity_builder::EntityBuilderPlugin;
@@ -56,6 +56,6 @@ impl Plugin for AssetHandlingPlugin {
             .add_system(preload_mod_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets))
             .add_system(preload_audio_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets))
             .add_system(preload_animation_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets))
-            .add_system(preload_stage_spawn_behvaior_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets));
+            .add_system(preload_stage_spawn_behavior_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets));
     }
 }

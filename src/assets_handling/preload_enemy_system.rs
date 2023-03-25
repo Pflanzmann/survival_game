@@ -3,6 +3,7 @@ use std::fs;
 use bevy::prelude::{Assets, AssetServer, Res, ResMut, TextureAtlas};
 
 use crate::models::configurations::raw_configs::raw_enemy_config::RawEnemyConfig;
+use crate::models::spawner::enemy_config::EnemyConfig;
 use crate::models::spawner::enemy_config_handle::EnemyConfigHandles;
 use crate::util::read_file_to_string::read_file_to_string;
 
@@ -14,6 +15,8 @@ pub fn preload_enemy_system(
     let base_path = "configurations/enemies/";
     let paths = fs::read_dir(base_path).unwrap();
 
+    let mut enemy_configs: Vec<EnemyConfig> = Vec::new();
+
     for path in paths {
         let mut file_path = String::new();
         file_path.push_str(base_path);
@@ -21,6 +24,9 @@ pub fn preload_enemy_system(
         let my_string = read_file_to_string(&path.unwrap().path().display().to_string());
 
         let config: RawEnemyConfig = serde_json::from_str(&my_string).expect("JSON was not well-formatted");
-        enemy_handles_new.enemy_configs.push(config.get_config(&asset_server, &mut texture_atlases));
+        enemy_configs.push(config.get_config(&asset_server, &mut texture_atlases));
     }
+
+    enemy_configs.sort_by(|a, b| a.config_id.partial_cmp(&b.config_id).unwrap());
+    enemy_handles_new.enemy_configs = enemy_configs
 }
