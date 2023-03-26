@@ -1,82 +1,62 @@
 use bevy::prelude::*;
+use bevy_egui::*;
+use bevy_egui::egui::*;
 
-use crate::models::ui::game_over::NavigationButton;
-use crate::models::ui::main_menu::MainMenuComp;
+use crate::AppState;
 
-pub fn spawn_main_menu_system(
-    mut commands: Commands,
+pub fn show_main_menu_system(
     asset_loader: Res<AssetServer>,
+    mut egui_context: EguiContexts,
+    mut state_trigger: ResMut<NextState<AppState>>,
 ) {
-    commands
-        .spawn(NodeBundle {
-            style: Style {
-                size: Size::new(Val::Percent(80.0), Val::Percent(80.0)),
-                position: UiRect {
-                    left: Val::Percent(10.0),
-                    bottom: Val::Percent(10.0),
-                    top: Val::Percent(10.0),
-                    right: Val::Percent(10.0),
-                },
-                position_type: PositionType::Absolute,
-                align_items: AlignItems::Center,
-                justify_content: JustifyContent::SpaceEvenly,
-                flex_direction: FlexDirection::Column,
-                ..Default::default()
-            },
-            background_color: Color::BLACK.into(),
-            ..Default::default()
-        })
-        .with_children(|parent| {
-            parent.spawn(TextBundle {
-                style: Style {
-                    ..Default::default()
-                },
-                text: Text::from_section(
-                    "Atomic UndersurVampire".to_string(),
-                    TextStyle {
-                        font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
-                        font_size: 60.0,
-                        color: Color::RED,
-                    },
-                ),
-                ..Default::default()
-            });
-            parent.spawn(ButtonBundle {
-                style: Style {
-                    size: Size::new(Val::Percent(25.0), Val::Percent(10.0)),
-                    align_items: AlignItems::Center,
-                    justify_content: JustifyContent::SpaceEvenly,
-                    flex_direction: FlexDirection::Column,
-                    ..Default::default()
-                },
-                background_color: Color::BLACK.into(),
-                ..Default::default()
-            }).with_children(|parent| {
-                parent.spawn(TextBundle {
-                    style: Style {
-                        ..Default::default()
-                    },
-                    text: Text::from_section(
-                        "Start Game".to_string(),
-                        TextStyle {
-                            font: asset_loader.load("fonts/BodoniFLF-Roman.ttf"),
-                            font_size: 20.0,
-                            color: Color::WHITE,
-                        },
-                    ),
-                    ..Default::default()
-                });
-            })
-                .insert(NavigationButton);
-        })
-        .insert(MainMenuComp);
-}
+    let screen_size = egui_context.ctx_mut().screen_rect();
+    let temp = asset_loader.load("sprites/ui/ítem_background.png");
+    let background_image = egui_context.add_image(temp);
 
-pub fn close_main_menu_system(
-    mut commands: Commands,
-    my_query: Query<Entity, With<MainMenuComp>>,
-) {
-    for entity in my_query.iter() {
-        commands.entity(entity).despawn_recursive();
-    }
+    //background color
+    let background_color = egui::containers::Frame {
+        fill: egui::Color32::from_rgb(241, 233, 218),
+        ..Default::default()
+    };
+    let frame = egui::containers::Frame {
+        fill: egui::Color32::from_rgba_premultiplied(0, 0, 0, 0),
+        ..Default::default()
+    };
+
+
+    //main window
+    egui::CentralPanel::default()
+        .frame(background_color)
+        .show(egui_context.ctx_mut(), |ui| {
+            ui.image(background_image, vec2(screen_size.width(), screen_size.height()));
+        });
+
+    egui::CentralPanel::default()
+        .frame(frame)
+        .show(egui_context.ctx_mut(), |ui| {
+            ui.vertical_centered_justified(|ui| {
+                ui.allocate_space(egui::Vec2::new(0.0, 100.0));
+
+                ui.set_min_size(egui::Vec2::new(0.0, 100.0));
+
+                ui.label(egui::RichText::new("Atomic Under Paper Lord Chess")
+                    .heading()
+                    .color(egui::Color32::from_rgb(255, 255, 255))
+                    .size(50.0)
+                );
+            });
+
+            ui.vertical_centered(|ui| {
+                ui.set_min_width(100.0);
+                ui.set_max_width(400.0);
+                ui.vertical_centered_justified(|ui| {
+                    if ui.add(egui::Button::new(egui::RichText::new("Start Game")
+                        .color(egui::Color32::from_rgb(0, 0, 0))
+                        .size(30.0))
+                    ).clicked() {
+                        state_trigger.set(AppState::InGame);
+                    };
+                });
+            });
+        });
 }

@@ -7,7 +7,7 @@ use crate::scheduling::BaseSets;
 use crate::ui::cmd::CmdUiPlugin;
 use crate::ui::game_over_screen::{button_click_system, spawn_game_over_screen_system};
 use crate::ui::game_won_screen::spawn_game_won_screen_system;
-use crate::ui::main_menu_screen::{close_main_menu_system, spawn_main_menu_system};
+use crate::ui::main_menu_screen::{show_main_menu_system};
 use crate::ui::pause_screen::{close_pause_system, spawn_pause_system};
 use crate::ui::setup_tool_tip_window::{move_tool_tip_window, populate_tooltip_window, setup_tool_tip_window};
 use crate::ui::shop_system::{close_shop_menu_system, shop_button_system, spawn_shop_menu_system};
@@ -48,8 +48,6 @@ impl Plugin for UiPlugin {
             .add_system(spawn_game_over_screen_system.in_schedule(OnEnter(AppState::GameOver)))
             .add_system(spawn_pause_system.in_schedule(OnEnter(AppState::Paused)))
             .add_system(close_pause_system.in_schedule(OnExit(AppState::Paused)))
-            .add_system(spawn_main_menu_system.in_schedule(OnEnter(AppState::MainMenu)))
-            .add_system(close_main_menu_system.in_schedule(OnExit(AppState::MainMenu)))
             .add_system(spawn_shop_menu_system.in_schedule(OnEnter(AppState::Shop)))
             .add_system(close_shop_menu_system.in_schedule(OnExit(AppState::Shop)))
             .add_system(spawn_game_won_screen_system.in_schedule(OnEnter(AppState::GameWon)))
@@ -61,6 +59,7 @@ impl Plugin for UiPlugin {
 
             // .add_system(update_gold_text_system.in_set(UiUpdateSystemSet))
 
+            .add_system(show_main_menu_system.run_if(in_state(AppState::MainMenu)))
             .add_system(show_hud_system.in_set(UiUpdateSystemSet))
             .add_system(update_hud_state.in_set(UiUpdateSystemSet))
 
