@@ -13,12 +13,12 @@ pub enum SpriteLayer {
 impl SpriteLayer {
     pub fn get_layer_z(&self) -> f32 {
         match *self {
-            SpriteLayer::Background => -900000000.0,
-            SpriteLayer::FloorLevel => -800000000.0,
-            SpriteLayer::LowGroundLevel => -700000000.0,
-            SpriteLayer::GroundLevel => -600000000.0,
-            SpriteLayer::AirLevel => -500000000.0,
-            SpriteLayer::UILevel => -400000000.0,
+            SpriteLayer::Background => -30000.0,
+            SpriteLayer::FloorLevel => -20000.0,
+            SpriteLayer::LowGroundLevel => -10000.0,
+            SpriteLayer::GroundLevel => 0.0,
+            SpriteLayer::AirLevel => 10000.0,
+            SpriteLayer::UILevel => 20000.0,
         }
     }
 }

@@ -1,4 +1,4 @@
-use bevy::prelude::{BuildChildren, Color, Commands, ComputedVisibility, GlobalTransform, Name, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2, Visibility};
+use bevy::prelude::{BuildChildren, Color, Commands, GlobalTransform, Name, Res, ResMut, Sprite, SpriteBundle, Transform, Vec2, VisibilityBundle};
 
 use crate::{SpriteLayer, TextureHandles};
 use crate::models::layerable::Layerable;
@@ -18,8 +18,7 @@ pub fn background_startup_system(
             Transform::default(),
             Layerable::new(SpriteLayer::Background.get_layer_z()),
             GlobalTransform::default(),
-            ComputedVisibility::default(),
-            Visibility::Visible,
+            VisibilityBundle::default()
         ))
         .id();
 
@@ -39,7 +38,6 @@ pub fn background_startup_system(
                     color: sprite_color,
                     ..Default::default()
                 },
-                visibility: Visibility::Visible,
                 ..Default::default()
             })
                 .insert(Tile)

@@ -1,4 +1,4 @@
-use bevy::prelude::{BuildChildren, Commands, Entity, EventReader, GlobalTransform, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
+use bevy::prelude::{BuildChildren, Commands, Entity, EventReader, GlobalTransform, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3, VisibilityBundle, With};
 
 use crate::models::behavior::chase_target_behavior::ChaseTargetBehavior;
 use crate::models::behavior::rotate_behavior::UnitRotation;
@@ -52,6 +52,7 @@ pub fn apply_shield_system(
             .insert(Transform::default())
             .insert(UnitRotation { revolutions_per_min: modification.revolutions_per_min })
             .insert(GlobalTransform::default())
+            .insert(VisibilityBundle::default())
             .id();
 
         let child = commands.spawn(SpriteBundle {

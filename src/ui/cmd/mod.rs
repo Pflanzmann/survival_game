@@ -19,6 +19,7 @@ use crate::ui::cmd::debug_window::show_debug_window_system;
 use crate::ui::cmd::fps_counter_update_system::fps_counter_update_system;
 use crate::ui::cmd::spawn_collision_boxes::{CollisionBox, init_collision_boxes, init_new_collision_boxes};
 use crate::ui::cmd::update_console_history::update_console_history;
+use crate::util::debug::show_quad_tree_system::show_quad_tree_system;
 use crate::util::helper_systems::despawn_recursive_system::despawn_recursive_system;
 
 mod debug_window;
@@ -84,6 +85,7 @@ impl Plugin for CmdUiPlugin {
             .add_system(init_new_collision_boxes.in_set(CmdUiUpdateConsoleSystemSet))
             .add_system(update_console_history.in_set(CmdUiUpdateConsoleSystemSet))
             .add_system(show_debug_window_system.in_set(CmdUiUpdateConsoleSystemSet))
+            //.add_system(show_quad_tree_system.in_set(CmdUiUpdateConsoleSystemSet))
 
             .add_system(assign_attribute_value_system::<Health, HealthText>.in_set(CmdUiUpdateConsoleSystemSet))
             .add_system(assign_attribute_value_system::<Damage, DamageText>.in_set(CmdUiUpdateConsoleSystemSet))

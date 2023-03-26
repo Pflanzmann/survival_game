@@ -21,7 +21,9 @@ pub fn acid_puddle_system(
     mut projectile_stopped_event: EventReader<ProjectileStoppedEvent>,
     owner_query: Query<(&GlobalTransform, &AcidPuddle, &AcidPuddleOwner, &UnitSize)>,
 ) {
+    println!("called");
     for event in projectile_stopped_event.iter() {
+        println!("with event");
         let (transform, acid_puddle, acid_puddle_owner, unit_size) = match owner_query.get(event.projectile_entity) {
             Ok(transform) => transform,
             Err(_) => continue,

@@ -1,7 +1,6 @@
 use bevy::prelude::*;
-
-use bevy_egui::egui::*;
 use bevy_egui::*;
+use bevy_egui::egui::*;
 
 use crate::models::events::debug_command_event::DebugCommandEvent;
 use crate::models::resources::console_history::ConsoleHistory;
@@ -39,7 +38,7 @@ pub fn show_debug_window_system(
                 let input = ui.text_edit_singleline(&mut state.input_text);
 
                 if input.lost_focus() {
-                    ui.input(|input_state| {
+                    ui.input(|_| {
                         if keys.pressed(KeyCode::LShift) {
                             input.request_focus();
                         }
