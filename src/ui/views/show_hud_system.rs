@@ -15,7 +15,7 @@ pub fn show_hud_system(
     }
 
     egui::Area::new("Hud Area")
-        .anchor(egui::Align2::CENTER_TOP, egui::Vec2::default())
+        .anchor(egui::Align2::LEFT_TOP, egui::Vec2::default())
         .show(egui_context.ctx_mut(), |ui| {
             ui.style_mut().visuals.code_bg_color = Color32::from_rgb(255, 2, 255);
             ui.set_max_size(egui::Vec2::new(500.0, 0.0));

@@ -2,7 +2,7 @@ extern crate core;
 
 use bevy::app::App;
 use bevy::DefaultPlugins;
-use bevy::prelude::States;
+use bevy::prelude::{in_state, States};
 use bevy_inspector_egui::bevy_egui::EguiPlugin;
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use bevy_kira_audio::AudioPlugin;
@@ -58,13 +58,12 @@ pub enum ConsoleState {
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
-
         .add_plugin(EguiPlugin)
 
         .add_state::<AppState>()
         .add_state::<ConsoleState>()
 
-        .add_plugin(WorldInspectorPlugin::new())
+        .add_plugin(WorldInspectorPlugin::new().run_if(in_state(ConsoleState::Shown)))
 
         .add_plugin(UiPlugin)
         .add_plugin(CustomAudioPlugin)
