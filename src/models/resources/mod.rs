@@ -10,12 +10,14 @@ use world::spawn_timer::SpawnIntervalTimer;
 
 use crate::models::resources::console_history::{ConsoleHistory, read_history_from_file};
 use crate::models::resources::shop_customer::ShopCustomer;
+use crate::models::resources::ui_states::hud_state::HudState;
 use crate::models::resources::world::game_time::GameTime;
 
 pub mod console_history;
 pub mod shop_customer;
 pub mod world;
 pub mod collision;
+pub mod ui_states;
 
 pub struct ResourcePlugin;
 
@@ -34,6 +36,8 @@ impl Plugin for ResourcePlugin {
 
             .init_resource::<ShopCustomer>()
             .insert_resource::<ConsoleHistory>(read_history_from_file())
+
+            .init_resource::<HudState>()
 
             .insert_resource(FixedTime::new_from_secs(0.1))
         ;
