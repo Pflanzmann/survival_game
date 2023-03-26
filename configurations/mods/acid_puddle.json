@@ -12,6 +12,7 @@
   "Price": 5,
   "AcidPuddle": {
     "time_alive": 1.5,
+    "proc_chance": 1.0,
     "damage": 2.0,
     "damage_ticks_per_min": 60
   }

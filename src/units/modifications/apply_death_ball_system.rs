@@ -1,4 +1,4 @@
-use bevy::prelude::{BuildChildren, Commands, Entity, EventReader, GlobalTransform, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3, With};
+use bevy::prelude::{BuildChildren, Commands, Entity, EventReader, GlobalTransform, Name, Query, Res, Sprite, SpriteBundle, Transform, Vec2, Vec3, VisibilityBundle, With};
 
 use crate::models::aim_direction::AimDirection;
 use crate::models::behavior::aim_at_closest_target_behavior::AimAtClosestTargetBehavior;
@@ -49,6 +49,7 @@ pub fn apply_death_ball_system(
             .insert(Transform::default())
             .insert(UnitRotation { revolutions_per_min: modification.revolutions_per_min })
             .insert(GlobalTransform::default())
+            .insert(VisibilityBundle::default())
             .id();
 
         let child = commands.spawn(SpriteBundle {

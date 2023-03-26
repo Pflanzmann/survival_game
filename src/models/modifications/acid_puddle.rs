@@ -5,6 +5,7 @@ use serde::Deserialize;
 #[derive(Copy, Clone, Component, Deserialize)]
 pub struct AcidPuddle {
     pub time_alive: f32,
+    pub proc_chance: f32,
     pub damage: f32,
     pub damage_ticks_per_min: f32,
 }

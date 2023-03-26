@@ -65,8 +65,7 @@ impl Plugin for ProjectileModificationsPlugin {
 
         app.configure_set(
             RunProjectileModsToBulletSystemSet
-                .in_base_set(BaseSets::Update)
-                .run_if(on_event::<ProjectileShotEvent>())
+                .in_base_set(BaseSets::PostUpdate)
                 .run_if(in_state(AppState::InGame))
         );
 
