@@ -19,7 +19,7 @@ pub fn toggle_pause_system(
         return;
     }
 
-    if input.pressed(KeyCode::Escape) && console_state.0 == ConsoleState::Hidden {
+    if input.pressed(KeyCode::Escape) {
         state_timer.0 = 0.0;
         match app_state.0 {
             AppState::MainMenu => {}
@@ -37,10 +37,10 @@ pub fn toggle_pause_system(
 
         match console_state.0 {
             ConsoleState::Shown => {
-                next_app_state.set(AppState::Paused);
                 next_console_state.set(ConsoleState::Hidden);
             }
             ConsoleState::Hidden => {
+                next_app_state.set(AppState::Paused);
                 next_console_state.set(ConsoleState::Shown);
             }
         }

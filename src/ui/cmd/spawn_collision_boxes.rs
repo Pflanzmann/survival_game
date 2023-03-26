@@ -7,7 +7,7 @@ use crate::models::collision::solid_body_collider::SolidBodyCollider;
 #[derive(Component)]
 pub struct CollisionBox;
 
-pub fn render_collision_boxes(
+pub fn init_new_collision_boxes(
     mut commands: Commands,
     asset_server: Res<AssetServer>,
     collision_unit_query: Query<(Entity, &SolidBodyCollider), Added<SolidBodyCollider>>,
@@ -150,14 +150,5 @@ pub fn init_collision_boxes(
                 }
             ).insert(CollisionBox);
         });
-    }
-}
-
-pub fn despawn_collision_boxes(
-    mut commands: Commands,
-    collision_unit_query: Query<Entity, With<CollisionBox>>,
-) {
-    for entity in collision_unit_query.iter() {
-        commands.entity(entity).despawn();
     }
 }
