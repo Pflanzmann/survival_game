@@ -54,3 +54,20 @@ pub fn god_mode_command(
         }
     }
 }
+
+const HELP_TEXT: &str = "god [toggle (on | off)]";
+
+pub fn push_god_mode_info(
+    mut debug_command_events: EventReader<DebugCommandEvent>,
+    mut debug_command_info_event: EventWriter<DebugCommandInfoEvent>,
+) {
+    for debug_command_event in debug_command_events.iter() {
+        if debug_command_event.key != "help" {
+            continue;
+        }
+
+        debug_command_info_event.send(
+            DebugCommandInfoEvent { debug_command: HELP_TEXT.to_string() }
+        );
+    }
+}
