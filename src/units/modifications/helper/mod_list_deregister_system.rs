@@ -19,6 +19,8 @@ pub fn mod_list_deregister_system(
             Err(_) => continue,
         };
 
-        target.register.remove(&remove_event.mod_entity);
+        target.register.retain(|element| {
+            return !element.eq(&remove_event.mod_entity);
+        });
     }
 }

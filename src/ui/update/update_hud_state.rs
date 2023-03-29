@@ -23,7 +23,7 @@ pub fn update_hud_state(
             };
 
             state.entities.push(*registered_entity);
-            state.image_handles.push(added_mod_sprite_handle.handle.clone());
+            state.image_handles.insert(0, added_mod_sprite_handle.handle.clone());
         }
     }
 }

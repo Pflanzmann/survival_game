@@ -49,12 +49,14 @@ impl Plugin for UiPlugin {
             .add_system(shop_button_system.in_set(UiUpdateSystemSet))
             // .add_system(update_gold_text_system.in_set(UiUpdateSystemSet))
 
-            .add_system(show_main_menu_system.run_if(in_state(AppState::MainMenu)))
-            .add_system(show_game_over_system.run_if(in_state(AppState::GameOver)))
-            .add_system(show_game_won_system.run_if(in_state(AppState::GameWon)))
+            .add_system(show_main_menu_system.in_set(UiUpdateSystemSet).run_if(in_state(AppState::MainMenu)))
+            .add_system(show_game_over_system.in_set(UiUpdateSystemSet).run_if(in_state(AppState::GameOver)))
+            .add_system(show_game_won_system.in_set(UiUpdateSystemSet).run_if(in_state(AppState::GameWon)))
 
-            .add_system(show_hud_system.in_set(UiUpdateSystemSet))
-            .add_system(update_hud_state.in_set(UiUpdateSystemSet))
+            .add_system(show_hud_system.in_set(UiUpdateSystemSet).run_if(in_state(AppState::InGame)))
+            .add_system(show_hud_system.in_set(UiUpdateSystemSet).run_if(in_state(AppState::Shop)))
+            .add_system(show_hud_system.in_set(UiUpdateSystemSet).run_if(in_state(AppState::Paused)))
+            .add_system(update_hud_state.in_set(UiUpdateSystemSet).run_if(in_state(AppState::InGame)))
 
             .add_system(move_tool_tip_window.in_set(UiUpdateSystemSet))
             .add_system(setup_tool_tip_window.in_set(UiUpdateSystemSet))

@@ -21,10 +21,14 @@ pub fn mod_list_register_system(
         };
 
         if let Some(mut register) = target {
-            register.register.insert(apply_event.mod_entity);
+            if register.register.contains(&apply_event.mod_entity) {
+                return;
+            }
+
+            register.register.insert(0, apply_event.mod_entity);
         } else {
             let mut register = ModRegister::default();
-            register.register.insert(apply_event.mod_entity);
+            register.register.push(apply_event.mod_entity);
 
             commands.entity(apply_event.target_entity).insert(register);
         }

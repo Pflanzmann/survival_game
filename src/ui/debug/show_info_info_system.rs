@@ -5,7 +5,7 @@ use crate::models::resources::ui_states::info_window_state::InfoWindowState;
 
 pub fn show_info_window_system(
     mut egui_context: EguiContexts,
-    mut state: ResMut<InfoWindowState>,
+    state: ResMut<InfoWindowState>,
 ) {
     egui::Window::new("Info")
         .resizable(false)
