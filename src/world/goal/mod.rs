@@ -2,8 +2,6 @@ use bevy::prelude::*;
 
 use crate::AppState;
 use crate::scheduling::BaseSets;
-use crate::world::goal::goal_activation_system::goal_activation_system;
-use crate::world::goal::setup_goal_system::setup_goal_system;
 
 mod goal_activation_system;
 mod setup_goal_system;
@@ -24,8 +22,8 @@ impl Plugin for GoalPlugin {
                 .run_if(in_state(AppState::InGame))
         );
 
-        app.add_system(setup_goal_system.in_schedule(OnEnter(AppState::MainMenu)));
-
-        app.add_system(goal_activation_system.in_set(GoalUpdateSystemSet));
+        // app.add_system(setup_goal_system.in_schedule(OnEnter(AppState::MainMenu)));
+        //
+        // app.add_system(goal_activation_system.in_set(GoalUpdateSystemSet));
     }
 }
