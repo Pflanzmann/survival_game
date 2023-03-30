@@ -13,6 +13,7 @@ use crate::units::hit_system::hit_system;
 use crate::units::inherit_unit_size_system::inherit_unit_size_system;
 use crate::units::knock_back_system::knock_back_system;
 use crate::units::layerable_system::layerable_system;
+use crate::units::level_up_system::level_up_system;
 use crate::units::mirror_aim_to_move_direction_system::mirror_aim_to_move_direction_system;
 use crate::units::modifications::UnitModificationsPlugin;
 use crate::units::move_unit_system::move_unit_system;
@@ -50,6 +51,7 @@ mod knock_back_system;
 mod inherit_unit_size_system;
 
 pub mod guns;
+pub mod level_up_system;
 
 
 /// This plugin manages the everything related to [Unit] systems and how they get applied.
@@ -116,7 +118,8 @@ impl Plugin for UnitPlugin {
             .add_system(unit_push_system.in_set(UnitUpdateSystemSet))
             .add_system(time_alive_system.in_set(UnitUpdateSystemSet))
             .add_system(knock_back_system.in_set(UnitUpdateSystemSet))
-            .add_system(inherit_unit_size_system.in_set(UnitUpdateSystemSet));
+            .add_system(inherit_unit_size_system.in_set(UnitUpdateSystemSet))
+            .add_system(level_up_system.in_set(UnitUpdateSystemSet));
 
         app
             .add_system(move_unit_system.in_set(UnitMovementSystemSet))

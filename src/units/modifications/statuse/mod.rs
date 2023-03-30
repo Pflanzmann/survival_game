@@ -18,7 +18,7 @@ impl Plugin for StatusPlugin {
     fn build(&self, app: &mut App) {
         app.configure_set(
             StatusSystemSet
-                .in_base_set(BaseSets::Update)
+                .in_base_set(BaseSets::PreUpdate)
                 .run_if(in_state(AppState::InGame))
         );
 

@@ -11,20 +11,20 @@ use crate::models::unit_attributes::move_speed::MoveSpeed;
 use crate::models::unit_attributes::reload::Reload;
 use crate::models::unit_attributes::unit_size::UnitSize;
 use crate::scheduling::BaseSets;
-use crate::ui::debug::debug_window::show_debug_window_system;
-use crate::ui::debug::show_info_attribute_value_system::show_info_attribute_value_system;
-use crate::ui::debug::show_info_fps_system::show_info_fps_system;
+use crate::ui::debug::show_debug_window_system::show_debug_window_system;
+use crate::ui::debug::show_info_attribute_value_system::update_info_attribute_value_system;
+use crate::ui::debug::update_info_fps_system::show_info_fps_system;
 use crate::ui::debug::show_info_info_system::show_info_window_system;
 use crate::ui::debug::spawn_collision_boxes::{CollisionBox, init_collision_boxes, init_new_collision_boxes};
 use crate::ui::debug::update_console_history::update_console_history;
 use crate::util::helper_systems::despawn_recursive_system::despawn_recursive_system;
 
-mod debug_window;
+mod show_debug_window_system;
 mod update_console_history;
 mod spawn_collision_boxes;
 mod show_info_info_system;
 mod show_info_attribute_value_system;
-mod show_info_fps_system;
+mod update_info_fps_system;
 
 pub struct CmdUiPlugin;
 
@@ -81,10 +81,10 @@ impl Plugin for CmdUiPlugin {
 
         app
             .add_system(show_info_fps_system.in_set(CmdUiFixedUpdateConsoleSystemSet))
-            .add_system(show_info_attribute_value_system::<Health>.in_set(CmdUiFixedUpdateConsoleSystemSet))
-            .add_system(show_info_attribute_value_system::<Damage>.in_set(CmdUiFixedUpdateConsoleSystemSet))
-            .add_system(show_info_attribute_value_system::<UnitSize>.in_set(CmdUiFixedUpdateConsoleSystemSet))
-            .add_system(show_info_attribute_value_system::<MoveSpeed>.in_set(CmdUiFixedUpdateConsoleSystemSet))
-            .add_system(show_info_attribute_value_system::<Reload>.in_set(CmdUiFixedUpdateConsoleSystemSet));
+            .add_system(update_info_attribute_value_system::<Health>.in_set(CmdUiFixedUpdateConsoleSystemSet))
+            .add_system(update_info_attribute_value_system::<Damage>.in_set(CmdUiFixedUpdateConsoleSystemSet))
+            .add_system(update_info_attribute_value_system::<UnitSize>.in_set(CmdUiFixedUpdateConsoleSystemSet))
+            .add_system(update_info_attribute_value_system::<MoveSpeed>.in_set(CmdUiFixedUpdateConsoleSystemSet))
+            .add_system(update_info_attribute_value_system::<Reload>.in_set(CmdUiFixedUpdateConsoleSystemSet));
     }
 }

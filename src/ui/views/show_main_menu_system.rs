@@ -10,8 +10,8 @@ pub fn show_main_menu_system(
     mut state_trigger: ResMut<NextState<AppState>>,
 ) {
     let screen_size = egui_context.ctx_mut().screen_rect();
-    let temp = asset_loader.load("sprites/ui/ítem_background.png");
-    let background_image = egui_context.add_image(temp);
+    let image_handle = asset_loader.load("sprites/ui/ítem_background.png");
+    let background_image = egui_context.add_image(image_handle);
 
     //background color
     let background_color = egui::containers::Frame {
