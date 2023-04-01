@@ -2,18 +2,19 @@ use bevy::prelude::*;
 
 use crate::AppState;
 use crate::scheduling::BaseSets;
-use crate::world::background::background_startup_system::background_startup_system;
 use crate::world::background::move_background_tiles_system::move_background_tiles_system;
+use crate::world::background::update_background_tiles_system::update_background_tiles_system;
 
-mod background_startup_system;
 mod move_background_tiles_system;
+mod update_background_tiles_system;
 
 /// this plugin manages the "world" spawning and procedural world building
 ///
-/// [ background_startup_system ] spawns the initial world tiles
+/// [ update_background_tiles_system ] spawns new tiles if needed and reuses old ones if possible
+/// when the background grid gets moved
 ///
-/// [ move_background_tiles_system ] moves the background tiles when the player moves into
-/// a new "chunk"
+/// [ move_background_tiles_system ] moves the center of the background grid when the player moves
+/// into a new "chunk"
 pub struct BackgroundPlugin;
 
 #[derive(SystemSet, Debug, Hash, PartialEq, Eq, Clone)]
@@ -27,8 +28,7 @@ impl Plugin for BackgroundPlugin {
                 .run_if(in_state(AppState::InGame))
         );
 
-        app.add_system(background_startup_system.in_schedule(OnEnter(AppState::MainMenu)));
-
         app.add_system(move_background_tiles_system.in_set(BackgroundUpdateSystemSet));
+        app.add_system(update_background_tiles_system.in_set(BackgroundUpdateSystemSet));
     }
 }

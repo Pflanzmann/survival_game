@@ -65,7 +65,6 @@ pub fn setup_player_system(
 
             .insert(Health::new(player_handles.player_one.health))
             .insert(StraightBasicShot)
-            // .insert(BasicSword)
             .insert(Reload::new(player_handles.player_one.reload))
             .insert(ModRegister::default())
 

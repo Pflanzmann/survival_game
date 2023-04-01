@@ -1,8 +1,8 @@
 use bevy::asset::Handle;
-use bevy::prelude::{AssetServer, Image, Res, ResMut, Resource};
+use bevy::prelude::*;
 
-use crate::assets_handling::preload_projectile_system::ProjectileConfigHandles;
 use crate::assets_handling::preload_item_system::ItemConfigHandles;
+use crate::assets_handling::preload_projectile_system::ProjectileConfigHandles;
 
 #[derive(Default, Resource)]
 pub struct TextureHandles {
@@ -10,7 +10,7 @@ pub struct TextureHandles {
     pub hot_dog_sprite: Handle<Image>,
     pub barrel_sprite: Handle<Image>,
     pub projectile_fireball: Handle<Image>,
-    pub background_tile: Handle<Image>,
+    pub background_tile: Handle<TextureAtlas>,
     pub sold_button: Handle<Image>,
     pub turret_unit: Handle<Image>,
     pub slime_unit: Handle<Image>,
@@ -25,6 +25,7 @@ pub fn preload_texture_system(
     asset_server: Res<AssetServer>,
     item_handles: Res<ItemConfigHandles>,
     projectile_handles: Res<ProjectileConfigHandles>,
+    mut texture_atlases: ResMut<Assets<TextureAtlas>>,
     mut texture_handles: ResMut<TextureHandles>,
 ) {
     texture_handles.coin_sprite = asset_server.load(&item_handles.coin.sprite_path);
@@ -42,5 +43,6 @@ pub fn preload_texture_system(
     texture_handles.sword = asset_server.load("sprites/sword.png");
 
     texture_handles.projectile_fireball = asset_server.load(&projectile_handles.basic_projectile.sprite_path);
-    texture_handles.background_tile = asset_server.load("sprites/full_grass.png");
+
+    texture_handles.background_tile = texture_atlases.add(TextureAtlas::from_grid(asset_server.load("sprite_sheets/background.png"), Vec2::new(32.0, 32.0), 6, 7, None, None));
 }

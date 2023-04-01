@@ -14,8 +14,6 @@ pub fn setup_camera_system(
     camera_bundle.projection.area = Rect::new(-1280.0, -688.5, 1280.0, 688.5);
     camera_bundle.projection.far = 10000000000000000000000000.0;
 
-    camera_bundle.projection.scale = 3.0;
-
     commands.spawn(camera_bundle)
         .insert(MainCamera)
         .insert(Name::new("MainCamera"));

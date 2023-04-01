@@ -30,7 +30,7 @@ impl Plugin for ResourcePlugin {
             .init_resource::<SolidBodyQuadTree>()
             .init_resource::<HitBoxQuadTree>()
 
-            .insert_resource::<BackgroundTilesResource>(BackgroundTilesResource { current_origin: Vec2::new(-1.0, -1.0), tiles: Vec::new() })
+            .insert_resource::<BackgroundTilesResource>(BackgroundTilesResource { current_origin: Vec2::new(-1.0, -1.0) })
             .init_resource::<SpawnIntervalTimer>()
             .init_resource::<SpawnPhaseTimer>()
             .init_resource::<SpawnTaskReceiver>()
