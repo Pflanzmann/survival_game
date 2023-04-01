@@ -1,0 +1,7 @@
+{
+  "generated_background_radius_x": 36,
+  "generated_background_radius_y": 36,
+  "background_step_distance": 1000,
+  "noise_scale": 30.0,
+  "tile_size": 256.0
+}

@@ -11,6 +11,7 @@ use crate::assets_handling::preload_player_system::{PlayerConfigHandles, preload
 use crate::assets_handling::preload_projectile_system::{preload_projectile_system, ProjectileConfigHandles};
 use crate::assets_handling::preload_stage_spawn_system::{preload_stage_spawn_behavior_system, StageSpawnBehaviorHandle};
 use crate::assets_handling::preload_texture_system::{preload_texture_system, TextureHandles};
+use crate::assets_handling::preload_world_grid_config_system::preload_world_grid_config_system;
 use crate::models::spawner::enemy_config_handle::EnemyConfigHandles;
 use crate::util::entity_builder::EntityBuilderPlugin;
 
@@ -23,6 +24,7 @@ pub mod preload_player_system;
 pub mod preload_projectile_system;
 pub mod preload_stage_spawn_system;
 pub mod preload_texture_system;
+mod preload_world_grid_config_system;
 
 /// This plugin serves as a Preloader for all [ Assets ].
 ///
@@ -56,6 +58,7 @@ impl Plugin for AssetHandlingPlugin {
             .add_system(preload_mod_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets))
             .add_system(preload_audio_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets))
             .add_system(preload_animation_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets))
-            .add_system(preload_stage_spawn_behavior_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets));
+            .add_system(preload_stage_spawn_behavior_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets))
+            .add_system(preload_world_grid_config_system.in_schedule(CoreSchedule::Startup).in_base_set(AssetSet::LoadAssets));
     }
 }
