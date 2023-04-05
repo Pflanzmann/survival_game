@@ -3,7 +3,7 @@ use bevy::prelude::{EventReader, EventWriter, ResMut};
 use crate::models::events::debug_command_event::DebugCommandEvent;
 use crate::models::events::debug_command_info_event::DebugCommandInfoEvent;
 use crate::models::resources::world::spawn_phase_timer::SpawnPhaseTimer;
-use crate::models::resources::world::spawn_timer::SpawnIntervalTimer;
+use crate::models::resources::world::spawn_interval_timer::SpawnIntervalTimer;
 
 const KEY: &str = "spawn";
 

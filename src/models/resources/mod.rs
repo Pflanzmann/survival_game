@@ -6,7 +6,7 @@ use collision::solid_body_quad_tree::SolidBodyQuadTree;
 use world::background_tiles_resource::BackgroundTilesResource;
 use world::spawn_phase_timer::SpawnPhaseTimer;
 use world::spawn_task_receiver::SpawnTaskReceiver;
-use world::spawn_timer::SpawnIntervalTimer;
+use world::spawn_interval_timer::SpawnIntervalTimer;
 
 use crate::models::resources::console_history::{ConsoleHistory, read_history_from_file};
 use crate::models::resources::shop_customer::ShopCustomer;
