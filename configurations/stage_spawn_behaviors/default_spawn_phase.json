@@ -1,19 +1,16 @@
 {
   "spawn_phases": [
     {
-      "duration": 5.0,
-      "spawn_interval": 30.0,
-      "enemies": [],
-      "pattern": {
-        "type": "Random"
-      }
-    },
-    {
-      "duration": 30.0,
-      "spawn_interval": 1.2,
+      "duration": 60.0,
+      "spawn_interval": 1.0,
+      "minimum_enemy_amount": 100,
       "enemies": [
         {
           "enemy_index": 0,
+          "spawn_weight": 3.0
+        },
+        {
+          "enemy_index": 6,
           "spawn_weight": 1.0
         }
       ],
@@ -22,8 +19,23 @@
       }
     },
     {
-      "duration": 5,
+      "duration": 60.0,
+      "spawn_interval": 1.0,
+      "minimum_enemy_amount": 30,
+      "enemies": [
+        {
+          "enemy_index": 1,
+          "spawn_weight": 1.0
+        }
+      ],
+      "pattern": {
+        "type": "Random"
+      }
+    },
+    {
+      "duration": 0,
       "spawn_interval": 1000,
+      "minimum_enemy_amount": 10,
       "enemies": [
         {
           "enemy_index": 5,
@@ -36,34 +48,17 @@
       }
     },
     {
-      "duration": 300.0,
+      "duration": 60.0,
       "spawn_interval": 0.1,
+      "minimum_enemy_amount": 50,
       "enemies": [
         {
-          "enemy_index": 1,
-          "spawn_weight": 10.0
+          "enemy_index": 0,
+          "spawn_weight": 1.0
         },
         {
-          "enemy_index": 2,
-          "spawn_weight": 10.0
-        }
-      ],
-      "pattern": {
-        "type": "Directional",
-        "horizontal": true
-      }
-    },
-    {
-      "duration": 300.0,
-      "spawn_interval": 0.1,
-      "enemies": [
-        {
-          "enemy_index": 1,
-          "spawn_weight": 10.0
-        },
-        {
-          "enemy_index": 4,
-          "spawn_weight": 10.0
+          "enemy_index": 6,
+          "spawn_weight": 2.0
         }
       ],
       "pattern": {
@@ -73,7 +68,8 @@
     },
     {
       "duration": 300.0,
-      "spawn_interval": 1.0,
+      "spawn_interval": 2.0,
+      "minimum_enemy_amount": 10,
       "enemies": [
         {
           "enemy_index": 3,
