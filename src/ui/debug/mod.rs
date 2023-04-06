@@ -13,6 +13,7 @@ use crate::models::unit_attributes::unit_size::UnitSize;
 use crate::scheduling::BaseSets;
 use crate::ui::debug::show_debug_window_system::show_debug_window_system;
 use crate::ui::debug::show_info_attribute_value_system::update_info_attribute_value_system;
+use crate::ui::debug::show_info_gun_attribute_value_system::update_info_gun_attribute_value_system;
 use crate::ui::debug::update_info_fps_system::show_info_fps_system;
 use crate::ui::debug::show_info_info_system::show_info_window_system;
 use crate::ui::debug::spawn_collision_boxes::{CollisionBox, init_collision_boxes, init_new_collision_boxes};
@@ -25,6 +26,7 @@ mod spawn_collision_boxes;
 mod show_info_info_system;
 mod show_info_attribute_value_system;
 mod update_info_fps_system;
+mod show_info_gun_attribute_value_system;
 
 pub struct CmdUiPlugin;
 
@@ -85,6 +87,7 @@ impl Plugin for CmdUiPlugin {
             .add_system(update_info_attribute_value_system::<Damage>.in_set(CmdUiFixedUpdateConsoleSystemSet))
             .add_system(update_info_attribute_value_system::<UnitSize>.in_set(CmdUiFixedUpdateConsoleSystemSet))
             .add_system(update_info_attribute_value_system::<MoveSpeed>.in_set(CmdUiFixedUpdateConsoleSystemSet))
-            .add_system(update_info_attribute_value_system::<Reload>.in_set(CmdUiFixedUpdateConsoleSystemSet));
+            .add_system(update_info_attribute_value_system::<Reload>.in_set(CmdUiFixedUpdateConsoleSystemSet))
+            .add_system(update_info_gun_attribute_value_system::<Damage>.in_set(CmdUiFixedUpdateConsoleSystemSet));
     }
 }

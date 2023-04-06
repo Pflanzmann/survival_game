@@ -3,9 +3,7 @@ use serde::Deserialize;
 #[derive(Deserialize)]
 #[serde(tag = "type")]
 pub enum SpawnPattern {
-    Random {
-        spawn_interval: f32
-    },
+    Random,
 
     Circle {
         spawn_angle_in_degree: f32
@@ -22,6 +20,6 @@ pub enum SpawnPattern {
 
 impl Default for SpawnPattern {
     fn default() -> Self {
-        SpawnPattern::Random { spawn_interval: 1.0 }
+        SpawnPattern::Random
     }
 }

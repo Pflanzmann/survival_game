@@ -1,8 +1,8 @@
 {
   "sprite_custom_size_x": 256.0,
   "sprite_custom_size_y": 256.0,
-  "move_speed": 10.0,
+  "move_speed": 15.0,
   "damage": 5.0,
   "health": 20.0,
-  "reload": 40.0
+  "reload": 80.0
 }
