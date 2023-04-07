@@ -1,13 +1,8 @@
 use bevy::prelude::Resource;
 
-#[derive(Resource)]
-pub struct SpawnPhaseTimer {
+#[derive(Default, Resource)]
+pub struct SpawnStageState {
     pub current_spawn_phase: usize,
-    pub timer: f32,
-}
-
-impl Default for SpawnPhaseTimer {
-    fn default() -> Self {
-        Self { current_spawn_phase: 0, timer: 3.0 }
-    }
+    pub phase_timer: f32,
+    pub spawn_interval: f32,
 }

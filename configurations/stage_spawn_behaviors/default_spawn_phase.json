@@ -3,7 +3,7 @@
     {
       "duration": 60.0,
       "spawn_interval": 1.0,
-      "minimum_enemy_amount": 100,
+      "minimum_enemy_amount": 10,
       "enemies": [
         {
           "enemy_index": 0,
@@ -16,6 +16,21 @@
       ],
       "pattern": {
         "type": "Random"
+      }
+    },
+    {
+      "duration": 0.0,
+      "spawn_interval": 0.0,
+      "minimum_enemy_amount": 0,
+      "enemies": [
+        {
+          "enemy_index": 2,
+          "spawn_weight": 1.0
+        }
+      ],
+      "pattern": {
+        "type": "Grouped",
+        "enemy_amount": 50
       }
     },
     {
@@ -33,9 +48,9 @@
       }
     },
     {
-      "duration": 0,
-      "spawn_interval": 1000,
-      "minimum_enemy_amount": 10,
+      "duration": 0.0,
+      "spawn_interval": 0.0,
+      "minimum_enemy_amount": 0,
       "enemies": [
         {
           "enemy_index": 5,
@@ -44,7 +59,7 @@
       ],
       "pattern": {
         "type": "Circle",
-        "spawn_angle_in_degree": 10.0
+        "spawn_angle_in_degree": 7.0
       }
     },
     {
@@ -62,17 +77,16 @@
         }
       ],
       "pattern": {
-        "type": "Directional",
-        "horizontal": false
+        "type": "Random"
       }
     },
     {
-      "duration": 300.0,
-      "spawn_interval": 2.0,
-      "minimum_enemy_amount": 10,
+      "duration": 60.0,
+      "spawn_interval": 0.25,
+      "minimum_enemy_amount": 40,
       "enemies": [
         {
-          "enemy_index": 3,
+          "enemy_index": 2,
           "spawn_weight": 1.0
         }
       ],

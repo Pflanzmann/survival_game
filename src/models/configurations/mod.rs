@@ -6,3 +6,4 @@ pub mod barrel_config;
 pub mod mod_config;
 pub mod raw_configs;
 pub mod world_grid_config;
+pub mod spawner_config;

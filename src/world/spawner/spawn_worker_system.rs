@@ -1,4 +1,5 @@
 use bevy::prelude::{Commands, Name, Res, ResMut, SpriteSheetBundle, TextureAtlasSprite, Transform, Vec2};
+use rand::random;
 
 use crate::models::animation::animation_state::CurrentAnimationState;
 use crate::models::animation::walking_animation_component::MoveAnimationSide;
@@ -62,7 +63,7 @@ pub fn spawn_worker_system(
             .insert(SteeringBehavior::default())
             .insert(ChaseTargetBehavior { target: spawn_task.target_player, proximity: 0.0 })
 
-            .insert(MoveAnimationSide::new(0.0, 3, 2, 15))
+            .insert(MoveAnimationSide::new(random::<f32>() * 10.0, 3, 2, 15))
             .insert(CurrentAnimationState::new());
     }
 }

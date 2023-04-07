@@ -1,0 +1,5 @@
+{
+  "spawn_range": 3840.0,
+  "spawn_range_offset": 512.0,
+  "max_spawns_per_frame": 20
+}

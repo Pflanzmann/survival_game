@@ -11,6 +11,7 @@ use crate::animation::movement_animation_down_system::movement_animation_down_sy
 use crate::animation::movement_animation_side_system::movement_animation_side_system;
 use crate::animation::movement_animation_up_system::movement_animation_up_system;
 use crate::animation::teleport_animation_system::teleport_animation_system;
+use crate::AppState;
 use crate::scheduling::BaseSets;
 
 mod movement_animation_side_system;
@@ -34,6 +35,7 @@ impl Plugin for AnimationPlugin {
         app.configure_set(
             AnimationSystemSet
                 .in_base_set(BaseSets::Update)
+                .run_if(in_state(AppState::InGame))
         );
 
         app
