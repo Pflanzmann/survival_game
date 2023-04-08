@@ -1,8 +1,9 @@
 use serde::Deserialize;
 
-#[derive(Deserialize)]
+#[derive(Default, Deserialize)]
 #[serde(tag = "type")]
 pub enum SpawnPattern {
+    #[default]
     Random,
 
     Circle {
@@ -13,13 +14,7 @@ pub enum SpawnPattern {
         enemy_amount: usize
     },
 
-    Directional {
+    Sided {
         horizontal: bool
     },
-}
-
-impl Default for SpawnPattern {
-    fn default() -> Self {
-        SpawnPattern::Random
-    }
 }

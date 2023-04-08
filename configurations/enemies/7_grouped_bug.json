@@ -1,5 +1,5 @@
 {
-  "config_id": 2,
+  "config_id": 7,
   "entity_name": "Bug",
   "size": [
     320.0,
@@ -16,7 +16,7 @@
   "collider_weight": 0.5,
   "base_damage": 10.0,
   "damage_interval": 60.0,
-  "move_speed": 5.0,
+  "move_speed": 20.0,
   "health": 20.0,
   "behavior": {
     "type": "DirectionalMovement"

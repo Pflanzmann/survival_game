@@ -50,7 +50,7 @@ pub fn spawn_scheduler_system(
         SpawnPattern::Grouped { .. } => {
             grouped_spawn_pattern(spawner_config, spawn_stage_state, spawn_task_receiver, spawn_stage, player_query)
         }
-        SpawnPattern::Directional { .. } => {
+        SpawnPattern::Sided { .. } => {
             directional_spawn_pattern(spawner_config, spawn_stage_state, spawn_task_receiver, spawn_stage, player_query, enemies_missing)
         }
     }
@@ -104,7 +104,7 @@ fn directional_spawn_pattern(
     enemies_to_spawn: usize,
 ) {
     let horizontal = match spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].pattern {
-        SpawnPattern::Directional { horizontal } => horizontal,
+        SpawnPattern::Sided { horizontal } => horizontal,
         _ => { return; }
     };
 

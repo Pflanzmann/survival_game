@@ -13,10 +13,7 @@
           "enemy_index": 6,
           "spawn_weight": 1.0
         }
-      ],
-      "pattern": {
-        "type": "Random"
-      }
+      ]
     },
     {
       "duration": 0.0,
@@ -42,15 +39,9 @@
           "enemy_index": 1,
           "spawn_weight": 1.0
         }
-      ],
-      "pattern": {
-        "type": "Random"
-      }
+      ]
     },
     {
-      "duration": 0.0,
-      "spawn_interval": 0.0,
-      "minimum_enemy_amount": 0,
       "enemies": [
         {
           "enemy_index": 5,
@@ -75,10 +66,7 @@
           "enemy_index": 6,
           "spawn_weight": 2.0
         }
-      ],
-      "pattern": {
-        "type": "Random"
-      }
+      ]
     },
     {
       "duration": 60.0,
@@ -89,10 +77,7 @@
           "enemy_index": 2,
           "spawn_weight": 1.0
         }
-      ],
-      "pattern": {
-        "type": "Random"
-      }
+      ]
     }
   ]
 }

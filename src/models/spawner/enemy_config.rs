@@ -1,4 +1,5 @@
 use bevy::prelude::{Handle, TextureAtlas, Vec2};
+use crate::models::configurations::raw_configs::enemy_behavior::EnemyBehavior;
 
 use crate::SpriteLayer;
 
@@ -17,4 +18,6 @@ pub struct EnemyConfig {
 
     pub move_speed: f32,
     pub health: f32,
+
+    pub behavior: EnemyBehavior,
 }

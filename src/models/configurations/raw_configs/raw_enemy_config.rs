@@ -1,6 +1,7 @@
 use bevy::prelude::{Assets, AssetServer, Res, ResMut, TextureAtlas, Vec2};
 use serde::Deserialize;
 
+use crate::models::configurations::raw_configs::enemy_behavior::EnemyBehavior;
 use crate::models::spawner::enemy_config::EnemyConfig;
 use crate::SpriteLayer;
 
@@ -23,6 +24,9 @@ pub struct RawEnemyConfig {
 
     pub move_speed: f32,
     pub health: f32,
+
+    #[serde(default)]
+    pub behavior: EnemyBehavior,
 }
 
 impl RawEnemyConfig {
@@ -42,6 +46,7 @@ impl RawEnemyConfig {
             damage_interval: self.damage_interval,
             move_speed: self.move_speed,
             health: self.health,
+            behavior: self.behavior
         }
     }
 }
