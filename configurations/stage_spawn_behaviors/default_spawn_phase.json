@@ -21,7 +21,7 @@
       "minimum_enemy_amount": 0,
       "enemies": [
         {
-          "enemy_index": 2,
+          "enemy_index": 7,
           "spawn_weight": 1.0
         }
       ],

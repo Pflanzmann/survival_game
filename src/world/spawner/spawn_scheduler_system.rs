@@ -72,19 +72,7 @@ fn random_spawn_pattern(
             enemies_to_spawn -= 1;
             did_it_once = true;
 
-            let total_spawn_weight: f32 = spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].enemies.iter().map(|value| value.spawn_weight).sum();
-            let random_number = random::<f32>() * total_spawn_weight;
-
-            let mut previous_spawn_weights: f32 = 0.0;
-            let mut enemy_index = 0;
-            'enemy_loop: for enemy in spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].enemies.iter() {
-                previous_spawn_weights += enemy.spawn_weight;
-
-                if random_number < previous_spawn_weights {
-                    enemy_index = enemy.enemy_index;
-                    break 'enemy_loop;
-                }
-            };
+            let enemy_index = get_random_enemy_index(&spawn_phase_timer, &spawn_stage);
 
             let random_offset = get_random_offset_vector(spawner_config.spawn_range_offset);
             let direction_to_spawn = get_random_offset_vector(2.0).normalize_or_zero();
@@ -116,33 +104,24 @@ fn directional_spawn_pattern(
         did_it_once = true;
 
         for (player_entity, player_transform) in player_query.iter() {
-            let total_spawn_weight: f32 = spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].enemies.iter().map(|value| value.spawn_weight).sum();
-            let random_number = random::<f32>() * total_spawn_weight;
+            let enemy_index = get_random_enemy_index(&spawn_phase_timer, &spawn_stage);
 
-            let mut previous_spawn_weights: f32 = 0.0;
-            for enemy in spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].enemies.iter() {
-                previous_spawn_weights += enemy.spawn_weight;
+            let direction_to_spawn = if horizontal {
+                let random_x = if random::<bool>() { 1.0 } else { -1.0 };
+                let random_y = random::<f32>() * 2.0 - 1.0;
 
-                if random_number < previous_spawn_weights {
-                    let direction_to_spawn = if horizontal {
-                        let random_x = if random::<bool>() { 1.0 } else { -1.0 };
-                        let random_y = random::<f32>() * 2.0 - 1.0;
+                Vec2::new(random_x, random_y).normalize_or_zero()
+            } else {
+                let random_x = random::<f32>() * 2.0 - 1.0;
+                let random_y = if random::<bool>() { 1.0 } else { -1.0 };
 
-                        Vec2::new(random_x, random_y).normalize_or_zero()
-                    } else {
-                        let random_x = random::<f32>() * 2.0 - 1.0;
-                        let random_y = if random::<bool>() { 1.0 } else { -1.0 };
+                Vec2::new(random_x, random_y).normalize_or_zero()
+            };
 
-                        Vec2::new(random_x, random_y).normalize_or_zero()
-                    };
+            let random_offset = get_random_offset_vector(spawner_config.spawn_range_offset);
+            let position_to_spawn = player_transform.translation.truncate() + (direction_to_spawn * spawner_config.spawn_range) + random_offset;
 
-                    let random_offset = get_random_offset_vector(spawner_config.spawn_range_offset);
-                    let position_to_spawn = player_transform.translation.truncate() + (direction_to_spawn * spawner_config.spawn_range) + random_offset;
-
-                    spawn_task_receiver.push_new_task(SpawnTask::new(enemy.enemy_index, position_to_spawn, player_entity));
-                    return;
-                }
-            }
+            spawn_task_receiver.push_new_task(SpawnTask::new(enemy_index, position_to_spawn, player_entity));
         }
     }
 }
@@ -162,19 +141,7 @@ fn circle_spawn_pattern(
     let mut current_angle = spawn_angle;
 
     for (player_entity, player_transform) in player_query.iter() {
-        let total_spawn_weight: f32 = spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].enemies.iter().map(|value| value.spawn_weight).sum();
-        let random_number = random::<f32>() * total_spawn_weight;
-
-        let mut previous_spawn_weights: f32 = 0.0;
-        let mut enemy_index = 0;
-        'enemy_loop: for enemy in spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].enemies.iter() {
-            previous_spawn_weights += enemy.spawn_weight;
-
-            if random_number < previous_spawn_weights {
-                enemy_index = enemy.enemy_index;
-                break 'enemy_loop;
-            }
-        };
+        let enemy_index = get_random_enemy_index(&spawn_phase_timer, &spawn_stage);
 
         while current_angle < 360.0 {
             let angle_radians = -current_angle * PI / 180.0;
@@ -200,29 +167,20 @@ fn grouped_spawn_pattern(
     };
 
     for (player_entity, player_transform) in player_query.iter() {
-        let total_spawn_weight: f32 = spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].enemies.iter().map(|value| value.spawn_weight).sum();
-        let random_number = random::<f32>() * total_spawn_weight;
+        let enemy_index = get_random_enemy_index(&spawn_phase_timer, &spawn_stage);
 
-        let mut previous_spawn_weights: f32 = 0.0;
-        for enemy in spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].enemies.iter() {
-            previous_spawn_weights += enemy.spawn_weight;
+        let random_offset = get_random_offset_vector(spawner_config.spawn_range_offset);
+        let direction_to_spawn = get_random_offset_vector(2.0).normalize_or_zero();
+        let box_position_to_spawn = player_transform.translation.truncate() + (direction_to_spawn * spawner_config.spawn_range) + random_offset;
 
-            if random_number < previous_spawn_weights {
-                let random_offset = get_random_offset_vector(spawner_config.spawn_range_offset);
-                let direction_to_spawn = get_random_offset_vector(2.0).normalize_or_zero();
-                let box_position_to_spawn = player_transform.translation.truncate() + (direction_to_spawn * spawner_config.spawn_range) + random_offset;
+        for index in 0..enemy_amount {
+            let x_offset = index % 5;
+            let y_offset = index / 5;
+            let offset_direction = Vec2::new(x_offset as f32, y_offset as f32) * 64.0;
 
-                for index in 0..enemy_amount {
-                    let x_offset = index % 5;
-                    let y_offset = index / 5;
-                    let offset_direction = Vec2::new(x_offset as f32, y_offset as f32) * 64.0;
+            let position_to_spawn = box_position_to_spawn + offset_direction;
 
-                    let position_to_spawn = box_position_to_spawn + offset_direction;
-
-                    spawn_task_receiver.push_new_task(SpawnTask::new(enemy.enemy_index, position_to_spawn, player_entity));
-                }
-                return;
-            }
+            spawn_task_receiver.push_new_task(SpawnTask::new(enemy_index, position_to_spawn, player_entity));
         }
     }
 }
@@ -231,4 +189,25 @@ fn get_random_offset_vector(multiplier: f32) -> Vec2 {
     let random_x = random::<f32>() * multiplier - (multiplier / 2.0);
     let random_y = random::<f32>() * multiplier - (multiplier / 2.0);
     Vec2::new(random_x, random_y)
+}
+
+fn get_random_enemy_index(
+    spawn_phase_timer: &ResMut<SpawnStageState>,
+    spawn_stage: &Res<SpawnStage>,
+) -> usize {
+    let total_spawn_weight: f32 = spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].enemies.iter().map(|value| value.spawn_weight).sum();
+    let random_number = random::<f32>() * total_spawn_weight;
+
+    let mut previous_spawn_weights: f32 = 0.0;
+    let mut enemy_index = 0;
+    'enemy_loop: for enemy in spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].enemies.iter() {
+        previous_spawn_weights += enemy.spawn_weight;
+
+        if random_number < previous_spawn_weights {
+            enemy_index = enemy.enemy_index;
+            break 'enemy_loop;
+        }
+    };
+
+    enemy_index
 }
