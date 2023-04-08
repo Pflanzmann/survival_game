@@ -42,6 +42,7 @@ pub fn spawn_worker_system(
             SpriteSheetBundle {
                 sprite: TextureAtlasSprite {
                     custom_size: Some(enemy_handles.enemy_configs[spawn_task.enemy_config_index].size),
+                    color: enemy_handles.enemy_configs[spawn_task.enemy_config_index].tint,
                     ..Default::default()
                 },
                 transform: Transform::from_translation(spawn_task.position.extend(enemy_handles.enemy_configs[spawn_task.enemy_config_index].sprite_layer.get_layer_z())),

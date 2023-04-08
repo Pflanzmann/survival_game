@@ -1,4 +1,4 @@
-use bevy::prelude::{Assets, AssetServer, Res, ResMut, TextureAtlas, Vec2};
+use bevy::prelude::{Assets, AssetServer, Color, Res, ResMut, TextureAtlas, Vec2};
 use serde::Deserialize;
 
 use crate::models::configurations::raw_configs::enemy_behavior::EnemyBehavior;
@@ -16,6 +16,8 @@ pub struct RawEnemyConfig {
     pub texture_atlas_columns: usize,
     pub texture_atlas_rows: usize,
     pub sprite_layer: SpriteLayer,
+    #[serde(default)]
+    pub tint: Vec<f32>,
 
     pub collider_weight: f32,
 
@@ -35,18 +37,31 @@ impl RawEnemyConfig {
         asset_server: &Res<AssetServer>,
         texture_atlases: &mut ResMut<Assets<TextureAtlas>>,
     ) -> EnemyConfig {
+        let color = if self.tint.len() >= 3 {
+            let mut color = Color::rgb(self.tint[0], self.tint[1], self.tint[2]);
+
+            if self.tint.len() == 4 {
+                color.set_a(self.tint[3]);
+            }
+
+            color
+        } else {
+            Color::default()
+        };
+
         EnemyConfig {
             config_id: self.config_id,
             entity_name: self.entity_name.clone(),
             size: self.size,
             texture_atlas: texture_atlases.add(TextureAtlas::from_grid(asset_server.load(&self.sprite_path), self.texture_atlas_grid_size, self.texture_atlas_columns, self.texture_atlas_rows, None, None)),
             sprite_layer: self.sprite_layer,
+            tint: color,
             collider_weight: self.collider_weight,
             base_damage: self.base_damage,
             damage_interval: self.damage_interval,
             move_speed: self.move_speed,
             health: self.health,
-            behavior: self.behavior
+            behavior: self.behavior,
         }
     }
 }

@@ -1,4 +1,4 @@
-use bevy::prelude::{Handle, TextureAtlas, Vec2};
+use bevy::prelude::{Color, Handle, TextureAtlas, Vec2};
 use crate::models::configurations::raw_configs::enemy_behavior::EnemyBehavior;
 
 use crate::SpriteLayer;
@@ -10,6 +10,7 @@ pub struct EnemyConfig {
     pub size: Vec2,
     pub texture_atlas: Handle<TextureAtlas>,
     pub sprite_layer: SpriteLayer,
+    pub tint: Color,
 
     pub collider_weight: f32,
 
