@@ -55,6 +55,15 @@ pub enum ConsoleState {
     Shown,
 }
 
+#[derive(States, Debug, Clone, Eq, PartialEq, Hash, Default)]
+pub enum MainMenuState {
+    #[default]
+    Entry,
+    MainMenu,
+    ChooseStage,
+    Options,
+}
+
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
@@ -62,6 +71,7 @@ fn main() {
 
         .add_state::<AppState>()
         .add_state::<ConsoleState>()
+        .add_state::<MainMenuState>()
 
         .add_plugin(WorldInspectorPlugin::new().run_if(in_state(ConsoleState::Shown)))
 
