@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-#[derive(Default, Deserialize)]
+#[derive(Default, Deserialize, Clone)]
 #[serde(tag = "type")]
 pub enum SpawnPattern {
     #[default]

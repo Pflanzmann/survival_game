@@ -15,9 +15,6 @@ pub fn preload_mod_system(
     let paths = fs::read_dir(base_path).unwrap();
 
     for path in paths {
-        let mut file_path = String::new();
-        file_path.push_str(base_path);
-
         let child = entity_builder.spawn_entity(&mut commands, &asset_server, path.unwrap().path().display().to_string().as_str());
         commands.entity(parent).add_child(child);
     }

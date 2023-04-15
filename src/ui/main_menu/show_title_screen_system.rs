@@ -2,7 +2,7 @@ use bevy::prelude::*;
 use bevy_egui::*;
 use bevy_egui::egui::*;
 
-use crate::{AppState, MainMenuState};
+use crate::MainMenuState;
 
 pub fn show_title_screen_system(
     asset_loader: Res<AssetServer>,

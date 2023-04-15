@@ -1,0 +1,35 @@
+{
+  "name": "Sided Level",
+  "spawn_phases": [
+    {
+      "duration": 15,
+      "spawn_interval": 0.5,
+      "minimum_enemy_amount": 10,
+      "enemies": [
+        {
+          "enemy_index": 8,
+          "spawn_weight": 1.0
+        }
+      ],
+      "pattern": {
+        "type": "Sided",
+        "horizontal": true
+      }
+    },
+    {
+      "duration": 15,
+      "spawn_interval": 0.5,
+      "minimum_enemy_amount": 10,
+      "enemies": [
+        {
+          "enemy_index": 9,
+          "spawn_weight": 1.0
+        }
+      ],
+      "pattern": {
+        "type": "Sided",
+        "horizontal": false
+      }
+    }
+  ]
+}

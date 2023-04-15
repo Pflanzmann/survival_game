@@ -6,61 +6,58 @@ use rand::random;
 use crate::models::configurations::spawner_config::SpawnerConfig;
 use crate::models::enemy::Enemy;
 use crate::models::player::Player;
-use crate::models::resources::world::spawn_phase_timer::SpawnStageState;
+use crate::models::resources::world::active_stage::ActiveStage;
 use crate::models::resources::world::spawn_task_receiver::SpawnTaskReceiver;
 use crate::models::spawner::spawn_pattern::SpawnPattern;
-use crate::models::spawner::spawn_stage::SpawnStage;
 use crate::models::spawner::spawn_task::SpawnTask;
 
 pub fn spawn_scheduler_system(
     spawner_config: Res<SpawnerConfig>,
     time: Res<Time>,
-    mut spawn_stage_state: ResMut<SpawnStageState>,
+    mut active_stage: ResMut<ActiveStage>,
     spawn_task_receiver: ResMut<SpawnTaskReceiver>,
-    spawn_stage: Res<SpawnStage>,
     player_query: Query<(Entity, &Transform), With<Player>>,
     enemy_count_query: Query<With<Enemy>>,
 ) {
-    spawn_stage_state.phase_timer -= time.delta_seconds();
-    if spawn_stage_state.phase_timer < 0.0 {
-        spawn_stage_state.current_spawn_phase += 1;
-        if spawn_stage_state.current_spawn_phase >= spawn_stage.spawn_phases.len() {
-            spawn_stage_state.current_spawn_phase = 0;
+    active_stage.phase_time += time.delta_seconds();
+    if active_stage.phase_time > active_stage.stage.spawn_phases[active_stage.current_spawn_phase].duration {
+        active_stage.current_spawn_phase += 1;
+        if active_stage.current_spawn_phase >= active_stage.stage.spawn_phases.len() {
+            active_stage.current_spawn_phase = 0;
         }
 
-        spawn_stage_state.phase_timer = spawn_stage.spawn_phases[spawn_stage_state.current_spawn_phase].duration;
-        spawn_stage_state.spawn_interval = 0.0;
+        active_stage.phase_time = 0.0;
+        active_stage.spawn_interval_time = 0.0;
     }
 
-    spawn_stage_state.spawn_interval -= time.delta_seconds();
-    if spawn_stage_state.spawn_interval > 0.0 {
+    active_stage.spawn_interval_time += time.delta_seconds();
+    if active_stage.spawn_interval_time < active_stage.stage.spawn_phases[active_stage.current_spawn_phase].spawn_interval {
         return;
     }
-    spawn_stage_state.spawn_interval = spawn_stage.spawn_phases[spawn_stage_state.current_spawn_phase].spawn_interval;
+    active_stage.spawn_interval_time = 0.0;
 
-    let enemies_missing = spawn_stage.spawn_phases[spawn_stage_state.current_spawn_phase].minimum_enemy_amount - enemy_count_query.iter().count();
+    let enemies_missing = active_stage.stage.spawn_phases[active_stage.current_spawn_phase].minimum_enemy_amount - enemy_count_query.iter().count();
 
-    match spawn_stage.spawn_phases[spawn_stage_state.current_spawn_phase].pattern {
+    match active_stage.stage.spawn_phases[active_stage.current_spawn_phase].pattern {
         SpawnPattern::Random { .. } => {
-            random_spawn_pattern(spawner_config, spawn_stage_state, spawn_task_receiver, spawn_stage, player_query, enemies_missing)
+            random_spawn_pattern(spawner_config, active_stage, spawn_task_receiver,  player_query, enemies_missing)
         }
         SpawnPattern::Circle { .. } => {
-            circle_spawn_pattern(spawner_config, spawn_stage_state, spawn_task_receiver, spawn_stage, player_query)
+            circle_spawn_pattern(spawner_config, active_stage, spawn_task_receiver,  player_query)
         }
         SpawnPattern::Grouped { .. } => {
-            grouped_spawn_pattern(spawner_config, spawn_stage_state, spawn_task_receiver, spawn_stage, player_query)
+            grouped_spawn_pattern(spawner_config, active_stage, spawn_task_receiver,  player_query)
         }
         SpawnPattern::Sided { .. } => {
-            directional_spawn_pattern(spawner_config, spawn_stage_state, spawn_task_receiver, spawn_stage, player_query, enemies_missing)
+            directional_spawn_pattern(spawner_config, active_stage, spawn_task_receiver, player_query, enemies_missing)
         }
     }
 }
 
 fn random_spawn_pattern(
     spawner_config: Res<SpawnerConfig>,
-    spawn_phase_timer: ResMut<SpawnStageState>,
+    active_stage: ResMut<ActiveStage>,
     mut spawn_task_receiver: ResMut<SpawnTaskReceiver>,
-    spawn_stage: Res<SpawnStage>,
     player_query: Query<(Entity, &Transform), With<Player>>,
     enemies_to_spawn: usize,
 ) {
@@ -72,7 +69,7 @@ fn random_spawn_pattern(
             enemies_to_spawn -= 1;
             did_it_once = true;
 
-            let enemy_index = get_random_enemy_index(&spawn_phase_timer, &spawn_stage);
+            let enemy_index = get_random_enemy_index(&active_stage);
 
             let random_offset = get_random_offset_vector(spawner_config.spawn_range_offset);
             let direction_to_spawn = get_random_offset_vector(2.0).normalize_or_zero();
@@ -85,13 +82,12 @@ fn random_spawn_pattern(
 
 fn directional_spawn_pattern(
     spawner_config: Res<SpawnerConfig>,
-    spawn_phase_timer: ResMut<SpawnStageState>,
+    active_stage: ResMut<ActiveStage>,
     mut spawn_task_receiver: ResMut<SpawnTaskReceiver>,
-    spawn_stage: Res<SpawnStage>,
     player_query: Query<(Entity, &Transform), With<Player>>,
     enemies_to_spawn: usize,
 ) {
-    let horizontal = match spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].pattern {
+    let horizontal = match active_stage.stage.spawn_phases[active_stage.current_spawn_phase].pattern {
         SpawnPattern::Sided { horizontal } => horizontal,
         _ => { return; }
     };
@@ -104,7 +100,7 @@ fn directional_spawn_pattern(
         did_it_once = true;
 
         for (player_entity, player_transform) in player_query.iter() {
-            let enemy_index = get_random_enemy_index(&spawn_phase_timer, &spawn_stage);
+            let enemy_index = get_random_enemy_index(&active_stage);
 
             let direction_to_spawn = if horizontal {
                 let random_x = if random::<bool>() { 1.0 } else { -1.0 };
@@ -128,12 +124,11 @@ fn directional_spawn_pattern(
 
 fn circle_spawn_pattern(
     spawner_config: Res<SpawnerConfig>,
-    spawn_phase_timer: ResMut<SpawnStageState>,
+    active_stage: ResMut<ActiveStage>,
     mut spawn_task_receiver: ResMut<SpawnTaskReceiver>,
-    spawn_stage: Res<SpawnStage>,
     player_query: Query<(Entity, &Transform), With<Player>>,
 ) {
-    let spawn_angle = match spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].pattern {
+    let spawn_angle = match active_stage.stage.spawn_phases[active_stage.current_spawn_phase].pattern {
         SpawnPattern::Circle { spawn_angle_in_degree } => spawn_angle_in_degree,
         _ => { return; }
     };
@@ -141,7 +136,7 @@ fn circle_spawn_pattern(
     let mut current_angle = spawn_angle;
 
     for (player_entity, player_transform) in player_query.iter() {
-        let enemy_index = get_random_enemy_index(&spawn_phase_timer, &spawn_stage);
+        let enemy_index = get_random_enemy_index(&active_stage);
 
         while current_angle < 360.0 {
             let angle_radians = -current_angle * PI / 180.0;
@@ -156,18 +151,17 @@ fn circle_spawn_pattern(
 
 fn grouped_spawn_pattern(
     spawner_config: Res<SpawnerConfig>,
-    spawn_phase_timer: ResMut<SpawnStageState>,
+    active_stage: ResMut<ActiveStage>,
     mut spawn_task_receiver: ResMut<SpawnTaskReceiver>,
-    spawn_stage: Res<SpawnStage>,
     player_query: Query<(Entity, &Transform), With<Player>>,
 ) {
-    let enemy_amount = match spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].pattern {
+    let enemy_amount = match active_stage.stage.spawn_phases[active_stage.current_spawn_phase].pattern {
         SpawnPattern::Grouped { enemy_amount } => enemy_amount,
         _ => { return; }
     };
 
     for (player_entity, player_transform) in player_query.iter() {
-        let enemy_index = get_random_enemy_index(&spawn_phase_timer, &spawn_stage);
+        let enemy_index = get_random_enemy_index(&active_stage);
 
         let random_offset = get_random_offset_vector(spawner_config.spawn_range_offset);
         let direction_to_spawn = get_random_offset_vector(2.0).normalize_or_zero();
@@ -192,15 +186,14 @@ fn get_random_offset_vector(multiplier: f32) -> Vec2 {
 }
 
 fn get_random_enemy_index(
-    spawn_phase_timer: &ResMut<SpawnStageState>,
-    spawn_stage: &Res<SpawnStage>,
+    active_stage: &ResMut<ActiveStage>,
 ) -> usize {
-    let total_spawn_weight: f32 = spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].enemies.iter().map(|value| value.spawn_weight).sum();
+    let total_spawn_weight: f32 = active_stage.stage.spawn_phases[active_stage.current_spawn_phase].enemies.iter().map(|value| value.spawn_weight).sum();
     let random_number = random::<f32>() * total_spawn_weight;
 
     let mut previous_spawn_weights: f32 = 0.0;
     let mut enemy_index = 0;
-    'enemy_loop: for enemy in spawn_stage.spawn_phases[spawn_phase_timer.current_spawn_phase].enemies.iter() {
+    'enemy_loop: for enemy in active_stage.stage.spawn_phases[active_stage.current_spawn_phase].enemies.iter() {
         previous_spawn_weights += enemy.spawn_weight;
 
         if random_number < previous_spawn_weights {

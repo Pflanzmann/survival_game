@@ -1,0 +1,25 @@
+{
+  "config_id": 8,
+  "entity_name": "Kobold",
+  "size": [
+    256.0,
+    256.0
+  ],
+  "sprite_path": "sprite_sheets/kobold.png",
+  "texture_atlas_grid_size": [
+    64.0,
+    80.0
+  ],
+  "texture_atlas_columns": 4,
+  "texture_atlas_rows": 4,
+  "sprite_layer": "GroundLevel",
+  "collider_weight": 0.8,
+  "base_damage": 5.0,
+  "damage_interval": 60.0,
+  "move_speed": 10.0,
+  "health": 12.0,
+  "behavior": {
+    "type": "SidedMovement",
+    "horizontal": true
+  }
+}

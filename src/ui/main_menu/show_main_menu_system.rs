@@ -3,12 +3,11 @@ use bevy::prelude::*;
 use bevy_egui::*;
 use bevy_egui::egui::*;
 
-use crate::{AppState, MainMenuState};
+use crate::MainMenuState;
 
 pub fn show_main_menu_system(
     asset_loader: Res<AssetServer>,
     mut egui_context: EguiContexts,
-    mut next_app_state: ResMut<NextState<AppState>>,
     mut next_menu_state: ResMut<NextState<MainMenuState>>,
     mut exit: EventWriter<AppExit>,
 
@@ -59,7 +58,7 @@ pub fn show_main_menu_system(
                             .color(Color32::from_rgb(255, 255, 255))
                             .size(30.0))
                     ).clicked() {
-                        next_app_state.set(AppState::InGame);
+                        next_menu_state.set(MainMenuState::ChooseStage);
                     };
 
                     ui.add_space(50.0);

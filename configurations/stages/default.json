@@ -1,4 +1,5 @@
 {
+  "name": "Default",
   "spawn_phases": [
     {
       "duration": 60.0,

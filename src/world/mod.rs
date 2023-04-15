@@ -5,14 +5,12 @@ use crate::scheduling::BaseSets;
 use crate::world::background::BackgroundPlugin;
 use crate::world::drops::DropsPlugin;
 use crate::world::game_time_system::game_time_system;
-use crate::world::goal::GoalPlugin;
 use crate::world::spawner::SpawnerPlugin;
 
 pub mod background;
 pub mod drops;
 pub mod spawner;
 mod game_time_system;
-mod goal;
 
 pub struct WorldPlugin;
 
@@ -30,8 +28,7 @@ impl Plugin for WorldPlugin {
         app
             .add_plugin(DropsPlugin)
             .add_plugin(BackgroundPlugin)
-            .add_plugin(SpawnerPlugin)
-            .add_plugin(GoalPlugin);
+            .add_plugin(SpawnerPlugin);
 
         app.add_system(game_time_system.in_set(WorldSystemSet));
     }

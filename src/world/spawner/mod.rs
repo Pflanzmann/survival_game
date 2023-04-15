@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 
 use crate::{App, AppState};
+use crate::models::resources::world::active_stage::ActiveStage;
 use crate::scheduling::BaseSets;
 use crate::world::spawner::spawn_scheduler_system::spawn_scheduler_system;
 use crate::world::spawner::spawn_worker_system::spawn_worker_system;
@@ -22,7 +23,7 @@ impl Plugin for SpawnerPlugin {
         );
 
         app
-            .add_system(spawn_scheduler_system.in_set(SpawnerSystemSet))
+            .add_system(spawn_scheduler_system.in_set(SpawnerSystemSet).run_if(resource_exists::<ActiveStage>()))
             .add_system(spawn_worker_system.in_set(SpawnerSystemSet));
     }
 }

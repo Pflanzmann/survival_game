@@ -1,17 +1,28 @@
-use bevy::prelude::{Commands, ResMut};
-use crate::models::resources::world::spawn_phase_timer::SpawnStageState;
+use std::fs;
 
-use crate::models::spawner::spawn_stage::SpawnStage;
+use bevy::prelude::*;
+
+use crate::models::spawner::spawn_stage::Stage;
 use crate::util::read_file_to_string::read_file_to_string;
+
+#[derive(Default, Resource)]
+pub struct StageList {
+    pub stages: Vec<Stage>,
+}
 
 pub fn preload_stage_spawn_behavior_system(
     mut commands: Commands,
-    mut spawn_phase_timer: ResMut<SpawnStageState>,
 ) {
-    let my_string = read_file_to_string("configurations/stage_spawn_behaviors/default_spawn_phase.json");
-    let spawn_stage_behavior: SpawnStage = serde_json::from_str(&my_string).expect("JSON was not well-formatted");
-    
-    spawn_phase_timer.phase_timer = spawn_stage_behavior.spawn_phases[0].duration;
+    let base_path = "configurations/stages/";
+    let paths = fs::read_dir(base_path).unwrap();
 
-    commands.insert_resource(spawn_stage_behavior);
+    let mut stage_list = StageList::default();
+
+    for path in paths {
+        let my_string = read_file_to_string(path.unwrap().path().display().to_string().as_str());
+        let stage: Stage = serde_json::from_str(&my_string).expect("JSON was not well-formatted");
+        stage_list.stages.push(stage)
+    }
+
+    commands.insert_resource(stage_list);
 }

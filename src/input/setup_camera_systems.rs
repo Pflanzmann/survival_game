@@ -1,6 +1,6 @@
 use bevy::prelude::*;
 use bevy::render::camera::ScalingMode;
-use bevy::window::{PrimaryWindow, WindowMode, WindowResolution};
+use bevy::window::{PrimaryWindow, WindowResolution};
 
 use crate::models::main_camera::MainCamera;
 
@@ -26,6 +26,5 @@ pub fn setup_camera_system(
         window.title = String::from("Atomic Under Chess");
         window.resolution = WindowResolution::new(1920.0, 1080.0);
         window.resizable = false;
-        window.mode = WindowMode::Fullscreen;
     }
 }

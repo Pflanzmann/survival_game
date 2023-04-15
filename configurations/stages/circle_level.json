@@ -1,0 +1,19 @@
+{
+  "name": "Circle Level",
+  "spawn_phases": [
+    {
+      "duration": 10.0,
+      "spawn_interval": 8.0,
+      "enemies": [
+        {
+          "enemy_index": 5,
+          "spawn_weight": 1.0
+        }
+      ],
+      "pattern": {
+        "type": "Circle",
+        "spawn_angle_in_degree": 7.0
+      }
+    }
+  ]
+}

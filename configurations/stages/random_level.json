@@ -1,0 +1,20 @@
+{
+  "name": "Random Level",
+  "spawn_phases": [
+    {
+      "duration": 60.0,
+      "spawn_interval": 0.5,
+      "minimum_enemy_amount": 10,
+      "enemies": [
+        {
+          "enemy_index": 0,
+          "spawn_weight": 3.0
+        },
+        {
+          "enemy_index": 6,
+          "spawn_weight": 1.0
+        }
+      ]
+    }
+  ]
+}
