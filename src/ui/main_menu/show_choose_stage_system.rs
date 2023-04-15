@@ -6,11 +6,6 @@ use crate::{AppState, MainMenuState};
 use crate::assets_handling::preload_stage_spawn_system::StageList;
 use crate::models::resources::world::active_stage::ActiveStage;
 
-#[derive(Default)]
-pub struct LocalOptionsState {
-    pub fullscreen_checkbox: bool,
-}
-
 pub fn show_choose_stage_system(
     mut commands: Commands,
     asset_loader: Res<AssetServer>,
@@ -32,7 +27,6 @@ pub fn show_choose_stage_system(
         fill: Color32::from_rgba_premultiplied(0, 0, 0, 0),
         ..Default::default()
     };
-
 
     //main window background
     CentralPanel::default()
